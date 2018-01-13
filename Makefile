@@ -60,6 +60,7 @@ $(PREFIX)/techbookfest4.html: $(ADOCS) $(ASSETS)
 lint: redpen rubocop crystal-format
 
 redpen:
+	redpen -c config/redpen/conf.xml -L ja README.md 2>/dev/null
 	redpen -c config/redpen/conf.xml -L ja $(ADOCS) 2>/dev/null
 
 rubocop:
