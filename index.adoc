@@ -1,0 +1,27 @@
+= Crystal Introduction
+crystal-jp
+:lang: ja
+:doctype: book
+:pdf-page-size: b5
+:sectnums:
+:chapter-label:
+:table-caption: テーブル
+:toc:
+
+include::./01-introduction/content.adoc[]
+
+include::./02-getting-started/content.adoc[]
+
+include::./03-syntax/content.adoc[]
+
+include::./04-macro/content.adoc[]
+
+include::./05-shards/content.adoc[]
+
+include::./06-tools/content.adoc[]
+
+include::./07-web-development/content.adoc[]
+
+include::./08-cli-development/content.adoc[]
+
+include::./09-history/content.adoc[]

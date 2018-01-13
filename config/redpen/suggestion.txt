@@ -1,0 +1,884 @@
+10．	（10）
+1．	（1）
+2．	（2）
+3．	（3）
+4．	（4）
+5．	（5）
+6．	（6）
+7．	（7）
+8．	（8）
+9．	（9）
+Action Controller	ActionController
+Action Form	アクションフォーム
+Action Listener	アクションリスナ
+Action Mailer	ActionMailer
+Action Mapping	アクションマッピング
+Action Pack	ActionPack
+Action Script	ActionScript
+Action Servlet	アクションサーブレット
+Action View	ActionView
+ActionForm	アクションフォーム
+ActionForm Bean	アクションフォームBean
+ActionFormBean	アクションフォームBean
+ActionFormBeans	アクションフォームBean
+ActionListener	アクションリスナ
+ActionScript VirtualMachine	ActionScript Virtual Machine
+ActionScript1	ActionScript 1
+ActionScript10	ActionScript 10
+ActionScript2	ActionScript 2
+ActionScript3	ActionScript 3
+ActionScript4	ActionScript 4
+ActionScript5	ActionScript 5
+ActionScript6	ActionScript 6
+ActionScript7	ActionScript 7
+ActionScript8	ActionScript 8
+ActionScript9	ActionScript 9
+ActionScriptVirtualMachine	ActionScript Virtual Machine
+ActionServlet	アクションサーブレット
+Actionクラス	アクションクラス
+Actionサーブレット	アクションサーブレット
+Actionマッピング	アクションマッピング
+Active Model	ActiveModel
+Active Record	ActiveRecord
+Active Resource	ActiveResource
+Active Support	ActiveSupport
+Activity	アクティビティ
+Angular.js	AngularJS
+angularjs	AngularJS
+apache	Apache
+Apache1	Apache 1
+Apache2	Apache 2
+Apatch	Apache
+apatch	Apache
+Apatch1	Apache 2
+Apatch2	Apache 2
+Applet	アプレット
+Array Function	Arrow Function
+ASP .NET	ASP.NET
+Backup	バックアップ
+Big Table	Bigtable
+Big table	Bigtable
+BigTable	Bigtable
+bit	ビット
+Bit	ビット
+Broadcast receiver	ブロードキャストレシーバ
+C2ウィキ	C2 Wiki
+CakePHP1	CakePHP 1
+CakePHP2	CakePHP 2
+CakePHP3	CakePHP 3
+CakePHP4	CakePHP 4
+CakePHP5	CakePHP 5
+Capistorano	Capistrano
+Chrome Webストア	Chrome Web Store
+Chromeウェブストア	Chrome Web Store
+Chronium	Chromium
+CoffeScript	CoffeeScript
+Content provider	コンテントプロバイダ
+COOKIE	Cookie
+cookie	Cookie
+Custome	Custom
+Data Services	データサービス
+Data Sync	データ同期
+DENA	DeNA
+Disk	ディスク
+DreamWeaver	Dreamweaver
+Dual Core	デュアルコア
+Dual Core CPU	デュアルコアCPU
+Dualコア	デュアルコア
+ECMA Script	ECMAScript
+ECMA Script1	ECMAScript 1
+ECMA Script2	ECMAScript 2
+ECMA Script3	ECMAScript 3
+ECMA Script4	ECMAScript 4
+ECMA Script5	ECMAScript 5
+ECMA Script6	ECMAScript 6
+ECMA Script7	ECMAScript 7
+ECMA Script8	ECMAScript 8
+ECMA Script9	ECMAScript 9
+ECMAScript1	ECMAScript 1
+ECMAScript2	ECMAScript 2
+ECMAScript3	ECMAScript 3
+ECMAScript4	ECMAScript 4
+ECMAScript5	ECMAScript 5
+ECMAScript6	ECMAScript 6
+ECMAScript7	ECMAScript 7
+ECMAScript8	ECMAScript 8
+ECMAScript9	ECMAScript 9
+ECMA標準	Ecma標準
+Emacs1	Emacs 1
+Emacs2	Emacs 2
+Emacs3	Emacs 3
+Emacs4	Emacs 4
+Emacs5	Emacs 5
+EmberJS	Ember.js
+Entity	エンティティ
+entity	エンティティ
+Entity Bean	エンティティBean
+entity bean	エンティティBean
+ES next	ES.next
+facebook	Facebook
+Fire Fox	Firefox
+FireFox	Firefox
+Flash Platform	Flashプラットフォーム
+Flash プレイヤー	Flash Player
+Flash プレーヤ	Flash Player
+Flash プレーヤー	Flash Player
+FlashLite	Flash Lite
+FlashPlayer	Flash Player
+Flashプレイヤー	Flash Player
+Flashプレーヤ	Flash Player
+Flashプレーヤー	Flash Player
+FlexBuilder	Flex Builder
+Fluxbox	Flexbox
+Form Bean	フォームBean
+Fundation	Foundation
+Geotag	ジオタグ
+geotag	ジオタグ
+github	GitHub
+gmail	Gmail
+Google Gears	Gears
+Google Map	Google Maps
+GoogleGears	Gears
+GoogleMap	Google Maps
+GoogleMaps	Google Maps
+Googleガジェット	Google Gadget
+Googleマップ	Google Maps
+Grease monkey	Greasemonkey
+Grease Monkey	Greasemonkey
+GreaseMonkey	Greasemonkey
+Gバイト	GB
+hit率	ヒット率
+Homeインタフェース	ホームインタフェース
+HTML 1	HTML1
+HTML 2	HTML2
+HTML 3	HTML3
+HTML 4	HTML4
+HTML 5	HTML5
+HTML Import	HTML Imports
+HTML5Rock	HTML5 Rocks
+HTML5Rocks	HTML5 Rocks
+hz	Hz
+HZ	Hz
+IE 1	IE1
+IE 2	IE2
+IE 3	IE3
+IE 4	IE4
+IE 5	IE5
+IE 6	IE6
+IE 7	IE7
+IE 8	IE8
+IE 9	IE9
+Intent	インテント
+Internet Explorer1	Internet Explorer 1
+Internet Explorer10	Internet Explorer 10
+Internet Explorer2	Internet Explorer 2
+Internet Explorer3	Internet Explorer 3
+Internet Explorer4	Internet Explorer 4
+Internet Explorer5	Internet Explorer 5
+Internet Explorer6	Internet Explorer 6
+Internet Explorer7	Internet Explorer 7
+Internet Explorer8	Internet Explorer 8
+Internet Explorer9	Internet Explorer 9
+IO	I/O
+ISO1	ISO 1
+ISO2	ISO 2
+ISO3	ISO 4
+ISO5	ISO 5
+ISO6	ISO 6
+ISO7	ISO 7
+ISO8	ISO 8
+ISO9	ISO 9
+ISO\-	ISO
+iノード	inode
+Java Bean	JavaBeans
+Java Beans	JavaBeans
+Java EE1	Java EE 1
+Java EE2	Java EE 2
+Java EE3	Java EE 3
+Java EE4	Java EE 4
+Java EE5	Java EE 5
+Java EE6	Java EE 6
+Java EE7	Java EE 7
+Java EE8	Java EE 8
+Java EE9	Java EE 9
+Java Script	JavaScript
+Java SE1	Java SE 1
+Java SE2	Java SE 2
+Java SE3	Java SE 3
+Java SE4	Java SE 4
+Java SE5	Java SE 5
+Java SE6	Java SE 6
+Java SE7	Java SE 7
+Java SE8	Java SE 8
+Java SE9	Java SE 9
+Java Server Faces	JavaServer Faces
+Java Server Pages	JavaServer Pages
+Java VM	JVM
+Java1	Java 1
+Java2	Java 2
+Java3	Java 3
+Java3D	Java 3D
+Java4	Java 4
+Java5	Java 5
+Java6	Java 6
+Java7	Java 7
+Java8	Java 8
+Java9	Java 9
+JavaBean	JavaBeans
+JavaEE	Java EE
+JavaEE1	Java EE 1
+JavaEE2	Java EE 2
+JavaEE3	Java EE 3
+JavaEE4	Java EE 4
+JavaEE5	Java EE 5
+JavaEE6	Java EE 6
+JavaEE7	Java EE 7
+JavaEE8	Java EE 8
+JavaEE9	Java EE 9
+JavaSE	Java SE
+JavaSE1	Java SE 1
+JavaSE2	Java SE 2
+JavaSE3	Java SE 3
+JavaSE4	Java SE 4
+JavaSE5	Java SE 5
+JavaSE6	Java SE 6
+JavaSE7	Java SE 7
+JavaSE8	Java SE 8
+JavaSE9	Java SE 9
+JavaVM	JVM
+JDK1	JDK 1
+JDK2	JDK 2
+JDK3	JDK 3
+JDK4	JDK 4
+JDK5	JDK 5
+JDK6	JDK 6
+JDK7	JDK 7
+JDK8	JDK 8
+JDK9	JDK 9
+jquery	jQuery
+JSF1	JSF 1
+JSF2	JSF 2
+JSF3	JSF 3
+JSF4	JSF 4
+JSF5	JSF 5
+JSF6	JSF 6
+JSF7	JSF 7
+JSF8	JSF 8
+JSF9	JSF 9
+JSP1	JSP 1
+JSP2	JSP 2
+JSP3	JSP 3
+JSP4	JSP 4
+JSP5	JSP 5
+JSP6	JSP 6
+JSP7	JSP 7
+JSP8	JSP 8
+JSP9	JSP 9
+Kbps	kbps
+Key-Value	key-value
+KHz	kHz
+Khz	kHz
+khz	kHz
+KHZ	kHz
+kHZ	kHz
+Kyoto *Dystopia	Tokyo Dystopia
+Kyoto *Promenade	Tokyo Promenade
+Kyoto *Tyrant	Tokyo Tyrant
+KyotoCabinet	Kyoto Cabinet
+KyotoTycoon	Kyoto Tycoon
+Kバイト	KB
+LL言語	LL
+localstorage	localStorage
+Localインタフェース	ローカルインタフェース
+Mac Book	MacBook
+MacOS	Mac OS
+MacOSX	Mac OS X
+microsoft	Microsoft
+ML	メーリングリスト
+Mongo DB	MongoDB
+Mバイト	MB
+Nagios1	Nagios 1
+Nagios2	Nagios 2
+Nagios3	Nagios 3
+Nagios4	Nagios 4
+Nagios5	Nagios 5
+Nagios6	Nagios 6
+Nagios7	Nagios 7
+Nagios8	Nagios 8
+Nagios9	Nagios 9
+O-Rマッ	O/Rマッ
+O\/Rマッパー	O/Rマッパ
+oeprator	operator
+Onetime URL	ワンタイムURL
+Open GL	OpenGL
+ORM	O/Rマッパ
+ORマッ	O/Rマッ
+packge.json	package.json
+path	パス
+Path	パス
+peformance	Performance
+Pentium 2	Pentium II
+Pentium 3	Pentium III
+Pentium IV	Pentium 4
+Pentium2	Pentium II
+Pentium3	Pentium III
+Perl1	Perl 1
+Perl2	Perl 2
+Perl3	Perl 3
+Perl4	Perl 4
+Perl5	Perl 5
+Perl6	Perl 6
+Perl7	Perl 7
+Perl8	Perl 8
+Perl9	Perl 9
+Permalink	パーマリンク
+permalink	パーマリンク
+permanent link	パーマリンク
+PhotoShop	Photoshop
+photoshop	Photoshop
+PHP1	PHP 1
+PHP2	PHP 2
+PHP3	PHP 3
+PHP4	PHP 4
+PHP5	PHP 5
+PHP6	PHP 6
+PHP7	PHP 7
+PHP8	PHP 8
+PHP9	PHP 9
+pixel	ピクセル
+pointer event	Pointer Events
+pointer events	Pointer Events
+PostgreSQL1	PostgreSQL 1
+PostgreSQL2	PostgreSQL 2
+PostgreSQL3	PostgreSQL 3
+PostgreSQL4	PostgreSQL 4
+PostgreSQL5	PostgreSQL 5
+PostgreSQL6	PostgreSQL 6
+PostgreSQL7	PostgreSQL 7
+PostgreSQL8	PostgreSQL 8
+PostgreSQL9	PostgreSQL 9
+propety	Property
+px	ピクセル
+Pバイト	PB
+Quad Core	クアッドコア
+Quad Core CPU	クアッドコアCPU
+Quadコア	クアッドコア
+Query String	クエリ文字列
+QueryString	クエリ文字列
+Rails1	Rails 1
+Rails2	Rails 2
+Rails3	Rails 3
+Rails4	Rails 4
+Rails5	Rails 5
+Rails6	Rails 6
+Rails7	Rails 7
+Rails8	Rails 8
+Rails9	Rails 9
+Red Hat Linux1	Red Hat Linux 1
+Red Hat Linux2	Red Hat Linux 2
+Red Hat Linux3	Red Hat Linux 3
+Red Hat Linux4	Red Hat Linux 4
+Red Hat Linux5	Red Hat Linux 5
+Red Hat Linux6	Red Hat Linux 6
+Red Hat Linux7	Red Hat Linux 7
+Red Hat Linux8	Red Hat Linux 8
+Red Hat Linux9	Red Hat Linux 9
+RedHad	Red Hat
+Redhad	Red Hat
+redhad	Red Hat
+RedHat	Red Hat
+Redhat	Red Hat
+redhat	Red Hat
+RedHat Linux	Red Hat Linux
+RedHat Linux([0-9])	Red Hat Linux $1
+RedHatLinux	Red Hat Linux
+RedHatLinux([0-9])	Red Hat Linux $1
+redux	Redux
+Remoteインタフェース	リモートインタフェース
+Requestオブジェクト	リクエストオブジェクト
+Responseオブジェクト	レスポンスオブジェクト
+Reverse Proxy	リバースプロキシ
+RFC1	RFC 1
+RFC2	RFC 2
+RFC3	RFC 3
+RFC4	RFC 4
+RFC5	RFC 5
+RFC6	RFC 6
+RFC7	RFC 7
+RFC8	RFC 8
+RFC9	RFC 9
+RoR	Ruby on Rails
+RPC Services	RPCサービス
+Ruby Gems	RubyGems
+Ruby On Rails	Ruby on Rails
+Ruby1	Ruby 1
+Ruby2	Ruby 2
+Ruby3	Ruby 3
+Ruby4	Ruby 4
+Ruby5	Ruby 5
+Ruby6	Ruby 6
+Ruby7	Ruby 7
+Ruby8	Ruby 8
+Ruby9	Ruby 9
+SAML1	SAML 1
+SAML2	SAML 2
+SAML3	SAML 3
+SAML4	SAML 4
+SAML5	SAML 5
+SAML6	SAML 6
+SAML7	SAML 7
+SAML8	SAML 8
+SAML9	SAML 9
+SauceLabs	Sauce Labs
+Serviceインタフェース	サービスインタフェース
+Servlet	サーブレット
+SERVLET	サーブレット
+Servlet1	Servlet 1
+Servlet2	Servlet 2
+Servlet3	Servlet 3
+Servlet4	Servlet 4
+Servlet5	Servlet 5
+Servlet6	Servlet 6
+Servlet7	Servlet 7
+Servlet8	Servlet 8
+Servlet9	Servlet 9
+session	セッション
+Session	セッション
+session bean	セッションBean
+Session Bean	セッションBean
+session storage	sessionStorage
+sessionstorage	sessionStorage
+Sessionオブジェクト	セッションオブジェクト
+Silver Light	Silverlight
+SilverLight	Silverlight
+Slave	スレーブ
+sourceforge	SourceForge
+SourceMap	Source Map
+SQL1	SQL 1
+SQL2	SQL 2
+SQL3	SQL 3
+SQL4	SQL 4
+SQL5	SQL 5
+SQL6	SQL 6
+SQL7	SQL 7
+SQL8	SQL 8
+SQL9	SQL 9
+subversion	Subversion
+Sun RPC	SunRPC
+Symfony 2	Symfony2
+TemplateStrings	Template Strings
+timestamp	タイムスタンプ
+Timestamp	タイムスタンプ
+Tokyo *Tycoon	Kyoto Tycoon
+TokyoCabinet	Tokyo Cabinet
+TokyoDystopia	Tokyo Dystopia
+TokyoPromenade	Tokyo Promenade
+TokyoTyrant	Tokyo Tyrant
+Tomcat1	Tomcat 1
+Tomcat2	Tomcat 2
+Tomcat3	Tomcat 3
+Tomcat4	Tomcat 4
+Tomcat5	Tomcat 5
+Tomcat6	Tomcat 6
+Tomcat7	Tomcat 7
+Tomcat8	Tomcat 8
+Tomcat9	Tomcat 9
+Touch Event	Touch Events
+TravisCI	Travis CI
+Triton	Tritonn
+triton	Tritonn
+tritonn	Tritonn
+tweet	ツイート
+Tweet	ツイート
+Tバイト	TB
+Ubuntsu	Ubuntu
+ubuntsu	Ubuntu
+ubuntu	Ubuntu
+Ubuntu Linux	Ubuntu
+unicode	Unicode
+Unitテスト	ユニットテスト
+Unix	UNIX
+UTF 8	UTF-8
+UTF8	UTF-8
+utf8	UTF-8
+VB	Visual Basic
+vim script	Vimスクリプト
+vim1	Vim 1
+vim2	Vim 2
+vim3	Vim 3
+vim4	Vim 4
+vim5	Vim 5
+vim6	Vim 6
+vim7	Vim 7
+vim8	Vim 8
+vim9	Vim 9
+Virtual machine	Virtual Machine
+VirtualDOM	Virtual DOM
+VirtualDom	Virtual DOM
+Visual Studio.NET	Visual Studio .NET
+VisualBasic	Visual Basic
+WEB	Web
+WEB API	Web API
+Web AudioAPI	Web Audio API
+web components	Web Components
+Web components	Web Components
+Web Logic	WebLogic
+Web Socket	WebSocket
+Web Sphere	WebSphere
+WebAPI	Web API
+WEBAPI	Web API
+WebAudio API	Web Audio API
+WebComponents	Web Components
+webkit	WebKit
+WebUI	Web UI
+Webブラウザー	ブラウザ
+WEBブラウザー	ブラウザ
+Widget	ウィジェット
+widget	ウィジェット
+WiFi	Wi-Fi
+wiki	Wiki
+WikiPedia	Wikipedia
+Wikiア	Wikia
+Wikiベース	WikiBase
+Wikiメディア	Wikimedia
+Windows 2003 Server	Windows Server 2003
+Windows 2008 Server	Windows Server 2008
+Windows Server 2000	Windows 2000 Server
+Windows2000	Windows 2000
+Windows3.	Windows 3.
+Windows7	Windows 7
+Windows95	Windows 95
+Windows98	Windows 98
+WindowsMe	Windows Me
+WindowsME	Windows Me
+WindowsNT	Windows NT
+WindowsVista	Windows Vista
+WindowsXP	Windows XP
+Workaound	Workaround
+YAHOO	Yahoo
+Yahoo! Gadget	Yahoo!ウィジェット
+Yahoo! Widget	Yahoo!ウィジェット
+Yahoo!Gadget	Yahoo!ウィジェット
+Yahoo!Widget	Yahoo!ウィジェット
+YahooGadget	Yahoo!ウィジェット
+YahooWidget	Yahoo!ウィジェット
+Youtube	YouTube
+youtube	YouTube
+――	──
+―─	──
+Ⅳ	IV
+ⅳ	iv
+Ⅵ	VI
+ⅵ	vi
+Ⅶ	VII
+ⅶ	vii
+Ⅷ	VIII
+ⅷ	viii
+Ⅸ	IX
+ⅸ	ix
+①	（1）
+②	（2）
+③	（3）
+④	（4）
+⑤	（5）
+⑥	（6）
+⑦	（7）
+⑧	（8）
+⑨	（9）
+⑩	（10）
+─―	──
+、）	）、
+。」	」
+。（	（
+。）	）。
+」、「	」「
+どういう(!こと	どのような
+など追加	などが追加
+の比較して	を比較して
+アィデア	アイデア
+アィディア	アイデア
+アイディア	アイデア
+アクションスクリプト	ActionScript
+アクティビティー	アクティビティ
+アステリスク	アスタリスク
+アダプター	アダプタ
+アトリビュート	属性
+アニメーター	アニメータ
+アノーテーション	アノテーション
+アンダーバー	アンダースコア
+アーキティクチャ	アーキテクチャ
+アーキテクチャー	アーキテクチャ
+インストーラー	インストーラ
+インスパイヤ	インスパイア
+インタフェイス	インタフェース
+インタプリター	インタプリタ
+インターフェィス	インタフェース
+インターフェイス	インタフェース
+インターフェース	インタフェース
+インタープリタ	インタプリタ
+インタープリター	インタプリタ
+インデクス	インデックス
+ウィキ	Wiki
+ウィキア	Wikia
+ウィキウィキWeb	WikiWikiWeb
+ウィキウィキウェブ	WikiWikiWeb
+ウィキベース	WikiBase
+ウィキペディア	Wikipedia
+ウィキメディア	Wikimedia
+ウイルス	ウィルス
+ウインドウ	ウィンドウ
+ウェッブ	Web
+ウエア	ウェア
+エクセル	Excel
+エディター	エディタ
+エミッター	エミッタ
+エミュレーター	エミュレータ
+エレメント	要素
+エンコーダー	エンコーダ
+エンティティー	エンティティ
+エントリー	エントリ
+オブション	オプション
+オペレーティングシステム	OS
+オライリー	オライリー・ジャパン
+オライリージャパン	オライリー・ジャパン
+カウンター	カウンタ
+カテゴリー	カテゴリ
+ガベージ・	ガベージ
+ガーベジ	ガベージ
+ガーベジ・	ガベージ
+ガーベッジ	ガベージ
+ガーベッジ・	ガベージ
+ガーベージ	ガベージ
+ガーベージ・	ガベージ
+キャラクター	キャラクタ
+キロバイト	KB
+キーバリュー	key-value
+キー・バリュー	key-value
+キー／バリュー	key-value
+ギガバイト	GB
+クァッドCore	クアッドコア
+クァッドコア	クアッドコア
+クイックWeb	qwikWeb
+クイックウェブ	qwikWeb
+クエリストリング	クエリ文字列
+クエリー	クエリ
+クエリーストリング	クエリ文字列
+クッキー	Cookie
+クライアント\/サーバ	クライアント／サーバ
+クライアント\/サーバー	クライアント／サーバ
+クライアントサーバ	クライアント／サーバ
+クライアントサーバー	クライアント／サーバ
+クライアント・サーバ	クライアント／サーバ
+クライアント・サーバー	クライアント／サーバ
+クラスター	クラスタ
+クロージャー	クロージャ
+クローラー	クローラ
+グランド	グラウンド
+ゲッター	ゲッタ
+コピペ	コピー&ペースト
+コピーアンドペースト	コピー&ペースト
+コピー＆ペースト	コピー&ペースト
+コミッター	コミッタ
+コミニュ	コミュニ
+コンストラクター	コンストラクタ
+コンテクスト	コンテキスト
+コンテナー	コンテナ
+コントローラー	コントローラ
+コンピューター	コンピュータ
+サイトイン	サインイン
+サーチWiki	SearchWiki
+サーチウィキ	SearchWiki
+サーバー	サーバ
+サーブレット&JSP	サーブレット/JSP
+サーブレット＆JSP	サーブレット/JSP
+サーブレット／JSP	サーブレット/JSP
+シュミレー	シミュレー
+ジェネレイティブ	ジェネレーティブ
+ジェネレーター	ジェネレータ
+ジョブス	ジョブズ
+スカラー	スカラ
+スタンドアロン	スタンドアローン
+ストアード	ストアド
+ストレジ	ストレージ
+ストレッジ	ストレージ
+スモールトーク	Smalltalk
+スレイブ	スレーブ
+セキュリティー	セキュリティ
+セッター	セッタ
+セレクター	セレクタ
+ソフトウエア	ソフトウェア
+ソフトバンククリエイティブ	ソフトバンク クリエイティブ
+ダイヤグラム	ダイアグラム
+チェーン	チェイン
+ツィート	ツイート
+ツイッター	Twitter
+ツリー・エントリ	ツリーエントリ
+ツリー・オブジェクト	ツリーオブジェクト
+ティドリーWiki	TiddlyWiki
+ティドリーウィキ	TiddlyWiki
+テクノロジー	テクノロジ
+テラバイト	TB
+ディスクリプタ	記述子
+ディスパッチャー	ディスパッチャ
+ディスプレー	ディスプレイ
+ディフォルト	デフォルト
+ディベロッパ	デベロッパ
+ディベロッパー	デベロッパ
+ディレクタ	ディレクター
+ディレクトリー	ディレクトリ
+ディヴェロッパ	デベロッパ
+ディーエヌエー	DeNA
+ディー・エヌ・エー	DeNA
+デグレ	リグレッション
+デグレード	リグレッション
+デコーダー	デコーダ
+デザイナー	デザイナ
+デバック	デバッグ
+デフォルト有効	デフォルトで有効
+デフォールト	デフォルト
+デプロイメント	デプロイ
+デベロッパー	デベロッパ
+デュアルCore	デュアルコア
+デリバリー	デリバリ
+ドキュメンテーション	ドキュメント
+ドライバー	ドライバ
+ドラッグアンドドロップ	ドラッグ&ドロップ
+ドラッグ・アンド・ドロップ	ドラッグ&ドロップ
+ドラッグ＆ドロップ	ドラッグ&ドロップ
+ヌーペディア	Nupedia
+ハイパーパール	HyperPerl
+ハイパー・リンク	ハイパーリンク
+ハンドラー	ハンドラ
+バッファー	バッファ
+バラエティー	バラエティ
+バランサー	バランサ
+パソコン	PC
+パタン	パターン
+パラメタ	パラメータ
+パラメーター	パラメータ
+パーサー	パーサ
+パーザ	パーサ
+パーザー	パーサ
+パーマネントリンク	パーマリンク
+ビューアー	ビューア
+ビューワ	ビューア
+ビューワー	ビューア
+ビーン	Bean
+ピアソンエデュケーション	ピアソン・エデュケーション
+ファイアーウォール	ファイアウォール
+ファイアーフォックス	Firefox
+ファイヤウォール	ファイアウォール
+ファイヤーウォール	ファイアウォール
+ファイヤーウオール	ファイアウォール
+ファイヤーフォックス	Firefox
+ファイラー	ファイラ
+ファクトリー	ファクトリ
+フィクスチャー	フィクスチャ
+フィルター	フィルタ
+フィーチャフォン	フィーチャーフォン
+フェイズ	フェーズ
+フェイルオーバ	フェイルオーバー
+フェールオーバ	フェイルオーバー
+フェールオーバー	フェイルオーバー
+フォトショップ	Photoshop
+フォームビーン	フォームBean
+フッター	フッタ
+フッダ	フッタ
+フラッシュ	Flash
+ブラウザー	ブラウザ
+ブレイク	ブレーク
+プライマリー	プライマリ
+プラットホーム	プラットフォーム
+プリフィックス	プレフィックス
+プレイン	プレーン
+プレフィクス	プレフィックス
+プレーヤ	プレイヤー
+プレーヤー	プレーヤ
+プロキシー	プロキシ
+プロクシ	プロキシ
+プロクシー	プロキシ
+プログラマー	プログラマ
+プロシージャー	プロシージャ
+プロバイダー	プロバイダ
+プロパティー	プロパティ
+ヘッタ	ヘッダ
+ヘッター	ヘッダ
+ヘッダー	ヘッダ
+ヘヴィ	ヘビー
+ベクター	ベクタ
+ベンダ	ベンダー
+ペタバイト	PB
+ページャー	ページャ
+ポインター	ポインタ
+ポリモルフィズム	ポリモフィズム
+ポリモーフィズム	ポリモフィズム
+ポルモルフィズム	ポリモフィズム
+マイクロソフト	Microsoft
+マスタ・スレーブ	マスタ／スレーブ
+マスター	マスタ
+マッパー	マッパ
+マッピングツール	マッパ
+マトリクス	マトリックス
+マネージメント	マネジメント
+ミートボールWiki	MeatballWiki
+ミートボールウィキ	MeatballWiki
+メインテナンス	メンテナンス
+メガバイト	MB
+メタファー	メタファ
+メディアWiki	MediaWiki
+メディアウィキ	MediaWiki
+メモリー	メモリ
+メンテナー	メンテナ
+メンバ	メンバー
+メーカ	メーカー
+ヤフー	Yahoo
+ユニコード	Unicode
+ユーザー	ユーザ
+ユースモッドWiki	UseModWiki
+ユースモッドウィキ	UseModWiki
+ユーティリティー	ユーティリティ
+ライブライ	ライブラリ
+ライブラリー	ライブラリ
+ラッパー	ラッパ
+リジューム	レジューム
+リスナー	リスナ
+リファラー	リファラ
+リポジトリー	リポジトリ
+リリーう	リリース
+リーダ	リーダー
+ルーター	ルータ
+レイテンシー	レイテンシ
+レジストリー	レジストリ
+レッドハット	Red Hat
+レビュアー	レビュア
+レビュワ	レビュア
+レビュワー	レビュア
+レビューア	レビュア
+レビューアー	レビュア
+レビューワ	レビュア
+レビューワー	レビュア
+レポジトリ	リポジトリ
+レポジトリー	リポジトリ
+ローダー	ローダ
+ワーカー	ワーカ
+ワード	Word
+・・・	…
+今ままで	今まで
+単体テスト	ユニットテスト
+対処方	対処法
+新規開発終了	新規開発を終了
+方定義	型定義
+既定	デフォルト
+用に	ように
+薔薇	バラ
+行得る	行える
+！！	!!
+！？	!?
+．（	（
+？！	?!
+？？	??
+｢	「
+｣	」
+･･･	…
+当って	当たって
+サフィックス	接尾辞
