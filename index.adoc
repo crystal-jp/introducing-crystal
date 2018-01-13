@@ -1,4 +1,4 @@
-= Crystal Introduction
+= The Crystal Programming Language
 crystal-jp
 :lang: ja
 :doctype: book
