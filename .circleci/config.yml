@@ -6,10 +6,18 @@ jobs:
       - image: makenowjust/techbookfest-build:latest
     steps:
       - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+          - v1-dependencies-
       - run:
           name: Install dependencies
           command: |
             bundle install --path=vendor/bundle
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
       - run:
           name: Build
           command: make
