@@ -45,7 +45,9 @@
     <validator name="EmptySection" level="Info"/>
     <validator name="GappedSection" />
     <validator name="SectionLevel" />
-    <validator name="ParagraphNumber"/>
+    <validator name="ParagraphNumber">
+      <property name="max_num" value="10" />
+    </validator>
     <validator name="ListLevel" />
 
     <!--Load JavaScript validators-->
