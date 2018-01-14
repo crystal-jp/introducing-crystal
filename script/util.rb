@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-require 'english'
 require 'shellwords'
 
 def sh(*cmd, **opt)
   out = opt[:out]
   puts "$ #{cmd.shelljoin}#{out ? " >#{out.shellescape}" : ''}"
-  system(*cmd.map(&:to_s), **opt)
-  exit 1 unless $CHILD_STATUS.success?
+  ok = system(*cmd.map(&:to_s), **opt)
+  exit 1 unless ok
 end
 
 def cd(path, &block)

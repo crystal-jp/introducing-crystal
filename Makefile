@@ -56,8 +56,9 @@ $(PREFIX)/techbookfest4-web.pdf: $(ADOCS) $(ASSETS)
 $(PREFIX)/techbookfest4.html: $(ADOCS) $(ASSETS)
 	bundle exec asciidoctor $(ASCIIDOCTOR_HTML_FLAGS) -o $@ $<
 
-.PHONY: lint redpen rubocop crystal-format format
-lint: redpen rubocop crystal-format
+.PHONY: lint lint-full redpen rubocop crystal-format format
+lint: redpen crystal-format
+lint-full: lint rubocop
 
 redpen:
 	redpen -c config/redpen/conf.xml -L ja README.md 2>/dev/null

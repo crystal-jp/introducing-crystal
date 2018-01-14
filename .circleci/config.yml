@@ -1,0 +1,23 @@
+version: 2.0
+
+jobs:
+  build:
+    docker:
+      - image: makenowjust/techbookfest-build:latest
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            bundle install --path=vendor/bundle
+      - run:
+          name: Build
+          command: make
+      - store_artifacts:
+          path: build
+      - run:
+          name: Lint
+          command: make lint-full
+      - run:
+          name: Test
+          command: make test

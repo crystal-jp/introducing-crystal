@@ -192,3 +192,11 @@ puts "Crystal"
   - `Makefile` がある場合は、 `make` と `make test` を実行します。
 
 という風にして実行します。
+
+## CI 用のコンテナのビルド方法
+
+[RedPen の1.10.1](https://github.com/redpen-cc/redpen/releases/tag/redpen-1.10.1)の `.tar.gz` を落としてきて展開したあと、次のコマンドを実行します。
+
+```console
+docker build -t makenowjust/techbookfest-build -f .circleci/images/build/Dockerfile .
+```

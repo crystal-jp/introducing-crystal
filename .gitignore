@@ -2,3 +2,4 @@
 /vendor/bundle
 /.bundle/
 /Makefile.local
+/redpen-distribution-*
