@@ -883,3 +883,5 @@ youtube	YouTube
 当って	当たって
 サフィックス	接尾辞
 プレフィックス	接頭辞
+CRYSTAL	Crystal
+クリスタル	Crystal

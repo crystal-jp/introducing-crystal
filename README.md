@@ -193,6 +193,10 @@ puts "Crystal"
 
 という風にして実行します。
 
+### `make lint` ではチェックされないけど注意してほしい部分
+
+  - 全て小文字の `crystal` という表記はコマンド名として、先頭が大文字の Crystal はプログラミング言語の名前として使い分けてください。
+
 ## CI 用のコンテナのビルド方法
 
 [RedPen 1.10.1](https://github.com/redpen-cc/redpen/releases/tag/redpen-1.10.1)の `.tar.gz` を落としてきて展開したあと、次のコマンドを実行します。
