@@ -7,6 +7,9 @@ macro conditionals(content)
   {% end %}
 end
 
-conditionals 1 # => one
-conditionals 2 # => 2
 # end::code[]
+
+# tag::main[]
+conditionals 1 # => "one"
+conditionals 2 # => 2
+# end::main[]

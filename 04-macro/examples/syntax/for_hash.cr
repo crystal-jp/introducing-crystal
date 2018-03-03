@@ -9,7 +9,10 @@ end
 
 iteration({foo: "FOO", bar: "BAR", baz: "BAZ"})
 
+# end::code[]
+
+# tag::main[]
 foo # => "FOO"
 bar # => "BAR"
 baz # => "BAZ"
-# end::code[]
+# end::main[]

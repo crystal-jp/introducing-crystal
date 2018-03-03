@@ -6,5 +6,9 @@ end
 
 x = 0
 dont_update_x # outputs 1
-x # => 0
+
 # end::code[]
+
+# tag::main[]
+x # => 0
+# end::main[]

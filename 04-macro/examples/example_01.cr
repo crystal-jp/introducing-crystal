@@ -5,7 +5,7 @@ macro my_macro(method_name, content)
   end
 end
 
-my_macro my_method, "hoge" # <2>
+my_macro(my_method, "hoge") # <2>
 
 # end::code[]
 

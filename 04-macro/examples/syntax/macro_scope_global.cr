@@ -1,8 +1,11 @@
 # tag::code[]
 # global で定義された Macro は、どこからでも参照可能
 macro my_macro
-  def my_method; end
+  "expanded my macro!!!"
 end
 
-my_macro
 # end::code[]
+
+# tag::main[]
+my_macro # => "expanded my macro!!!"
+# end::main[]

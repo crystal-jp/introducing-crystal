@@ -20,7 +20,14 @@ class MyClass
   end
 end
 
-my_class = MyClass.new
-puts my_class.methods_name       # => ["m1", "m2", "m3", "methods_name", "methods_visibility"]
-puts my_class.methods_visibility # => [":public", ":protected", ":private", ":public", ":public"]
 # end::code[]
+
+# tag::main[]
+my_class = MyClass.new
+
+my_class.methods_name
+# => ["m1", "m2", "m3", "methods_name", "methods_visibility"]
+
+my_class.methods_visibility
+# => [":public", ":protected", ":private", ":public", ":public"]
+# end::main[]

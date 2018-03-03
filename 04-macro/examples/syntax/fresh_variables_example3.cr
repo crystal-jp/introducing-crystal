@@ -1,4 +1,3 @@
-# tag::code[]
 macro fresh_vars_sample
   %hoge{"a"}      = 0
   %hoge{1}        = 1
@@ -10,4 +9,7 @@ macro fresh_vars_sample
 end
 
 fresh_vars_sample
-# end::code[]
+# output:
+# 0
+# 1
+# 2

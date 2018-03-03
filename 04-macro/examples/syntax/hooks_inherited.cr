@@ -10,6 +10,9 @@ end
 class SubClass < SuperClass
 end
 
-SuperClass.new.type_name # => undefined method 'type_name' for SuperClass
-SubClass.new.type_name   # => "SubClass"
 # end::code[]
+
+# tag::main[]
+# SuperClass.new.type_name は undefined method 'type_name' for SuperClass となる
+SubClass.new.type_name # => "SubClass"
+# end::main[]

@@ -5,5 +5,9 @@ end
 
 x = 0
 update_x
-x # => 1
+
 # end::code[]
+
+# tag::main[]
+x # => 1
+# end::main[]

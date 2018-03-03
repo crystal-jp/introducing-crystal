@@ -5,7 +5,14 @@ macro ast_node_id(ast_node)
   end
 end
 
-ast_node_id foo   # => "content"
-ast_node_id "bar" # => "content"
-ast_node_id :baz  # => "content"
+ast_node_id foo
+ast_node_id "bar"
+ast_node_id :baz
+
 # end::code[]
+
+# tag::main[]
+foo # => "content"
+bar # => "content"
+baz # => "content"
+# end::main[]

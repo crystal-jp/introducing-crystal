@@ -29,8 +29,11 @@ end
 #     end
 define_macros alice, bob
 
-greeting_for_alice "hello"  #=> "hello alice"
-greeting_for_bob "hallo"    #=> "hallo bob"
-greeting_for_alice "hej"    #=> "hej alice"
-greeting_for_bob "hola"     #=> "¡hola bob!"
 # end::code[]
+
+# tag::main[]
+greeting_for_alice "hello" # => "hello alice"
+greeting_for_bob "hallo"   # => "hallo bob"
+greeting_for_alice "hej"   # => "hej alice"
+greeting_for_bob "hola"    # => "¡hola bob!"
+# end::main[]

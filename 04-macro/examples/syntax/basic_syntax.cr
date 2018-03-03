@@ -6,6 +6,8 @@ macro my_macro(method_name, content)
 end
 
 my_macro my_method, "hoge" # <2>
-
-
 # end::code[]
+
+# tag::main[]
+my_method # => "hoge"
+# end::main[]

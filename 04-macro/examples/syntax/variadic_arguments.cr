@@ -9,7 +9,10 @@ end
 
 variadic_arguments foo, bar, baz
 
+# end::code[]
+
+# tag::main[]
 foo # => 0
 bar # => 1
 baz # => 2
-# end::code[]
+# end::main[]

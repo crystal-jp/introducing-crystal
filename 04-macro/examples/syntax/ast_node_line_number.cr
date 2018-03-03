@@ -1,8 +1,13 @@
 # tag::code[]
 macro ast_node_line_number(ast_node)
-  {% puts ast_node.line_number %}
+  {{ ast_node.line_number }}
 end
 
-ast_node_line_number 1        # => 5
-ast_node_line_number "string" # => 6
+# ... 他のコードが並ぶ
+
 # end::code[]
+
+# tag::main[]
+ast_node_line_number 1        # => 12
+ast_node_line_number "string" # => 13
+# end::main[]

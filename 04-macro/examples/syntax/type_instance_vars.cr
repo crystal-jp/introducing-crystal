@@ -14,7 +14,10 @@ class MyClass
   end
 end
 
-my_class = MyClass.new("Taro", 30)
-puts my_class.instance_variables_name # => ["name", "age"]
-puts my_class.instance_variables_type # => [String, Int32]
 # end::code[]
+
+# tag::main[]
+my_class = MyClass.new("Taro", 30)
+my_class.instance_variables_name # => ["name", "age"]
+my_class.instance_variables_type # => [String, Int32]
+# end::main[]
