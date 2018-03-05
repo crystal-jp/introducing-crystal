@@ -1,0 +1,18 @@
+name: myecho_clim
+version: 0.1.0
+
+authors:
+  - at-grandpa <yoshiyuki.tsuchida.k@gmail.com>
+
+targets:
+  myecho_clim:
+    main: src/myecho_clim.cr
+
+crystal: 0.24.1
+
+license: MIT
+
+dependencies:
+  clim:
+    github: at-grandpa/clim
+    version: 0.1.5
