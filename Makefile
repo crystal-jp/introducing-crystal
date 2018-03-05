@@ -33,7 +33,7 @@ ADOCS = \
   index.adoc \
   $(wildcard */*.adoc)
 EXAMPLES = $(wildcard */examples/**/*.cr)
-PROJECTS = $(wildcard */projects/*)
+PROJECTS = $(abspath $(wildcard */projects/*))
 PROJECT_CRS = $(and $(PROJECTS), $(shell find $(PROJECTS) -name '*.cr'))
 ASSETS = $(shell find [0-9][0-9]-* -not -name '*.adoc')
 CRS = $(EXAMPLES) $(PROJECT_CRS)
