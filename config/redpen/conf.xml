@@ -47,7 +47,7 @@
     <validator name="GappedSection" />
     <validator name="SectionLevel" />
     <validator name="ParagraphNumber">
-      <property name="max_num" value="10" />
+      <property name="max_num" value="30" />
     </validator>
     <validator name="ListLevel" />
 
