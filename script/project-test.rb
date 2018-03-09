@@ -7,7 +7,7 @@ require_relative './util'
 PROJECTS = ARGV.to_a
 
 PROJECTS.each do |project|
-  path = Pathname.new(project)
+  path = Pathname.new(project).realpath
 
   cd(path) do
     if (path / 'Makefile').exist?
