@@ -179,7 +179,6 @@ Internet Explorer6	Internet Explorer 6
 Internet Explorer7	Internet Explorer 7
 Internet Explorer8	Internet Explorer 8
 Internet Explorer9	Internet Explorer 9
-IO	I/O
 ISO1	ISO 1
 ISO2	ISO 2
 ISO3	ISO 4
