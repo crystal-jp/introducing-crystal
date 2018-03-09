@@ -27,6 +27,7 @@
     <validator name="InvalidSymbol">
       <symbols>
         <symbol name="NUMBER_SIGN" value="#" invalid-chars="＃" />
+        <symbol name="COMMA" value="、" invalid-chars="，" />
       </symbols>
     </validator>
     <validator name="KatakanaEndHyphen"/>
