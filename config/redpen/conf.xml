@@ -30,7 +30,9 @@
         <symbol name="COMMA" value="、" invalid-chars="，" />
       </symbols>
     </validator>
-    <validator name="KatakanaEndHyphen"/>
+    <validator name="KatakanaEndHyphen">
+        <property name="list" value="ファイバー" />
+    </validator>
     <validator name="KatakanaSpellCheck" level="info"/>
     <validator name="SpaceBetweenAlphabeticalWord" />
     <validator name="ParenthesizedSentence">
