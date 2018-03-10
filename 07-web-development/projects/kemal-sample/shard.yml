@@ -1,0 +1,24 @@
+name: kemal-sample
+version: 0.1.0
+
+authors:
+  - msky026 <pref.myu@gmail.com>
+
+targets:
+  kemal-sample:
+    main: src/kemal-sample.cr
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+    version: 0.22.0
+  db:
+    github: crystal-lang/crystal-db
+  pg:
+    github: will/crystal-pg
+  spec-kemal:
+    github: kemalcr/spec-kemal
+
+crystal: 0.24.1
+
+license: MIT

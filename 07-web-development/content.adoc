@@ -1,1 +1,151 @@
 == Web 開発
+
+
+この章では、Crystalを用いてWeb開発を行う方法について解説します。 +
+本サンプルで使用するCrystalのバージョンは「0.24.1」で確認しています。
+
+=== CrystalのWebフレームワーク
+
+Crystalで現在最も活発に開発されているWebフレームワークがKemalです。 +
+RubyでいうところのSinatra風の設計を思想で作られており、シンプルな実装でWebアプリを作成することが出来ます。
+
+* URL http://kemalcr.com/  
+* github https://github.com/kemalcr/kemal 
+
+またKemal以外の主なフレームワークとして以下のものがあります。
+
+* Amber
+
+フルスタックのWebフレームワークです。 +
+様々なコードジェネレータや、ORマッパーを備えています。Rails的な規約重視のフレームワークです。 +
+Webサイト: https://www.amberframework.org
+
+本書では主にKemalを用いて簡単なWebアプリを作成しながらWeb開発の方法を解説していきます。 +
+また本サンプルに使用するKemalのバージョンは「0.22.0」を想定しています。
+
+=== Kemalインストール
+
+適当な作業用のディレクトリ以下で、以下のコードを実行してみます。ディレクトリが作成され幾つか雛形が作成されます。 +
+（本稿ではサンプルアプリを「kemal-sample」として進めます）
+
+....
+crystal init app kemal-sample
+cd kemal-sample
+....
+
+shard.ymlファイルに以下の内容を追記します。
+
+[source,yaml]
+----
+include::./projects/kemal-sample/shard.yml[lines=11..14]
+----
+
+以下のコマンドを実行することでKemal本体をインストールすることが出来ます。
+
+....
+shards install
+....
+
+=== Kemal FirstStep
+
+インストールまで問題なく動かせたら続いて簡単なサンプルを作成してみましょう。 +
+カレントのsrcディレクトリ以下の「kemal-sample.cr」に以下の追記を行います。
+
+まず行頭に以下の行を足します。
+
+....
+
+require "kemal"
+....
+
+続いて「module Kemal::Sample」内に以下の内容を追記します。
+
+[source,crystal]
+----
+include::./projects/kemal-sample/src/kemal-sample.cr[lines=5..8]
+----
+
+末尾の行に以下の内容を追記します。
+
+....
+Kemal.run
+....
+
+画面側の処理を作成します。 +
+src以下にviewディレクトリを作成し、以下の内容のhello.ecrファイルをviewディレクトリ内に作成します。
+
+[source,html]
+----
+include::./projects/kemal-sample/src/views/hello.ecr[]
+----
+
+記述したら、以下のコマンドでビルド、実行します。
+
+....
+crystal build src/kemal-sample.cr
+./kemal-sample
+....
+
+ブラウザで「http://localhost:3000/」でアクセスします。 +
+「Hello World」と表示されていれば問題ありません。
+
+=== DBと連動する
+
+通常、WebアプリではDBが必須です。Kemalで作ったアプリからDBにアクセスすることも可能です。 +
+ライブラリを使用することでPostgreSQLか、もしくはMySQLを使用することが出来ます。 +
+今回はPostgreSQLを使用します。
+
+.テーブル名 articles
+|============
+|カラム名|型
+|id     |serial
+|title  |text
+|content|text
+|============
+
+DBを作成します。
+....
+createdb kemal_sample_development -O your_owner
+....
+
+テスト用のDBも合わせて作成します。
+
+....
+createdb kemal_sample_test -O your_owner
+....
+
+DDLを作成しロードします。
+
+[source,sql]
+----
+include::./projects/kemal-sample/sql/create_articles.sql[]
+----
+
+....
+psql -U your_owner -d kemal_sample_development -f sql/create_articles.sql
+....
+
+テスト用のDBにも合わせてテーブルを作成します。
+
+....
+psql -U your_owner -d kemal_sample_test -f sql/create_articles.sql
+....
+
+作成した後、shard.ymlファイルに以下の内容を追記します。
+
+[source,yaml]
+----
+include::./projects/kemal-sample/shard.yml[lines=11..18]
+----
+
+編集後、以下のコマンドを実行します。
+
+....
+shards install
+....
+
+=== 投稿一覧ページの編集
+
+これからいよいよWebアプリらしく記事の一覧ページと詳細ページ、新規投稿ページをそれぞれ作成していきます。 +
+まず全ページで共通で使用するテンプレートは別に作成します。 +
+テンプレートヘッダに新規投稿ページと投稿リストページヘのリンクを表示し、ページ内に各ページのコンテンツを表示するように修正していきます。
