@@ -9,7 +9,7 @@ module Kemal::Sample
     render "src/views/hello.ecr"
   end
 
-  database_url = "postgres://preface@localhost:5432/kemal_sample_development"
+  database_url = "postgres://localhost:5432/kemal_sample_development"
   db = DB.open(database_url)
 
   ["/", "/articles"].each do |path|

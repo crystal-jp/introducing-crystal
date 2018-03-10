@@ -1,7 +1,0 @@
-name: pg
-version: 0.14.1
-
-dependencies:
-  db:
-    github: crystal-lang/crystal-db
-    version: ~> 0.5.0
