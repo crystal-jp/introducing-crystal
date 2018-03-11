@@ -19,6 +19,6 @@ dependencies:
   spec-kemal:
     github: kemalcr/spec-kemal
 
-crystal: 0.24.1
+crystal: 0.24.2
 
 license: MIT
