@@ -4,18 +4,21 @@ require "pg"
 require "./kemal-sample/*"
 
 module Kemal::Sample
+  # tag::hello[]
   get "/hello" do |env|
     hello = "Hello World"
     render "src/views/hello.ecr"
   end
+  # end::hello[]
 
+  # tag::main[]
   database_url = "postgres://localhost:5432/kemal_sample_development"
   db = DB.open(database_url)
 
   ["/", "/articles"].each do |path|
     get path do |env|
       articles = [] of Hash(String, String | Int32)
-      # クエリの実行
+      # tag::query[]
       db.query("select id, title, content from articles") do |rs|
         rs.each do
           article = {} of String => String | Int32
@@ -25,6 +28,7 @@ module Kemal::Sample
           articles << article
         end
       end
+      # end::query[]
       db.close
       render "src/views/index.ecr", "src/views/application.ecr"
     end
@@ -60,8 +64,7 @@ module Kemal::Sample
     db.close
     render "src/views/articles/show.ecr", "src/views/application.ecr"
   end
+  # end::main[]
 end
 
-# tag::main[]
 Kemal.run
-# end::main[]

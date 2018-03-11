@@ -1,55 +1,57 @@
 == Web 開発
 
 
-この章では、Crystalを用いてWeb開発を行う方法について解説します。 +
-本サンプルで使用するCrystalのバージョンは「0.24.1」で確認しています。
+この章では、 Crystal を用いて Web 開発を行う方法について解説します。 +
+本サンプルで使用する Crystal のバージョンは「0.24.1」で確認しています。
 
-=== CrystalのWebフレームワーク
+=== Crystal の Web フレームワーク
 
-Crystalで現在最も活発に開発されているWebフレームワークがKemalです。 +
-RubyでいうところのSinatra風の設計を思想で作られており、シンプルな実装でWebアプリを作成することが出来ます。
+Crystal で現在最も活発に開発されている Web フレームワークが Kemal です。 +
+Ruby でいうところの Sinatra に似た設計思想で作られており、シンプルな実装で Web アプリを作成することが出来ます。 +
+本書では主に Kemal を用いて簡単な Web アプリを作成しながら Web 開発の方法を解説していきます。
 
 * URL http://kemalcr.com/  
-* github https://github.com/kemalcr/kemal 
+* GitHub https://github.com/kemalcr/kemal 
 
-またKemal以外の主なフレームワークとして以下のものがあります。
+また Kemal 以外の主なフレームワークとして以下のものがあります。
 
-* Amber
+* Amber https://www.amberframework.org
 
-フルスタックのWebフレームワークです。 +
-様々なコードジェネレータや、ORマッパーを備えています。Rails的な規約重視のフレームワークです。 +
-Webサイト: https://www.amberframework.org
+フルスタックの Web フレームワークです。 +
+様々なコードジェネレータや、 O/RM を備えています。 Rails 的な規約重視のフレームワークです。 +
 
-本書では主にKemalを用いて簡単なWebアプリを作成しながらWeb開発の方法を解説していきます。 +
-また本サンプルに使用するKemalのバージョンは「0.22.0」を想定しています。
+=== Kemal による Web 開発
 
-=== Kemalインストール
+それでは本章から Kemal による Web 開発を、サンプルを交えながら説明します。
+また本サンプルに使用する Kemal のバージョンは「0.22.0」を想定しています。
 
-適当な作業用のディレクトリ以下で、以下のコードを実行してみます。ディレクトリが作成され幾つか雛形が作成されます。 +
-（本稿ではサンプルアプリを「kemal-sample」として進めます）
+==== Kemal インストール
+
+適当な作業用のディレクトリ以下で、以下のコードを実行してみます。ディレクトリが作成され幾つかのファイルがひな形から作成されます。 +
+本稿ではサンプルアプリを kemal-sample として進めます。
 
 ....
 crystal init app kemal-sample
 cd kemal-sample
 ....
 
-shard.ymlファイルに以下の内容を追記します。
+shard.yml ファイルに以下の内容を追記します。
 
 [source,yaml]
 ----
 include::./projects/kemal-sample/shard.yml[lines=11..14]
 ----
 
-以下のコマンドを実行することでKemal本体をインストールすることが出来ます。
+以下のコマンドを実行することで Kemal 本体をインストールすることが出来ます。
 
 ....
 shards install
 ....
 
-=== Kemal FirstStep
+==== Kemal FirstStep
 
 インストールまで問題なく動かせたら続いて簡単なサンプルを作成してみましょう。 +
-カレントのsrcディレクトリ以下の「kemal-sample.cr」に以下の追記を行います。
+カレントの src ディレクトリ以下の「 kemal-sample.cr 」に以下の追記を行います。
 
 まず行頭に以下の行を足します。
 
@@ -58,11 +60,11 @@ shards install
 require "kemal"
 ....
 
-続いて「module Kemal::Sample」内に以下の内容を追記します。
+続いて「 module Kemal::Sample 」内に以下の内容を追記します。
 
 [source,crystal]
 ----
-include::./projects/kemal-sample/src/kemal-sample.cr[lines=5..8]
+include::./projects/kemal-sample/src/kemal-sample.cr[tags=hello]
 ----
 
 末尾の行に以下の内容を追記します。
@@ -72,14 +74,27 @@ Kemal.run
 ....
 
 画面側の処理を作成します。 +
-src以下にviewディレクトリを作成し、以下の内容のhello.ecrファイルをviewディレクトリ内に作成します。
+src 以下に view ディレクトリを作成し、以下の hello.ecr ファイルを view ディレクトリ内に作成します。
 
 [source,html]
 ----
 include::./projects/kemal-sample/src/views/hello.ecr[]
 ----
 
-記述したら、以下のコマンドでビルド、実行します。
+Kemal の基本的な使い方として、 REST の動詞 GET POST PUT DELETE を以下の形で記述します。
+
+....
+get "/path" do |env|
+  # 処理
+end
+
+post "/path" do |env|
+  # 処理
+end
+....
+
+詳しい内容については後述します。
+先ずは記述したら、以下のコマンドでビルド、実行します。
 
 ....
 crystal build src/kemal-sample.cr
@@ -87,13 +102,13 @@ crystal build src/kemal-sample.cr
 ....
 
 ブラウザで「http://localhost:3000/」でアクセスします。 +
-「Hello World」と表示されていれば問題ありません。
+「 Hello World 」と表示されていれば問題ありません。
 
-=== DBと連動する
+==== DB と連動する
 
-通常、WebアプリではDBが必須です。Kemalで作ったアプリからDBにアクセスすることも可能です。 +
-ライブラリを使用することでPostgreSQLか、もしくはMySQLを使用することが出来ます。 +
-今回はPostgreSQLを使用します。
+通常、 Web アプリでは DB が必須です。 Kemal で作ったアプリから DB にアクセスすることも可能です。 +
+ライブラリを使用することで PostgreSQL か、もしくは MySQL を使用することが出来ます。 +
+今回は PostgreSQL を使用します。
 
 .テーブル名 articles
 |============
@@ -103,18 +118,12 @@ crystal build src/kemal-sample.cr
 |content|text
 |============
 
-DBを作成します。
+DB を作成します。
 ....
 createdb kemal_sample_development -O your_owner
 ....
 
-テスト用のDBも合わせて作成します。
-
-....
-createdb kemal_sample_test -O your_owner
-....
-
-DDLを作成しロードします。
+DDL を作成しロードします。
 
 [source,sql]
 ----
@@ -125,13 +134,7 @@ include::./projects/kemal-sample/sql/create_articles.sql[]
 psql -U your_owner -d kemal_sample_development -f sql/create_articles.sql
 ....
 
-テスト用のDBにも合わせてテーブルを作成します。
-
-....
-psql -U your_owner -d kemal_sample_test -f sql/create_articles.sql
-....
-
-作成した後、shard.ymlファイルに以下の内容を追記します。
+作成した後、 shard.yml ファイルに以下の内容を追記します。
 
 [source,yaml]
 ----
@@ -144,8 +147,109 @@ include::./projects/kemal-sample/shard.yml[lines=11..18]
 shards install
 ....
 
-=== 投稿一覧ページの編集
+==== 投稿一覧ページの編集
 
-これからいよいよWebアプリらしく記事の一覧ページと詳細ページ、新規投稿ページをそれぞれ作成していきます。 +
+これからいよいよ Web アプリらしく記事の一覧ページと詳細ページ、新規投稿ページをそれぞれ作成していきます。 +
 まず全ページで共通で使用するテンプレートは別に作成します。 +
 テンプレートヘッダに新規投稿ページと投稿リストページヘのリンクを表示し、ページ内に各ページのコンテンツを表示するように修正していきます。
+
+==== レイアウトページの作成
+
+まずひな形のページを application.ecr という名前で作成します。
+
+[source,html]
+----
+include::./projects/kemal-sample/src/views/application.ecr[]
+----
+
+本サンプルでは BootStrap を使用します。 +
+CDN を使用しますので特にダウンロード不要ですが、ダウンロードする場合は別途「 http://getbootstrap.com/ 」から必要なファイルをダウンロードし、プロジェクトカレントの /public 以下に配置してください。
+
+==== CSS の作成
+
+ページ修飾用の CSS を作成します。本サンプルでは rails tutorial をそのまま参考にします。
+
+[source,css]
+----
+include::./projects/kemal-sample/public/css/custom.css[]
+----
+
+==== 一覧ページの作成
+
+記事一覧ページを以下の内容で作成します。
+
+[source,html]
+----
+include::./projects/kemal-sample/src/views/index.ecr[]
+----
+
+==== 新規投稿ページ
+
+記事投稿用のページを新規作成します。
+
+以下のファイルを追加します。
+
+[source,html]
+----
+include::./projects/kemal-sample/src/views/articles/new.ecr[]
+----
+
+==== 詳細ページ
+
+一覧ページから記事タイトルをクリックした時に遷移する詳細ページを作成します。
+
+[source,html]
+----
+include::./projects/kemal-sample/src/views/articles/show.ecr[]
+----
+
+==== Kemal プログラム改修
+
+kemal-sample.cr を以下の内容で修正します。
+
+行頭を以下の内容に修正します。
+
+....
+require "kemal"
+require "db"
+require "pg"
+....
+
+続いて「 module Kemal::Sample 」内に以下の内容を追記します。
+
+[source,crystal]
+----
+include::./projects/kemal-sample/src/kemal-sample.cr[tags=main]
+----
+
+修正は以上です。次項から処理について解説します。
+
+==== クエリ
+
+まずクエリは以下のように記述します。  
+
+[source,crystal]
+----
+include::./projects/kemal-sample/src/kemal-sample.cr[tags=query]
+----
+
+query メソッドに SQL クエリを記述し、ループ内で結果を格納していきます。 +
+1件だけ取得したい場合は query_one もしくは `query_one?` を使います。後者は1件もデータが無い場合がありうる場合に使います。  
+
+....
+  sql = "select id, title, body from articles where id = $1::int8"
+  article["id"], article["title"], article["body"] = 
+    db.query_one(sql, params, as: {Int32, String, String})
+....
+
+query_one の戻り値は、 as で指定した型の Touple になります。  
+
+....
+render "src/views/articles/show.ecr", "src/views/application.ecr"
+....
+
+の形式で ecr ファイルをレンダリングすることで、 Rails のようにファイルを入れ子の形で描画することが出来ます。
+
+Web アプリ再起動後に http://localhost:3000/ にアクセスすると、まだ記事が投稿されていないので空欄になっています。 +
+http://localhost:3000/articles/new にアクセスすると、タイトルと本文を入力する画面が表示されており、入力後に一覧に遷移すると成功です。 +
+記事タイトルをクリックすると詳細画面に遷移すると成功です。
