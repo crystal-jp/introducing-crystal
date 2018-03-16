@@ -204,7 +204,8 @@ include::./projects/kemal-sample/src/views/articles/new.ecr[]
 
 ==== 詳細ページ
 
-一覧ページから記事タイトルをクリックした時に遷移する詳細ページを作成します。
+一覧ページから記事タイトルをクリックした時に遷移する詳細ページを作成します。 +
+データへの更新については後述します。
 
 [source,html]
 ----
@@ -283,15 +284,9 @@ Web アプリ再起動後に `http://localhost:3000/` にアクセスすると�
 
 ==== オブジェクトの CRUD
 
-Kemal は RESTful に対応しており、 get post 以外にも、 put delete patch にも対応しております。  
+Kemal は RESTful に対応しており、 GET POST 以外にも、 PUT DELETE にも対応しております。 +
 記事の編集をサンプルに追加しながら説明します。 +
 新規ページで `src/views/articles/edit.ecr` を追加します。 +  
-また、記事詳細ページから `edit.ecr` へのリンクを追加します。 +
-
-[source,crystal]
-----
-include::./projects/kemal-sample/src/views/articles/show.ecr[]
-----
 
 データの編集画面 +
 
@@ -300,7 +295,7 @@ include::./projects/kemal-sample/src/views/articles/show.ecr[]
 include::./projects/kemal-sample/src/views/articles/edit.ecr[]
 ----
 
-ブラウザによっては form が get post 以外には対応していない場合、以下の hidden フィールドの設定で put や delete で送信することが出来ます。 +
+ブラウザによっては form が get post 以外には対応していない場合、以下の hidden フィールドの設定で PUT や DELETE で送信することが出来ます。 +
 `kemal-sample.cr` を以下の内容で修正します。
 
 [source,crystal]
@@ -309,7 +304,7 @@ include::./projects/kemal-sample/src/kemal-sample.cr[tags=edit]
 ----
 
 これで、データの追加から一覧表示、編集までの処理が行えるようになります。 +
-また、 delete を追加する場合は以下のように行います。
+また、 DELETE を追加する場合は以下のように行います。
 
 [source,crystal]
 ----

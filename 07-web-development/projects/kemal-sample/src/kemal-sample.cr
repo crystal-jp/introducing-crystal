@@ -73,8 +73,8 @@ module Kemal::Sample
     id = env.params.url["id"].to_i32
     params = [] of Int32
     params << id
-    sql = "select id, title, body from articles where id = $1::int8"
-    article["id"], article["title"], article["body"] = 
+    sql = "select id, title, content from articles where id = $1::int8"
+    article["id"], article["title"], article["content"] = 
       db.query_one(sql, params, as: {Int32, String, String})
     articles << article
     db.close
@@ -84,12 +84,12 @@ module Kemal::Sample
   put "/articles/:id" do |env|
     id = env.params.url["id"].to_i32
     title_param = env.params.body["title"]
-    body_param = env.params.body["body"]
+    content_param = env.params.body["content"]
     params = [] of String | Int32
     params << title_param
-    params << body_param
+    params << content_param
     params << id
-    db.exec("update articles set title = $1::text, body = $2::text where id = $3::int8", params)
+    db.exec("update articles set title = $1::text, content = $2::text where id = $3::int8", params)
     db.close
     env.redirect "/articles/#{id}"
   end
