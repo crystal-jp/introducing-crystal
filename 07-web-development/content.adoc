@@ -254,6 +254,22 @@ query メソッドに SQL クエリを記述し、ループ内で結果を格納
 
 `query_one` の戻り値は、 `as` で指定した型の `Touple` になります。  
 
+==== データの更新
+
+更新系のクエリは以下のような記述で行います。 +
+データの投入は以下のように行います。
+
+[source,crystal]
+----
+db.exec("insert into articles(title, content) values($1::text, $2::text)", params)
+----
+
+SQL 文に update や delete も設定ができます。
+
+==== レンダリング
+
+View の構造はテンプレート形式で設定することが出来ます。
+
 [source,crystal]
 ----
 render "src/views/articles/show.ecr", "src/views/application.ecr"
@@ -264,3 +280,48 @@ render "src/views/articles/show.ecr", "src/views/application.ecr"
 Web アプリ再起動後に `http://localhost:3000/` にアクセスすると、まだ記事が投稿されていないので空欄になっています。 +
 `http://localhost:3000/articles/new` にアクセスすると、タイトルと本文を入力する画面が表示されており、入力後に一覧に遷移すると成功です。 +
 記事タイトルをクリックすると詳細画面に遷移すると成功です。
+
+==== オブジェクトの CRUD
+
+Kemal は RESTful に対応しており、 get post 以外にも、 put delete patch にも対応しております。  
+記事の編集をサンプルに追加しながら説明します。 +
+新規ページで `src/views/articles/edit.ecr` を追加します。 +  
+また、記事詳細ページから `edit.ecr` へのリンクを追加します。 +
+
+[source,crystal]
+----
+include::./projects/kemal-sample/src/views/articles/show.ecr[]
+----
+
+データの編集画面 +
+
+[source,crystal]
+----
+include::./projects/kemal-sample/src/views/articles/edit.ecr[]
+----
+
+ブラウザによっては form が get post 以外には対応していない場合、以下の hidden フィールドの設定で put や delete で送信することが出来ます。 +
+`kemal-sample.cr` を以下の内容で修正します。
+
+[source,crystal]
+----
+include::./projects/kemal-sample/src/kemal-sample.cr[tags=edit]
+----
+
+これで、データの追加から一覧表示、編集までの処理が行えるようになります。 +
+また、 delete を追加する場合は以下のように行います。
+
+[source,crystal]
+----
+delete "/articles/:id" do |env|
+  id = env.params.url["id"].to_i32
+  params = [] of Int32
+  params << id
+  db.exec("delete from articles where id = $1::int8", params)
+  db.close
+  env.redirect "/"
+end
+----
+
+これでデータの作成、表示、更新、削除の機能を持ったアプリを作ることが出来ます。 +
+本稿では省略しますが、セッションを用いて認証機能を追加することも出来ます。 +

@@ -65,6 +65,35 @@ module Kemal::Sample
     render "src/views/articles/show.ecr", "src/views/application.ecr"
   end
   # end::main[]
+
+  # tag::edit[]
+  get "/articles/:id/edit" do |env|
+    articles = [] of Hash(String, String | Int32)
+    article = {} of String => String | Int32
+    id = env.params.url["id"].to_i32
+    params = [] of Int32
+    params << id
+    sql = "select id, title, body from articles where id = $1::int8"
+    article["id"], article["title"], article["body"] = 
+      db.query_one(sql, params, as: {Int32, String, String})
+    articles << article
+    db.close
+    render "src/views/articles/edit.ecr", "src/views/application.ecr"
+  end
+
+  put "/articles/:id" do |env|
+    id = env.params.url["id"].to_i32
+    title_param = env.params.body["title"]
+    body_param = env.params.body["body"]
+    params = [] of String | Int32
+    params << title_param
+    params << body_param
+    params << id
+    db.exec("update articles set title = $1::text, body = $2::text where id = $3::int8", params)
+    db.close
+    env.redirect "/articles/#{id}"
+  end
+  # end::edit[]
 end
 
 Kemal.run

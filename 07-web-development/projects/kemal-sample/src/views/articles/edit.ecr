@@ -1,0 +1,17 @@
+<h2>投稿編集</h2>
+<% articles.each do |article| %>
+<form method="post", action="/articles/<%=article["id"] %>">
+  <!--
+   hiddenフィールドにname="_method"、
+   valueにputを設定する。
+  -->
+  <input type="hidden", name="_method", value="put" />
+  <input type="text" name="title" size="10" maxlength="10" value="<%=article["title"] %>" />
+  <br />
+  <br />
+  <textarea name="body" cols="40" rows="4"><%=article["body"] %></textarea>
+  <br />
+  <br />
+  <input type="submit" value="edit" class="btn btn-primary">
+</form>
+<% end %>
