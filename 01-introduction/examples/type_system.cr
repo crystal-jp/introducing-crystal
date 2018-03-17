@@ -6,5 +6,5 @@ end
 
 foo = ENV["FOO"]? || 10
 
-typeof(foo) # => (Int32 | String)
+typeof(foo)        # => (Int32 | String)
 typeof(shout(foo)) # => String
