@@ -244,7 +244,7 @@ include::./projects/kemal-sample/src/kemal-sample.cr[tags=query]
 ----
 
 query メソッドに SQL クエリを記述し、ループ内で結果を格納していきます。 +
-1件だけ取得したい場合は `query_one` もしくは `query_one?` を使います。後者は1件もデータが無い場合がありうる場合に使います。  
+1件だけ取得したい場合は `query_one` もしくは `query_one?` を使います。後者は1件もデータが無い場合がありうる場合に使います。 +
 
 [source,crystal]
 ----
@@ -253,7 +253,31 @@ query メソッドに SQL クエリを記述し、ループ内で結果を格納
     db.query_one(sql, params, as: {Int32, String, String})
 ----
 
-`query_one` の戻り値は、 `as` で指定した型の `Touple` になります。  
+`query_one` の戻り値は、 `as` で指定した型の `Touple` になります。 +
+パラメータを SQL 文に渡す場合は上記例で言うと +
+
+[source,crystal]
+----
+$1::int8 
+----
+
+と、連番で指定していきます。 +
+これは PostgreSQL の例です。 MySQL の場合は？で指定します。 +
+指定できる型番は以下の形式です。 +
+
+* text 
+* boolean
+* int8 int4 int2
+* float4 float8
+* timestamptz date timestamp
+* json and jsonb
+* uuid
+* bytea
+* numeric/decimal
+* varchar
+* regtype
+* geo types
+* array types: int8 int4 int2 float8 float4 bool text
 
 ==== データの更新
 
@@ -320,3 +344,50 @@ end
 
 これでデータの作成、表示、更新、削除の機能を持ったアプリを作ることが出来ます。 +
 本稿では省略しますが、セッションを用いて認証機能を追加することも出来ます。 +
+
+=== 補注
+
+本稿のコードでは取り上げませんでしたが、 Web アプリを書く上で注意すべき事項を以下に記載します。
+
+==== トランザクション
+
+データの原子性を保つ上で、トランザクション制御は必須です。 +
+以下の設定でトランザクションのコミット、およびロールバックを設定します。 +
+
+[source,crystal]
+----
+database_url = "postgres://localhost:5432/kemal_sample_development"
+db = DB.open(database_url)
+db.transaction do |tx|
+  result = tx.connection.exec("insert into articles(title, content) values('hoge', 'huga')")
+  # エラー時
+  if !result
+    tx.rollback
+  else
+    tx.commit
+  end
+end
+----
+
+==== MySQL
+
+MySQL を使用する場合は、以下の設定を行います。 + 
+`shard.yml` に以下の記述を行います。
+
+[source,yaml]
+----
+dependencies:
+  mysql:
+    github: crystal-lang/crystal-mysql
+----
+
+[source,crystal]
+----
+require "db"
+require "mysql"
+
+DB.open "mysql://root@localhost/test" do |db|
+  # 実行系
+  db.exec "insert into contacts values (?, ?)", "John", 30
+end
+----
