@@ -17,7 +17,7 @@ describe "crystal run command" do
   describe "output help" do
     it "with '--help'" do
       `crystal run src/myecho_clim.cr -- --help`.should eq <<-HELP_MESSAGE
-
+ 
         My echo.
 
         Usage:
@@ -26,9 +26,9 @@ describe "crystal run command" do
 
         Options:
 
+          --prefix PREFIX                  prefix to each arguments. [type:String] [default:""]
           --help                           Show this help.
-          --prefix PREFIX                  prefix to each arguments.  [default:""]
-          -v, --version                    show version.  [default:false]
+          -v, --version                    Show version.
 
 
       HELP_MESSAGE

@@ -8,11 +8,11 @@ targets:
   myecho_clim:
     main: src/myecho_clim.cr
 
-crystal: 0.24.1
+crystal: 0.24.2
 
 license: MIT
 
 dependencies:
   clim:
     github: at-grandpa/clim
-    version: 0.1.5
+    version: 0.2.0

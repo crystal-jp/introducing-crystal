@@ -700,7 +700,7 @@ pre_foo pre_bar pre_baz
 ==== at-grandpa/clim
 
 これは私自身が作成したライブラリです。
-Ruby の Thor ライクな DSL を提供します。
+記述量の少なさと直感的な記述を目的に作成しています。
 コードを見てみましょう。
 
 [script,crystal,indent=0]
@@ -709,9 +709,9 @@ Ruby の Thor ライクな DSL を提供します。
 include::./projects/myecho_clim/src/myecho_clim.cr[]
 ----
 
-`desc` や `string` などの定義が１行で書けます。
-コマンドの実行箇所は、すぐ下の `run` ブロックになります。
-`version` のデフォルト実装はないので、オプションで定義しています。
+`desc` や `option` などの定義が１行で書けます。
+`version` マクロも用意しました。
+コマンドの実行箇所は、 `run` ブロックになります。
 サブコマンドも対応しており、直感的に記述することができます。
 詳しくはマニュアルを御覧ください。
 
@@ -733,9 +733,9 @@ $ crystal run src/myecho_clim.cr -- --help
 
   Options:
 
+    --prefix PREFIX                  prefix to each arguments. [type:String] [default:""]
     --help                           Show this help.
-    --prefix PREFIX                  prefix to each arguments.  [default:""]
-    -v, --version                    show version.  [default:false]
+    -v, --version                    Show version.
 
 $ crystal run src/myecho_clim.cr -- --prefix pre_ foo bar baz
 pre_foo pre_bar pre_baz
