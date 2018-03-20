@@ -4,6 +4,92 @@
 この章では、 Crystal を用いて Web 開発を行う方法について解説します。 +
 本サンプルで使用する Crystal のバージョンは `0.24.2` で確認しています。
 
+=== Crystal での Web 開発の前提知識
+
+まず、 Crystal では HTTP でのサービスをどのように処理するかについて解説します。 +
+前の章でも既に解説済みですが、改めて Crystal での Web 開発の基本となる部分について解説します。 +
+
+以下のコードで解説します。
+
+[source,crystal]
+----
+require "http/server"
+
+server = HTTP::Server.new("0.0.0.0", 8080) do |context|
+  context.response.content_type = "text/plain"
+  context.response.print "Hello world"
+end
+
+puts "Listening on http://0.0.0.0:8080"
+server.listen
+----
+
+ポート 8080 での HTTP アクセスを Listen する最小のプログラムです。 +
+以下のコードを実行することで簡易 HTTP サーバとして機能します。 +
+localhost:8080 にアクセスすると `Hello world` が表示されます。
+
+[source,shell]
+----
+$ crystal server.cr
+Listening on http://0.0.0.0:8080
+----
+
+==== HTTP ハンドラ
+
+基本的に Crystal の HTTP サーバが返却するパラメータは レスポンス本文、ヘッダ、ステータスコードの3種です。 +
+その3種を持っている限りにおいて、処理をスタックすることが出来ます。 +
+この辺りの規約は Ruby でいうところの Rack に似ているといえます。 +
+HTTP ハンドラを実装するには Rack 同様に call メソッドを定義し、引数に `HTTP::Server::Context` 型のオブジェクトを渡すという形式になっています。 +
+以下に例を記載します。
+
+[source,crystal]
+----
+require "http/server"
+
+class InterruptTestFirst
+  include HTTP::Handler
+
+  def call(context)
+    response = call_next(context)
+    puts "aa"
+    response
+  end
+end
+
+class InterruptTestSecond
+  include HTTP::Handler
+
+  def call(context)
+    response = call_next(context)
+    puts "bb"
+    response
+  end
+end
+
+server = HTTP::Server.new("0.0.0.0", 8080, [InterruptTestFirst.new, InterruptTestSecond.new]) do |context|
+  context.response.content_type = "text/plain"
+  context.response.print "Hello world"
+end
+
+puts "Listening on http://0.0.0.0:8080"
+server.listen
+----
+
+上記の例で言いますと、 `InterruptTestFirst` `InterruptTestSecond` の順にスタックに積まれます。 +
+実行されるのは先入れ後出しなので、後に積まれた `InterruptTestSecond` からになります。
+
+`curl -X GET http://localhost:8080` を実行することで以下の内容がコンソールに出力されます。
+
+[source,shell]
+----
+bb
+
+aa
+----
+
+主に Crystal で Web 開発を行う上での基本的な内容ですが、実際に開発する場合は何らかの Web フレームワークを用いることになるかと思います。 +
+次項から Web フレームワークについて解説します。
+
 === Crystal の Web フレームワーク
 
 Crystal で現在最も活発に開発されている Web フレームワークが Kemal です。 +
