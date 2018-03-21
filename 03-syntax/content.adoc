@@ -365,3 +365,25 @@ include::./examples/initialize.cr[tag=file]
 ----
 include::./examples/default.cr[tag=file]
 ----
+
+==== `alias`
+
+`alias` 文を使って型の別名を定義できます。
+
+[source,crystal]
+----
+include::./examples/alias.cr[tag=file]
+----
+
+=== 例外処理
+
+`begin`、`rescue`、`else`、`ensure` で例外処理ができます。
+
+`rescue` は指定した型の例外が投げられたときに実行される部分です。 `else` は `begin` 内で例外が投げられなかった場合に実行される部分、 `ensure` は例外が投げられても投げられなくても実行される部分です。
+
+また、`do` ブロックとメソッドの本体に対しては `begin` を省略して `rescue` 、 `else`、 `ensure` が書けます。
+
+[source,crystal]
+----
+include::./examples/exception.cr[]
+----
