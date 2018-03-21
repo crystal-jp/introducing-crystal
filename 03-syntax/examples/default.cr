@@ -27,6 +27,9 @@ end
 # tag::main[]
 foo = Foo.new(42) # デフォルト引数は省略できます
 foo.bar           # => "foo"
+# 名前付き引数で明示的に指定することもできます
+foo = Foo.new(bar: "bar", foo: 24)
+foo.bar # => "bar"
 # オーバロードしたメソッドは引数に応じて適切なものが呼び出されます
 foo.baz        # => 0
 foo.baz(42)    # => :int32
