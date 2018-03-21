@@ -20,9 +20,9 @@ RubyGems と Shards の大きな違いは、パッケージのインストール
 
 前述の通り、Shards では導入パッケージの管理をプロジェクト単位で行います。そのため、まずはプロジェクトで実現する機能とプロジェクトの名前を決める必要があります。
 
-実用的かどうかはさておき、今回は、パラメータとしてページタイトルと本文を受け取って最低限の HTML ソースを出力する、だけのシンプルなコマンドラインツールを例として考えてみましょう。
+実用的かどうかはさておき、今回は、パラメータとしてページタイトルと本文を受け取って最低限の HTML ソースを出力する、というだけのシンプルなコマンドラインツールを作ってみましょう。
 
-次にプロジェクトの名前です。shard として公開する場合にはいくつか名前にルール（後述）もありますが、そうでない場合にはそこまで深く考える必要はありません。ということで、今回はシンプル（simple）な HTML を返すアプリですので simple_html というプロジェクト名にすることにします。
+次にプロジェクトの名前です。shard として公開する場合にはいくつか名前にルール（後述）もありますが、そうでない場合にはそこまで深く考える必要はありません。ということで、今回はシンプル（simple）な HTML を返すアプリなので `simple_html` というプロジェクト名にすることにします。
 
 .sinple_html コマンド利用イメージ
 
@@ -81,19 +81,24 @@ Shards には公式リポジトリがなく、公式には shard の検索機能
 
 今のところ、この問題を解決する決定打は出てきていませんが、以下の2サイトは shard を探す助けになってくれるはずです。
 
-====
-link:https://github.com/veelenga/awesome-crystal[Awesome Crystal]:: 一定の条件を満たした自薦他薦の shard をカテゴリ分類してリスト化。リストの更新も人の手で管理されているため、限定的ではあるもののある程度の基準をクリアした shard がみつかる。
+[suppress='SuggestExpression']
+Awesome Crystal:: link:https://github.com/veelenga/awesome-crystal[] +
+一定の条件を満たした自薦他薦の shard をカテゴリ分類してリスト化。リストの更新も人の手で管理されているため、限定的ではあるもののある程度の基準をクリアした shard が見つかる。
 
-link:http://crystalshards.xyz/[CrystalShards.xyz]:: GitHub で公開されている shard のキーワード検索機能を提供。GitHub で公開されている shard を自動的に収集しているため玉石混淆ではあるものの、Awesome Crytstal より網羅的にマイナな shard もみつけられる。
-====
+CrystalShards.xyz:: link:http://crystalshards.xyz/[] +
+GitHub で公開されている shard のキーワード検索機能を提供。GitHub で公開されている shard を自動的に収集しているため玉石混こうではあるものの、Awesome Crytstal より網羅的にマイナな shard も見つけられる。
 
-Awesome Crystal 内を「 html 」で検索してみると、HTML 構築専用の構文を提供してくれる link:https://github.com/crystal-lang/html_builder[html_builder] という shard が見つかりました。早速これを使ってみることにしましょう。
+試しに Awesome Crystal 内を「 html 」で検索してみると、HTML 構築専用の構文を提供してくれる `html_builder` という shard が見つかりました。早速これを使ってみることにしましょう。
+
+====
+crystal-lang/html_builder:: link:https://github.com/crystal-lang/html_builder[]
+====
 
 ==== 使用する shard を指定する
 
-プロジェクトディレクトリ内にある shard.yaml ファイルは、shard 関係の設定を記述するためのファイルです。
+プロジェクトディレクトリ内にある `shard.yaml` ファイルは、shard 関係の設定を記述するファイルです。
 
-アプリケーションとして初期化された shard.yaml は概ね以下のような内容になっています。また、.gitconfig などで git 用のユーザ名やメールアドレスが設定されていれば、それらが `authors` 属性へ自動挿入されます。
+アプリケーションとして初期化された `shard.yaml` は概ね以下のような内容になっています。このとき、`.gitconfig` などで git 用のユーザ名やメールアドレスが設定されていれば、それらが `authors` 属性へ自動挿入されます。
 
 .ひな形生成時の shard.yml
 
@@ -102,11 +107,11 @@ Awesome Crystal 内を「 html 」で検索してみると、HTML 構築専用�
 include::projects/simple_html/shard.yml[lines=1..13]
 ----
 
-ここへ `html_builder` を指定するための設定を追加しましょう。ほとんどの場合 shard の README には、その shard を使用するために shard.yaml へ追加する内容が紹介されていますので、そちらが参考になります。例えば、`html_builder` の README には以下のように記述されています。
+ここへ `html_builder` を指定するための設定を追加しましょう。ほとんどの場合 shard の README には、その shard を使用するために `shard.yaml` へ追加する内容が紹介されていますので、そちらが参考になります。例えば、`html_builder` の README には以下のように記述されています。
 
 image::05-shards/html_builder_installation.png[]
 
-指定された内容を追加した shard.yaml はこのようになりました。
+指定された内容を追加した `shard.yaml` はこのようになりました。
 
 .依存ライブラリの設定追加後
 
@@ -116,7 +121,7 @@ include::projects/simple_html/shard.yml[]
 ----
 
 [suppress='InvalidSymbol']
-===== 使いたい shard のバージョン指定するには
+===== 使いたい shard のバージョン指定する
 
 `shard.yml` 内で使用する shard のバージョンを指定することもできます。例えば、2018年3月時点の `html_builder` はバージョン `0.2.2` が最新です。そのため、バージョン指定をせず shard をインストールした上の例では最新のバージョン `0.2.2` がインストールされました。しかし、`shard.yml` での記述を以下のようにすることで以前のバージョン `0.2.1` も利用可能です。
 
@@ -130,13 +135,13 @@ dependencies:
     version: 0.2.1
 ----
 
-ここで使用する `version` には、バージョンを直接記述るす以外に、バージョンと `>` `<` `>=` `\<=` `~>` 演算子を組み合わせて使用することもできます。
+ここで使用する `version` には、バージョンを直接記述るす以外に、バージョンと `>`/`<`/`>=`/`\<=`/`~>` 演算子を組み合わせて使用することもできます。
 
 ====
 例:: `>= 0.2.0` でバージョン0.2.0以上。
 ====
 
-これら演算子のうち、`>` `<` `>=` `\<=` あたりは直感的に理解しやすいのですが、`~>` は以下のようにやや特殊な挙動をします。
+これら演算子のうち、`>`/`<`/`>=`/`\<=` あたりは直感的に理解しやすいのですが、`~>` は以下のようにやや特殊な挙動をします。
 
 ====
 - `~> 2.0.3` は、 `>= 2.0.3` かつ `< 2.1` と同じ。
@@ -269,7 +274,7 @@ NOTE: 今回は作成した shard を GitHub 上で公開することを想定�
 
 アプリケーションを作成する場合と同様、何はともあれ shard として再利用したいライブラリに持たせる機能と、その名前を決める必要があります。機能については既にやりたいことがあるはずですが、一般に公開する shard の名前は意外と悩みどころです。
 
-shard.yml ファイルの記述方法を定義した「 link:https://github.com/crystal-lang/shards/blob/master/SPEC.md[shard.yml specification.] 」には、shard の名前として以下のような命名規則が規定されています。
+shard.yml ファイルの記述方法を定義した「 shard.yml specification. 」には、shard の名前として以下のような命名規則が規定されています。
 
 ====
 - 他の shard と重複しないこと
@@ -287,9 +292,13 @@ shard.yml ファイルの記述方法を定義した「 link:https://github.com/
 - アンダースコアやダッシュが連続してはならない
 ====
 
-基本的にこれらの条件に従う必要がありますが、shard 名の重複についてはそこまで厳密に考えなくても問題になることは少ないでしょう。単機能の shard 名は割とカブりがちですし、その名前を世界中の誰も使っていないことを確認することは実際には不可能です。とはいえ、最低でも標準添付のライブラリとカブるような名前は避けなければいけません。また、とりあえず CrystalShards.xyz で使いたい名前を検索して、ヒットするかどうかの確認くらいはしてみても良いかもしれません。
+====
+shard.yml specification.:: link:https://github.com/crystal-lang/shards/blob/master/SPEC.md[]
+====
 
-また、既存の例をいくつかみてみると、shard の命名法には大きく2つのパターンがあるようです。
+基本的にこれらの条件に従う必要がありますが、shard 名の重複についてはそこまで厳密に考えなくても問題になることは少ないでしょう。単機能の shard 名は割とカブりがちですし、その名前を世界中の誰も使っていないことを確認することは実際には不可能です。とはいえ、最低でも標準添付のライブラリとカブるような名前は避ける必要があります。余裕があれば CrystalShards.xyz で使いたい名前を検索して、ヒットするかどうか確認くらいはしてみても良いかもしれません。
+
+また、既存 shard の例をいくつかみてみると、shard の命名スタイルには大きく2つのパターンがあるようです。
 
 ====
 1. `html_builder` や `mysql` など、機能をそのまま表した名前。単機能とは言わないまでも何か1つの対象に焦点を絞った shard に多い。
@@ -299,20 +308,24 @@ shard.yml ファイルの記述方法を定義した「 link:https://github.com/
 
 これらを参考にわかり易い、またはカッコいい shard 名を考えてみてください。
 
-ここでは整数 n に対して n 番目のフィボナッチ数を返してくれる shard を作ってみることにしましょう。単機能のシンプルな shard ですので、shard 名はそのまま `fibonacci` にします。
+ここでは整数 `n` に対して `n` 番目のフィボナッチ数を返してくれる shard を作ってみることにしましょう。単機能のシンプルな shard ですので、shard 名はそのまま `fibonacci` としました。
 
 .shard 名はスネークケースで
 
 ****
-命名規則上は shard 名にダッシュ記号も使えることになっていますが、基本的には単語の区切りにアンダースコアを使用するスネークケースで命名することをお勧めします。その理由は、一般的に shard 名はソースコードのファイル名にも使用されるためです。Crystal 公式ドキュメントの link:https://crystal-lang.org/docs/conventions/coding_style.html[コーディングスタイル]では、ソースファイルのパスを名前空間に合致させ、ファイル名として型名をスネークケースに変換したものを使用するよう推奨されています。
+命名規則上はダッシュ記号も使えることになっていますが、shard 名には基本的には単語の区切りにアンダースコアを使用するスネークケースで命名することをお勧めします。その理由は、shard 名がソースコードのファイル名にも使用される場合が多いためです。Crystal 公式ドキュメントの「コーディングスタイル」では、ソースファイルのパスを名前空間に合致させ、ファイル名として型名をスネークケースに変換したものを使用するよう推奨されています。
 
 ====
 例:: `HTTP::WebSocket` -> http/web_socket.cr
 ====
 
-shard 名をスネークケースで命名しておけば、プロジェクトひな形で生成されたソースファイル名をそのまま使用できます。
+====
+Crystal公式ドキュメント「コーディングスタイル」:: link:https://crystal-lang.org/docs/conventions/coding_style.html[]
+====
 
-ちなみに、同コーディングスタイルでは、型名（クラス名やモジュール名）として複数の単語を先頭文字のみ大文字にしてそのまま連結したアッパーキャメルケースを使用することが推奨されています。`crystal init` コマンドによるプロジェクトひな型の自動生成でも、プロジェクト名をアッパーキャメルケースへ変換した名前で名前空間用のモジュールが定義されます。この点からも shard 名はスネークケースで付けておくと便利です。
+ちなみに、shard 名をスネークケースで命名してプロジェクト名にも使用すれば、プロジェクトひな形で生成されたソースファイル名をそのまま使用できます。
+
+また、同コーディングスタイルでは、型名（クラス名やモジュール名）として複数の単語を先頭文字のみ大文字にしてそのまま連結したアッパーキャメルケースを使用することが推奨されています。`crystal init` コマンドによるプロジェクトひな型の自動生成でも、プロジェクト名をアッパーキャメルケースへ変換した名前で名前空間用のモジュールが定義されます。この点からも shard 名はスネークケースで付けておくと便利です。
 ****
 
 ==== プロジェクトひな形の作成
@@ -335,12 +348,7 @@ shard を使用する際にも使用した `shard.yml` ですが、本来この�
 
 メタデータとして最低限必要な情報はひな形生成時に自動取得されていますので、ある程度そのままでも利用可能な状態になっています。
 
-.ひな形生成時の shard.yml
-
-[source, yaml]
-----
-include::projects/fibonacci/shard.yml[]
-----
+.ひな形生成時の shard.yml に含まれる設定
 
 ====
 `name`:: shard の名前。プロジェクト名がそのまま使用される。
@@ -354,9 +362,9 @@ include::projects/fibonacci/shard.yml[]
 `license`:: shard 公開時に採用するライセンスの種類。デフォルトでは `MIT` ライセンスが設定されている。
 ====
 
-複数人で開発している場合に `authors` を追加する、`MIT` 以外のライセンスを `license` に指定するなど、必要に応じてこれらの値を変更してください。また、作りたい shard に別の shard の機能が必要であれば、アプリケーションを作成した際と同様に `dependencies` の設定を追加します。
+複数人で開発している場合に `authors` を追加したり、`MIT` 以外のライセンスを `license` に指定したりするなど、必要に応じてこれらの値を変更してください。また、作りたい shard に別の shard の機能が必要であれば、アプリケーションを作成した際と同様に `dependencies` の設定を追加します。
 
-fibonacci では他の shard を使用することもなく、特に変更すべき内容もありませんのでこのまま進めることにします。
+`fibonacci` では他の shard を使用することもなく、特に変更すべき内容もありませんのでこのまま進めることにします。
 
 ===== shard.yml ファイルのフォーマット
 
@@ -364,20 +372,25 @@ fibonacci では他の shard を使用することもなく、特に変更すべ
 
 「 shard.yml specification.」には、`shard.yml` のルールとして以下の条件が示されています。
 
+====
 - YAML ドキュメントとして構文的に正しいこと
+
 - 文字コードは UTF-8 を使用すること
+
 - 空白2文字でインデントすること
+
 - 文字列、配列、ハッシュ以外の YAML の要素を使用しないこと
+====
 
 `shard.yml` を修正した場合は、これらの条件から外れないように注意しましょう。
 
-また、「 shard.yml specification.」にはひな形で登場しない設定可能な項目なども説明されていますので、一度詳しく目を通しておくことをお勧めします。
+また、「 shard.yml specification.」ではひな形に登場しない項目もいくつか説明されています。状況によっては便利な項目もありますので一度詳しく目を通しておくことをお勧めします。
 
 ==== spec テスト用のテストケースを書く
 
-最近ではテスト駆動開発（test-driven development）や振る舞い駆動開発（behavior driven development）が流行りのようです。これらの手法では、まずパブリックなメソッドの想定される挙動（引数や返り値など）を定義してから、テストケースを使用した spec テストが通るようにソースコードを記述するという流れで開発を行います。
+最近ではテスト駆動開発（test-driven development）や振る舞い駆動開発（behavior driven development）が流行りのようです。spec テスト実行機能がコンパイラに標準で用意されていたりすることから、Crystal としてはこうした開発方式を推奨しているようです。これらの方式では、まず想定されるパブリックメソッドの挙動（テストケース）を定義してから、テストケースを満足するコードを実装する、という流れで開発を進めます。
 
-spec テスト実行機能がコンパイラに標準で用意されていたりすることから、Crystal としてはこうした開発方式を推奨しているように思えます。プロジェクトひな形にあらかじめ spec テスト用の構成が含まれていますので、ソースファイルにコードを書き始める前に、まずは `fibonacci` のテストケースを書いてみましょう。
+プロジェクトひな形にはあらかじめ spec テスト用の構成が含まれていますので、ソースファイルにコードを書き始める前に、まずは `fibonacci` のテストケースを書いてみましょう。
 
 [suppress='InvalidSymbol']
 今回は shard 名（プロジェクト名）が fibonacci ですので、名前空間用のモジュールは `Fibonacci` になります。提供するメソッドは n 番目のフィボナッチ数を返す `Fibonacci.number(n)` のみ。引数 `n` は整数（`Int` 型のいずれか）でさえあれば良いでしょう。一方、出力されるフィボナッチ数は `n` が大きくなると急激に大きくなります。`n` が200を超える頃には128ビット整数でも表現しきれないサイズになりますので、ここは可変長整数（`BigInt`）型を使用することにします。また、あまり一般的ではありませんが、フィボナッチ数は `n` が負の場合も定義されています。せっかくですので、`n` が負のフィボナッチ数にも対応させることにしましょう。
@@ -388,11 +401,6 @@ spec テスト実行機能がコンパイラに標準で用意されていたり
 ----
 require "fibonacci"
 
-
-Fibonacci.number(-4) #=> -3_big_i
-Fibonacci.number(-3) #=>  2_big_i
-Fibonacci.number(-2) #=> -1_big_i
-Fibonacci.number(-1) #=>  1_big_i
 Fibonacci.number(0)  #=>  0_big_i
 Fibonacci.number(1)  #=>  1_big_i
 Fibonacci.number(2)  #=>  1_big_i
@@ -427,7 +435,7 @@ fibonacci の挙動に合わせて spec ファイルに必要なテストケー�
 include::projects/fibonacci/spec/fibonacci_spec.cr[]
 ----
 
-テストケースの書き方はこの章の最後で詳しく紹介しますので、ここでは「そういうものだ」として先へ進んでください。
+テストケースの書き方はこの章の最後で詳しく紹介しますので、ひとまずは「そういうもの」として先へ進んでください。
 
 ==== 機能の実装
 
@@ -444,7 +452,7 @@ include::projects/fibonacci/src/fibonacci.cr[]
 
 ==== spec テストの実行
 
-spec テストの実行コマンドは `crystal spec` です。プロジェクトディレクトリの直下でこのコマンドを実行すると、テストケースが順番に実行され、実際の挙動が指定された結果に合致しているかどうかがチェックされます。
+spec テストの実行コマンドは `crystal spec` です。プロジェクトディレクトリの直下でこのコマンドを実行すると、テストケースが順に評価され、実際の挙動が指定された結果に合致しているかどうかチェックされます。
 
 .spec テスト実行結果
 
@@ -457,7 +465,7 @@ Finished in 203 microseconds
 $
 ----
 
-テスト結果の先頭行には `it` ブロックごとに実際の挙動がテストで想定された通りであれば `.` が表示されます。もしここに `.` 以外の文字が表示されているようであれば、対応した `it` ブロック内でテストした機能の実装に問題があることになります。まずは先頭行がすべて `.` になるまで、ソースコードの修正とテストを繰り返しましょう。
+テスト結果の先頭行には、テストケース（`it` ブロック）ごとの実行結果がそれぞれ1文字で表示されます。表示されたのが `.` であれば、そのテストケースには合格できたことになります。もしここに `.` 以外の文字が表示されているようであれば、対応した `it` ブロック内でテストした機能の実装に問題があることになります。まずは先頭行がすべて `.` になるまで、ソースコードの修正とテストを繰り返しましょう。
 
 今回の spec ファイルには `it` ブロックが3つあり、上の例では `.` が3つ並んでいます。ということは、実装したソースコードは当初想定した通りの挙動をしているようですね。
 
@@ -468,16 +476,19 @@ $
 ひな形生成時に用意されている `README.md` ファイルは、GitHub での公開を前提としています。そのため、GitHub で shard を 公開する場合には、以下の2点を修正するだけで標準的な README として利用できるようになっています。
 
 [suppress='SuggestExpression']
+====
 1. 何箇所かある `[your-github-name]` を自分の GitHub アカウントに置き換える
 
 2. `TODO:` の部分を埋めていく
+====
 
 .README.md 中に登場する TODO: 項目
 `TODO: Write a description here`:: その shard の概要。最低限、なにをする shard なのかくらいは書いておいた方が良い。
 
 `TODO: Write usage instructions here`:: その shard の使い方。ある程度サンプルコードで代用可能。
 
-`TODO: Write development instructions here`:: その shard の開発に関わろうとする人向けの情報。積極的に開発者を募るつもりがなければ、`## Contributing` と一緒に `## Development` の項目ごと削除するという手も。
+[suppress='InvalidSymbol']
+`TODO: Write development instructions here`:: その shard の開発に関わろうとする人向けの情報。積極的に開発者を募るつもりがなければ、`\\## Contributing` と一緒に `## Development` の項目ごと削除するという手も。
 
 というわけで、最低限の項目を記載した `README.md` は以下のようになりました。
 
@@ -496,9 +507,13 @@ include::projects/fibonacci/README.md[]
 
 `MIT` ライセンスは2015年時点の統計では、その当時 GitHub で公開されていたリポジトリの4割以上が採用してたというメジャーなオープンソース向けのライセンスです。その内容は、ざっくり言うと「著作権表記とライセンス条項さえ含まれていれば有償無償問わず自由に使って良い、ただし無保証」というものです。ソフトウェアを使う側からすると比較的自由に利用でき、開発者としては免責が明言されているため、比較的使いやすいライセンスの1つです。大した量ではありませんので、詳細については一度 `LICENSE` ファイルの内容を読んでみてください。
 
-もし `MIT` 以外のライセンスを採用したければ、`LICENSE` ファイルの内容を使用したいライセンス条件に書き換えた上、`shard.yml` の `license` を変更してください。`shard.yml` の `license` には OSI（Open Source Initiative）で定義されたライセンス名か、ライセンスの参照先 URL を指定できます。
+もし `MIT` 以外のライセンスを採用したければ、`LICENSE` ファイルの内容を使用したいライセンス条件に書き換えて `shard.yml` の `license` を変更してください。`shard.yml` の `license` には OSI（Open Source Initiative）で定義されたライセンス名か、ライセンスの参照先 URL を指定できます。
 
-`fibonacci` は特にライセンスへのこだわりはありませんので、`MIT` ライセンスのままで行こうと思います。
+====
+OSI ライセンス名:: link:https://opensource.org/licenses/alphabetical[]
+====
+
+特にライセンスへのこだわりはありませんので `fibonacci` は `MIT` ライセンスのままで行こうと思います。
 
 ==== GitHub へ公開する
 
@@ -524,7 +539,7 @@ shard を作る手順の最後に、shard のバージョン管理方法につ�
 毎度おなじみ「 shard.yml specification.」には、shard のバージョンとして以下のようなルールが示されています。
 
 ====
-- link:https://semver.org/lang/ja/[セマンティックバージョニング]に従うことが望ましい
+- セマンティックバージョニングに従うことが望ましい
 
 - 数字が含まれていること
 
@@ -533,6 +548,10 @@ shard を作る手順の最後に、shard のバージョン管理方法につ�
 例:: `0.0.1`、`1.2.3`、`2.0.0-rc1` など
 
 ルールとして強制はされないものの、セマンティックバージョニングのように合理的なバージョン付けを強く推奨。
+====
+
+====
+セマンティックバージョニング:: link:https://semver.org/lang/ja/[]
 ====
 
 もし、後方互換が損なわれる大きな変更でも、内部の子細なバグフィックスでもメジャーバージョンが上がるようでは、使う側としてバージョンの変化からバージョンアップのインパクトを測りかねてしまいます。
@@ -715,38 +734,53 @@ include::examples/bear1_spec.cr[]
 
 .使用可能なオブジェクトの状態チェック
 
-`actual.sould eq expected`:: `actual` が `expected` と等しいかどうか。
- 条件： `actual == expected`
+`actual.sould eq expected`:: `actual` が `expected` と等しいかどうか。 +
+条件： `actual == expected`
 
-`actual.sould be expected`:: `actual` が `expected` 同値とみなせるかどうか。条件： `actual.same?(expected)`
+`actual.sould be expected`:: `actual` が `expected` 同値とみなせるかどうか。 +
+条件： `actual.same?(expected)`
 
-`actual.sould be_a expected`:: `actual` が `expected` 型の値かどうか。条件： `actual.is_a?(expected)`
+`actual.sould be_a expected`:: `actual` が `expected` 型の値かどうか。 +
+条件： `actual.is_a?(expected)`
 
-`actual.sould be_nil`:: `actual` が `nil` かどうか。条件： `actual.nil?`
+`actual.sould be_nil`:: `actual` が `nil` かどうか。 +
+条件： `actual.nil?`
 
-`actual.should be_true`:: `acrual` が `true` かどうか。条件： `actual == true`
+`actual.should be_true`:: `acrual` が `true` かどうか。 +
+条件： `actual == true`
 
-`actual.should be_false`:: `acrual` が `false` かどうか。条件： `actual == false`
+`actual.should be_false`:: `acrual` が `false` かどうか。 +
+条件： `actual == false`
 
-`actual.should be_false`:: `acrual` が `false` かどうか。条件： `actual == false`
+`actual.should be_false`:: `acrual` が `false` かどうか。 +
+条件： `actual == false`
 
-`actual.should be_truthy`:: `acrual` が `if` 文で真とみなされる。条件： `acrual` が `false`、`nil`、`Pointer.null` のいずれでもない
+`actual.should be_truthy`:: `acrual` が `if` 文で真とみなされる。 +
+条件： `acrual` が `false`、`nil`、`Pointer.null` のいずれでもない
 
-`actual.should be_falsey`:: `acrual` が `if` 文で偽とみなされる。条件： `acrual` が `false`、`nil`、`Pointer.null` のいずれか
+`actual.should be_falsey`:: `acrual` が `if` 文で偽とみなされる。 +
+条件： `acrual` が `false`、`nil`、`Pointer.null` のいずれか
 
-`actual.should be < expected`:: `actual` が `expected` より小さいかどうか。条件： `actual < expected`
+`actual.should be < expected`:: `actual` が `expected` より小さいかどうか。 +
+条件： `actual < expected`
 
-`actual.should be <= expected`:: `actual` が `expected` 以下かどうか。条件： `actual <= expected`
+`actual.should be <= expected`:: `actual` が `expected` 以下かどうか。 +
+条件： `actual <= expected`
 
-`actual.should be > expected`:: `actual` が `expected` より大きいかどうか。条件： `actual > expected`
+`actual.should be > expected`:: `actual` が `expected` より大きいかどうか。 +
+条件： `actual > expected`
 
-`actual.should be >= expected`:: `actual` が `expected` 以上かどうか。条件： `actual >= expected`
+`actual.should be >= expected`:: `actual` が `expected` 以上かどうか。 +
+条件： `actual >= expected`
 
-`actual.should be_close(expected, delta)`:: `actual` と `expexted` の差が `delta` 以下かどうか。条件： `(actual - expected).abs <= delta`
+`actual.should be_close(expected, delta)`:: `actual` と `expexted` の差が `delta` 以下かどうか。 +
+条件： `(actual - expected).abs <= delta`
 
-`actual.should contain expected`:: `actual` が `expexted` を含むかどうか。条件： `actual.includes?(expected)`
+`actual.should contain expected`:: `actual` が `expexted` を含むかどうか。 +
+条件： `actual.includes?(expected)`
 
-`actual.should match expected`:: `actual` が `expexted` にマッチするかどうか。条件： `actual =~ expected`
+`actual.should match expected`:: `actual` が `expexted` にマッチするかどうか。 +
+条件： `actual =~ expected`
 
 ==== 例外の発生チェック
 
@@ -806,7 +840,7 @@ include::examples/spec_error.txt[lines=2..2]
 
 エラー（`E`）:: テストケース内で `expect_raises` で補足されない想定外の例外が発生した場合
 
-ペンディング(`*`):: テストケースが `pending` ブロックとして定義されており、テストの実行を保留している場合。
+ペンディング（`*`）:: テストケースが `pending` ブロックとして定義されており、テストの実行を保留している場合。
 
 ===== 不合格となったテストケースの詳細情報
 
