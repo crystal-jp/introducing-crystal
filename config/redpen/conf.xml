@@ -16,7 +16,7 @@
     <validator name="Okurigana"/>
     <validator name="JapaneseNumberExpression"/>
     <validator name="JapaneseAmbiguousNounConjunction" />
-    <validator name="JapaneseJoyoKanji" />
+    <validator name="JapaneseJoyoKanji" level="Warn"/>
     <validator name="LongKanjiChain" />
     <validator name="DoubledConjunctiveParticleGa" />
     <validator name="SuggestExpression">
