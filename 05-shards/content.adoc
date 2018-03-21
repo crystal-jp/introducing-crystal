@@ -84,7 +84,7 @@ Shards には公式リポジトリがなく、公式には shard の検索機能
 ====
 link:https://github.com/veelenga/awesome-crystal[Awesome Crystal]:: 一定の条件を満たした自薦他薦の shard をカテゴリ分類してリスト化。リストの更新も人の手で管理されているため、限定的ではあるもののある程度の基準をクリアした shard がみつかる。
 
-link:http://crystalshards.xyz/[CrystalShards.xyz]:: GitHub で公開されている shard のキーワード検索機能を提供。GitHub で公開されている shard を自動的に収集しているため玉石混こうではあるものの、Awesome Crytstal より網羅的にマイナな shard もみつけられる。
+link:http://crystalshards.xyz/[CrystalShards.xyz]:: GitHub で公開されている shard のキーワード検索機能を提供。GitHub で公開されている shard を自動的に収集しているため玉石混淆ではあるものの、Awesome Crytstal より網羅的にマイナな shard もみつけられる。
 ====
 
 Awesome Crystal 内を「 html 」で検索してみると、HTML 構築専用の構文を提供してくれる link:https://github.com/crystal-lang/html_builder[html_builder] という shard が見つかりました。早速これを使ってみることにしましょう。
@@ -592,9 +592,9 @@ Crystal には、RSpec を参考にした spec テスト機能を提供するモ
 
 まず、spec テストにはテストケースを記述した spec ファイルが必要です。spec ファイルは、 `"spec"` とテスト対象となるコードを `require` した Crystal のソースファイルで、テストケース自体も Crystal のコードとして記述します。
 
-さて、ここでは簡単な例として `"がおー"` とほえる `Bear` クラスを実装する場合を考えてみましょう。`Bear` クラスが持つインスタンスメソッドはほえ声を文字列で返す `#bark` のみ、ソースファイル名は `bear.cr` です。
+さて、ここでは簡単な例として `"がおー"` と吠える `Bear` クラスを実装する場合を考えてみましょう。`Bear` クラスが持つインスタンスメソッドは吠え声を文字列で返す `#bark` のみ、ソースファイル名は `bear.cr` です。
 
-spec ファイルの名前は `\\***_spec.cr` と付けられることが多く、`***` の部分にはテスト対象とするソースファイルのベースネームが使用されることが一般的です。今回もその例に倣って、熊がちゃんと `"がおー"` とほえるかどうかテストする `bear_spec.cr` を、ソースファイルと同じディレクトリに作ってみました。
+spec ファイルの名前は `\\***_spec.cr` と付けられることが多く、`***` の部分にはテスト対象とするソースファイルのベースネームが使用されることが一般的です。今回もその例に倣って、熊がちゃんと `"がおー"` と吠えるかどうかテストする `bear_spec.cr` を、ソースファイルと同じディレクトリに作ってみました。
 
 .bear_spec.cr
 
@@ -613,7 +613,7 @@ include::examples/bear_spec.cr[]
 
 ===== プログラム本体を実装する
 
-さて、spec ファイルが用意できたので次に `Bear` クラスそのものを `bear.cr` へ実装していくのですが、うっかり熊に `"わん"` とほえさせてしまいました。
+さて、spec ファイルが用意できたので次に `Bear` クラスそのものを `bear.cr` へ実装していくのですが、うっかり熊に `"わん"` と吠えさせてしまいました。
 
 .実装ミスを含んだ bear.cr
 
