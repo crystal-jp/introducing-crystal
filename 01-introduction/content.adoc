@@ -139,6 +139,8 @@ http://crystal.pine.moe[Crystal-JP の Slack（日本語）]
 
 日本の Crystal ユーザコミュニティ「 Crystal-JP 」の Slack への招待ページです。Crystal-JP の Slack では日本語で Crystal の情報交換を行うことができます。お気軽に参加ください。また、Crystal-JP では不定期に（今のところ東京のみですが）イベントを開催しており、そのお知らせなども主にこの Slack で告知されます。
 
+また、Crystal のライブラリなどを探したい場合には https://github.com/veelenga/awesome-crystal[Awesome Crystal] や https://crystalshards.xyz[CrystalShards] が参考になるでしょう。
+
 === まとめ
 
 本章では、Crystal の特徴を簡単に説明しました。Crystal がどのようにして「 C 言語のように速く、Ruby の書き味を持つ」ということを実現しているかの概要だけでも把握していただき、Crystal の魅力を感じていただけたら幸いです。
