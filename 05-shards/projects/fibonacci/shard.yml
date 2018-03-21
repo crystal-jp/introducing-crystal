@@ -1,0 +1,9 @@
+name: fibonacci
+version: 0.1.0
+
+authors:
+  - Your Git Name <your_mail@example.org>
+
+crystal: 0.24.2
+
+license: MIT
