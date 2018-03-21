@@ -242,6 +242,16 @@ Crystal では Ruby ほど `Proc` を使いません。
 include::./examples/variable.cr[]
 ----
 
+=== 定数
+
+定数も `=` で定義できます。
+定数の名前は大文字でなければいけません。
+
+[source,crystal]
+----
+include::./examples/constant.cr[tag=file]
+----
+
 === 条件分岐と繰り返し構文
 
 Crystal にも Ruby とほぼ同等の条件分岐・繰り返しの構文があり、大体同じように使えます。
@@ -272,16 +282,6 @@ NOTE: Crystal には後置 `while` ・後置 `until` はありません。
 include::./examples/repeat.cr[]
 ----
 
-[suppress='InvalidSymbol']
-==== 型制限
-
-これらの構文の条件部分に単純に変数を渡して `nil` かどうか確かめたり、 `is_a?` を使って変数の型を確かめたりすると、それによって変数の型が制限されます。
-
-[source,crystal]
-----
-include::./examples/restriction.cr[]
-----
-
 === `require`
 
 Crystal では `require` はメソッドではなく構文です。
@@ -298,4 +298,70 @@ Crystal では `require` はメソッドではなく構文です。
 [source,crystal]
 ----
 include::./examples/require.cr[]
+----
+
+[suppress='InvalidSymbol']
+==== 型制限
+
+これらの条件部分に単純に変数を渡して `nil` かどうか確かめたり、 `is_a?` を使って変数の型を確かめたりすると、それによって変数の型が制限されます。
+
+[source,crystal]
+----
+include::./examples/restriction.cr[]
+----
+
+=== 型とメソッド
+
+==== クラス・メソッドの定義
+
+[source,crystal]
+----
+include::./examples/class.cr[tag=file]
+----
+
+クラスは `class` キーワードで定義します。
+クラス名は大文字から始めなければいけません。
+定義した `class` は `new` クラスメソッドでインスタンス化できます。
+継承は Ruby と同様に `<` で出来ます。
+
+メソッドは `def` キーワードで定義します。
+メソッド名は大文字からは始められません。
+返り値は最後に実行した式の値になります。
+
+==== `initialize`・インスタンス変数
+
+コンストラクタは `initialize` メソッドで定義できます。
+
+`@` から始まる変数はインスタンス変数になります。
+メソッドの引数にインスタンス変数を指定すると、そのメソッドの呼び出しと共にインスタンス変数に代入されます。
+インスタンス変数の型はコンパイル時に決定できるようになっていなければなりません。
+
+[source,crystal]
+----
+include::./examples/initialize.cr[tag=file]
+----
+
+==== `protected`、`private`
+
+`def` の前に `protected`、`private` を置くとメソッドの可視性を変更できます。
+
+  - `private` の場合、メソッドはレシーバーの無い形式でしか呼び出せません。
+  - `protected` の場合、メソッドは自身か継承先のクラスの中でしか呼び出せません。
+
+トップレベルのメソッドに対しては `private` が指定できます。この場合、そのファイルでのみ参照できるメソッドになります。
+
+また、クラス内の定数にも `private` を指定することができて、その場合は `::` を使った参照ができなくなります。
+
+==== デフォルト引数・型制限・オーバーロード
+
+デフォルト引数は、引数に続いて `=` で指定します。
+
+引数に続いて `:` のあとに型を指定すると、引数がその型で制限されます。
+型の制限された引数のあるメソッドを、その型以外で呼ぼうとするとコンパイル時にエラーになります。
+
+異なる引数の数、型制限で同名のメソッドを定義した場合、実行時に適切な型のものが選択されて呼び出されます。
+
+[source,crystal]
+----
+include::./examples/default.cr[tag=file]
 ----
