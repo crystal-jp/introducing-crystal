@@ -179,7 +179,7 @@ puts "Crystal"
 # Crystal
 ```
 
-`# output:` と `# =>{` や `# raises` は併用できません。
+`# output:` と `# =>` や `# raises` は併用できません。
 
 ### Shards のプロジェクトについて
 
