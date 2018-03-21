@@ -1,6 +1,0 @@
-version: 1.0
-shards:
-  fibonacci:
-    path: ../fibonacci
-    version: 0.1.0
-

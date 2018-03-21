@@ -2,7 +2,6 @@ require "./spec_helper"
 
 describe Fibonacci do
   describe ".number(n : Int)" do
-
     # n が 1 〜 5 のフィボナッチ数を正しく返してくれる
     it "returns first 5 fibonacci numbers correctly." do
       Fibonacci.number(1).should eq BigInt.new(1)
