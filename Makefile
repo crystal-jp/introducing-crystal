@@ -32,7 +32,7 @@ BUILD_FILES = $(BUILD_PDFS) $(BUILD_HTML)
 ADOCS = \
   index.adoc \
   $(wildcard */*.adoc)
-EXAMPLES = $(wildcard */examples/**/*.cr)
+EXAMPLES = $(wildcard */examples/*.cr) $(wildcard */examples/**/*.cr)
 PROJECTS = $(wildcard */projects/*)
 PROJECT_CRS = $(and $(PROJECTS), $(shell find $(PROJECTS) -type d -name lib -prune -o -name '*.cr' -print))
 ASSETS = $(shell find [0-9][0-9]-* -not -name '*.adoc')
