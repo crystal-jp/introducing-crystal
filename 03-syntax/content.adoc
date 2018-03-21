@@ -272,6 +272,7 @@ NOTE: Crystal には後置 `while` ・後置 `until` はありません。
 include::./examples/repeat.cr[]
 ----
 
+[suppress='InvalidSymbol']
 ==== 型制限
 
 これらの構文の条件部分に単純に変数を渡して `nil` かどうか確かめたり、 `is_a?` を使って変数の型を確かめたりすると、それによって変数の型が制限されます。
