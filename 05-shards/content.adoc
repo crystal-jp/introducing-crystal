@@ -2,7 +2,8 @@
 
 Ruby に RubyGems があるように、Crystal にも Crystal Shards というパケージ管理の仕組みが存在しています。v0.8.0 以降の Crystal コンパイラは、Crystal Shards を標準のパッケージマネージャとして採用しています。そのため、Crystal Shards を利用するための特別な準備は必要ありません。
 
-また、Crystal Shards における個々のパッケージを shard （シャード：鉱物などの「欠片」や「破片」といった意味）と呼びます。Ruby や Python といった先行する言語と比べると充分とは言えないかもしれませんが、それでも GitHub などを利用して 2000 を超える shard が公開されています。
+また、Crystal Shards における個々のパッケージを shard （シャード）と呼びます。これは鉱物などの「欠片」や「破片」といった意味の単語です。
+Ruby や Python といった先行する言語と比べると充分とは言えないかもしれませんが、それでも GitHub などを利用して 2000 を超える shard が公開されています。
 
 RubyGems と Crystal Shards の大きな違いは、パッケージのインストール先です。RubyGems は基本的にグローバルな Ruby の実行環境に対してパッケージをインストールする仕組みであり、それをプロジェクト単位で個別管理するための別途 Bundler が登場しました。一方、Crystal Shards では導入パッケージをプロジェクオ単位で管理することが前提となっており、プロジェクト間でパッケージのバージョンがコンフリクトするような状況は起こりにくくなっています。
 
@@ -23,6 +24,7 @@ RubyGems と Crystal Shards の大きな違いは、パッケージのインス�
 次にプロジェクトの名前です。shard として公開する場合にはいくつか名前にルール（後述）もありますが、そうでない場合にはそこまで深く考える必要はありません。ということで、今回はシンプル（simple）な HTML（html）を返すアプリですので simple_html というプロジェクト名にすることにします。
 
 .sinple_html コマンド利用イメージ
+
 ----
 $ simple_html "Page Title" "Page body."
 <html><head><title>Page Title</title></head><body><h1>Page Title</h1><p>Page body.</p></body></html>
@@ -35,24 +37,39 @@ $ simple_html "Page Title" "Page body."
 `crystal init` コマンドには、プロジェクトの種類（`app` もしくは `lib`）とプロジェクト名を指定します。したがって、`simple_html` をアプリケーションとして実装する場合のひな形生成コマンドは `crystal init app simple_html` になります。このコマンドを実行するとカレントディレクトリの直下にプロジェクト名と同じ名前の simple_html ディレクトリができ、その中に各種ひな型が自動生成されます。
 
 .simple_html アプリケーション用プロジェクトのひな形生成コマンド
+
 ----
 $ crystal init app simple_html
 ----
 
 .プロジェクトひな形として生成されるファイル/ディレクトリ
+
 `.git/`（ディレクトリ）:: このプロジェクト用の初期化済み git リポジトリ。
+
 `.gitignore`:: git 管理除外ファイルの指定用。
+
 `.editorconfig`:: 文字コードや改行コード、インデントなどの設定を異なるエディタ間で共通利用するための設定ファイル。詳細を知りたければ EditorConfig で検索。
+
 `LICENSE`:: このプロジェクトのライセンスを明示するためのテキストファイル。自分で使うだけのアプリケーションなら気にする必要はない。標準では MIT ライセンス前提の内容になっているので、必要に応じて適宜変更する。
+
 `README.md`:: Markdown フォーマットで書かれたこのプロジェクトの README ファイル。GitHub などを通じて公開する予定ならちゃんと書いた方が良い。
+
 `.travis.yml`:: Travis CI を使用してテストやビルドを自動化するための設定ファイル。使いこなせば強力なツールではあるが、最初のうちはあまり気にしなくても良い。
+
 `shard.yml`:: プロジェクトに関連したメタデータ（名前やバージョン、作者など）やプロジェクトが利用する shard などの情報を記述するための設定ファイル。
+
 `src/`（ディレクトリ）:: プログラムのソースディレクトリ。ソースコードはすべてこの配下に置く。
+
 `src/[プロジェクト名].cr`:: プロジェクトのメインソースコード。プログラムのエントリポイント。
+
 `src/[プロジェクト名]/`（ディレクトリ）:: ソースコードを分割する場合、`src/[プロジェクト名].cr` 以外のファイルはここへ置く。
+
 `src/[プロジェクト名]/version.cr`:: プログラム中でプロジェクトバージョンを確認するための定数を定義しているだけのファイル。通常は `src/[プロジェクト名].cr` から `require` される。バージョンを上げたら修正。
+
 `spec/`（ディレクトリ）:: spec テスト用ディレクトリ。テスト関連のファイルはここへ置く。
+
 `spec/spec_helper.cr`:: spec テスト関連ファイルその1。あまり触らない方。
+
 `spec/[プロジェクト名]_spec.cr`:: spec テスト関連ファイルその2（spec ファイル）。実際のテストケースを記述する方。
 
 ==== shard を探す
@@ -65,6 +82,7 @@ Crystal Shards には公式リポジトリがなく、公式には shard の検�
 
 ====
 link:https://github.com/veelenga/awesome-crystal[Awesome Crystal]:: 一定の条件を満たした自薦他薦の shard をカテゴリ分類してリスト化。リストの更新も人の手で管理されているため、限定的ではあるもののある程度の基準をクリアした shard がみつかる。
+
 link:http://crystalshards.xyz/[CrystalShards.xyz]:: GitHub で公開されている shard のキーワード検索機能を提供。GitHub で公開されている shard を自動的に収集しているため玉石混淆ではあるものの、Awesome Crytstal より網羅的にマイナな shard もみつけられる。
 ====
 
@@ -77,6 +95,7 @@ Awesome Crystal 内を「 html 」で検索してみると、HTML 構築専用�
 アプリケーションとして初期化された shard.yaml は概ね以下のような内容になっています。また、.gitconfig などで git 用のユーザ名やメールアドレスが設定されていれば、それらが `authors` 属性へ自動挿入されます。
 
 .ひな形生成時の shard.yml
+
 [source, yaml]
 ----
 include::projects/simple_html/shard.yml[lines=1..13]
@@ -89,6 +108,7 @@ image::05-shards/html_builder_installation.png[]
 指定された内容を追加した shard.yaml はこのようになりました。
 
 .依存ライブラリの設定追加後
+
 [source, yaml]
 ----
 include::projects/simple_html/shard.yml[]
@@ -99,6 +119,7 @@ include::projects/simple_html/shard.yml[]
 `shard.yml` 内で使用する shard のバージョンを指定することもできます。例えば、2018年2月時点の `html_builder` はバージョン `0.2.2` が最新です。そのため上の例のようにバージョン指定をせず shard をインストールすると、最新バージョンである `0.2.2` がインストールされます。しかし、`shard.yml` での記述を以下のようにすることで、過去のバージョンである `0.2.1` を使用可能です。
 
 .バージョン指定をした shard 設定
+
 [source, yaml]
 ----
 dependencies:
@@ -125,6 +146,7 @@ dependencies:
 `html_builder` は GitHub で公開されている shard でしたが、Crystal Shards は GitHub だけでなく、以下の公開方式に対応しています。
 
 .shard の取得先
+
 [source, yaml]
 ----
 # ファイルパス
@@ -144,6 +166,7 @@ gitlab: user/repository
 shard.yaml に指定した shard をプロジェクト環境にインストールするコマンドは `crystal deps` です。プロジェクトディレクトリの直下でこのコマンドを実行すると、プロジェクトディレクトリの下に lib ディレクトリが作られ、その中に必要なファイル一式が展開されます。
 
 .shard のインストール
+
 ----
 $ crystal deps
 Fetching https://github.com/crystal-lang/html_builder.git
@@ -157,6 +180,7 @@ Installing html_builder (0.2.2)
 ひな型生成直後のソースコード `src/simple_html.cr` には、プロジェクト名 `simple_html` をキャメルケースに変換した `SimpleHtml` モジュールが定義されています。この `SimpleHtml` モジュールはこのプロジェクトの名前空間として使用するものです。ですので、特に理由がない限りプロジェクト固有の機能実装は `SimpleHtml` モジュールか、もしくはその中で定義した型に対して行うことになります。
 
 .ひな形生成時のメインソースコード
+
 [source, crystal]
 ----
 include::projects/simple_html/src/simple_html_org.cr[]
@@ -169,6 +193,7 @@ image::05-shards/html_builder_usage.png[]
 指定された `require` 文に加えていくつかのメソッドを実装し、何はともあれ simple_html のソースコードが完成しました。
 
 .完成した simple_html コマンドのソースコード
+
 [source, crystal]
 ----
 include::projects/simple_html/src/simple_html.cr[]
@@ -179,6 +204,7 @@ include::projects/simple_html/src/simple_html.cr[]
 ビルド後に試しに実行してみると `html_builder` の機能を使えていることが確認できました。
 
 .simple_html コマンドのコパイルと実行結果
+
 ----
 $ crystal build src/simple_html.cr
 $ ./simple_html "Page Title" "Page body."
@@ -188,6 +214,7 @@ $ ./simple_html "Page Title" "Page body."
 動作に問題がないようであれば、実際に使用する実行ファイルは、最適化フラグ `--release` を付けた状態で再度ビルドしましょう。
 
 .最適化フラグを付けたビルド
+
 ----
 $ crystal build --release src/simple_html.cr
 ----
@@ -195,11 +222,16 @@ $ crystal build --release src/simple_html.cr
 以上がインターネット上で公開されている shard を利用する際のざっくりとした手順になります。
 
 .shard を利用する手順のまとめ
+
 ****
 1. shard を利用するプロジェクトを作成する（`crystal init` コマンド）
+
 2. `shard.yml` に使用したい shard の記述を追加する
+
 3. shard をプロジェクトディレクトリにインストールする（`crystal deps` コマンド）
+
 4. ソースコードの先頭で shard を `require` する
+
 5. ソースコード内で shard が提供する機能を使用する
 ****
 
@@ -217,7 +249,7 @@ Crystal が標準で提供していない様々な機能を使えるようにな
 
 「世界中の Crystal 使いの人々に便利な機能を提供したい」という理由も当然アリです。ただ、そこまで肩肘を張らず「自分が便利だから」というだけでも、自作ライブラリを shard として公開する理由としては十分です。実際、複数のプロジェクトで共通使用する汎用部品は、仮に自分だけしか使わなかったとしても shard として公開しておくことでデプロイ時の手間やその後のメンテナンスをかなり省力化できます。
 
-例えば、ライブラリを開発環境とは別の本番環境で使用したい場合、プロジェクト全体を tar で固めて scp で転送、なんてことをしがちです。こうした作業はただでさえ手間がかかりますが、使用するライブラリのバージョンが異なる複数のプロジェクトを維持していこうと思うと気が遠くなります。しかし、ライブラリを shard として公開しておけば、新しいプロジェクトディレクトリ内で `shard.yml` ファイルに 2 〜 3 行追加して `crystal deps` コマンドを実行するだけになります。また、必要であれば個々のプロジェクトごとに過去のバージョンを指定してインストールすることもできます。
+例えば、ライブラリを開発環境とは別の本番環境で使用したい場合、プロジェクト全体を tar で固めて scp で転送、なんてことをしがちです。こうした作業はただでさえ手間がかかりますが、使用するライブラリのバージョンが異なる複数のプロジェクトを維持していこうと思うと気が遠くなります。もしそのライブラリが shard として公開されていれば、プロジェクトディレクトリ内で `shard.yml` に 2 〜 3 行追加して `crystal deps` コマンドを実行するだけになります。さらに、必要であれば個々のプロジェクトごとに過去のバージョンを指定してインストールすることもできます。
 
 これだけでも、自作ライブラリを shard 化しておくメリットはあると言えるのではないでしょうか。
 
@@ -235,11 +267,17 @@ shard.yml ファイルの記述方法を定義した「 link:https://github.com/
 
 ====
 - 他の shard と重複しないこと
+
 - 50 文字以下
+
 - 英文字は小文字（`a`-`z`）を使用すべき
+
 - 名前の一部に「 crystal 」を含むべきではない
+
 - 数字（`0`-`9`）を含んでも良いが、先頭に置いてはならない
+
 - アンダースコア（`_`）やダッシュ（`-`）を含んでも良いが、先頭や末尾に置いてはならない
+
 - アンダースコアやダッシュが連続してはならない
 ====
 
@@ -249,6 +287,7 @@ shard.yml ファイルの記述方法を定義した「 link:https://github.com/
 
 ====
 1. `html_builder` や `mysql` など、機能をそのまま表した名前。単機能とは言わないまでも何か1つの対象に焦点を絞った shard に多い。
+
 2. `kemal` や `topaz` など、機能とは関係なくプロダクトイメージなどからつけられた独自の名前。フレームワークなどある程度の規模を持ち、複数の機能から構成されている shard に多い。
 ====
 
@@ -257,6 +296,7 @@ shard.yml ファイルの記述方法を定義した「 link:https://github.com/
 ここでは整数 n に対して n 番目のフィボナッチ数を返してくれる shard を作ってみることにしましょう。単機能のシンプルな shard ですので、shard 名はそのまま `fibonacci` にします。
 
 .shard 名はスネークケースで
+
 ****
 命名規則上は shard 名にダッシュ記号も使えることになっていますが、基本的には単語の区切りにアンダースコアを使用するスネークケースで命名することをお勧めします。その理由は、一般的に shard 名はソースコードのファイル名にも使用されるためです。Crystal 公式ドキュメントの link:https://crystal-lang.org/docs/conventions/coding_style.html[コーディングスタイル]では、ソースファイルのパスを名前空間に合致させ、ファイル名として型名をスネークケースに変換したものを使用するよう推奨されています。
 
@@ -276,6 +316,7 @@ shard を作成する際も、そのためのプロジェクトを立ち上げ�
 独立したアプリケーションではなく、再利用可能なライブラリを作る場合のプロジェクトひな形生成コマンドは「 `crystal init lib プロジェクト名`」です。
 
 .fibonacci shard 用プロジェクトのひな形生成コマンド
+
 ----
 $ crystal init lib fibonacci
 ----
@@ -289,6 +330,7 @@ shard を使用する際にも、使用したい shard の指定に `shard.yml` 
 メタデータとして最低限必要な以下の情報がひな形生成時に自動的に取得されており、この時点である程度そのまま利用可能な状態になっています。
 
 .ひな形生成時の shard.yml
+
 [source, yaml]
 ----
 include::projects/fibonacci/shard.yml[]
@@ -296,9 +338,13 @@ include::projects/fibonacci/shard.yml[]
 
 ====
 `name`:: shard の名前。プロジェクト名がそのまま使用される。
+
 `version`:: shard のバージョン情報。ひな形生成時は `0.1.0` になっている。
+
 `authors`:: shard 作成者のリスト（配列）。git の設定で `user.name` と `user.mail` が設定されていればそれらが使用される。
+
 `crystal`:: shard が対応する Crystal のバージョン。ひな形を生成した `crystal` コマンドのバージョンが使用される。
+
 `license`:: shard 公開時に採用するライセンスの種類。デフォルトでは `MIT` ライセンスが設定されている。
 ====
 
@@ -330,6 +376,7 @@ fibonacci では他の shard を使用することもなく、特に変更すべ
 今回は shard 名（プロジェクト名）が fibonacci ですので、名前空間用のモジュールは `Fibonacci` になります。提供するメソッドは n 番目のフィボナッチ数を返す `Fibonacci.number(n)` のみ。引数 `n` は整数（`Int` 型のいずれか）でさえあれば良いでしょう。一方、出力されるフィボナッチ数は n が大きくなると急激に大きくなります。`n` が200を超える頃には128ビット整数でも表現しきれないサイズになりますので、ここは可変長整数である `BigInt` 型を使用することにします。また、あまり一般的ではありませんが、フィボナッチ数は `n` が負の場合も定義されています。せっかくですので、`n` が負のフィボナッチ数にも対応させることにしましょう。
 
 .fibonacci shard の使用イメージ
+
 [source, crystal]
 ----
 include::projects/fibonacci_test/src/fibonacci_test.cr[lines=2..13]
@@ -337,6 +384,7 @@ include::projects/fibonacci_test/src/fibonacci_test.cr[lines=2..13]
 
 プロジェクトひな形にはテストケースを記述するための spec ファイル （`spec/fibonacci_spec.cr`）が用意されており、あらかじめ以下のようなテストケースが記述されています。
 
+.ひな形生成時の fibonacci_spec.cr
 [source, crystal]
 ----
 require "./spec_helper"
@@ -354,6 +402,8 @@ end
 
 fibonacci の挙動に合わせて spec ファイルに必要なテストケースを記述すると以下のようになりました。
 
+.テストケースを記述した fibonacci_spec.cr
+
 [source, crystal]
 ----
 include::projects/fibonacci/spec/fibonacci_spec.cr[]
@@ -368,6 +418,7 @@ include::projects/fibonacci/spec/fibonacci_spec.cr[]
 fibonacci の実装方法も何パターンか考えられますが、とりあえず、一度計算した内容のキャッシュくらいは持てるように実装してみたのが以下のコードです。
 
 .fibonacci のソースコード
+
 [source, crystal]
 ----
 include::projects/fibonacci/src/fibonacci.cr[]
@@ -377,7 +428,8 @@ include::projects/fibonacci/src/fibonacci.cr[]
 
 spec テストの実行コマンドは `crystal spec` です。プロジェクトディレクトリの直下でこのコマンドを実行すると、テストケースが順番に実行され、実際の挙動が指定された結果に合致しているかどうかがチェックされます。
 
-. spec テスト実行結果
+.spec テスト実行結果
+
 ----
 $ crystal spec
 ...
@@ -398,16 +450,20 @@ $
 ひな形生成時に用意されている `README.md` ファイルは、GitHub での公開を前提としています。そのため、GitHub で shard を 公開する場合には、以下の2点を修正するだけで標準的な README として利用できるようになっています。
 
 1. 何箇所かある `[your-github-name]` を自分の GitHub アカウントに置き換える
+
 2. `TODO:` の部分を埋めていく
 
 .README.md 中に登場する TODO: 項目
 `TODO: Write a description here`:: その shard の概要。最低限、なにをする shard なのかくらいは書いておいた方が良い。
+
 `TODO: Write usage instructions here`:: その shard の使い方。ある程度サンプルコードで代用可能。
+
 `TODO: Write development instructions here`:: その shard の開発に関わろうとする人向けの情報。積極的に開発者を募るつもりがなければ、`\\## Contributing` と一緒に `## Development` の項目ごと削除するという手も。
 
 というわけで、最低限の項目を記載した `README.md` は以下のようになりました。
 
 .完成した README.md
+
 [source, markdown]
 ----
 include::projects/fibonacci/README.md[]
@@ -450,7 +506,9 @@ shard を作る手順の最後に、shard のバージョン管理方法につ�
 
 ====
 - link:https://semver.org/lang/ja/[セマンティックバージョニング]に従うことが望ましい
+
 - 数字が含まれていること
+
 - `.` や `-` を使用しても良いが、連続しないこと
 
 例:: `0.0.1`、`1.2.3`、`2.0.0-rc1` など
@@ -480,9 +538,13 @@ NOTE: 使用する shard のバージョンを指定する際の `~>` 演算子�
 
 ====
 1. `fibonacci` の機能を修正
+
 2. `src/fibonacci/version.cr` の `VERSION` 定数を `0.2.0` に変更
+
 3. `shard.yml` 2行目の `version` を `0.2.0` に変更
+
 4. 変更をコミットし、GitHub 上の master ブランチへマージ
+
 5. GitHub 上で変更がマージされた master ブランチにバージョンタグ `v0.2.0` を追加
 ====
 
@@ -493,13 +555,21 @@ NOTE: 使用する shard のバージョンを指定する際の `~>` 演算子�
 .shard を作る手順のまとめ
 ****
 1. shard のためのプロジェクトを作成する（`crystal init` コマンド）
+
 2. `shard.yml` にメタデータを記述する
+
 3. spec テストのテストケースを書く
+
 4. テストケースを満足させるようにソースファイルに機能を実装する
+
 5. spec テストを実行し、問題があれば修正する
+
 6. README を書く
+
 7. ライセンスを選ぶ
+
 8. GiuHub などのリポジトリへ公開する
+
 9. git リポジトリにバージョンタグを付ける
 ****
 
@@ -522,6 +592,7 @@ Crystal には、RSpec を参考にした spec テストのためのモジュー
 spec ファイルの名前は `\\***_spec.cr` と付けられることが多く、`***` の部分にはテスト対象とするソースファイルのベースネームが使用されることが一般的です。今回もその例に倣って、熊がちゃんと `"がおー"` と吠えるかどうかテストする `bear_spec.cr` を、ソースファイルと同じディレクトリに作ってみました。
 
 .bear_spec.cr
+
 [source, crystal]
 ----
 include::examples/bear_spec.cr[]
@@ -538,6 +609,7 @@ include::examples/bear_spec.cr[]
 さて、spec ファイルが用意できたので次に `Bear` クラスそのものを `bear.cr` へ実装していくのですが、うっかり熊に `"わん"` と吠えさせてしまいました。
 
 .実装ミスを含んだ bear.cr
+
 [source, crystal]
 ----
 include::examples/bear0.cr[]
@@ -546,6 +618,7 @@ include::examples/bear0.cr[]
 この状態で spec テストを実行してみるとどうなるでしょうか。
 
 .spec テストの実行結果
+
 [source]
 ----
 include::examples/spec_error.txt[]
@@ -558,6 +631,7 @@ include::examples/spec_error.txt[]
 テスト結果から問題の箇所は明らかですので、`bear.cr` の実装を修正しました。
 
 .修正後の bear.cr
+
 [source, crystal]
 ----
 include::examples/bear.cr[]
@@ -566,6 +640,7 @@ include::examples/bear.cr[]
 もう一度 spec テストを実行してみると、今度は `F` ではなく `.` が表示されましたので、実装したコードが当初想定した通りの機能を実現できていることが確認できました。
 
 .spec テストの実行結果（ソース修正後）
+
 ----
 include::examples/spec_success.txt[]
 ----
@@ -583,6 +658,7 @@ include::examples/spec_success.txt[]
 また、Crystal の spec ファイルでは、グルーピング用のブロックとして `describe` 以外にもう1つ `context` 使用できます。`describe` ブロックがテスト対象をもとにしたグルーピングだとすると、`context` ブロックはその時の状況（条件）によるグルーピングです。例えば、配列が要素を含んでいるか否かで挙動が異なる場合に、それぞれの状況を明確にすることができます。
 
 .describe と context
+
 [source, crystal]
 ----
 include::examples/spec_example_00.cr[]
@@ -595,6 +671,7 @@ include::examples/spec_example_00.cr[]
 テストケースを書くためのブロックには `it` ともう1つ、`pending` があります。`pending` ブロックは文字通り、一時的にそのテストケースの実行を保留する場合に使用します。例えば、機能仕様としてのテストケースは定義されたものの対象となるメソッドが未実装であるような場合には、`it` の代わりに `pending` ブロックを使用すると良いでしょう。ただし、あくまで **一時的に保留しておく** だけですので、最終的には `pending` ブロックを `it` ブロックに置き換えてテストに合格できるようにしなければいけません。
 
 .it と pending
+
 [source, crystal]
 ----
 include::examples/bear1_spec.cr[]
@@ -607,22 +684,38 @@ include::examples/bear1_spec.cr[]
 オブジェクトの状態に対するチェック条件には以下のような種類があります。一部のチェック条件は特定のインスタンスメソッドを持たないオブジェクトに対しては使用できません。例えば、`should be` を使用するには `#same?` が実装されている必要があります。
 
 .使用可能なオブジェクトの状態チェック
+
 `actual.sould eq expected`:: `actual` が `expected` と等しい。
  条件： `actual == expected`
+
 `actual.sould be expected`:: `actual` が `expected` 同値とみなせる。条件： `actual.same?(expected)`
+
 `actual.sould be_a expected`:: `actual` が `expected` 型の値である。条件： `actual.is_a?(expected)`
+
 `actual.sould be_nil`:: `actual` が `nil` である。条件： `actual.nil?`
+
 `actual.should be_true`:: `acrual` が `true` である。条件： `actual == true`
+
 `actual.should be_false`:: `acrual` が `false` である。条件： `actual == false`
+
 `actual.should be_false`:: `acrual` が `false` である。条件： `actual == false`
+
 `actual.should be_truthy`:: `acrual` が `if` 文で真とみなされる。条件： `acrual` が `false`、`nil`、`Pointer.null` 以外である
+
 `actual.should be_falsey`:: `acrual` が `if` 文で偽とみなされる。条件： `acrual` が `false`、`nil`、`Pointer.null` である
+
 `actual.should be < expected`:: `actual` が `expected` より小さい。条件： `actual < expected`
+
 `actual.should be <= expected`:: `actual` が `expected` 以下である。条件： `actual <= expected`
+
 `actual.should be > expected`:: `actual` が `expected` より大きい。条件： `actual > expected`
+
 `actual.should be >= expected`:: `actual` が `expected` 以上である。条件： `actual >= expected`
+
 `actual.should be_close(expected, delta)`:: `actual` と `expexted` の差が `delta` 以下である。条件： `(actual - expected).abs <= delta`
+
 `actual.should contain expected`:: `actual` が `expexted` を含む。条件： `actual.includes?(expected)`
+
 `actual.should match expected`:: `actual` が `expexted` にマッチする。条件： `actual =~ expected`
 
 ==== 例外の発生チェック
@@ -630,6 +723,7 @@ include::examples/bear1_spec.cr[]
 `expext_raises` ブロックに引数として例外の型を指定して使用すると、ブロック内で指定した型の例外が発生することをチェックできます。
 
 .例外チェック
+
 [source, crystal]
 ----
 include::examples/spec_example_01.cr[]
@@ -638,7 +732,9 @@ include::examples/spec_example_01.cr[]
 このとき、引数に文字列もしくは正規表現オブジェクトを追加することで、エラーメッセージに対する条件を指定することも可能です。
 
 .メッセージ条件付き例外チェック
+
 `expect_raises(SomeError, "message") { ... }`:: エラーメッセージに `"message"` が含まれる `SomeError` 型の例外が発生しなければ不合格。
+
 `expect_raises(SomeError, / pattern /) { ... }`:: エラーメッセージが `/pattern` にマッチする `SomeError` 型の例外が発生しなければ不合格。
 
 なお、発生した例外の状態を他のチェック条件でテストする場合には、`expect_raises` の返り値として例外インスタンスを取得できます。
@@ -648,9 +744,13 @@ include::examples/spec_example_01.cr[]
 テストの実行結果は大きく分けると以下のパートから構成されます。
 
 1. テストケースの実行結果サマリ
+
 2. 不合格となったテストケースの詳細情報
+
 3. テストの実行に要した時間
+
 4. テスト結果の統計情報
+
 5. 不合格となったテストケースの一覧
 
 このうち、2. および 5. については、どのテストケースでにもエラーが発生しなかった場合には表示されません。
@@ -664,14 +764,18 @@ include::examples/spec_example_01.cr[]
 include::examples/spec_error.txt[lines=2..2]
 ----
 
-テストケースの実行結果には成功（`.`）、不合格（`F`）、エラー（`E`）、ペンディング（`*`）の4種類があり、ここにはテストケースの数だけ実行結果に対応した文字が並べて表示されます。spec テストを実行したのがカラー表示対応のターミナルであれば `.` は緑、`F` と `E` が赤、`*` が黄色で表示されているかもしれません。
+テストケースの実行結果には成功（`.`）、不合格（`F`）、エラー（`E`）、ペンディング（`*`）の4種類があります。spec テストの実行結果では、先頭行にテストケースの数だけ実行結果に対応した文字が並んで表示されます。もし spec テストを実行したのがカラー表示対応のターミナルであれば `.` は緑、`F` と `E` が赤、`*` が黄色で表示されているかもしれません。
 
 ここで表示される実行結果が全て `.` になっていれば、spec テストに合格したことになります。
 
 .終了ステータスの種類
+
 成功（`.`）:: テストケース内のチェック条件を全てパスし、想定外の例外やエラーも発生しなかった場合。
+
 不合格（`F`）:: テストケース内のチェック条件を満たさない項目が存在した場合。
+
 エラー（`E`）:: テストケース内で `expect_raises` で補足されない想定外の例外が発生した場合
+
 ペンディング(`*`):: テストケースが `pending` ブロックとして定義されており、テストの実行を保留している場合。
 
 ===== 不合格となったテストケースの詳細情報
@@ -684,9 +788,13 @@ include::examples/spec_error.txt[lines=4..12]
 `Failures:` に続くのは不合格となったテストケースの具体的な問題点が出力されます。
 
 .不合格テストケースの情報
+
 1. 不合格テストケースの通し番号とテストケースの説明（3行目）
+
 2. 不合格の原因となったチェック項目（4行目）
+
 3. 想定された状態（`Expected:`）と実際の状態（`got:`）（6〜7行目）
+
 4. 該当チェック項目があるファイル名と行番号（9行目）
 
 ===== テストの実行に要した時間
@@ -729,9 +837,13 @@ include::examples/spec_error.txt[lines=17..19]
 spec テストを実行する `crystal spec` コマンドには、パラメータとしてディレクトリや単体の spec ファイル、さらには特定のテストケースを指定してテストを実行できます。
 
 .crystal spec コマンドへのパラメータ指定
+
 `crystal spec`:: デフォルトの挙動。`spec/**/*_spec.cr` にマッチする全ての spec ファイルを対象とする。
+
 `crystal spec dir/`:: ディレクトリを指定した場合。`dir/**/*_spec.cr` マッチする全ての spec ファイルを対象とする。
+
 `crystal spec spec_file.cr`:: spec ファイルを指定した場合。`spec_file.cr` 単体を対象とする。
+
 `crystal spec file.cr:10`:: spec ファイルと行数を指定した場合。`spec_file.cr` ファイルの10行目で定義されたテストケースだけを対象とする。
 
 NOTE: 最後の例で指定された行がグルーピング用ブロック（`describe`、`context`）だった場合には、そのブロック内で定義された全てのテストケースが実行対象となります。
