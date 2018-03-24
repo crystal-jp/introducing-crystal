@@ -1,23 +1,14 @@
-# `Int32` 型の 42 です
-42
-typeof(42) # => Int32
-
-# `Float64` 型の 3.14 です
-3.14
+# 何も指定していない数値は `Int32` 、 `Float64` 型
+typeof(123)  # => Int32
 typeof(3.14) # => Float64
 
-# 区切りとして `_` を含められます
-5000_0000_0000_000 # 円欲しい！
+# 符号付き整数型
+[typeof(123i8), typeof(123i16), typeof(123i32), typeof(123i64), typeof(123i128)]
+# => [Int8, Int16, Int32, Int64, Int128]
 
-# 2進数表記、8進数表記、16進数表記が利用できます
-0b100 == 4                # => true
-0o777 == 511              # => true
-0xdead_beaf == 3735928495 # => true
+# 符号無し整数型
+[typeof(123u8), typeof(123u16), typeof(123u32), typeof(123u64), typeof(123u128)]
+# => [UInt8, UInt16, UInt32, UInt64, UInt128]
 
-# よくある指数表記も使えます
-3.14e2 == 314f64 # => true
-
-# 接尾辞で型を指定できます
-typeof(42i64)  # => Int64
-typeof(0xACu8) # => UInt8
-typeof(5.0f32) # => Float32
+# 浮動小数点型
+[typeof(3.14f32), typeof(3.14f64)] # => [Float32, Float64]
