@@ -2,15 +2,9 @@ require "html_builder"
 require "./simple_html/*"
 
 module SimpleHtml
-  def self.run(args : Array(String))
-    if args.size == 2
-      STDOUT << build(args[0], args[1]) << '\n'
-    else
-      STDERR << usage << '\n'
-    end
-  end
-
-  def self.build(title, body)
+  def self.build(args : Array(String))
+    title = args[0]
+    body = args[1]
     HTML.build {
       html {
         head {
@@ -23,10 +17,8 @@ module SimpleHtml
       }
     }
   end
-
-  def self.usage
-    "usage: simple_html TITLE BODY"
-  end
 end
 
-SimpleHtml.run(ARGV)
+if File.basename(PROGRAM_NAME) == File.basename(__FILE__, ".cr")
+  puts SimpleHtml.build(ARGV)
+end
