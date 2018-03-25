@@ -1,1 +1,340 @@
-== インストール
+== Getting Started
+
+「はじめに」の章で説明したように、 Crystal はコンパイラ言語なので、プログラムのソースコードをコンパイルするためのコンパイラが必要になります。
+
+この章ではまず、Crystal を実際に使っていくための様々なプラットフォームでのインストール方法を紹介します。
+
+そして、プログラムを書くために大事なエディタのサポート状況についても紹介します。
+
+=== Linux へのインストール
+
+Linux へのインストール方法はディストリビューションごとに異なります。ここでは、主要なディストリビューションでのインストール方法を紹介します。
+
+==== Debian や Ubuntu
+
+Debian 系のディストリビューションでは、 Crystal の公式リポジトリを利用することができます。
+
+そのために、まず APT の構成にリポジトリを追加します。以下のコマンドを実行してください。
+
+[source,shell]
+----
+curl https://dist.crystal-lang.org/apt/setup.sh | sudo bash
+----
+
+これによりリポジトリが構成されキーが登録されます。もし上記を自分自身で設定するのがお好みの場合は、以下を実行しても同じことができます。
+
+[source,shell]
+----
+apt-key adv --keyserver keys.gnupg.net --recv-keys 09617FD37CC06B54
+echo "deb https://dist.crystal-lang.org/apt crystal main" > /etc/apt/sources.list.d/crystal.list
+apt-get update
+----
+
+リポジトリを構成したら以下で Crystal がインストールできます。
+
+[source,shell]
+----
+sudo apt-get install crystal
+----
+
+ただし、 別途必要となる `cc` コマンドが入っていないなどの理由で Crystal の実行ができない場合があります。その際には以下を実行し `build-essential` パッケージを導入してください。
+
+[source,shell]
+----
+sudo apt-get install build-essential
+----
+
+なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードすることができます。
+
+[source,shell]
+----
+sudo apt-get update
+sudo apt-get install crystal
+----
+
+==== Red Hat や CentOS
+
+Red Hat 系のディストリビューションでも、 Crystal の公式リポジトリを利用することができます。
+
+まず YUM の構成にリポジトリを追加します。以下のコマンドを実行してください。
+
+[source,shell]
+----
+curl https://dist.crystal-lang.org/rpm/setup.sh | sudo bash
+----
+
+これでリポジトリが構成されキーが登録されますが、以下のように、同様のことを手動で行うことも可能です。
+
+[source,shell]
+----
+rpm --import https://dist.crystal-lang.org/rpm/RPM-GPG-KEY
+
+cat > /etc/yum.repos.d/crystal.repo <<END
+[crystal]
+name = Crystal
+baseurl = https://dist.crystal-lang.org/rpm/
+END
+----
+
+リポジトリを構成したら以下で Crystal がインストールできます。
+
+[source,shell]
+----
+sudo yum install crystal
+----
+
+なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードすることができます。
+
+[source,shell]
+----
+sudo yum update crystal
+----
+
+==== Arch Linux
+
+Arch Linux では、ユーザリポジトリから Crystal をインストールできます。
+
+[source,shell]
+----
+sudo pacman -S crystal
+----
+
+==== Gentoo Linux
+
+Gentoo Linux では、メインの overlay に Crystal が含まれています。
+
+以下で構成のフラグを確認することができます。
+
+[source,shell]
+----
+equery u dev-lang/crystal
+[ Legend : U - final flag setting for installation]
+[        : I - package is installed with flag     ]
+[ Colors : set, unset                             ]
+ * Found these USE flags for dev-lang/crystal-0.18.7:
+ U I
+ - - doc      : Add extra documentation (API, Javadoc, etc). It is recommended to enable per package instead of globally
+ - - examples : Install examples, usually source code
+ + + xml      : Use the dev-libs/libxml2 library to enable Crystal xml module
+ + - yaml     : Use the dev-libs/libyaml library to enable Crystal yaml module
+----
+
+以下を実行してインストールしてください。
+
+[source,shell]
+----
+su -
+emerge -a dev-lang/crystal
+----
+
+==== macOS
+
+macOS では、 http://brew.sh/[Homebrew] を利用して簡単に Crystal をインストールすることができます。
+
+[source,shell]
+----
+brew update
+brew install crystal-lang
+----
+
+もし Crystal の言語自体を開発することにも興味があるのであれば、同時に LLVM もインストールしておくと良いでしょう。その場合は上記の2行目を以下に変更します。
+
+[source,shell]
+----
+brew install crystal-lang --with-llvm
+----
+
+なお、macOS で Crystal を使うときに以下のエラーに遭遇することがあります。
+
+[source,shell]
+----
+ld: library not found for -levent
+----
+
+その場合は、以下のようにコマンドラインツールを再インストールした上で、デフォルトのツールチェインを選択し直す必要があります。
+
+[source,shell]
+----
+xcode-select --install
+xcode-select --switch /Library/Developer/CommandLineTools
+----
+
+==== Linuxbrew
+
+http://linuxbrew.sh/[Linuxbrew] を使って Linux に Crystal をインストールすることもできます。手順は macOS で Homebrew を利用する場合と同様です。
+
+==== Windows
+
+残念ながら、まだ Crystal は Windows での実行をサポートしていません。ですが、実験的なサポートには留まるものの、 https://docs.microsoft.com/en-us/windows/wsl/about[Windows Subsystem for Linux] で Ubuntu を利用することで Windows 上で Crystal を使うことが可能です。
+
+インストール手順は Debian や Ubuntu へのインストール方法と同様です。
+
+まず、インストールした Ubuntu のシェルで以下を実行し、APT の構成にリポジトリを追加します。
+
+[source,shell]
+----
+curl -sSL https://dist.crystal-lang.org/apt/setup.sh | sudo bash
+----
+
+これでリポジトリが構成されキーが登録されますが、以下のように、同様のことを手動で行うことも可能です。
+
+[source,shell]
+----
+sudo apt-key adv --keyserver keys.gnupg.net --recv-keys 09617FD37CC06B54
+echo "deb https://dist.crystal-lang.org/apt crystal main" | sudo tee /etc/apt/sources.list.d/crystal.list
+sudo apt-get update
+----
+
+ただし、Crystal プログラムをコンパイルには C コンパイラ（ `cc` ）とリンカ（ `ld` ）も必要になりますので、以下で別途インストールしてください。
+
+[source,shell]
+----
+sudo apt-get install clang binutils
+----
+
+リポジトリを構成し、追加の必要パッケージもインストールできたら、以下で Crystal がインストールできます。
+
+[source,shell]
+----
+sudo apt-get install crystal
+----
+
+なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードすることができます。
+
+[source,shell]
+----
+sudo apt-get update
+sudo apt-get install crystal
+----
+
+==== その他のインストール方法
+
+ここまで、プラットフォームごとのインストール方法を説明しましたが、自分の使っている環境が対応していない場合や、より最新のバージョンを使いたい場合のインストール方法を紹介します。入門書の範囲を超えてしまうため、詳細についてはリンク先をご覧ください。
+
+- https://crystal-lang.org/docs/installation/from_a_targz.html[tar ボールからのバイナリインストール]
+- https://crystal-lang.org/docs/installation/from_source_repository.html[ソースコードからのビルド]
+
+=== Hello Crystal
+
+==== インストールの確認
+
+Crystal のインストールができたら、以下のコマンドを実行してみましょう。これで、Crystal がインストールされて利用できる状態かどうかが確認できます。
+
+[source,shell]
+----
+crystal -v
+----
+
+正常にインストールされている場合、
+
+[source,shell]
+----
+Crystal 0.24.2 (2018-03-09)
+----
+
+といったバージョン情報が表示されます。もし「コマンドが見つからない」といったエラーが表示された場合は、
+
+- Crystal のインストールでエラーが発生していないか
+- Crystal をインストールした場所にパスが通っているか
+
+を確認してください。
+
+==== はじめての Crystal プログラム
+
+無事にインストールして使える状態になっていたら、はじめての Crystal のプログラムを書いてみましょう。ご多分に漏れず、ここでも最初のプログラムは「 Hello world 」とします。
+
+好きなエディタで、以下のプログラムを書いて `hello.cr` として保存してください。Crystal の拡張子は `.cr` です。
+
+[source,crystal]
+----
+puts "Hello world!"
+----
+
+それではプログラムを実行してみましょう。
+
+[source,shell]
+----
+crystal hello.cr
+----
+
+実行して、
+
+[source,shell]
+----
+Hello world!
+----
+
+と表示されたら成功です！
+
+Crystal はコンパイラ言語ですが、このように1つのコマンドでコンパイルと実行を同時に行うことができます。
+
+[source,shell]
+----
+crystal run hello.cr
+----
+
+と実行しても同様です。
+
+=== Crystal を書くためのエディタ
+
+さて、これで Crystal を書くための準備が整ったので、次の章からは文法など実際にプログラムを書くための内容に入っていきます。ですが、プログラムを快適に書くためにはエディタのサポートも欠かせません。
+
+この章では最後に、以下の代表的なオープンソースエディタの Crystal サポートの状況について簡単に紹介します。
+
+- Visual Studio Code
+- Atom
+- Vim
+- Emacs
+
+==== Visual Studio Code
+
+Visual Studio Code、通称 VSCode は機能の豊富さとシンプルさ軽さを両立したエディタとしてとても人気のエディタです。
+
+VSCode で Crystal プログラミングをサポートするエクステンションにはいくつか種類がありますが、現在最も活発に開発されているのは Crystal Language というものです。GitHub 上では https://github.com/crystal-lang-tools/vscode-crystal-lang[crystal-lang-tools/vscode-crystal-lang] というリポジトリで開発されています。
+
+この Crystal Language エクステンションをインストールするだけで、
+
+- シンタックスハイライト
+- 自動インデント
+- 自動フォーマット
+- エラー検知
+- 定義ジャンプ
+
+などの機能がすぐに利用できるようになります。
+
+vscode-crystal-lang の GitHub 上の Wiki にはより詳しい設定などの情報も記載されています。例えば、エラーの検知レベルをカスタマイズできるなど、より便利に使うための設定も書かれていますので合わせてご覧ください。
+
+==== Atom
+
+GitHub 社製のエディタ Atom では、以下のパッケージを導入することで快適に Crystal プログラミングができます。
+
+- https://github.com/crystal-lang-tools/language-crystal[crystal-lang-tools/language-crystal]
+- https://github.com/crystal-lang-tools/atom-ide-crystal[crystal-lang-tools/atom-ide-crystal]
+
+language-crystal は Atom のパッケージとしては language-crystal-actual という名前で提供されているので注意が必要です。　これをインストールすると Crystal のシンタックスハイライトや自動インデントがサポートされます。
+
+atom-ide-crystal は意欲的なパッケージで、 https://github.com/crystal-lang-tools/scry[scry] という Crystal の Language Server を利用して IDE のような機能を追加するものです。まだ機能的には充実していない面もありますが、エラー検知をサポートするなど少しずつ開発が進んでいます。
+
+==== Vim
+
+言わずと知れた Vim でも、プラグインを使うことで Crystal プログラミングにエディタのサポートを受けることができます。
+
+https://github.com/rhysd/vim-crystal[rhysd/vim-crystal] をインストールすると Crystal の filetype が追加され、シンタックスハイライトや自動インデントが有効になります。
+
+また、vim-crystal には Crystal の組み込みツール `crystal tool` や Spec との連携などの便利な機能があり、シームレスにプログラミングしやすくなっています。
+
+エラー検知をしたい場合には、 https://github.com/vim-syntastic/syntastic[vim-syntastic/syntastic] などの統合解析プラグインを導入が必要です。前述の vim-crystal にはこの syntastic 用のチェッカもバンドルされているため、特別な設定をせずとも利用することができます。
+
+==== Emacs
+
+Emacs で Crystal のプログラムを書く場合は https://github.com/crystal-lang-tools/emacs-crystal-mode[crystal-lang-tools/emacs-crystal-mode] を使うのがよいでしょう。
+
+このパッケージを導入するとシンタックスハイライトや自動インデントがサポートされ、定番のチェックツール flycheck にも Crystal のサポートが追加されます。
+
+emacs-crystal-mode パッケージは https://melpa.org/#/crystal-mode[MELPA] に登録されているので導入も簡単です。
+
+=== まとめ
+
+この章では、Crystal のインストール方法とエディタのサポート状況について紹介しました。まだ発展途上であり入門書の範囲を超えてしまうのでここでは記載しませんが、 もし Crystal に慣れてきたらエディタと連携したデバッグ方法なども調べてみるとよいでしょう。
+
+次の章では Crystal の構文について説明します。
