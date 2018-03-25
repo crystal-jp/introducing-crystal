@@ -1,0 +1,17 @@
+name: simple_html
+version: 0.1.0
+
+authors:
+  - Your Git Name <your_mail@example.org>
+
+targets:
+  simple_html:
+    main: src/simple_html.cr
+
+crystal: 0.24.2
+
+license: MIT
+
+dependencies:
+  html_builder:
+    github: crystal-lang/html_builder
