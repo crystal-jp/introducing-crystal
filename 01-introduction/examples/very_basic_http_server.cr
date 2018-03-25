@@ -1,4 +1,5 @@
 # tag::code[]
+# tag::compileonly[]
 require "http/server"
 
 server = HTTP::Server.new(8080) do |context|

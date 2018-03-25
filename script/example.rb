@@ -38,6 +38,7 @@ class Example
   private def convert(line, i)
     result = convert_assert_all(line)
     result ||= convert_main(line, i)
+    result ||= convert_compileonly(line)
     result ||= save_output(line, i)
     result || line
   end
@@ -70,6 +71,12 @@ class Example
     *, expr, klass, text = *match
     return "expect_raises(#{klass}, #{text.inspect}) { #{expr} }\n" if text
     "expect_raises(#{klass}) { #{expr} }\n"
+  end
+
+  private def convert_compileonly(line)
+    return unless line == "# tag::compileonly\[\]\n"
+    mode! :compileonly
+    line
   end
 
   private def convert_main(line, i)
@@ -124,7 +131,7 @@ class Example
   private def inject(lines)
     case @mode
     when :assert          then inject_assert lines
-    when :normal, :output then lines
+    when :compileonly, :normal, :output then lines
     end
   end
 
