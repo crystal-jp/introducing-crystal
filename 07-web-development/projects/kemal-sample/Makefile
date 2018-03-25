@@ -2,4 +2,4 @@ all:
 	shards build
 
 test:
-	crystal build spec/kemal-sample_spec.cr
+	crystal build --no-codegen spec/kemal-sample_spec.cr
