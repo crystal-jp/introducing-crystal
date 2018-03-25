@@ -1,1 +1,768 @@
 == CLI 開発
+
+この章では Crystal での CLI 開発について書きます。
+
+=== Crystal で CLI ツール
+
+Crystal で CLI ツールの開発をしていきましょう。
+Crystal で CLI ツールを書くメリットは次のようなものがあります。
+
+* コンパイルしてワンバイナリにできる
+* Ruby 風の syntax で雑に書ける
+* 実行速度が早い
+* コンパイル時に型チェックが入る
+
+CLI ツールは、欲しい時にサッと書けて継続的に使えるようにしたいですね。
+そういう意味では、 Crystal という選択肢は良いのではないでしょうか。
+今回初めて Crystal を触るという方も、まずは CLI ツールをサクッと作ってみることをおすすめします。
+
+では、早速作っていきましょう。
+
+=== 自作の echo コマンド「 myecho 」を作る
+
+`echo` コマンドを模倣した `myecho` コマンドを作っていきましょう。
+まずは `crystal init app myecho` を実行してひな形を作ります。
+
+[script,shell]
+----
+$ crystal init app myecho
+      create  myecho/.gitignore
+      create  myecho/.editorconfig
+      create  myecho/LICENSE
+      create  myecho/README.md
+      create  myecho/.travis.yml
+      create  myecho/shard.yml
+      create  myecho/src/myecho.cr
+      create  myecho/src/myecho/version.cr
+      create  myecho/spec/spec_helper.cr
+      create  myecho/spec/myecho_spec.cr
+Initialized empty Git repository in /path/to/myecho/.git/
+----
+
+次のようなファイルが作成されました。
+
+[script,shell]
+----
+$ tree
+.
+├── LICENSE
+├── README.md
+├── shard.yml
+├── spec
+│   ├── myecho_spec.cr
+│   └── spec_helper.cr
+└── src
+    ├── myecho
+    │   └── version.cr
+    └── myecho.cr
+
+3 directories, 7 files
+----
+
+これで準備は整いました。
+まずはテストを回してみましょう。
+
+[script,shell]
+----
+$ crystal spec
+F
+
+Failures:
+
+  1) MyEcho works
+     Failure/Error: false.should eq(true)
+
+       Expected: true
+            got: false
+
+     # spec/myecho_spec.cr:7
+
+Finished in 73 microseconds
+1 examples, 1 failures, 0 errors, 0 pending
+
+Failed examples:
+
+crystal spec spec/myecho_spec.cr:6 # MyEcho works
+----
+
+テストは落ちます。
+ひな形生成時、 `spec/myecho_spec.cr` に失敗するテストが書かれているからです。
+
+[script,crystal]
+.spec/myecho_spec.cr
+----
+include::./projects/myecho/spec/myecho_01_first_spec_failed.cr[]
+----
+
+では、実際のテストから書いていきましょう。
+`myecho` の基本機能は「与えられた引数の文字列をそのまま出力する」です。
+
+[script,crystal]
+.spec/myecho_spec.cr の一部
+----
+include::./projects/myecho/spec/myecho_02_standart_output_spec.cr[tag=spec]
+----
+<1> 出力する先の `IO` インスタンスを生成します。テスト時は `IO::Memory` に出力します。
+<2> `MyEcho::Cli` に `io` を渡し、インスタンスを生成します。
+<3> `MyEcho::Cli#run` に、コマンドライン引数の `ARGV` を模した `["foo", "bar"]` を渡して実行します。
+<4> `io` に出力された文字列を検証します。
+
+まだ実装が終わっていないので、このテストは落ちます。
+実装側も書きましょう。
+
+[script,crystal]
+.src/myecho.cr
+----
+include::./projects/myecho/src/myecho_02_standard_output.cr[]
+----
+<1> インスタンス変数 `@io` を定義します。初期値は `STDOUT` です。
+<2> `#run` を定義します。
+<3> `@io` に引数 `args` を出力します。
+
+書けたらテストを回しましょう。
+
+[script,shell]
+----
+$ crystal spec
+.
+
+Finished in 66 microseconds
+1 examples, 0 failures, 0 errors, 0 pending
+----
+
+通りました。
+これで、受け取った引数をそのまま出力するメソッド `#run` を実装できました。
+次は build してバイナリを作りましょう。
+
+まずは build 対象のファイルを作ります。
+`src/myecho.cr` で `#run` を呼び出して直接 build してもよいですが、そうするとテスト時にも `#run` が実行されてしまいます。
+それを避けるために `cli.cr` ファイルを別途作成し、 `myecho.cr` を require しましょう。
+
+[script,crystal]
+.src/cli.cr
+----
+include::./projects/myecho/src/cli.cr[]
+----
+
+これで、モジュールと build ファイルを分離できました。
+早速 build してみましょう。
+
+[script,shell]
+----
+$ mkdir bin
+$ crystal build -o ./bin/myecho ./src/cli.cr
+----
+
+`./bin/` ディレクトリを作成し、その中に `myecho` という名前でバイナリを出力しています。
+`myecho` を実行してみましょう。
+
+[script,shell]
+----
+$ ./bin/myecho Hello!! World!!
+Hello!! World!!
+----
+
+出力されました！
+CLI ツールの完成です！
+いろいろ出力して遊んでみてください。
+
+[script,shell]
+----
+$ ./bin/myecho HAHAHA!
+HAHAHA!
+----
+
+=== バージョン表示のオプション `-v` を実装する
+
+さらに CLI ツールらしくしていきましょう。
+バージョンを表示させる `-v` オプションを実装します。
+オプションがあると一気に CLI ツールらしくなりますね。
+
+Crystal には `OptionParser` というクラスが用意されています。
+コマンドラインオプションを扱うのに便利なクラスです。
+今回は `OptionParser` の使い方も解説しつつ実装していきます。
+
+まずはテストから書きましょう。
+
+[source,crystal,indent=0]
+.spec/myecho_spec.cr の一部
+----
+include::./projects/myecho/spec/myecho_03_display_version_v_spec.cr[tag=version]
+----
+<1> 出力する先の `IO` インスタンスを生成します。テスト時は `IO::Memory` に出力します。
+<2> `MyEcho::Cli` に `io` を渡し、インスタンスを生成します。
+<3> version を表示するコマンドライン引数 `["-v"]` を渡して実行します。
+<4> `MyEcho::VERSION` が表示されていることを検証します。
+
+テストを回しましょう。
+
+[script,shell]
+----
+$ crystal spec
+
+..F
+
+Failures:
+
+  1) MyEcho MyEcho::Cli run writes the version to specified IO with '-v'
+     Failure/Error: io.to_s.should eq MyEcho::VERSION + "\n"
+
+       Expected: "0.1.0\n"
+            got: "-v\n"
+
+     # spec/myecho_spec.cr:18
+
+Finished in 117 microseconds
+3 examples, 1 failures, 0 errors, 0 pending
+
+Failed examples:
+
+crystal spec spec/myecho_spec.cr:14 # MyEcho MyEcho::Cli run writes the version to specified IO with '-v'
+----
+
+`0.1.0` が期待されていますが `-v` が出力されていますね。
+これは期待通りの落ち方です。
+では実装に入りましょう。
+
+単純に「 `-v` が入力されたら `MyEcho::VERSION` を出力する」でもよいのですが、先程も宣言した通り `OptionParser` を導入します。
+
+[script,crystal]
+.src/myecho.cr
+----
+include::./projects/myecho/src/myecho_03_display_version_v.cr[]
+----
+<1> 標準ライブラリの `OptionParser` を require します。
+<2> `OptionParser#parse` に `args` を渡し、ブロック内でオプションを定義していきます。
+<3> `OptionParser#on` の引数に `-v` とその説明文を、ブロックには実行したい処理を書きます。
+<4> オプション以外の引数は、配列になって `OptionParser#unknown_args` のブロック引数となります。
+
+テストを回しましょう。
+
+[script,shell]
+----
+$ crystal spec
+...
+
+Finished in 102 microseconds
+3 examples, 0 failures, 0 errors, 0 pending
+----
+
+通りました。
+バイナリも作りましょう。
+そして、実際にバージョンを表示してみましょう。
+
+[script,shell]
+----
+$ crystal build -o ./bin/myecho ./src/cli.cr
+$ ./bin/myecho foo
+foo
+$ ./bin/myecho -v
+0.1.0
+----
+
+バージョン表示ができました！
+CLI ツールらしくなってきました。
+
+ここまで来ると、 `--version` を指定してもバージョンを表示させたいですよね。
+現状だと例外が発生してしまいます。
+
+[script,shell]
+----
+$ ./bin/myecho --version
+--version
+Invalid option: --version (OptionParser::InvalidOption)
+
+（スタックトレースが続く ... ）
+----
+
+では対応していきましょう。
+まずはテストから書きます。
+
+[source,crystal,indent=0]
+.spec/myecho_spec.cr の一部
+----
+include::./projects/myecho/spec/myecho_04_display_version_version_spec.cr[tag=version]
+----
+<1> `--version` を指定した場合でも、バージョンが表示されることを検証しています。
+
+テストを回すと、例外が発生しテストが落ちます。
+
+[script,shell]
+----
+$ crystal spec
+.....E
+
+Failures:
+
+  1) MyEcho MyEcho::Cli run writes the version to specified IO with '--version'
+
+       Invalid option: --version
+Error running at_exit handler: Index out of bounds
+----
+
+対応するには、 `OptionParser#on` の第二引数に `long_flag` を指定します。
+
+[script,crystal,indent=0]
+.src/myecho.cr の一部
+----
+include::./projects/myecho/src/myecho_04_display_version_version.cr[tag=version]
+----
+<1> `OptionParser#on` の第二引数に `--version` を指定しています。
+
+これでテストが通ります。
+
+[script,shell]
+----
+$ crystal spec
+......
+
+Finished in 189 microseconds
+6 examples, 0 failures, 0 errors, 0 pending
+----
+
+実際にバージョンを表示してみましょう。
+
+[script,shell]
+----
+$ crystal build -o ./bin/myecho ./src/cli.cr
+$ ./bin/myecho foo
+foo
+$ ./bin/myecho -v
+0.1.0
+$ ./bin/myecho --version
+0.1.0
+----
+
+`--version` でもバージョンを表示することができました。
+このように、 `OptionParser` は、コマンドラインオプションを柔軟に扱えます。
+
+=== ヘルプ表示のオプション `-h` `--help` を実装する
+
+次にヘルプを表示してみます。
+オプションの追加はバージョン表示の時と同じです。
+まずはテストから書きましょう。
+
+[source,crystal,indent=0]
+.spec/myecho_spec.cr の一部
+----
+include::./projects/myecho/spec/myecho_05_display_help_specified_string_spec_failed.cr[tag=help]
+----
+
+`-h` を指定した場合、何が表示されるかはまだわかりません。
+とりあえずこのまま進みましょう。
+現状だと、 `Invalid option: -h` でテストが落ちることは目に見えています。
+まずは適当に文字列を返しましょう。
+
+[script,crystal,indent=2]
+.src/myecho.cr の一部
+----
+include::./projects/myecho/src/myecho_05_display_help_specified_string.cr[tag=help]
+
+      ...
+
+include::./projects/myecho/src/myecho_05_display_help_specified_string.cr[tag=display_help]
+----
+
+当然、テストは失敗します。
+
+[script,shell]
+----
+$ crystal spec
+.........F
+
+Failures:
+
+  1) MyEcho MyEcho::Cli run writes the help to specified IO with '-h'
+     Failure/Error: io.to_s.should eq "helpには何が表示される？"
+
+       Expected: "helpには何が表示される？"
+            got: "helpです。\n"
+
+     # spec/myecho_spec.cr:35
+
+Finished in 246 microseconds
+10 examples, 1 failures, 0 errors, 0 pending
+
+Failed examples:
+
+crystal spec spec/myecho_spec.cr:31 # MyEcho MyEcho::Cli run writes the help to specified IO with '-h'
+----
+
+ここで、 `OptionParser` の便利機能を使います。
+`OptionParser#to_s` で、ヘルプメッセージを返してくれます。
+実装してみましょう。
+
+[script,crystal,indent=0]
+.src/myecho.cr の一部
+----
+include::./projects/myecho/src/myecho_06_display_help_formatted.cr[tag=option_parser_start]
+
+        ...
+
+include::./projects/myecho/src/myecho_06_display_help_formatted.cr[tag=option_parser_end]
+
+      ...
+
+include::./projects/myecho/src/myecho_06_display_help_formatted.cr[tag=display_help]
+
+----
+
+テストを回します。
+
+[script,shell]
+----
+$ crystal spec
+...F
+
+Failures:
+
+  1) MyEcho MyEcho::Cli run writes the help to specified IO with '-h'
+     Failure/Error: io.to_s.should eq "helpには何が表示される？"
+
+       Expected: "helpには何が表示される？"
+            got: "    -h, --help                       show help\n    -v, --version                    show version\n"
+
+     # spec/myecho_spec.cr:35
+
+Finished in 174 microseconds
+4 examples, 1 failures, 0 errors, 0 pending
+
+Failed examples:
+
+crystal spec spec/myecho_spec.cr:31 # MyEcho MyEcho::Cli run writes the help to specified IO with '-h'
+----
+
+それらしい文字列が返ってきました。
+テストを修正しましょう。
+
+[source,crystal,indent=0]
+.spec/myecho_spec.cr の一部
+----
+include::./projects/myecho/spec/myecho_06_display_help_formatted_spec.cr[tag=help]
+----
+
+今度はテストが回りました。
+
+[script,shell]
+----
+$ crystal spec
+..........
+
+Finished in 294 microseconds
+10 examples, 0 failures, 0 errors, 0 pending
+----
+
+ヘルプが表示されるかを build して確かめます。
+
+[script,shell]
+----
+$ crystal build -o ./bin/myecho ./src/cli.cr
+$ ./bin/myecho foo
+foo
+$ ./bin/myecho -h
+    -h, --help                       show help
+    -v, --version                    show version
+$ ./bin/myecho --help
+    -h, --help                       show help
+    -v, --version                    show version
+----
+
+ヘルプが表示されました。
+しかし、もう少し体裁の整ったヘルプがよいですね。
+例えば、コマンドの説明や Usage などがあると良さそうです。
+テストを書きましょう。
+
+[source,crystal,indent=0]
+.spec/myecho_spec.cr の一部
+----
+include::./projects/myecho/spec/myecho_07_display_help_banner_spec.cr[tag=help]
+----
+
+良い感じのヘルプにしてみました。
+テストが通るように実装しましょう。
+`OptionParser` には、 `#banner=` というメソッドがあり、ヘルプメッセージに加える文字列を定義できます。
+
+[script,crystal,indent=2]
+.src/myecho.cr の一部
+----
+include::./projects/myecho/src/myecho_07_display_help_banner.cr[tag=help_banner]
+----
+
+これでテストを通すことができました。
+build して動作を確かめましょう。
+
+[script,shell]
+----
+$ crystal build -o ./bin/myecho ./src/cli.cr
+$ ./bin/myecho --help
+
+My echo.
+
+Usage: myecho [options] [arguments]
+
+    -h, --help                       show help
+    -v, --version                    show version
+----
+
+より、ヘルプらしくなりました。
+`OptionParser` を使えば、このように簡単にヘルプを設定できます。
+
+=== prefix を付ける `--prefix` を実装する
+
+もっと CLI ツールらしくするために、さらにオプションを加えましょう。
+各コマンド引数に prefix をつける `--prefix` オプションです。
+期待される動作は次のようになります。
+
+[script,shell]
+----
+$ ./bin/myecho --prefix pre_ foo bar baz
+pre_foo pre_bar pre_baz
+----
+
+`--prefix PREFIX` を指定することで、各引数の先頭に `PREFIX` を付けます。
+まずはテストから書きましょう。
+
+[source,crystal,indent=0]
+.spec/myecho_spec.cr の一部
+----
+include::./projects/myecho/spec/myecho_08_prefix_spec.cr[tag=prefix]
+----
+
+このテストを通すように実装しましょう。
+
+[script,crystal,indent=2]
+.src/myecho.cr の一部
+----
+include::./projects/myecho/src/myecho_08_prefix.cr[tag=option_parser_start]
+
+        ...
+
+include::./projects/myecho/src/myecho_08_prefix.cr[tag=prefix]
+
+        ...
+
+include::./projects/myecho/src/myecho_08_prefix.cr[tag=option_parser_end]
+
+      ...
+
+include::./projects/myecho/src/myecho_08_prefix.cr[tag=display_prefix]
+----
+
+`OptionParser#on` は、 `long_flag` の名前だけでも指定可能です。
+`--prefix PREFIX` のように、オプション引数（ `PREFIX` ）を書くと、オプション引数が必須になります。
+また、今回の `--prefix` 定義のままで、コマンドラインから `--prefix=PREFIX` のように `=` を用いた指定も可能です。
+いい感じに取り扱ってくれます。
+
+これで `--prefix` の実装も終わりました。
+build して動作を確認しましょう。
+
+[script,shell]
+----
+$ crystal build -o ./bin/myecho ./src/cli.cr
+$ ./bin/myecho --prefix pre_ foo bar baz
+pre_foo pre_bar pre_baz
+----
+
+うまく動作しているようです。
+
+　
+
+いかがでしたでしょうか。
+`OptionParser` を使っての CLI ツールの作成方法が大体つかめたでしょうか。
+
+以下に、ここまでで紹介した `myecho` のコード全てを記載します。
+
+[script,crystal,indent=0]
+.src/cli.cr
+----
+include::./projects/myecho/src/cli.cr[]
+----
+
+[script,crystal,indent=0]
+.src/myecho.cr
+----
+include::./projects/myecho/src/myecho.cr[]
+----
+
+[script,crystal,indent=0]
+.src/myecho_spec.cr
+----
+include::./projects/myecho/spec/myecho_spec.cr[]
+----
+
+次は、もう少しかゆいところに手が届く、サードパーティ製の CLI ビルダーライブラリをいくつかご紹介します。
+
+=== サードパーティ製のライブラリを使う
+
+CLI ツールを作成するにあたって、サードパーティ製の CLI ビルダーツールを使うことは得策です。
+`OptionParser` よりもリッチな機能を使うことができます。
+例えば、 Ruby だと thor などが有名です。
+Crystal でも CLI ビルダーツールが作成されています。
+今回は主観で選択したいくつかをご紹介します。
+
+題材としては、ここまで作ってきた `myecho` を用います。
+
+==== mrrooijen/commander
+
+早い時期から作成されていたライブラリです。
+百聞は一見に如かず、早速 `myecho` を実装しましょう。
+
+[script,crystal,indent=0]
+.src/myecho_commander.cr
+----
+include::./projects/myecho_commander/src/myecho_commander.cr[]
+----
+
+サードパーティ製のライブラリは、基本的に次の構成になっています。
+
+* コマンドの説明（ `Description` や `Usage` など）
+* `Options` や `Flags` の定義
+* 実際に実行される箇所
+** `run` メソッドや `run` ブロックなど
+** ここで `Options` や `Flags` の入力値を受け取れる
+** ここで 入力された引数を受け取れる
+
+これらを独自の定義方法で書いていきます。
+`OotionParser` を用いたときよりも見やすくなっていると思います。
+また、 `help` や `version` など、 CLI ツールに必須のオプションはデフォルトでついている場合もあります。
+`mrrooijen/commander` の場合は `help` がデフォルトで設定されているので、コード上には現れていません。
+また、サブコマンドも実装可能です。
+詳しくは公式マニュアルを御覧ください。
+
+コードを実際に実行すると次のようになります。
+
+[script,shell]
+----
+$ crystal run src/myecho_commander.cr -- foo bar baz
+foo bar baz
+$ crystal run src/myecho_commander.cr -- --version
+0.1.0
+$ crystal run src/myecho_commander.cr -- --help
+  myecho - My echo.
+
+  Usage:
+    myecho [flags] [arguments]
+
+  Commands:
+    help [command]  # Help about any command.
+
+  Flags:
+    -h, --help     # Help for this command. default: 'false'.
+        --prefix   # prefix to each arguments. default: ''.
+    -v, --version  # show version. default: 'false'.
+$ crystal run src/myecho_commander.cr -- --prefix pre_ foo bar baz
+pre_foo pre_bar pre_baz
+----
+
+期待通りの動作をしていることがわかります。
+
+==== jwaldrip/admiral.cr
+
+最近も開発されているライブラリです。
+早速コードを見てみましょう。
+
+[script,crystal,indent=0]
+.src/myecho_admiral.cr
+----
+include::./projects/myecho_admiral/src/myecho_admiral.cr[]
+----
+
+行数が少ないですね。
+`help` と `version` の定義が Macro １行で書かれています。
+こういった DSL を提供しやすいのも Macro の強みです。
+構造もわかりやすく、読みやすいと思います。
+もちろん、サブコマンドも対応しています。
+
+実際に実行すると次のようになります。
+
+[script,shell]
+----
+$ crystal run src/myecho_admiral.cr -- foo bar baz
+foo bar baz
+$ crystal run src/myecho_admiral.cr -- --version
+0.1.0
+$ crystal run src/myecho_admiral.cr -- --help
+Usage:
+  myecho [flags...] [arg...]
+
+My echo.
+
+Flags:
+  --help, -h (default: false)     # Displays help for the current command.
+  --prefix                        # prefix to each arguments.
+  --version, -v (default: false)
+$ crystal run src/myecho_admiral.cr -- --prefix pre_ foo bar baz
+pre_foo pre_bar pre_baz
+----
+
+こちらも期待通りの動作をしています。
+
+==== at-grandpa/clim
+
+これは私自身が作成したライブラリです。
+記述量の少なさと直感的な記述を目的に作成しています。
+コードを見てみましょう。
+
+[script,crystal,indent=0]
+.src/myecho_clim.cr
+----
+include::./projects/myecho_clim/src/myecho_clim.cr[]
+----
+
+`desc` や `option` などの定義が１行で書けます。
+`version` マクロも用意しました。
+コマンドの実行箇所は、 `run` ブロックになります。
+サブコマンドも対応しており、直感的に記述することができます。
+詳しくはマニュアルを御覧ください。
+
+実際に実行すると次のようになります。
+
+[script,shell]
+----
+$ crystal run src/myecho_clim.cr -- foo bar baz
+foo bar baz
+$ crystal run src/myecho_clim.cr -- --version
+0.1.0
+$ crystal run src/myecho_clim.cr -- --help
+
+  My echo.
+
+  Usage:
+
+    myecho [options] [arguments] ...
+
+  Options:
+
+    --prefix PREFIX                  prefix to each arguments. [type:String] [default:""]
+    --help                           Show this help.
+    -v, --version                    Show version.
+
+$ crystal run src/myecho_clim.cr -- --prefix pre_ foo bar baz
+pre_foo pre_bar pre_baz
+----
+
+こちらも期待通りの動作をしています。
+
+　
+
+サードパーティ製のライブラリはそれぞれに特徴がありますが、デフォルトの `OptionParser` よりはリッチな機能を提供してくれます。
+個人で使う小さな CLI ツールだと `OptionParser` で十分かもしれません。
+しかし、ツールとして公開したりメンテナンスが必要になってくるケースでは、サードパーティ製ライブラリを使うほうが良いかと思います。
+ぜひ一度試してみてください。
+
+
+=== まとめ
+
+この章では Crystal で CLI ツールの開発を行うことについて説明しました。
+冒頭に説明した通り、利点は次のようになるでしょう。
+
+* コンパイルしてワンバイナリにできる
+* Ruby 風の syntax で雑に書ける
+* 実行速度が早い
+* コンパイル時に型チェックが入る
+
+ものすごく雑に小さい CLI ツールを作成する場合は、コンパイルがある分、 Crystal よりも Ruby の方が速いでしょう。
+しかし、中規模程度でコード量が多くてメンテナンスが必要になってくるケースだと、 Crystal の利点は大きくなってくるのではないでしょうか。
+大規模なバッチ処理などでも、処理スピードやメモリ使用量などで Crysal の力が発揮されると思います。
+
+みなさんも一度、 敷居の低い CLI ツールを通して Crystal に触れてみてください。
