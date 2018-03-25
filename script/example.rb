@@ -130,7 +130,7 @@ end
 class Example
   private def inject(lines)
     case @mode
-    when :assert          then inject_assert lines
+    when :assert then inject_assert lines
     when :compileonly, :normal, :output then lines
     end
   end
