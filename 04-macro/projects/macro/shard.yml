@@ -1,0 +1,17 @@
+name: projects
+version: 0.1.0
+
+authors:
+  - at-grandpa <yoshiyuki.tsuchida.k@gmail.com>
+
+targets:
+  projects:
+    main: src/projects.cr
+
+crystal: 0.24.1
+
+license: MIT
+
+dependencies:
+  timecop:
+    github: TobiasGSmollett/timecop.cr
