@@ -320,6 +320,7 @@ include::./projects/kemal-sample/src/kemal-sample.cr[tags=main]
 
 修正は以上です。次項から処理について解説します。
 
+[suppress=InvalidSymbol]
 ==== クエリ
 
 まずクエリは以下のように記述します。  

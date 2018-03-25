@@ -58,7 +58,7 @@ module Kemal::Sample
     params = [] of Int32
     params << id
     sql = "select id, title, content from articles where id = $1::int8"
-    article["id"], article["title"], article["content"] = 
+    article["id"], article["title"], article["content"] =
       db.query_one(sql, params, as: {Int32, String, String})
     articles << article
     db.close
@@ -74,7 +74,7 @@ module Kemal::Sample
     params = [] of Int32
     params << id
     sql = "select id, title, content from articles where id = $1::int8"
-    article["id"], article["title"], article["content"] = 
+    article["id"], article["title"], article["content"] =
       db.query_one(sql, params, as: {Int32, String, String})
     articles << article
     db.close

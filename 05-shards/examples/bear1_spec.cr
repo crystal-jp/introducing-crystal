@@ -9,7 +9,6 @@ describe Bear do
   end
 
   describe "#bite" do
-
     # Bear#bite は未実装
     pending "retuns \"がぶがぶ\"." do
       Bear.new.bite.should eq "がぶがぶ"
