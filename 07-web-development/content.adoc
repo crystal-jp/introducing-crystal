@@ -1,1 +1,479 @@
 == Web 開発
+
+
+この章では、 Crystal を用いて Web 開発を行う方法について解説します。 +
+本サンプルで使用する Crystal のバージョンは `0.24.2` で確認しています。
+
+=== Crystal での Web 開発の前提知識
+
+まず、 Crystal では HTTP でのサービスをどのように処理するかについて解説します。 +
+前の章でも既に解説済みですが、改めて Crystal での Web 開発の基本となる部分について解説します。 +
+
+以下のコードで解説します。
+
+[source,crystal]
+----
+require "http/server"
+
+server = HTTP::Server.new("0.0.0.0", 8080) do |context|
+  context.response.content_type = "text/plain"
+  context.response.print "Hello world"
+end
+
+puts "Listening on http://0.0.0.0:8080"
+server.listen
+----
+
+ポート 8080 での HTTP アクセスを Listen する最小のプログラムです。 +
+以下のコードを実行することで簡易 HTTP サーバとして機能します。 +
+localhost:8080 にアクセスすると `Hello world` が表示されます。
+
+[source,shell]
+----
+$ crystal server.cr
+Listening on http://0.0.0.0:8080
+----
+
+==== HTTP ハンドラ
+
+基本的に Crystal の HTTP サーバが返却するパラメータは レスポンス本文、ヘッダ、ステータスコードの3種です。 +
+その3種を持っている限りにおいて、処理をスタックすることが出来ます。 +
+この辺りの規約は Ruby でいうところの Rack に似ているといえます。 +
+HTTP ハンドラを実装するには Rack 同様に call メソッドを定義し、引数に `HTTP::Server::Context` 型のオブジェクトを渡すという形式になっています。 +
+以下に例を記載します。
+
+[source,crystal]
+----
+require "http/server"
+
+class InterruptTestFirst
+  include HTTP::Handler
+
+  def call(context)
+    response = call_next(context)
+    puts "aa"
+    response
+  end
+end
+
+class InterruptTestSecond
+  include HTTP::Handler
+
+  def call(context)
+    response = call_next(context)
+    puts "bb"
+    response
+  end
+end
+
+server = HTTP::Server.new("0.0.0.0", 8080, [InterruptTestFirst.new, InterruptTestSecond.new]) do |context|
+  context.response.content_type = "text/plain"
+  context.response.print "Hello world"
+end
+
+puts "Listening on http://0.0.0.0:8080"
+server.listen
+----
+
+上記の例で言いますと、 `InterruptTestFirst` `InterruptTestSecond` の順にスタックに積まれます。 +
+実行されるのは先入れ後出しなので、後に積まれた `InterruptTestSecond` からになります。
+
+`curl -X GET http://localhost:8080` を実行することで以下の内容がコンソールに出力されます。
+
+[source,shell]
+----
+bb
+
+aa
+----
+
+主に Crystal で Web 開発を行う上での基本的な内容ですが、実際に開発する場合は何らかの Web フレームワークを用いることになるかと思います。 +
+次項から Web フレームワークについて解説します。
+
+=== Crystal の Web フレームワーク
+
+Crystal で現在最も活発に開発されている Web フレームワークが Kemal です。 +
+Ruby でいうところの Sinatra に似た設計思想で作られており、シンプルな実装で Web アプリを作成することが出来ます。 +
+本書では主に Kemal を用いて簡単な Web アプリを作成しながら Web 開発の方法を解説していきます。
+
+* URL http://kemalcr.com/  
+* GitHub https://github.com/kemalcr/kemal 
+
+また Kemal 以外の主なフレームワークとして以下のものがあります。
+
+* Amber https://www.amberframework.org
+
+フルスタックの Web フレームワークです。 +
+様々なコードジェネレータや、 O/RM を備えています。 Rails 的な規約重視のフレームワークです。 +
+
+=== Kemal による Web 開発
+
+それでは本章から Kemal による Web 開発を、サンプルを交えながら説明します。
+また本サンプルに使用する Kemal のバージョンは `0.22.0` を想定しています。
+
+==== Kemal インストール
+
+適当な作業用のディレクトリ以下で、以下のコードを実行してみます。ディレクトリが作成され幾つかのファイルがひな形から作成されます。 +
+本稿ではサンプルアプリを kemal-sample として進めます。
+
+[source,shell]
+----
+crystal init app kemal-sample
+cd kemal-sample
+----
+
+shard.yml ファイルに以下の内容を追記します。
+
+[source,yaml]
+----
+include::./projects/kemal-sample/shard.yml[lines=11..14]
+----
+
+以下のコマンドを実行することで Kemal 本体をインストールすることが出来ます。
+
+[source,shell]
+----
+shards install
+----
+
+==== Kemal FirstStep
+
+インストールまで問題なく動かせたら続いて簡単なサンプルを作成してみましょう。 +
+カレントの src ディレクトリ以下の `kemal-sample.cr` に以下の追記を行います。
+
+まず行頭に以下の行を足します。
+
+[source,crystal]
+----
+require "kemal"
+----
+
+続いて `module Kemal::Sample` 内に以下の内容を追記します。
+
+[source,crystal]
+----
+include::./projects/kemal-sample/src/kemal-sample.cr[tags=hello]
+----
+
+末尾の行に以下の内容を追記します。
+
+[source,crystal]
+----
+Kemal.run
+----
+
+画面側の処理を作成します。 +
+`src` 以下に view ディレクトリを作成し、以下の `hello.ecr` ファイルを `view` ディレクトリ内に作成します。
+
+[source,html]
+----
+include::./projects/kemal-sample/src/views/hello.ecr[]
+----
+
+Kemal の基本的な使い方として、 REST の動詞 GET POST PUT DELETE を以下の形で記述します。
+
+[source,crystal]
+----
+get "/path" do |env|
+  # 処理
+end
+
+post "/path" do |env|
+  # 処理
+end
+----
+
+詳しい内容については後述します。
+先ずは記述したら、以下のコマンドでビルド、実行します。
+
+[source,shell]
+----
+crystal build src/kemal-sample.cr
+./kemal-sample
+----
+
+ブラウザで `http://localhost:3000/` でアクセスします。 +
+`Hello World` と表示されていれば問題ありません。
+
+==== DB と連動する
+
+通常、 Web アプリでは DB が必須です。 Kemal で作ったアプリから DB にアクセスすることも可能です。 +
+ライブラリを使用することで PostgreSQL か、もしくは MySQL を使用することが出来ます。 +
+今回は PostgreSQL を使用します。
+
+.テーブル名 articles
+|============
+|カラム名|型
+|id     |serial
+|title  |text
+|content|text
+|============
+
+DB を作成します。
+[source,shell]
+----
+createdb kemal_sample_development -O your_owner
+----
+
+DDL を作成しロードします。
+
+[source,sql]
+----
+include::./projects/kemal-sample/sql/create_articles.sql[]
+----
+
+[source,shell]
+----
+psql -U your_owner -d kemal_sample_development -f sql/create_articles.sql
+----
+
+作成した後、 shard.yml ファイルに以下の内容を追記します。
+
+[source,yaml]
+----
+include::./projects/kemal-sample/shard.yml[lines=11..18]
+----
+
+編集後、以下のコマンドを実行します。
+
+[source,shell]
+----
+shards install
+----
+
+==== 投稿一覧ページの編集
+
+これからいよいよ Web アプリらしく記事の一覧ページと詳細ページ、新規投稿ページをそれぞれ作成していきます。 +
+まず全ページで共通で使用するテンプレートは別に作成します。 +
+テンプレートヘッダに新規投稿ページと投稿リストページヘのリンクを表示し、ページ内に各ページのコンテンツを表示するように修正していきます。
+
+==== レイアウトページの作成
+
+まずひな形のページを `application.ecr` という名前で作成します。
+
+[source,html]
+----
+include::./projects/kemal-sample/src/views/application.ecr[]
+----
+
+本サンプルでは BootStrap を使用します。 +
+CDN を使用しますので特にダウンロード不要ですが、ダウンロードする場合は別途 `http://getbootstrap.com/` から必要なファイルをダウンロードし、プロジェクトカレントの `/public` 以下に配置してください。
+
+==== CSS の作成
+
+ページ修飾用の CSS を作成します。本サンプルでは rails tutorial をそのまま参考にします。
+
+[source,css]
+----
+include::./projects/kemal-sample/public/css/custom.css[]
+----
+
+==== 一覧ページの作成
+
+記事一覧ページを以下の内容で作成します。
+
+[source,html]
+----
+include::./projects/kemal-sample/src/views/index.ecr[]
+----
+
+==== 新規投稿ページ
+
+記事投稿用のページを新規作成します。
+
+以下のファイルを追加します。
+
+[source,html]
+----
+include::./projects/kemal-sample/src/views/articles/new.ecr[]
+----
+
+==== 詳細ページ
+
+一覧ページから記事タイトルをクリックした時に遷移する詳細ページを作成します。 +
+データへの更新については後述します。
+
+[source,html]
+----
+include::./projects/kemal-sample/src/views/articles/show.ecr[]
+----
+
+==== Kemal プログラム改修
+
+kemal-sample.cr を以下の内容で修正します。
+
+行頭を以下の内容に修正します。
+
+[source,crystal]
+----
+require "kemal"
+require "db"
+require "pg"
+----
+
+続いて `module Kemal::Sample` 内に以下の内容を追記します。
+
+[source,crystal]
+----
+include::./projects/kemal-sample/src/kemal-sample.cr[tags=main]
+----
+
+修正は以上です。次項から処理について解説します。
+
+==== クエリ
+
+まずクエリは以下のように記述します。  
+
+[source,crystal]
+----
+include::./projects/kemal-sample/src/kemal-sample.cr[tags=query]
+----
+
+query メソッドに SQL クエリを記述し、ループ内で結果を格納していきます。 +
+1件だけ取得したい場合は `query_one` もしくは `query_one?` を使います。後者は1件もデータが無い場合がありうる場合に使います。 +
+
+[source,crystal]
+----
+  sql = "select id, title, body from articles where id = $1::int8"
+  article["id"], article["title"], article["body"] = 
+    db.query_one(sql, params, as: {Int32, String, String})
+----
+
+`query_one` の戻り値は、 `as` で指定した型の `Touple` になります。 +
+パラメータを SQL 文に渡す場合は上記例で言うと +
+
+[source,crystal]
+----
+$1::int8 
+----
+
+と、連番で指定していきます。 +
+これは PostgreSQL の例です。 MySQL の場合は？で指定します。 +
+指定できる型番は以下の形式です。 +
+
+* text 
+* boolean
+* int8 int4 int2
+* float4 float8
+* timestamptz date timestamp
+* json and jsonb
+* uuid
+* bytea
+* numeric/decimal
+* varchar
+* regtype
+* geo types
+* array types: int8 int4 int2 float8 float4 bool text
+
+==== データの更新
+
+更新系のクエリは以下のような記述で行います。 +
+データの投入は以下のように行います。
+
+[source,crystal]
+----
+db.exec("insert into articles(title, content) values($1::text, $2::text)", params)
+----
+
+SQL 文に update や delete も設定ができます。
+
+==== レンダリング
+
+View の構造はテンプレート形式で設定することが出来ます。
+
+[source,crystal]
+----
+render "src/views/articles/show.ecr", "src/views/application.ecr"
+----
+
+の形式で ecr ファイルをレンダリングすることで、 Rails のようにファイルを入れ子の形で描画することが出来ます。
+
+Web アプリ再起動後に `http://localhost:3000/` にアクセスすると、まだ記事が投稿されていないので空欄になっています。 +
+`http://localhost:3000/articles/new` にアクセスすると、タイトルと本文を入力する画面が表示されており、入力後に一覧に遷移すると成功です。 +
+記事タイトルをクリックすると詳細画面に遷移すると成功です。
+
+==== オブジェクトの CRUD
+
+Kemal は RESTful に対応しており、 GET POST 以外にも、 PUT DELETE にも対応しております。 +
+記事の編集をサンプルに追加しながら説明します。 +
+新規ページで `src/views/articles/edit.ecr` を追加します。 +  
+
+データの編集画面 +
+
+[source,crystal]
+----
+include::./projects/kemal-sample/src/views/articles/edit.ecr[]
+----
+
+ブラウザによっては form が get post 以外には対応していない場合、以下の hidden フィールドの設定で PUT や DELETE で送信することが出来ます。 +
+`kemal-sample.cr` を以下の内容で修正します。
+
+[source,crystal]
+----
+include::./projects/kemal-sample/src/kemal-sample.cr[tags=edit]
+----
+
+これで、データの追加から一覧表示、編集までの処理が行えるようになります。 +
+また、 DELETE を追加する場合は以下のように行います。
+
+[source,crystal]
+----
+delete "/articles/:id" do |env|
+  id = env.params.url["id"].to_i32
+  params = [] of Int32
+  params << id
+  db.exec("delete from articles where id = $1::int8", params)
+  db.close
+  env.redirect "/"
+end
+----
+
+これでデータの作成、表示、更新、削除の機能を持ったアプリを作ることが出来ます。 +
+本稿では省略しますが、セッションを用いて認証機能を追加することも出来ます。 +
+
+=== 補注
+
+本稿のコードでは取り上げませんでしたが、 Web アプリを書く上で注意すべき事項を以下に記載します。
+
+==== トランザクション
+
+データの原子性を保つ上で、トランザクション制御は必須です。 +
+以下の設定でトランザクションのコミット、およびロールバックを設定します。 +
+
+[source,crystal]
+----
+database_url = "postgres://localhost:5432/kemal_sample_development"
+db = DB.open(database_url)
+db.transaction do |tx|
+  result = tx.connection.exec("insert into articles(title, content) values('hoge', 'huga')")
+  # エラー時
+  if !result
+    tx.rollback
+  else
+    tx.commit
+  end
+end
+----
+
+==== MySQL
+
+MySQL を使用する場合は、以下の設定を行います。 + 
+`shard.yml` に以下の記述を行います。
+
+[source,yaml]
+----
+dependencies:
+  mysql:
+    github: crystal-lang/crystal-mysql
+----
+
+[source,crystal]
+----
+require "db"
+require "mysql"
+
+DB.open "mysql://root@localhost/test" do |db|
+  # 実行系
+  db.exec "insert into contacts values (?, ?)", "John", 30
+end
+----

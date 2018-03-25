@@ -1,0 +1,8 @@
+<h2>Article</h2>
+<% articles.each do |article| %>
+  <h3><%=article["title"] %></h3>
+  <p><%=article["content"] %></p>
+  <!-- 更新 -->
+  <a href="/articles/<%=article["id"] %>/edit" target="_top" class="btn btn-primary">edit</a>
+<br />
+<% end %>
