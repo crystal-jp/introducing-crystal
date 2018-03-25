@@ -32,6 +32,7 @@
     </validator>
     <validator name="KatakanaEndHyphen">
       <property name="list" value="ファイバー" />
+      <property name="list" value="コンパイルエラー" />
     </validator>
     <validator name="KatakanaSpellCheck" level="info"/>
     <validator name="SpaceBetweenAlphabeticalWord" />
