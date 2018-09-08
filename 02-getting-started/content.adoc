@@ -96,11 +96,11 @@ sudo yum update crystal
 
 ==== Arch Linux
 
-Arch Linux では、ユーザリポジトリから Crystal をインストールできます。
+Arch Linux では、ユーザリポジトリから Crystal をインストールできます。パッケージの依存関係を管理するための `shards` も必要になるので同様にインストールしてください。
 
 [source,shell]
 ----
-sudo pacman -S crystal
+sudo pacman -S crystal shards
 ----
 
 ==== Gentoo Linux
@@ -111,7 +111,7 @@ Gentoo Linux では、メインの overlay に Crystal が含まれています�
 
 [source,shell]
 ----
-equery u dev-lang/crystal
+# equery u dev-lang/crystal
 [ Legend : U - final flag setting for installation]
 [        : I - package is installed with flag     ]
 [ Colors : set, unset                             ]
@@ -138,14 +138,7 @@ macOS では、 http://brew.sh/[Homebrew] を利用して簡単に Crystal を�
 [source,shell]
 ----
 brew update
-brew install crystal-lang
-----
-
-もし Crystal の言語自体を開発することにも興味があるのであれば、同時に LLVM もインストールしておくと良いでしょう。その場合は上記の2行目を以下に変更します。
-
-[source,shell]
-----
-brew install crystal-lang --with-llvm
+brew install crystal
 ----
 
 なお、macOS で Crystal を使うときに以下のエラーに遭遇することがあります。
@@ -165,51 +158,26 @@ xcode-select --switch /Library/Developer/CommandLineTools
 
 ==== Linuxbrew
 
-http://linuxbrew.sh/[Linuxbrew] を使って Linux に Crystal をインストールすることもできます。手順は macOS で Homebrew を利用する場合と同様です。
+http://linuxbrew.sh/[Linuxbrew] を使って Linux に Crystal をインストールすることもできます。
+
+[source,shell]
+----
+brew update
+brew install crystal-lang
+----
+
+もし Crystal の言語自体を開発することにも興味があるのであれば、同時に LLVM もインストールしておくと良いでしょう。その場合は上記の2行目を以下に変更します。
+
+[source,shell]
+----
+brew install crystal-lang --with-llvm
+----
 
 ==== Windows
 
-残念ながら、まだ Crystal は Windows での実行をサポートしていません。ですが、実験的なサポートには留まるものの、 https://docs.microsoft.com/en-us/windows/wsl/about[Windows Subsystem for Linux] で Ubuntu を利用することで Windows 上で Crystal を使うことが可能です。
+残念ながら、まだ Crystal は Windows での実行をサポートしていません。ですが、 https://docs.microsoft.com/en-us/windows/wsl/about[Windows Subsystem for Linux] を利用することで Windows 10 上で Crystal を使うことが可能です。
 
-インストール手順は Debian や Ubuntu へのインストール方法と同様です。
-
-まず、インストールした Ubuntu のシェルで以下を実行し、APT の構成にリポジトリを追加します。
-
-[source,shell]
-----
-curl -sSL https://dist.crystal-lang.org/apt/setup.sh | sudo bash
-----
-
-これでリポジトリが構成されキーが登録されますが、以下のように、同様のことを手動で行うことも可能です。
-
-[source,shell]
-----
-sudo apt-key adv --keyserver keys.gnupg.net --recv-keys 09617FD37CC06B54
-echo "deb https://dist.crystal-lang.org/apt crystal main" | sudo tee /etc/apt/sources.list.d/crystal.list
-sudo apt-get update
-----
-
-ただし、Crystal プログラムをコンパイルには C コンパイラ（ `cc` ）とリンカ（ `ld` ）も必要になりますので、以下で別途インストールしてください。
-
-[source,shell]
-----
-sudo apt-get install clang binutils
-----
-
-リポジトリを構成し、追加の必要パッケージもインストールできたら、以下で Crystal がインストールできます。
-
-[source,shell]
-----
-sudo apt-get install crystal
-----
-
-なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードすることができます。
-
-[source,shell]
-----
-sudo apt-get update
-sudo apt-get install crystal
-----
+WSL 上での Crystal のインストール方法は、それぞれの Linux ディストリビューションにおけるインストール方法と同様です。例えば、もし WSL に Ubuntu を導入したのであれば、前掲の「Debian や Ubuntu」でのインストール方法を参照してください。
 
 ==== その他のインストール方法
 
