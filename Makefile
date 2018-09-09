@@ -55,8 +55,8 @@ $(PREFIX)/techbookfest4-web.pdf: $(ADOCS) $(ASSETS)
 $(PREFIX)/techbookfest4.html: $(ADOCS) $(ASSETS)
 	bundle exec asciidoctor $(ASCIIDOCTOR_HTML_FLAGS) -o $@ $<
 
-.PHONY: lint lint-full redpen rubocop crystal-format format
-lint: redpen crystal-format
+.PHONY: lint lint-full redpen rubocop crystal-format format backspace
+lint: redpen crystal-format backspace
 lint-full: lint rubocop
 
 redpen:
@@ -71,6 +71,9 @@ crystal-format:
 
 format:
 	crystal tool format $(CRS)
+
+backspace:
+	! grep -e '\x08' README.md $(ADOCS)
 
 .PHONY: test example-test project-test
 test: example-test project-test
