@@ -20,7 +20,7 @@ jobs:
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
       - run:
           name: Build
-          command: make
+          command: make -j
       - store_artifacts:
           path: build
       - run:
