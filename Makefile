@@ -15,7 +15,6 @@ ASCIIDOCTOR_PRINT_PDF_FLAGS = \
   -a pdf-style=config/asciidoctor-pdf/themes/print-theme.yml
 ASCIIDOCTOR_WEB_PDF_FLAGS = \
   $(ASCIIDOCTOR_PDF_FLAGS) \
-  -r asciidoctor-pdf-cjk \
   $(ASCIIDOCTOR_ROUGE_FLAGS) \
   -a pdf-style=config/asciidoctor-pdf/themes/web-theme.yml
 
