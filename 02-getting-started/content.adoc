@@ -96,7 +96,7 @@ $ sudo yum update crystal
 
 ==== Arch Linux
 
-Arch Linux では、ユーザリポジトリから Crystal をインストールできます。パッケージの依存関係を管理するための `shards` も必要になるので同様にインストールしてください。
+Arch Linux では、ユーザリポジトリから Crystal をインストールできます。パッケージの依存関係を管理するための `shards` も必要になるので同様にインストールしてください。
 
 [source,console]
 ----

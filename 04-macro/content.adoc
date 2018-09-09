@@ -8,7 +8,7 @@ Crystal の Macro とは次のようなものです。
 
 * 「 Crystal のコードを書く」コード
 * コンパイルフェーズで実行され、 Crystal のコードに展開される
-* 全マクロが展開されたあとの Crystal コードが実際にコンパイルされる
+* 全マクロが展開されたあとの Crystal コードが実際にコンパイルされる
 
 これだけではイメージが湧きづらいので、Macro がどのようなものかを実際に見てみましょう。
 次のコードを見てください。
@@ -20,11 +20,11 @@ include::./examples/example_01.cr[tags=code;main]
 
 . `macro` ディレクティブを用いて Macro を定義します
 . 定義した Macro を呼び出します
-.. 引数 `my_method` `"hoge"` が Macro に渡されます
+.. 引数 `my_method` `"hoge"` が Macro に渡されます
 .. 引数をもとに処理が行われ、呼び出し箇所に Crystal コードが展開されます
 . Crystal コードに展開された後、通常のコンパイルが行われます
 
-つまり、上記の Macro 展開後は次のようになります。
+つまり、上記の Macro 展開後は次のようになります。
 
 [source,crystal]
 ----
@@ -36,7 +36,7 @@ include::./examples/example_01_expanded.cr[tags=code;main]
 
 Macro のイメージが湧きましたでしょうか。
 
-=== Macro の利点
+=== Macro の利点
 
 Macro を利用することで、コードの重複を排除できます。次のコードを見てください。
 
@@ -72,7 +72,7 @@ include::./examples/duplication_01_getter.cr[tags=code;main]
 === Macro の可読性
 
 重複の除去によって、 Macro 呼び出しのコードはすっきりしました。
-しかし、 Macro 定義のコードはどうしても複雑になってしまいます。
+しかし、 Macro 定義のコードはどうしても複雑になってしまいます。
 Macro の理解に加え、展開後の Crystal コードも理解しければならないからです。
 
 Crystal のバージョン `0.20.4` 以前は、 Macro 展開後のコードを知るすべはありませんでした。
@@ -103,7 +103,7 @@ Options:
     --stdin-filename                 Source file name to be read from STDIN
 ----
 
-`--cursor` オプションでカーソル位置を指定すると、カーソル上の Macro の展開結果を表示することができます。
+`--cursor` オプションでカーソル位置を指定すると、カーソル上の Macro の展開結果を表示することができます。
 先程の `getter` で試してみましょう。
 
 [source,console]
@@ -142,8 +142,8 @@ Crystal には、標準で搭載されている Macro があります。
 
 オブジェクトの同値性比較を行う `==` メソッドを定義します。
 
-同値性比較を行う場合、複数あるインスタンス変数の比較を行います。
-通常の場合、コードは次のようになります。
+同値性比較を行う場合、複数あるインスタンス変数の比較を行います。
+通常の場合、コードは次のようになります。
 
 [source,crystal]
 ----
@@ -199,7 +199,7 @@ include::./examples/record_01_macro.cr[tags=code;main]
 include::./projects/macro/src/parallel.cr[tags=code]
 ----
 
-これを実行すると、返り値、出力結果は次のようになります。
+これを実行すると、返り値、出力結果は次のようになります。
 
 [source,crystal,indent=0]
 ----
@@ -219,7 +219,7 @@ include::./projects/macro/src/parallel.cr[tags=main]
 
 === Macro の文法
 
-Macro の文法は https://crystal-lang.org/docs/syntax_and_semantics/macros.html[公式マニュアル] に記載されています。
+Macro の文法は https://crystal-lang.org/docs/syntax_and_semantics/macros.html[公式マニュアル] に記載されています。
 この章では公式マニュアルを基本とし、より詳しく解説していきます。
 
 ==== Macro のおさらい
@@ -241,20 +241,20 @@ include::./examples/syntax/basic_syntax.cr[tags=code;main]
 . 引数展開や条件分岐等の処理をし、 Crystal コードが生成される
 . 生成された Crystal コードを、Macro 呼び出し部分に展開する
 . すべての Macro を展開し終えたら、 Crystal コードのコンパイルをする
-. Crystal コードのコンパイルが終わったら実行する
+. Crystal コードのコンパイルが終わったら実行する
 
 この流れを頭の中に入れつつ、次のステップに進みましょう。
 
 ==== Macro と 抽象構文木
 
-Crystal のコードは、実際に実行する前にパーサによってパースされ、抽象構文木（  Abstract Syntax Tree ）を構築します。
+Crystal のコードは、実際に実行する前にパーサによってパースされ、抽象構文木（  Abstract Syntax Tree ）を構築します。
 抽象構文木を構成する木構造の各要素を AST node と言います。
 つまり、 Crystal のコードは各 AST node で構成されています。
 
 ここで Macro に話を戻します。
 Macro は Crystal のコードを組み立てるものでした。
 言い換えると「 Macro は AST node を操作して Crystal コードを組み立てるもの」ということになります。
-実際、 Macro が引数として受け取るのは AST node です。
+実際、 Macro が引数として受け取るのは AST node です。
 そのことを確かめてみましょう。
 
 ==== AST node
@@ -270,7 +270,7 @@ include::./examples/syntax/ast_node.cr[tags=code;main]
 これらの class は `Crystal::Macros::NumberLiteral` や `Crystal::Macros::ArrayLiteral` として定義されています。
 そして、全 AST node は `Crystal::Macros::ASTNode` を継承しています。 `Crystal::Macros::ASTNode` の幾つかのメソッドを紹介します。
 
-`#line_number` は、 AST node が書かれている行数を返します。
+`#line_number` は、 AST node が書かれている行数を返します。
 
 [source,crystal,indent=0]
 ----
@@ -294,14 +294,14 @@ include::./examples/syntax/ast_node_array_literal.cr[tags=code;main]
 ----
 
 通常の Crystal コードと似たような操作感で書くことができます。
-AST node を操作しているのか、 Crystal コードを操作しているのかをしっかりと意識してプログラミングしましょう。
+AST node を操作しているのか、 Crystal コードを操作しているのかをしっかりと意識してプログラミングしましょう。
 
 次からは、実際の文法を具体的に見ていきましょう。
 
 ==== スコープ
 
 Macro にもスコープがあります。
-次の例をみてください。
+次の例をみてください。
 
 *global に定義した場合*
 
@@ -382,7 +382,7 @@ include::./examples/syntax/for_hash.cr[tags=code;main]
 ----
 
 `for` も `if` と同様、 `macro` ディレクティブ以外の場所でも定義できます。
-
+
 [source,crystal,indent=0]
 ----
 include::./examples/syntax/for_outside.cr[tags=code;main]
@@ -449,11 +449,11 @@ include::./examples/syntax/nested_macros.cr[tags=code;main]
 "\{{greeting.id}} {{name.id}}"
 ----
 
-の部分では、外側の Macro で `{{name.id}}` の部分は展開されますが、 `\{{greeting.id}}` の部分は展開されません。
+の部分では、外側の Macro で `{{name.id}}` の部分は展開されますが、 `\{{greeting.id}}` の部分は展開されません。
 `\{{greeting.id}}` の部分は内側の Macro で展開されます。
 
 Nested macros は、 Macro の記述で重複が多い場合に有効です。
-しかし、可読性が損なわれやすいので注意が必要です。
+しかし、可読性が損なわれやすいので注意が必要です。
 
 ==== 生成コードの注意点
 
@@ -495,7 +495,7 @@ Macro には特別なインスタンス変数 `@type` が用意されていま�
 
 ===== TypeNode#instance_vars
 
-型に定義されているインスタンス変数を返します。
+型に定義されているインスタンス変数を返します。
 返り値は `Crystal::Macros::MetaVar` クラスの配列です。
 `MetaVar` クラスは、変数やインスタンス変数を表す型で、名前（ `MetaVar#name` ）と型（ `MetaVar#type` ）を持っています。
 
@@ -506,7 +506,7 @@ include::./examples/syntax/type_instance_vars.cr[tags=code;main]
 
 ===== TypeNode#methods
 
-型に定義されているメソッドの情報を返します。
+型に定義されているメソッドの情報を返します。
 返り値は `Crystal::Macros::Def` クラスの配列です。
 `Def` クラスは、 `def` ディレクティブを表す型で、メソッド定義に関するさまざまな情報を持っています。
 例えば、 `Def#args` は引数の情報、 `Def#return_type` はメソッドの返り値の型を表します。
@@ -517,7 +517,7 @@ include::./examples/syntax/type_methods.cr[tags=code;main]
 ----
 
 これらの他にもメソッドはたくさんあります。
-私の調べた限りでは、組み合わせればやりたいことはできるという、必要最低限なメソッドはそろっていました。
+私の調べた限りでは、組み合わせればやりたいことはできるという、必要最低限なメソッドはそろっていました。
 興味のある方はぜひ調べてみてください。
 
 ==== Hooks
@@ -534,10 +534,10 @@ Macro には、 hooks という特別な Macro が存在しています。
 |サブクラスが定義されている場合に実行される Macro
 
 | `macro included ... end`
-|モジュールが include されている場合に実行される Macro
+|モジュールが include されている場合に実行される Macro
 
 | `macro extended ... end`
-|モジュールが extend されている場合に実行される Macro
+|モジュールが extend されている場合に実行される Macro
 
 | `macro method_missing ... end`
 |メソッドが定義されていない場合に実行される Macro
@@ -560,7 +560,7 @@ include::./examples/syntax/hooks_inherited.cr[tags=code;main]
 include::./examples/syntax/hooks_method_missing.cr[]
 ----
 
-`method_missing` の引数は `Crystal::Macros::Call` です。
+`method_missing` の引数は `Crystal::Macros::Call` です。
 これはメソッドの呼び出しを表すクラスです。
 `#args` や `#receiver` などがあります。
 
@@ -586,7 +586,7 @@ include::./examples/syntax/fresh_variables_example2.cr[tags=code;main]
 
 `%変数名` とすることで、その Macro のコンテキスト内で唯一の変数として扱われます。
 仕組みは簡単です。
-上記のコードで `crystal tool expand` をしてみましょう。
+上記のコードで `crystal tool expand` をしてみましょう。
 
 [source,console,indent=0]
 ----
@@ -602,7 +602,7 @@ expansion 1:
 ----
 
 `__temp_20` のような変数に置き換わっています。
-このように、 Macro の実行フェーズで変数名を置き換えています。
+このように、 Macro の実行フェーズで変数名を置き換えています。
 
 Fresh variables は Hash 的な syntax もあります。
 `%変数名{キー}` と書きます。
@@ -613,13 +613,13 @@ Fresh variables は Hash 的な syntax もあります。
 include::./examples/syntax/fresh_variables_example3.cr[]
 ----
 
-これで、 Fresh variables を用いた for 文を書くことができます。
+これで、 Fresh variables を用いた for 文を書くことができます。
 
 === まとめ
 
 以上で、 Macro とはどういうものか、 Macro の文法はどうなっているのかなどの説明を終わります。
 Macro のおおまかなイメージは湧きましたでしょうか。
-自分はライブラリを書く際に Macro を使いますが、やはり重複排除の効果はすごいと思います。
+自分はライブラリを書く際に Macro を使いますが、やはり重複排除の効果はすごいと思います。
 また、 DSL の提供も比較的簡単にできるのではないでしょうか。
-Macro に慣れてくると、 Crystal 本来のコードを書くよりも Macro を書いている比率が多くなる印象が強いです。
+Macro に慣れてくると、 Crystal 本来のコードを書くよりも Macro を書いている比率が多くなる印象が強いです。
 今回のこの章を読み、「 Macro が読めるようになった」「 Macro が書けるようになった」という方が一人でも増えて頂けると幸いです。
