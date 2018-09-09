@@ -1,6 +1,6 @@
-# techbookfest4
+# introducing-crystal
 
-技術書典4で頒布する本を管理するリポジトリです。
+『入門Crystal』の原稿を管理するリポジトリです。
 
 ## 必要なもの
 
