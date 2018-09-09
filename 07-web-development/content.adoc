@@ -165,7 +165,7 @@ Kemal.run
 画面側の処理を作成します。 +
 `src` 以下に view ディレクトリを作成し、以下の `hello.ecr` ファイルを `view` ディレクトリ内に作成します。
 
-[source,html]
+[source,erb]
 ----
 include::./projects/kemal-sample/src/views/hello.ecr[]
 ----
@@ -251,7 +251,7 @@ $ shards install
 
 まずひな形のページを `application.ecr` という名前で作成します。
 
-[source,html]
+[source,erb]
 ----
 include::./projects/kemal-sample/src/views/application.ecr[]
 ----
@@ -272,7 +272,7 @@ include::./projects/kemal-sample/public/css/custom.css[]
 
 記事一覧ページを以下の内容で作成します。
 
-[source,html]
+[source,erb]
 ----
 include::./projects/kemal-sample/src/views/index.ecr[]
 ----
@@ -283,7 +283,7 @@ include::./projects/kemal-sample/src/views/index.ecr[]
 
 以下のファイルを追加します。
 
-[source,html]
+[source,erb]
 ----
 include::./projects/kemal-sample/src/views/articles/new.ecr[]
 ----
@@ -293,7 +293,7 @@ include::./projects/kemal-sample/src/views/articles/new.ecr[]
 一覧ページから記事タイトルをクリックした時に遷移する詳細ページを作成します。 +
 データへの更新については後述します。
 
-[source,html]
+[source,erb]
 ----
 include::./projects/kemal-sample/src/views/articles/show.ecr[]
 ----
