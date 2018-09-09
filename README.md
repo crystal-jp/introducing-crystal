@@ -178,6 +178,24 @@ puts "Crystal"
 
 `# output:` と `# =>` や `# raises` は併用できません。
 
+#### `# tag::compileonly[]`
+
+ソースコード中に `# tag::compileonly[]` があった場合、そのコードは上記のテストは実行されず、コンパイルが通るか確認するだけになります。
+
+```crystal
+# tag::compileonly[]
+# end::compileonly[]
+require "http/server"
+
+server = HTTP::Server.new do |context|
+  context.response.content_type = "text/plain"
+  context.response.print "Hello world, got #{context.request.path}!"
+end
+
+puts "Listening on http://127.0.0.1:8080"
+server.listen(8080)
+```
+
 ### Shards のプロジェクトについて
 
 いくつかの章では説明のためにプロジェクトを作るかと思います。
