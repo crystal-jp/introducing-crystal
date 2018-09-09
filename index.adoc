@@ -7,6 +7,7 @@ crystal-jp
 :chapter-label:
 :table-caption: テーブル
 :toc:
+:hardbreaks:
 
 include::./01-introduction/content.adoc[]
 
@@ -18,10 +19,10 @@ include::./04-macro/content.adoc[]
 
 include::./05-shards/content.adoc[]
 
-include::./06-tools/content.adoc[]
+// include::./06-tools/content.adoc[]
 
 include::./07-web-development/content.adoc[]
 
 include::./08-cli-development/content.adoc[]
 
-include::./09-history/content.adoc[]
+// include::./09-history/content.adoc[]

@@ -35,10 +35,11 @@ class Example
   RE_ASSERT      = /\A(.*?) # => (.*)\n\z/
   RE_RAISE       = /\A(.*?) # raises (\w+)(?: \((.*)\))?\n\z/
 
-  private def convert(line, i)
+  private def convert(line, offset)
     result = convert_assert_all(line)
-    result ||= convert_main(line, i)
-    result ||= save_output(line, i)
+    result ||= convert_main(line, offset)
+    result ||= convert_compileonly(line)
+    result ||= save_output(line, offset)
     result || line
   end
 
@@ -72,31 +73,37 @@ class Example
     "expect_raises(#{klass}) { #{expr} }\n"
   end
 
-  private def convert_main(line, i)
-    main_header(line, i) || main_footer(line, i)
-  end
-
-  private def main_header(line, i)
-    return unless line == "# tag::main[]\n"
-    raise '"# tag::main[]" is duplicated' if @main_start
-    @main_start = i
+  private def convert_compileonly(line)
+    return unless line == "# tag::compileonly\[\]\n"
+    mode! :compileonly
     line
   end
 
-  private def main_footer(line, i)
+  private def convert_main(line, offset)
+    main_header(line, offset) || main_footer(line, offset)
+  end
+
+  private def main_header(line, offset)
+    return unless line == "# tag::main[]\n"
+    raise '"# tag::main[]" is duplicated' if @main_start
+    @main_start = offset
+    line
+  end
+
+  private def main_footer(line, offset)
     return unless line == "# end::main[]\n"
     raise '"# tag::main[]" is missing' unless @main_start
     raise '"# end::main[]" is duplicated' if @main_end
-    @main_end = i
+    @main_end = offset
     line
   end
 
-  private def save_output(line, i)
+  private def save_output(line, offset)
     return unless line == "# output:\n"
     mode! :output
-    (i + 1...@lines.size).each do |j|
-      break unless @lines[j].start_with? '# '
-      @output << @lines[j][2..-1]
+    (offset + 1...@lines.size).each do |i|
+      break unless @lines[i].start_with? '# '
+      @output << @lines[i][2..-1]
     end
     line
   end
@@ -123,8 +130,8 @@ end
 class Example
   private def inject(lines)
     case @mode
-    when :assert          then inject_assert lines
-    when :normal, :output then lines
+    when :assert then inject_assert lines
+    when :compileonly, :normal, :output then lines
     end
   end
 

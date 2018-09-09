@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>kemal sample</title>
+  <!-- bootstrapを使用する -->
+  <link
+   rel="stylesheet"
+   href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/custom.css">
+</head>
+<body>
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <a id="logo">sample app</a>
+    <nav>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/articles">ArticleList</a></li>
+        <li><a href="/articles/new">新規投稿</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+  <div class="container">
+    <%= content %>
+  </div>
+</body>
+</html>

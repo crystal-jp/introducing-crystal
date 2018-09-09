@@ -1,0 +1,13 @@
+name: myecho
+version: 0.1.0
+
+authors:
+  - at-grandpa <yoshiyuki.tsuchida.k@gmail.com>
+
+targets:
+  myecho:
+    main: src/myecho.cr
+
+crystal: 0.24.1
+
+license: MIT

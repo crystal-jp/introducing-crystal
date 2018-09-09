@@ -1,0 +1,6 @@
+version: 1.0
+shards:
+  timecop:
+    github: TobiasGSmollett/timecop.cr
+    commit: b916d4eeffc7d77d17fd18d8dbbce6cfe1a6ea16
+

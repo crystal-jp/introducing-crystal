@@ -1,0 +1,5 @@
+$ crystal spec bear_spec.cr
+.
+
+Finished in 53 microseconds
+1 examples, 0 failures, 0 errors, 0 pending

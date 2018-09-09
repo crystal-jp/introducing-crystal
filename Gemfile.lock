@@ -1,11 +1,20 @@
+GIT
+  remote: git://github.com/MakeNowJust/asciidoctor-rouge.git
+  revision: b9a70a714a25a7dfa0098528397bb9241a7a8101
+  branch: rouge-3
+  specs:
+    asciidoctor-rouge (0.3.1)
+      asciidoctor (~> 1.5.6)
+      rouge (~> 3)
+
 GEM
   remote: https://rubygems.org/
   specs:
-    Ascii85 (1.0.2)
+    Ascii85 (1.0.3)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     afm (0.2.2)
-    asciidoctor (1.5.6.1)
+    asciidoctor (1.5.7.1)
     asciidoctor-pdf (1.5.0.alpha.16)
       asciidoctor (>= 1.5.0)
       prawn (>= 1.3.0, < 2.3.0)
@@ -18,25 +27,23 @@ GEM
       treetop (= 1.5.3)
     asciidoctor-pdf-cjk (0.1.3)
       asciidoctor-pdf (~> 1.5.0.alpha.8)
-    asciidoctor-rouge (0.3.0)
-      asciidoctor (~> 1.5.6)
-      rouge (~> 2.2)
-    ast (2.3.0)
+    ast (2.4.0)
     css_parser (1.6.0)
       addressable
     hashery (2.1.2)
+    jaro_winkler (1.5.1)
     parallel (1.12.1)
-    parser (2.4.0.2)
-      ast (~> 2.3)
+    parser (2.5.1.2)
+      ast (~> 2.4.0)
     pdf-core (0.7.0)
-    pdf-reader (2.0.0)
+    pdf-reader (2.1.0)
       Ascii85 (~> 1.0.0)
       afm (~> 0.2.1)
       hashery (~> 2.0)
       ruby-rc4
       ttfunk
     polyglot (0.3.5)
-    powerpack (0.1.1)
+    powerpack (0.1.2)
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
@@ -50,25 +57,26 @@ GEM
     prawn-templates (0.1.1)
       pdf-reader (~> 2.0)
       prawn (~> 2.2)
-    public_suffix (3.0.1)
+    public_suffix (3.0.3)
     rainbow (3.0.0)
-    rake (12.3.0)
-    rouge (2.2.1)
-    rubocop (0.52.1)
+    rake (12.3.1)
+    rouge (3.2.1)
+    rubocop (0.58.2)
+      jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
-      parser (>= 2.4.0.2, < 3.0)
+      parser (>= 2.5, != 2.5.1.1)
       powerpack (~> 0.1)
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
-    ruby-progressbar (1.9.0)
+    ruby-progressbar (1.10.0)
     ruby-rc4 (0.1.5)
     safe_yaml (1.0.4)
     thread_safe (0.3.6)
     treetop (1.5.3)
       polyglot (~> 0.3)
     ttfunk (1.5.1)
-    unicode-display_width (1.3.0)
+    unicode-display_width (1.4.0)
 
 PLATFORMS
   ruby
@@ -77,13 +85,13 @@ DEPENDENCIES
   asciidoctor
   asciidoctor-pdf
   asciidoctor-pdf-cjk
-  asciidoctor-rouge
+  asciidoctor-rouge!
   rake
   rouge
   rubocop
 
 RUBY VERSION
-   ruby 2.5.0p0
+   ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.0
+   1.16.1

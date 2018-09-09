@@ -1,0 +1,19 @@
+$ crystal spec bear_spec.cr
+F
+
+Failures:
+
+  1) Bear #bark returns "がおー".
+     Failure/Error: Bear.new.bark.should eq "がおー"
+
+       Expected: "がおー"
+            got: "わん"
+
+     # bear_spec.cr:7
+
+Finished in 127 microseconds
+1 examples, 1 failures, 0 errors, 0 pending
+
+Failed examples:
+
+crystal spec bear_spec.cr:6 # Bear #bark returns "がおー".

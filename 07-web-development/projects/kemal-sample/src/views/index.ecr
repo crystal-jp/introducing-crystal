@@ -1,0 +1,18 @@
+<h2>Article List</h2>
+<table class="table table-striped">
+<thead>
+  <tr>
+    <td>title</td>
+  </tr>
+<tbody>
+  <% articles.each do |article| %>
+  <tr>
+    <td>
+      <a href="/articles/<%=article["id"]? %>" target="_top">
+        <%=article["title"]? %>
+      </a>
+    </td>
+  </tr>
+  <% end %>
+</tbody>
+</table>

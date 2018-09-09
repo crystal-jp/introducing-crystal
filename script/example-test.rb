@@ -6,7 +6,7 @@ require 'tmpdir'
 require_relative './util'
 require_relative './example'
 
-EXAMPLES = ARGV.to_a
+EXAMPLES = ARGV.to_a.sort
 
 EXAMPLES.each do |example|
   example = Example.new Pathname.new(example)
@@ -14,6 +14,8 @@ EXAMPLES.each do |example|
   example.path.dirname.mkpath
   example.path.write example.code
   case example.mode
+  when :compileonly
+    sh 'crystal', 'build', '--no-codegen', example.path.to_s
   when :normal, :assert
     sh 'crystal', 'run', example.path.to_s
   when :output

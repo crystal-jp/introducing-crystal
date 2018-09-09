@@ -1,0 +1,17 @@
+name: myecho_admiral
+version: 0.1.0
+
+authors:
+  - at-grandpa <yoshiyuki.tsuchida.k@gmail.com>
+
+targets:
+  myecho_admiral:
+    main: src/myecho_admiral.cr
+
+crystal: 0.24.1
+
+license: MIT
+
+dependencies:
+  admiral:
+    github: jwaldrip/admiral.cr
