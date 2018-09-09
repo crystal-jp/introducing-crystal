@@ -1,5 +1,5 @@
 = The Crystal Programming Language
-crystal-jp
+crystal-jp (5t111111; arcage; at-grandpa; MakeNowJust; msky026)
 :lang: ja
 :doctype: book
 :pdf-page-size: b5
