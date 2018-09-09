@@ -1,6 +1,6 @@
 # introducing-crystal
 
-『入門Crystal』の原稿を管理するリポジトリです。
+『入門 Crystal』の原稿を管理するリポジトリです。
 
 ## 必要なもの
 
