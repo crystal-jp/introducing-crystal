@@ -1,5 +1,5 @@
 # tag::code[]
-# 引数のclass_nameを表示させるmacro
+# 引数のclass_nameを表示させるmacro
 macro ast_node_class_name(ast_node)
   {{ ast_node.class_name }}
 end
