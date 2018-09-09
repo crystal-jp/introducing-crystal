@@ -18,38 +18,42 @@ Debian 系のディストリビューションでは、 Crystal の公式リポ�
 
 [source,shell]
 ----
-curl https://dist.crystal-lang.org/apt/setup.sh | sudo bash
+curl -sSL https://dist.crystal-lang.org/apt/setup.sh | sudo bash
 ----
 
 これによりリポジトリが構成されキーが登録されます。もし上記を自分自身で設定するのがお好みの場合は、以下を実行しても同じことができます。
 
 [source,shell]
 ----
-apt-key adv --keyserver keys.gnupg.net --recv-keys 09617FD37CC06B54
-echo "deb https://dist.crystal-lang.org/apt crystal main" > /etc/apt/sources.list.d/crystal.list
-apt-get update
+curl -sL "https://keybase.io/crystal/pgp_keys.asc" | sudo apt-key add -
+echo "deb https://dist.crystal-lang.org/apt crystal main" | sudo tee /etc/apt/sources.list.d/crystal.list
+sudo apt-get update
 ----
 
 リポジトリを構成したら以下で Crystal がインストールできます。
 
 [source,shell]
 ----
-sudo apt-get install crystal
+sudo apt install crystal
 ----
 
-ただし、 別途必要となる `cc` コマンドが入っていないなどの理由で Crystal の実行ができない場合があります。その際には以下を実行し `build-essential` パッケージを導入してください。
+以下に記載するパッケージは必須ではありませんが、標準ライブラリの機能を使う上で必要となるためインストールすることを推奨します。
 
 [source,shell]
 ----
-sudo apt-get install build-essential
+sudo apt install libssl-dev      # OpenSSL に必要です
+sudo apt install libxml2-dev     # XML に必要です
+sudo apt install libyaml-dev     # YAML に必要です
+sudo apt install libgmp-dev      # Big numbers に必要です
+sudo apt install libreadline-dev # Readline に必要です
 ----
 
 なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードすることができます。
 
 [source,shell]
 ----
-sudo apt-get update
-sudo apt-get install crystal
+sudo apt update
+sudo apt install crystal
 ----
 
 ==== Red Hat や CentOS
@@ -92,11 +96,11 @@ sudo yum update crystal
 
 ==== Arch Linux
 
-Arch Linux では、ユーザリポジトリから Crystal をインストールできます。
+Arch Linux では、ユーザリポジトリから Crystal をインストールできます。パッケージの依存関係を管理するための `shards` も必要になるので同様にインストールしてください。
 
 [source,shell]
 ----
-sudo pacman -S crystal
+sudo pacman -S crystal shards
 ----
 
 ==== Gentoo Linux
@@ -107,7 +111,7 @@ Gentoo Linux では、メインの overlay に Crystal が含まれています�
 
 [source,shell]
 ----
-equery u dev-lang/crystal
+# equery u dev-lang/crystal
 [ Legend : U - final flag setting for installation]
 [        : I - package is installed with flag     ]
 [ Colors : set, unset                             ]
@@ -134,14 +138,7 @@ macOS では、 http://brew.sh/[Homebrew] を利用して簡単に Crystal を�
 [source,shell]
 ----
 brew update
-brew install crystal-lang
-----
-
-もし Crystal の言語自体を開発することにも興味があるのであれば、同時に LLVM もインストールしておくと良いでしょう。その場合は上記の2行目を以下に変更します。
-
-[source,shell]
-----
-brew install crystal-lang --with-llvm
+brew install crystal
 ----
 
 なお、macOS で Crystal を使うときに以下のエラーに遭遇することがあります。
@@ -161,51 +158,26 @@ xcode-select --switch /Library/Developer/CommandLineTools
 
 ==== Linuxbrew
 
-http://linuxbrew.sh/[Linuxbrew] を使って Linux に Crystal をインストールすることもできます。手順は macOS で Homebrew を利用する場合と同様です。
+http://linuxbrew.sh/[Linuxbrew] を使って Linux に Crystal をインストールすることもできます。
+
+[source,shell]
+----
+brew update
+brew install crystal-lang
+----
+
+もし Crystal の言語自体を開発することにも興味があるのであれば、同時に LLVM もインストールしておくと良いでしょう。その場合は上記の2行目を以下に変更します。
+
+[source,shell]
+----
+brew install crystal-lang --with-llvm
+----
 
 ==== Windows
 
-残念ながら、まだ Crystal は Windows での実行をサポートしていません。ですが、実験的なサポートには留まるものの、 https://docs.microsoft.com/en-us/windows/wsl/about[Windows Subsystem for Linux] で Ubuntu を利用することで Windows 上で Crystal を使うことが可能です。
+残念ながら、まだ Crystal は Windows での実行をサポートしていません。ですが、 https://docs.microsoft.com/en-us/windows/wsl/about[Windows Subsystem for Linux] を利用することで Windows 10 上で Crystal を使うことが可能です。
 
-インストール手順は Debian や Ubuntu へのインストール方法と同様です。
-
-まず、インストールした Ubuntu のシェルで以下を実行し、APT の構成にリポジトリを追加します。
-
-[source,shell]
-----
-curl -sSL https://dist.crystal-lang.org/apt/setup.sh | sudo bash
-----
-
-これでリポジトリが構成されキーが登録されますが、以下のように、同様のことを手動で行うことも可能です。
-
-[source,shell]
-----
-sudo apt-key adv --keyserver keys.gnupg.net --recv-keys 09617FD37CC06B54
-echo "deb https://dist.crystal-lang.org/apt crystal main" | sudo tee /etc/apt/sources.list.d/crystal.list
-sudo apt-get update
-----
-
-ただし、Crystal プログラムをコンパイルには C コンパイラ（ `cc` ）とリンカ（ `ld` ）も必要になりますので、以下で別途インストールしてください。
-
-[source,shell]
-----
-sudo apt-get install clang binutils
-----
-
-リポジトリを構成し、追加の必要パッケージもインストールできたら、以下で Crystal がインストールできます。
-
-[source,shell]
-----
-sudo apt-get install crystal
-----
-
-なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードすることができます。
-
-[source,shell]
-----
-sudo apt-get update
-sudo apt-get install crystal
-----
+WSL 上での Crystal のインストール方法は、それぞれの Linux ディストリビューションにおけるインストール方法と同様です。例えば、もし WSL に Ubuntu を導入したのであれば、前掲の「 Debian や Ubuntu 」でのインストール方法を参照してください。
 
 ==== その他のインストール方法
 
@@ -229,7 +201,7 @@ crystal -v
 
 [source,shell]
 ----
-Crystal 0.24.2 (2018-03-09)
+Crystal 0.26.1 (2018-08-27)
 ----
 
 といったバージョン情報が表示されます。もし「コマンドが見つからない」といったエラーが表示された場合は、
@@ -302,7 +274,7 @@ VSCode で Crystal プログラミングをサポートするエクステンシ�
 
 などの機能がすぐに利用できるようになります。
 
-vscode-crystal-lang の GitHub 上の Wiki にはより詳しい設定などの情報も記載されています。例えば、エラーの検知レベルをカスタマイズできるなど、より便利に使うための設定も書かれていますので合わせてご覧ください。
+vscode-crystal-lang の GitHub 上の Wiki にはより詳しい設定などの情報も記載されています。例えば、エラーの検知レベルをカスタマイズしたり、 https://github.com/crystal-lang-tools/scry[scry] という Crystal の Language Server との連携などのより便利に使うための設定も書かれていますので合わせてご覧ください。
 
 ==== Atom
 
@@ -313,7 +285,7 @@ GitHub 社製のエディタ Atom では、以下のパッケージを導入す�
 
 language-crystal は Atom のパッケージとしては language-crystal-actual という名前で提供されているので注意が必要です。　これをインストールすると Crystal のシンタックスハイライトや自動インデントがサポートされます。
 
-atom-ide-crystal は意欲的なパッケージで、 https://github.com/crystal-lang-tools/scry[scry] という Crystal の Language Server を利用して IDE のような機能を追加するものです。まだ機能的には充実していない面もありますが、エラー検知をサポートするなど少しずつ開発が進んでいます。
+atom-ide-crystal は、 前節でも触れた scry という Language Server と連携して IDE のような機能を追加するものです。まだ機能的には充実していない面もありますが、エラー検知をサポートするなど少しずつ開発が進んでいます。
 
 ==== Vim
 
