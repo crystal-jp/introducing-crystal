@@ -68,9 +68,6 @@ include::./examples/code.cr[]
 ```
 
 コードはディレクトリの `examples` 以下に置いてください。
-また、現状は言語に `crystal` を指定してもシンタックスハイライトがされませんが[既に Rouge に Pull Request は送ってある](https://github.com/jneen/rouge/pull/863)ので構わず指定してください。
-特に、そのために `ruby` 等を代わりに指定するのは絶対にやめてください。
-Crystal は Ruby ではありません。
 
 `examples` ディレクトリ以下に置いた Crystal のコードは `make test` の際にいくつか変換を施したのち実行されます。
 
