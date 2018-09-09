@@ -177,7 +177,7 @@ brew install crystal-lang --with-llvm
 
 残念ながら、まだ Crystal は Windows での実行をサポートしていません。ですが、 https://docs.microsoft.com/en-us/windows/wsl/about[Windows Subsystem for Linux] を利用することで Windows 10 上で Crystal を使うことが可能です。
 
-WSL 上での Crystal のインストール方法は、それぞれの Linux ディストリビューションにおけるインストール方法と同様です。例えば、もし WSL に Ubuntu を導入したのであれば、前掲の「Debian や Ubuntu」でのインストール方法を参照してください。
+WSL 上での Crystal のインストール方法は、それぞれの Linux ディストリビューションにおけるインストール方法と同様です。例えば、もし WSL に Ubuntu を導入したのであれば、前掲の「 Debian や Ubuntu 」でのインストール方法を参照してください。
 
 ==== その他のインストール方法
 
@@ -201,7 +201,7 @@ crystal -v
 
 [source,shell]
 ----
-Crystal 0.24.2 (2018-03-09)
+Crystal 0.26.1 (2018-08-27)
 ----
 
 といったバージョン情報が表示されます。もし「コマンドが見つからない」といったエラーが表示された場合は、
@@ -274,7 +274,7 @@ VSCode で Crystal プログラミングをサポートするエクステンシ�
 
 などの機能がすぐに利用できるようになります。
 
-vscode-crystal-lang の GitHub 上の Wiki にはより詳しい設定などの情報も記載されています。例えば、エラーの検知レベルをカスタマイズできるなど、より便利に使うための設定も書かれていますので合わせてご覧ください。
+vscode-crystal-lang の GitHub 上の Wiki にはより詳しい設定などの情報も記載されています。例えば、エラーの検知レベルをカスタマイズしたり、 https://github.com/crystal-lang-tools/scry[scry] という Crystal の Language Server との連携などのより便利に使うための設定も書かれていますので合わせてご覧ください。
 
 ==== Atom
 
@@ -285,7 +285,7 @@ GitHub 社製のエディタ Atom では、以下のパッケージを導入す�
 
 language-crystal は Atom のパッケージとしては language-crystal-actual という名前で提供されているので注意が必要です。　これをインストールすると Crystal のシンタックスハイライトや自動インデントがサポートされます。
 
-atom-ide-crystal は意欲的なパッケージで、 https://github.com/crystal-lang-tools/scry[scry] という Crystal の Language Server を利用して IDE のような機能を追加するものです。まだ機能的には充実していない面もありますが、エラー検知をサポートするなど少しずつ開発が進んでいます。
+atom-ide-crystal は、 前節でも触れた scry という Language Server と連携して IDE のような機能を追加するものです。まだ機能的には充実していない面もありますが、エラー検知をサポートするなど少しずつ開発が進んでいます。
 
 ==== Vim
 
