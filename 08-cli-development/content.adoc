@@ -1,5 +1,7 @@
 == CLI 開発
 
+著者: at-grandpa
+
 この章では Crystal での CLI 開発について書きます。
 
 === Crystal で CLI ツール
