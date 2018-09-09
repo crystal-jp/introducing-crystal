@@ -196,7 +196,7 @@ include::./examples/record_01_macro.cr[tags=code;main]
 [source,crystal,indent=0]
 ----
       io = IO::Memory.new
-include::./projects/macro/src/parallel.cr[tags=io_memory;code]
+include::./projects/macro/src/parallel.cr[tags=code]
 ----
 
 これを実行すると、返り値、出力結果は次のようになります。
@@ -358,7 +358,7 @@ include::./examples/syntax/if.cr[tags=code;main]
 
 [source,crystal,indent=0]
 ----
-include::./examples/syntax/if_outside.cr[tags=code;main]
+include::./examples/syntax/if_outside.cr[tags=code]
 ----
 
 これでちょっとした Macro を素早く書くことができます。

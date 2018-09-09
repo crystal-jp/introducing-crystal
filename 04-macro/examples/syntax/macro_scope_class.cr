@@ -18,7 +18,9 @@ class MacroScope
   end
 end
 
+# end::code[]
 # tag::main[]
+# tag::code[]
 # クラスメソッドと同じ syntax で参照可能
 MacroScope.my_macro # => "expanded my macro!!"
 

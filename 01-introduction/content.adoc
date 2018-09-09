@@ -17,7 +17,7 @@ Crystal が登場したのは2014年のことで、それからずっと「 Fast
 
 [source,crystal]
 ----
-include::./examples/very_basic_http_server.cr[tags=code;main]
+include::./examples/very_basic_http_server.cr[tags=code]
 ----
 
 いかがでしょうか。プログラムの細かいところはまだわからなくて問題ありませんが、Ruby を使ったことがある方であれば Crystal のプログラムが一見してとても Ruby に似ていることに気づいたと思います。自ら「 Slick as Ruby 」と称していることからもわかるように、Crystal は Ruby にとてもよく似たシンタックスを持ったプログラミング言語です。しかし、Crystal は Ruby とは異なる独自の特徴をいくつも持っており、それによって「 Fast as C 」の高速性や型安全なプログラミングを実現しています。　
@@ -47,7 +47,7 @@ Crystal は静的型付けのプログラミング言語です。これも、動
 
 [source,crystal]
 ----
-include::./examples/type_system.cr[tags=code;main]
+include::./examples/type_system.cr[tags=code]
 ----
 
 このプログラムは、変数 `foo` に、

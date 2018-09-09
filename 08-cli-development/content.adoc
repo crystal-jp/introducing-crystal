@@ -23,7 +23,7 @@ CLI ツールは、欲しい時にサッと書けて継続的に使えるよう�
 `echo` コマンドを模倣した `myecho` コマンドを作っていきましょう。
 まずは `crystal init app myecho` を実行してひな形を作ります。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal init app myecho
       create  myecho/.gitignore
@@ -41,7 +41,7 @@ Initialized empty Git repository in /path/to/myecho/.git/
 
 次のようなファイルが作成されました。
 
-[script,shell]
+[source,shell]
 ----
 $ tree
 .
@@ -62,7 +62,7 @@ $ tree
 これで準備は整いました。
 まずはテストを回してみましょう。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal spec
 F
@@ -88,7 +88,7 @@ crystal spec spec/myecho_spec.cr:6 # MyEcho works
 テストは落ちます。
 ひな形生成時、 `spec/myecho_spec.cr` に失敗するテストが書かれているからです。
 
-[script,crystal]
+[source,crystal]
 .spec/myecho_spec.cr
 ----
 include::./projects/myecho/spec/myecho_01_first_spec_failed.cr[]
@@ -97,7 +97,7 @@ include::./projects/myecho/spec/myecho_01_first_spec_failed.cr[]
 では、実際のテストから書いていきましょう。
 `myecho` の基本機能は「与えられた引数の文字列をそのまま出力する」です。
 
-[script,crystal]
+[source,crystal]
 .spec/myecho_spec.cr の一部
 ----
 include::./projects/myecho/spec/myecho_02_standart_output_spec.cr[tag=spec]
@@ -110,7 +110,7 @@ include::./projects/myecho/spec/myecho_02_standart_output_spec.cr[tag=spec]
 まだ実装が終わっていないので、このテストは落ちます。
 実装側も書きましょう。
 
-[script,crystal]
+[source,crystal]
 .src/myecho.cr
 ----
 include::./projects/myecho/src/myecho_02_standard_output.cr[]
@@ -121,7 +121,7 @@ include::./projects/myecho/src/myecho_02_standard_output.cr[]
 
 書けたらテストを回しましょう。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal spec
 .
@@ -138,7 +138,7 @@ Finished in 66 microseconds
 `src/myecho.cr` で `#run` を呼び出して直接 build してもよいですが、そうするとテスト時にも `#run` が実行されてしまいます。
 それを避けるために `cli.cr` ファイルを別途作成し、 `myecho.cr` を require しましょう。
 
-[script,crystal]
+[source,crystal]
 .src/cli.cr
 ----
 include::./projects/myecho/src/cli.cr[]
@@ -147,7 +147,7 @@ include::./projects/myecho/src/cli.cr[]
 これで、モジュールと build ファイルを分離できました。
 早速 build してみましょう。
 
-[script,shell]
+[source,shell]
 ----
 $ mkdir bin
 $ crystal build -o ./bin/myecho ./src/cli.cr
@@ -156,7 +156,7 @@ $ crystal build -o ./bin/myecho ./src/cli.cr
 `./bin/` ディレクトリを作成し、その中に `myecho` という名前でバイナリを出力しています。
 `myecho` を実行してみましょう。
 
-[script,shell]
+[source,shell]
 ----
 $ ./bin/myecho Hello!! World!!
 Hello!! World!!
@@ -166,7 +166,7 @@ Hello!! World!!
 CLI ツールの完成です！
 いろいろ出力して遊んでみてください。
 
-[script,shell]
+[source,shell]
 ----
 $ ./bin/myecho HAHAHA!
 HAHAHA!
@@ -196,7 +196,7 @@ include::./projects/myecho/spec/myecho_03_display_version_v_spec.cr[tag=version]
 
 テストを回しましょう。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal spec
 
@@ -226,7 +226,7 @@ crystal spec spec/myecho_spec.cr:14 # MyEcho MyEcho::Cli run writes the version 
 
 単純に「 `-v` が入力されたら `MyEcho::VERSION` を出力する」でもよいのですが、先程も宣言した通り `OptionParser` を導入します。
 
-[script,crystal]
+[source,crystal]
 .src/myecho.cr
 ----
 include::./projects/myecho/src/myecho_03_display_version_v.cr[]
@@ -234,11 +234,11 @@ include::./projects/myecho/src/myecho_03_display_version_v.cr[]
 <1> 標準ライブラリの `OptionParser` を require します。
 <2> `OptionParser#parse` に `args` を渡し、ブロック内でオプションを定義していきます。
 <3> `OptionParser#on` の引数に `-v` とその説明文を、ブロックには実行したい処理を書きます。
-<4> オプション以外の引数は、配列になって `OptionParser#unknown_args` のブロック引数となります。
+<4> オプション以外の引数は、配列になって `OptionParser#unknown_args` のブロック引数となります。
 
 テストを回しましょう。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal spec
 ...
@@ -251,7 +251,7 @@ Finished in 102 microseconds
 バイナリも作りましょう。
 そして、実際にバージョンを表示してみましょう。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal build -o ./bin/myecho ./src/cli.cr
 $ ./bin/myecho foo
@@ -266,7 +266,7 @@ CLI ツールらしくなってきました。
 ここまで来ると、 `--version` を指定してもバージョンを表示させたいですよね。
 現状だと例外が発生してしまいます。
 
-[script,shell]
+[source,shell]
 ----
 $ ./bin/myecho --version
 --version
@@ -287,7 +287,7 @@ include::./projects/myecho/spec/myecho_04_display_version_version_spec.cr[tag=ve
 
 テストを回すと、例外が発生しテストが落ちます。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal spec
 .....E
@@ -302,7 +302,7 @@ Error running at_exit handler: Index out of bounds
 
 対応するには、 `OptionParser#on` の第二引数に `long_flag` を指定します。
 
-[script,crystal,indent=0]
+[source,crystal,indent=0]
 .src/myecho.cr の一部
 ----
 include::./projects/myecho/src/myecho_04_display_version_version.cr[tag=version]
@@ -311,7 +311,7 @@ include::./projects/myecho/src/myecho_04_display_version_version.cr[tag=version]
 
 これでテストが通ります。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal spec
 ......
@@ -322,7 +322,7 @@ Finished in 189 microseconds
 
 実際にバージョンを表示してみましょう。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal build -o ./bin/myecho ./src/cli.cr
 $ ./bin/myecho foo
@@ -353,7 +353,7 @@ include::./projects/myecho/spec/myecho_05_display_help_specified_string_spec_fai
 現状だと、 `Invalid option: -h` でテストが落ちることは目に見えています。
 まずは適当に文字列を返しましょう。
 
-[script,crystal,indent=2]
+[source,crystal,indent=2]
 .src/myecho.cr の一部
 ----
 include::./projects/myecho/src/myecho_05_display_help_specified_string.cr[tag=help]
@@ -365,7 +365,7 @@ include::./projects/myecho/src/myecho_05_display_help_specified_string.cr[tag=di
 
 当然、テストは失敗します。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal spec
 .........F
@@ -392,7 +392,7 @@ crystal spec spec/myecho_spec.cr:31 # MyEcho MyEcho::Cli run writes the help to 
 `OptionParser#to_s` で、ヘルプメッセージを返してくれます。
 実装してみましょう。
 
-[script,crystal,indent=0]
+[source,crystal,indent=0]
 .src/myecho.cr の一部
 ----
 include::./projects/myecho/src/myecho_06_display_help_formatted.cr[tag=option_parser_start]
@@ -409,7 +409,7 @@ include::./projects/myecho/src/myecho_06_display_help_formatted.cr[tag=display_h
 
 テストを回します。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal spec
 ...F
@@ -443,7 +443,7 @@ include::./projects/myecho/spec/myecho_06_display_help_formatted_spec.cr[tag=hel
 
 今度はテストが回りました。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal spec
 ..........
@@ -454,7 +454,7 @@ Finished in 294 microseconds
 
 ヘルプが表示されるかを build して確かめます。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal build -o ./bin/myecho ./src/cli.cr
 $ ./bin/myecho foo
@@ -482,7 +482,7 @@ include::./projects/myecho/spec/myecho_07_display_help_banner_spec.cr[tag=help]
 テストが通るように実装しましょう。
 `OptionParser` には、 `#banner=` というメソッドがあり、ヘルプメッセージに加える文字列を定義できます。
 
-[script,crystal,indent=2]
+[source,crystal,indent=2]
 .src/myecho.cr の一部
 ----
 include::./projects/myecho/src/myecho_07_display_help_banner.cr[tag=help_banner]
@@ -491,7 +491,7 @@ include::./projects/myecho/src/myecho_07_display_help_banner.cr[tag=help_banner]
 これでテストを通すことができました。
 build して動作を確かめましょう。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal build -o ./bin/myecho ./src/cli.cr
 $ ./bin/myecho --help
@@ -513,7 +513,7 @@ Usage: myecho [options] [arguments]
 各コマンド引数に prefix をつける `--prefix` オプションです。
 期待される動作は次のようになります。
 
-[script,shell]
+[source,shell]
 ----
 $ ./bin/myecho --prefix pre_ foo bar baz
 pre_foo pre_bar pre_baz
@@ -530,7 +530,7 @@ include::./projects/myecho/spec/myecho_08_prefix_spec.cr[tag=prefix]
 
 このテストを通すように実装しましょう。
 
-[script,crystal,indent=2]
+[source,crystal,indent=2]
 .src/myecho.cr の一部
 ----
 include::./projects/myecho/src/myecho_08_prefix.cr[tag=option_parser_start]
@@ -556,7 +556,7 @@ include::./projects/myecho/src/myecho_08_prefix.cr[tag=display_prefix]
 これで `--prefix` の実装も終わりました。
 build して動作を確認しましょう。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal build -o ./bin/myecho ./src/cli.cr
 $ ./bin/myecho --prefix pre_ foo bar baz
@@ -572,19 +572,19 @@ pre_foo pre_bar pre_baz
 
 以下に、ここまでで紹介した `myecho` のコード全てを記載します。
 
-[script,crystal,indent=0]
+[source,crystal,indent=0]
 .src/cli.cr
 ----
 include::./projects/myecho/src/cli.cr[]
 ----
 
-[script,crystal,indent=0]
+[source,crystal,indent=0]
 .src/myecho.cr
 ----
 include::./projects/myecho/src/myecho.cr[]
 ----
 
-[script,crystal,indent=0]
+[source,crystal,indent=0]
 .src/myecho_spec.cr
 ----
 include::./projects/myecho/spec/myecho_spec.cr[]
@@ -607,7 +607,7 @@ Crystal でも CLI ビルダーツールが作成されています。
 早い時期から作成されていたライブラリです。
 百聞は一見に如かず、早速 `myecho` を実装しましょう。
 
-[script,crystal,indent=0]
+[source,crystal,indent=0]
 .src/myecho_commander.cr
 ----
 include::./projects/myecho_commander/src/myecho_commander.cr[]
@@ -631,7 +631,7 @@ include::./projects/myecho_commander/src/myecho_commander.cr[]
 
 コードを実際に実行すると次のようになります。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal run src/myecho_commander.cr -- foo bar baz
 foo bar baz
@@ -661,7 +661,7 @@ pre_foo pre_bar pre_baz
 最近も開発されているライブラリです。
 早速コードを見てみましょう。
 
-[script,crystal,indent=0]
+[source,crystal,indent=0]
 .src/myecho_admiral.cr
 ----
 include::./projects/myecho_admiral/src/myecho_admiral.cr[]
@@ -675,7 +675,7 @@ include::./projects/myecho_admiral/src/myecho_admiral.cr[]
 
 実際に実行すると次のようになります。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal run src/myecho_admiral.cr -- foo bar baz
 foo bar baz
@@ -703,7 +703,7 @@ pre_foo pre_bar pre_baz
 記述量の少なさと直感的な記述を目的に作成しています。
 コードを見てみましょう。
 
-[script,crystal,indent=0]
+[source,crystal,indent=0]
 .src/myecho_clim.cr
 ----
 include::./projects/myecho_clim/src/myecho_clim.cr[]
@@ -717,7 +717,7 @@ include::./projects/myecho_clim/src/myecho_clim.cr[]
 
 実際に実行すると次のようになります。
 
-[script,shell]
+[source,shell]
 ----
 $ crystal run src/myecho_clim.cr -- foo bar baz
 foo bar baz
