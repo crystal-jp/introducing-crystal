@@ -79,7 +79,7 @@ Crystal のバージョン `0.20.4` 以前は、 Macro 展開後のコードを�
 唯一のヒントは、エラーメッセージだけでした。
 しかし、 Crystal のバージョン `0.20.5` から `crystal tool expand` コマンドが追加されました。
 
-[source,shell]
+[source,console]
 ----
 $ crystal -v
 Crystal 0.24.1 (2017-12-26)
@@ -106,7 +106,7 @@ Options:
 `--cursor` オプションでカーソル位置を指定すると、カーソル上の Macro の展開結果を表示することができます。
 先程の `getter` で試してみましょう。
 
-[source,shell]
+[source,console]
 ----
 $ crystal tool expand --cursor /path/to/getter.cr:5:3 /path/to/getter.cr
 1 expansion found
@@ -129,7 +129,7 @@ Macro が展開されました。
 設定方法は、エディタそれぞれの方法を参照してください。
 
 この `crystal tool expand` のおかげで、 Macro のデバッグが格段にしやすくなりました。
-Macro を記述する際はぜひ活用してみてください。
+Macro を記述する際はぜひ活用してみてください。
 
 === 標準搭載の Macro
 
@@ -588,7 +588,7 @@ include::./examples/syntax/fresh_variables_example2.cr[tags=code;main]
 仕組みは簡単です。
 上記のコードで `crystal tool expand` をしてみましょう。
 
-[source,shell,indent=0]
+[source,console,indent=0]
 ----
 $ crystal tool expand -c /path/to/fresh_variables_example.cr:6:1 /path/to/fresh_variables_example.cr
 1 expansion found

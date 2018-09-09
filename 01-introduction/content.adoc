@@ -80,7 +80,7 @@ puts my_string.upcase
 
 これは、`rand` メソッドによって `0` 〜 `2` を生成し、その結果によって `if` 条件を判定しているものです。しかし、実行するまでその結果が「真」になるかどうかはわかりません。したがって、`my_string` が Null でないことをコンパイル時に保証することはできません。この場合は `upcase` メソッドが呼び出せるかどうかがわからないため、コンパイルは以下のようなエラーになります。
 
-[source,shell]
+[source,console]
 ----
 $ crystal hello_world.cr
 Error in hello_world.cr:5: undefined method 'upcase' for Nil (compile-time type is (String | Nil))

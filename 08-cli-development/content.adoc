@@ -23,7 +23,7 @@ CLI ツールは、欲しい時にサッと書けて継続的に使えるよう�
 `echo` コマンドを模倣した `myecho` コマンドを作っていきましょう。
 まずは `crystal init app myecho` を実行してひな形を作ります。
 
-[source,shell]
+[source,console]
 ----
 $ crystal init app myecho
       create  myecho/.gitignore
@@ -41,7 +41,7 @@ Initialized empty Git repository in /path/to/myecho/.git/
 
 次のようなファイルが作成されました。
 
-[source,shell]
+[source,console]
 ----
 $ tree
 .
@@ -62,7 +62,7 @@ $ tree
 これで準備は整いました。
 まずはテストを回してみましょう。
 
-[source,shell]
+[source,console]
 ----
 $ crystal spec
 F
@@ -121,7 +121,7 @@ include::./projects/myecho/src/myecho_02_standard_output.cr[]
 
 書けたらテストを回しましょう。
 
-[source,shell]
+[source,console]
 ----
 $ crystal spec
 .
@@ -147,7 +147,7 @@ include::./projects/myecho/src/cli.cr[]
 これで、モジュールと build ファイルを分離できました。
 早速 build してみましょう。
 
-[source,shell]
+[source,console]
 ----
 $ mkdir bin
 $ crystal build -o ./bin/myecho ./src/cli.cr
@@ -156,7 +156,7 @@ $ crystal build -o ./bin/myecho ./src/cli.cr
 `./bin/` ディレクトリを作成し、その中に `myecho` という名前でバイナリを出力しています。
 `myecho` を実行してみましょう。
 
-[source,shell]
+[source,console]
 ----
 $ ./bin/myecho Hello!! World!!
 Hello!! World!!
@@ -166,7 +166,7 @@ Hello!! World!!
 CLI ツールの完成です！
 いろいろ出力して遊んでみてください。
 
-[source,shell]
+[source,console]
 ----
 $ ./bin/myecho HAHAHA!
 HAHAHA!
@@ -196,7 +196,7 @@ include::./projects/myecho/spec/myecho_03_display_version_v_spec.cr[tag=version]
 
 テストを回しましょう。
 
-[source,shell]
+[source,console]
 ----
 $ crystal spec
 
@@ -238,7 +238,7 @@ include::./projects/myecho/src/myecho_03_display_version_v.cr[]
 
 テストを回しましょう。
 
-[source,shell]
+[source,console]
 ----
 $ crystal spec
 ...
@@ -251,7 +251,7 @@ Finished in 102 microseconds
 バイナリも作りましょう。
 そして、実際にバージョンを表示してみましょう。
 
-[source,shell]
+[source,console]
 ----
 $ crystal build -o ./bin/myecho ./src/cli.cr
 $ ./bin/myecho foo
@@ -266,13 +266,13 @@ CLI ツールらしくなってきました。
 ここまで来ると、 `--version` を指定してもバージョンを表示させたいですよね。
 現状だと例外が発生してしまいます。
 
-[source,shell]
+[source,console]
 ----
 $ ./bin/myecho --version
 --version
 Invalid option: --version (OptionParser::InvalidOption)
 
-（スタックトレースが続く ... ）
+（スタックトレースが続く ... ）
 ----
 
 では対応していきましょう。
@@ -287,7 +287,7 @@ include::./projects/myecho/spec/myecho_04_display_version_version_spec.cr[tag=ve
 
 テストを回すと、例外が発生しテストが落ちます。
 
-[source,shell]
+[source,console]
 ----
 $ crystal spec
 .....E
@@ -311,7 +311,7 @@ include::./projects/myecho/src/myecho_04_display_version_version.cr[tag=version]
 
 これでテストが通ります。
 
-[source,shell]
+[source,console]
 ----
 $ crystal spec
 ......
@@ -322,7 +322,7 @@ Finished in 189 microseconds
 
 実際にバージョンを表示してみましょう。
 
-[source,shell]
+[source,console]
 ----
 $ crystal build -o ./bin/myecho ./src/cli.cr
 $ ./bin/myecho foo
@@ -365,7 +365,7 @@ include::./projects/myecho/src/myecho_05_display_help_specified_string.cr[tag=di
 
 当然、テストは失敗します。
 
-[source,shell]
+[source,console]
 ----
 $ crystal spec
 .........F
@@ -409,7 +409,7 @@ include::./projects/myecho/src/myecho_06_display_help_formatted.cr[tag=display_h
 
 テストを回します。
 
-[source,shell]
+[source,console]
 ----
 $ crystal spec
 ...F
@@ -443,7 +443,7 @@ include::./projects/myecho/spec/myecho_06_display_help_formatted_spec.cr[tag=hel
 
 今度はテストが回りました。
 
-[source,shell]
+[source,console]
 ----
 $ crystal spec
 ..........
@@ -454,7 +454,7 @@ Finished in 294 microseconds
 
 ヘルプが表示されるかを build して確かめます。
 
-[source,shell]
+[source,console]
 ----
 $ crystal build -o ./bin/myecho ./src/cli.cr
 $ ./bin/myecho foo
@@ -491,7 +491,7 @@ include::./projects/myecho/src/myecho_07_display_help_banner.cr[tag=help_banner]
 これでテストを通すことができました。
 build して動作を確かめましょう。
 
-[source,shell]
+[source,console]
 ----
 $ crystal build -o ./bin/myecho ./src/cli.cr
 $ ./bin/myecho --help
@@ -513,7 +513,7 @@ Usage: myecho [options] [arguments]
 各コマンド引数に prefix をつける `--prefix` オプションです。
 期待される動作は次のようになります。
 
-[source,shell]
+[source,console]
 ----
 $ ./bin/myecho --prefix pre_ foo bar baz
 pre_foo pre_bar pre_baz
@@ -556,7 +556,7 @@ include::./projects/myecho/src/myecho_08_prefix.cr[tag=display_prefix]
 これで `--prefix` の実装も終わりました。
 build して動作を確認しましょう。
 
-[source,shell]
+[source,console]
 ----
 $ crystal build -o ./bin/myecho ./src/cli.cr
 $ ./bin/myecho --prefix pre_ foo bar baz
@@ -613,7 +613,7 @@ Crystal でも CLI ビルダーツールが作成されています。
 include::./projects/myecho_commander/src/myecho_commander.cr[]
 ----
 
-サードパーティ製のライブラリは、基本的に次の構成になっています。
+サードパーティ製のライブラリは、基本的に次の構成になっています。
 
 * コマンドの説明（ `Description` や `Usage` など）
 * `Options` や `Flags` の定義
@@ -631,7 +631,7 @@ include::./projects/myecho_commander/src/myecho_commander.cr[]
 
 コードを実際に実行すると次のようになります。
 
-[source,shell]
+[source,console]
 ----
 $ crystal run src/myecho_commander.cr -- foo bar baz
 foo bar baz
@@ -668,14 +668,14 @@ include::./projects/myecho_admiral/src/myecho_admiral.cr[]
 ----
 
 行数が少ないですね。
-`help` と `version` の定義が Macro １行で書かれています。
+`help` と `version` の定義が Macro １行で書かれています。
 こういった DSL を提供しやすいのも Macro の強みです。
 構造もわかりやすく、読みやすいと思います。
 もちろん、サブコマンドも対応しています。
 
 実際に実行すると次のようになります。
 
-[source,shell]
+[source,console]
 ----
 $ crystal run src/myecho_admiral.cr -- foo bar baz
 foo bar baz
@@ -717,7 +717,7 @@ include::./projects/myecho_clim/src/myecho_clim.cr[]
 
 実際に実行すると次のようになります。
 
-[source,shell]
+[source,console]
 ----
 $ crystal run src/myecho_clim.cr -- foo bar baz
 foo bar baz

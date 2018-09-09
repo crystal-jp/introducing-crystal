@@ -16,44 +16,44 @@ Debian 系のディストリビューションでは、 Crystal の公式リポ�
 
 そのために、まず APT の構成にリポジトリを追加します。以下のコマンドを実行してください。
 
-[source,shell]
+[source,console]
 ----
-curl -sSL https://dist.crystal-lang.org/apt/setup.sh | sudo bash
+$ curl -sSL https://dist.crystal-lang.org/apt/setup.sh | sudo bash
 ----
 
 これによりリポジトリが構成されキーが登録されます。もし上記を自分自身で設定するのがお好みの場合は、以下を実行しても同じことができます。
 
-[source,shell]
+[source,console]
 ----
-curl -sL "https://keybase.io/crystal/pgp_keys.asc" | sudo apt-key add -
-echo "deb https://dist.crystal-lang.org/apt crystal main" | sudo tee /etc/apt/sources.list.d/crystal.list
-sudo apt-get update
+$ curl -sL "https://keybase.io/crystal/pgp_keys.asc" | sudo apt-key add -
+$ echo "deb https://dist.crystal-lang.org/apt crystal main" | sudo tee /etc/apt/sources.list.d/crystal.list
+$ sudo apt-get update
 ----
 
 リポジトリを構成したら以下で Crystal がインストールできます。
 
-[source,shell]
+[source,console]
 ----
-sudo apt install crystal
+$ sudo apt install crystal
 ----
 
 以下に記載するパッケージは必須ではありませんが、標準ライブラリの機能を使う上で必要となるためインストールすることを推奨します。
 
-[source,shell]
+[source,console]
 ----
-sudo apt install libssl-dev      # OpenSSL に必要です
-sudo apt install libxml2-dev     # XML に必要です
-sudo apt install libyaml-dev     # YAML に必要です
-sudo apt install libgmp-dev      # Big numbers に必要です
-sudo apt install libreadline-dev # Readline に必要です
+$ sudo apt install libssl-dev      # OpenSSL に必要です
+$ sudo apt install libxml2-dev     # XML に必要です
+$ sudo apt install libyaml-dev     # YAML に必要です
+$ sudo apt install libgmp-dev      # Big numbers に必要です
+$ sudo apt install libreadline-dev # Readline に必要です
 ----
 
 なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードすることができます。
 
-[source,shell]
+[source,console]
 ----
-sudo apt update
-sudo apt install crystal
+$ sudo apt update
+$ sudo apt install crystal
 ----
 
 ==== Red Hat や CentOS
@@ -62,45 +62,45 @@ Red Hat 系のディストリビューションでも、 Crystal の公式リポ
 
 まず YUM の構成にリポジトリを追加します。以下のコマンドを実行してください。
 
-[source,shell]
+[source,console]
 ----
-curl https://dist.crystal-lang.org/rpm/setup.sh | sudo bash
+$ curl https://dist.crystal-lang.org/rpm/setup.sh | sudo bash
 ----
 
 これでリポジトリが構成されキーが登録されますが、以下のように、同様のことを手動で行うことも可能です。
 
-[source,shell]
+[source,console]
 ----
-rpm --import https://dist.crystal-lang.org/rpm/RPM-GPG-KEY
+$ rpm --import https://dist.crystal-lang.org/rpm/RPM-GPG-KEY
 
-cat > /etc/yum.repos.d/crystal.repo <<END
-[crystal]
-name = Crystal
-baseurl = https://dist.crystal-lang.org/rpm/
-END
+$ cat > /etc/yum.repos.d/crystal.repo <<END
+$ [crystal]
+$ name = Crystal
+$ baseurl = https://dist.crystal-lang.org/rpm/
+$ END
 ----
 
 リポジトリを構成したら以下で Crystal がインストールできます。
 
-[source,shell]
+[source,console]
 ----
-sudo yum install crystal
+$ sudo yum install crystal
 ----
 
 なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードすることができます。
 
-[source,shell]
+[source,console]
 ----
-sudo yum update crystal
+$ sudo yum update crystal
 ----
 
 ==== Arch Linux
 
 Arch Linux では、ユーザリポジトリから Crystal をインストールできます。パッケージの依存関係を管理するための `shards` も必要になるので同様にインストールしてください。
 
-[source,shell]
+[source,console]
 ----
-sudo pacman -S crystal shards
+$ sudo pacman -S crystal shards
 ----
 
 ==== Gentoo Linux
@@ -109,7 +109,7 @@ Gentoo Linux では、メインの overlay に Crystal が含まれています�
 
 以下で構成のフラグを確認することができます。
 
-[source,shell]
+[source,console]
 ----
 # equery u dev-lang/crystal
 [ Legend : U - final flag setting for installation]
@@ -125,59 +125,59 @@ Gentoo Linux では、メインの overlay に Crystal が含まれています�
 
 以下を実行してインストールしてください。
 
-[source,shell]
+[source,console]
 ----
-su -
-emerge -a dev-lang/crystal
+$ su -
+# emerge -a dev-lang/crystal
 ----
 
 ==== macOS
 
 macOS では、 http://brew.sh/[Homebrew] を利用して簡単に Crystal をインストールすることができます。
 
-[source,shell]
+[source,console]
 ----
-brew update
-brew install crystal
+$ brew update
+$ brew install crystal
 ----
 
 なお、macOS で Crystal を使うときに以下のエラーに遭遇することがあります。
 
-[source,shell]
+[source,console]
 ----
 ld: library not found for -levent
 ----
 
 その場合は、以下のようにコマンドラインツールを再インストールした上で、デフォルトのツールチェインを選択し直す必要があります。
 
-[source,shell]
+[source,console]
 ----
-xcode-select --install
-xcode-select --switch /Library/Developer/CommandLineTools
+$ xcode-select --install
+$ xcode-select --switch /Library/Developer/CommandLineTools
 ----
 
 ==== Linuxbrew
 
 http://linuxbrew.sh/[Linuxbrew] を使って Linux に Crystal をインストールすることもできます。
 
-[source,shell]
+[source,console]
 ----
-brew update
-brew install crystal-lang
+$ brew update
+$ brew install crystal-lang
 ----
 
 もし Crystal の言語自体を開発することにも興味があるのであれば、同時に LLVM もインストールしておくと良いでしょう。その場合は上記の2行目を以下に変更します。
 
-[source,shell]
+[source,console]
 ----
-brew install crystal-lang --with-llvm
+$ brew install crystal-lang --with-llvm
 ----
 
 ==== Windows
 
 残念ながら、まだ Crystal は Windows での実行をサポートしていません。ですが、 https://docs.microsoft.com/en-us/windows/wsl/about[Windows Subsystem for Linux] を利用することで Windows 10 上で Crystal を使うことが可能です。
 
-WSL 上での Crystal のインストール方法は、それぞれの Linux ディストリビューションにおけるインストール方法と同様です。例えば、もし WSL に Ubuntu を導入したのであれば、前掲の「 Debian や Ubuntu 」でのインストール方法を参照してください。
+WSL 上での Crystal のインストール方法は、それぞれの Linux ディストリビューションにおけるインストール方法と同様です。例えば、もし WSL に Ubuntu を導入したのであれば、前掲の「 Debian や Ubuntu 」でのインストール方法を参照してください。
 
 ==== その他のインストール方法
 
@@ -192,14 +192,14 @@ WSL 上での Crystal のインストール方法は、それぞれの Linux �
 
 Crystal のインストールができたら、以下のコマンドを実行してみましょう。これで、Crystal がインストールされて利用できる状態かどうかが確認できます。
 
-[source,shell]
+[source,console]
 ----
-crystal -v
+$ crystal -v
 ----
 
 正常にインストールされている場合、
 
-[source,shell]
+[source,console]
 ----
 Crystal 0.26.1 (2018-08-27)
 ----
@@ -224,14 +224,14 @@ puts "Hello world!"
 
 それではプログラムを実行してみましょう。
 
-[source,shell]
+[source,console]
 ----
-crystal hello.cr
+$ crystal hello.cr
 ----
 
 実行して、
 
-[source,shell]
+[source,console]
 ----
 Hello world!
 ----
@@ -240,9 +240,9 @@ Hello world!
 
 Crystal はコンパイラ言語ですが、このように1つのコマンドでコンパイルと実行を同時に行うことができます。
 
-[source,shell]
+[source,console]
 ----
-crystal run hello.cr
+$ crystal run hello.cr
 ----
 
 と実行しても同様です。

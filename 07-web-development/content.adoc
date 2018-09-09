@@ -28,7 +28,7 @@ server.listen
 以下のコードを実行することで簡易 HTTP サーバとして機能します。 +
 localhost:8080 にアクセスすると `Hello world` が表示されます。
 
-[source,shell]
+[source,console]
 ----
 $ crystal server.cr
 Listening on http://0.0.0.0:8080
@@ -80,7 +80,7 @@ server.listen
 
 `curl -X GET http://localhost:8080` を実行することで以下の内容がコンソールに出力されます。
 
-[source,shell]
+[source,console]
 ----
 bb
 
@@ -116,10 +116,10 @@ Ruby でいうところの Sinatra に似た設計思想で作られており、
 適当な作業用のディレクトリ以下で、以下のコードを実行してみます。ディレクトリが作成され幾つかのファイルがひな形から作成されます。 +
 本稿ではサンプルアプリを kemal-sample として進めます。
 
-[source,shell]
+[source,console]
 ----
-crystal init app kemal-sample
-cd kemal-sample
+$ crystal init app kemal-sample
+$ cd kemal-sample
 ----
 
 shard.yml ファイルに以下の内容を追記します。
@@ -131,9 +131,9 @@ include::./projects/kemal-sample/shard.yml[lines=11..14]
 
 以下のコマンドを実行することで Kemal 本体をインストールすることが出来ます。
 
-[source,shell]
+[source,console]
 ----
-shards install
+$ shards install
 ----
 
 ==== Kemal FirstStep
@@ -186,10 +186,10 @@ end
 詳しい内容については後述します。
 先ずは記述したら、以下のコマンドでビルド、実行します。
 
-[source,shell]
+[source,console]
 ----
-crystal build src/kemal-sample.cr
-./kemal-sample
+$ crystal build src/kemal-sample.cr
+$ ./kemal-sample
 ----
 
 ブラウザで `http://localhost:3000/` でアクセスします。 +
@@ -210,9 +210,9 @@ crystal build src/kemal-sample.cr
 |============
 
 DB を作成します。
-[source,shell]
+[source,console]
 ----
-createdb kemal_sample_development -O your_owner
+$ createdb kemal_sample_development -O your_owner
 ----
 
 DDL を作成しロードします。
@@ -222,9 +222,9 @@ DDL を作成しロードします。
 include::./projects/kemal-sample/sql/create_articles.sql[]
 ----
 
-[source,shell]
+[source,console]
 ----
-psql -U your_owner -d kemal_sample_development -f sql/create_articles.sql
+$ psql -U your_owner -d kemal_sample_development -f sql/create_articles.sql
 ----
 
 作成した後、 shard.yml ファイルに以下の内容を追記します。
@@ -236,9 +236,9 @@ include::./projects/kemal-sample/shard.yml[lines=11..18]
 
 編集後、以下のコマンドを実行します。
 
-[source,shell]
+[source,console]
 ----
-shards install
+$ shards install
 ----
 
 ==== 投稿一覧ページの編集
