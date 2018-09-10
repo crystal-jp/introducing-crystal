@@ -8,6 +8,7 @@ crystal-jp
 :table-caption: テーブル
 :toc:
 :hardbreaks:
+:data-uri:
 
 include::./01-introduction/content.adoc[]
 
