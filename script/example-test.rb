@@ -6,16 +6,17 @@ require 'tmpdir'
 require_relative './util'
 require_relative './example'
 
-def run_example_test(tid, example_path)
-  example = Example.new example_path
-  example.path.dirname.mkpath
-  example.path.write example.code
-  case example.mode
-  when :compileonly
+EXAMPLE_MODE = {
+  compileonly: lambda { |example, tid|
     sh 'crystal', 'build', '--no-codegen', example.path, thread_id: tid
-  when :normal, :assert
+  },
+  normal: lambda { |example, tid|
     sh 'crystal', 'run', example.path, thread_id: tid
-  when :output
+  },
+  assert: lambda { |example, tid|
+    sh 'crystal', 'run', example.path, thread_id: tid
+  },
+  output: lambda { |example, tid|
     Dir.mktmpdir do |tmp|
       tmp = Pathname.new(tmp)
       expected = tmp / 'expected.txt'
@@ -24,7 +25,14 @@ def run_example_test(tid, example_path)
       sh 'crystal', 'run', example.path, thread_id: tid, out: result
       sh 'diff', '-u', expected, result, thread_id: tid
     end
-  end
+  }
+}.freeze
+
+def run_example_test(tid, example_path)
+  example = Example.new example_path
+  example.path.dirname.mkpath
+  example.path.write example.code
+  EXAMPLE_MODE[example.mode].call(example, tid)
 end
 
 NUM_THREAD = 4
@@ -32,7 +40,9 @@ queue = Queue.new
 threads = []
 NUM_THREAD.times do |i|
   thread = Thread.new(i) do |tid|
-    while example_path = queue.shift
+    loop do
+      example_path = queue.shift
+      break unless example_path
       run_example_test tid, example_path
     end
   end
@@ -46,4 +56,4 @@ EXAMPLES.each do |example|
 end
 queue.close
 
-threads.each &:join
+threads.each(&:join)

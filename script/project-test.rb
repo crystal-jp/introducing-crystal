@@ -7,20 +7,22 @@ require_relative './util'
 
 def run_project_test(tid, path)
   if (path / 'Makefile').exist?
-    sh 'make', '-C', path, thread_id: tid
-    sh 'make', '-C', path, 'test', thread_id: tid
+    sh 'make', thread_id: tid, chdir: path
+    sh 'make', 'test', thread_id: tid, chdir: path
   else
-    sh 'sh', '-c', "cd #{path.to_s.shellescape}; shards", thread_id: tid
-    sh 'sh', '-c', "cd #{path.to_s.shellescape}; crystal spec", thread_id: tid
+    sh 'shards', thread_id: tid, chdir: path
+    sh 'crystal', 'spec', thread_id: tid, chdir: path
   end
 end
 
-NUM_THREAD = 2
+NUM_THREAD = 4
 queue = Queue.new
 threads = []
 NUM_THREAD.times do |i|
   thread = Thread.new(i) do |tid|
-    while path = queue.shift
+    loop do
+      path = queue.shift
+      break unless path
       run_project_test tid, path
     end
   end
@@ -35,4 +37,4 @@ PROJECTS.each do |project|
 end
 queue.close
 
-threads.each &:join
+threads.each(&:join)
