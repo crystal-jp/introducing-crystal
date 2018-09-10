@@ -180,7 +180,7 @@ puts "Crystal"
 
 #### `# tag::compileonly[]`
 
-ソースコード中に `# tag::compileonly[]` があった場合、そのコードは上記のテストは実行されず、コンパイルが通るか確認するだけになります。
+ソースコード中に `# tag::compileonly[]` がある場合、そのコードは上記のテストは実行されず、コンパイルが通るか確認するだけになります。
 
 ```crystal
 # tag::compileonly[]
