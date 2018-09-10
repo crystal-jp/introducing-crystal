@@ -22,11 +22,10 @@ ASCIIDOCTOR_HTML_FLAGS = \
   -r asciidoctor-rouge \
   $(ASCIIDOCTOR_ROUGE_FLAGS)
 
-BUILD_PDFS = \
-  $(PREFIX)/techbookfest4-print.pdf \
-  $(PREFIX)/techbookfest4-web.pdf
-BUILD_HTML = $(PREFIX)/techbookfest4.html
-BUILD_FILES = $(BUILD_PDFS) $(BUILD_HTML)
+PRINT_PDF = $(PREFIX)/introducing-crystal-print.pdf
+WEB_PDF = $(PREFIX)/introducing-crystal-web.pdf
+PDFS = $(PRINT_PDF) $(WEB_PDF)
+HTML = $(PREFIX)/introducing-crystal.html
 
 ADOCS = \
   index.adoc \
@@ -38,21 +37,21 @@ ASSETS = $(shell find [0-9][0-9]-* -not -name '*.adoc')
 CRS = $(EXAMPLES) $(PROJECT_CRS)
 
 .PHONY: all
-all: $(BUILD_FILES)
+all: pdf html
 
 .PHONY: pdf print-pdf web-pdf html
 pdf: print-pdf web-pdf
-print-pdf: $(PREFIX)/techbookfest4-print.pdf
-web-pdf: $(PREFIX)/techbookfest4-web.pdf
-html: $(PREFIX)/techbookfest4.html
+print-pdf: $(PRINT_PDF)
+web-pdf: $(WEB_PDF)
+html: $(HTML)
 
-$(PREFIX)/techbookfest4-print.pdf: $(ADOCS) $(ASSETS)
+$(PRINT_PDF): $(ADOCS) $(ASSETS)
 	bundle exec asciidoctor-pdf $(ASCIIDOCTOR_PRINT_PDF_FLAGS) -o $@ $<
 
-$(PREFIX)/techbookfest4-web.pdf: $(ADOCS) $(ASSETS)
+$(WEB_PDF): $(ADOCS) $(ASSETS)
 	bundle exec asciidoctor-pdf $(ASCIIDOCTOR_WEB_PDF_FLAGS) -o $@ $<
 
-$(PREFIX)/techbookfest4.html: $(ADOCS) $(ASSETS)
+$(HTML): $(ADOCS) $(ASSETS)
 	bundle exec asciidoctor $(ASCIIDOCTOR_HTML_FLAGS) -o $@ $<
 
 .PHONY: lint lint-full redpen rubocop crystal-format format backspace

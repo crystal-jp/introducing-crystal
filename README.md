@@ -21,7 +21,7 @@ $ make
 
 ```console
 $ ls build
-techbookfest4-print.pdf techbookfest4-web.pdf techbookfest4.html
+introducing-crystal-print.pdf introducing-crystal-web.pdf introducing-crystal.html
 ```
 
 それぞれ印刷用の PDF、Web 公開用の PDF、HTML です。
