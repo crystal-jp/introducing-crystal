@@ -1,6 +1,6 @@
-# techbookfest4
+# introducing-crystal
 
-技術書典4で頒布する本を管理するリポジトリです。
+『入門 Crystal』の原稿を管理するリポジトリです。
 
 ## 必要なもの
 
@@ -21,7 +21,7 @@ $ make
 
 ```console
 $ ls build
-techbookfest4-print.pdf techbookfest4-web.pdf techbookfest4.html
+introducing-crystal-print.pdf introducing-crystal-web.pdf introducing-crystal.html
 ```
 
 それぞれ印刷用の PDF、Web 公開用の PDF、HTML です。
