@@ -82,10 +82,10 @@ Shards には公式のリポジトリがなく、shard の検索機能が提供�
 今のところ、この問題を解決する決定打は出てきていませんが、以下の2サイトは必要な shard を探す際の助けになってくれるはずです。
 
 [suppress='SuggestExpression']
-Awesome Crystal:: link:https://github.com/veelenga/awesome-crystal[] +
+Awesome Crystal:: link:https://github.com/veelenga/awesome-crystal[]
 一定の条件を満たした自薦他薦の shard をカテゴリ分類してリスト化。リストの更新も人の手で管理されているため、限定的ではあるもののある程度の基準をクリアした shard が見つかる。
 
-CrystalShards.xyz:: link:http://crystalshards.xyz/[] +
+CrystalShards.xyz:: link:http://crystalshards.xyz/[]
 GitHub で公開されている shard のキーワード検索機能を提供。GitHub で公開されている shard を自動的に収集しているため玉石混こうではあるものの、Awesome Crytstal より網羅的にマイナな shard も見つけられる。
 
 試しに Awesome Crystal 内を「 html 」で検索してみると、HTML 構築専用の構文を提供してくれる `html_builder` という shard が見つかりました。早速これを使ってみることにしましょう。
@@ -703,49 +703,49 @@ include::examples/bear1_spec.cr[]
 
 .● 使用可能なオブジェクトの状態を評価する
 
-`actual.sould eq expected`:: `actual` が `expected` と等しいかどうか。+
+`actual.sould eq expected`:: `actual` が `expected` と等しいかどうか。
 条件： `actual == expected`
 
-`actual.sould be expected`:: `actual` が `expected` 同値とみなせるかどうか。+
+`actual.sould be expected`:: `actual` が `expected` 同値とみなせるかどうか。
 条件： `actual.same?(expected)`
 
-`actual.sould be_a expected`:: `actual` が `expected` 型の値かどうか。+
+`actual.sould be_a expected`:: `actual` が `expected` 型の値かどうか。
 条件： `actual.is_a?(expected)`
 
-`actual.sould be_nil`:: `actual` が `nil` かどうか。+
+`actual.sould be_nil`:: `actual` が `nil` かどうか。
 条件： `actual.nil?`
 
-`actual.should be_true`:: `acrual` が `true` かどうか。+
+`actual.should be_true`:: `acrual` が `true` かどうか。
 条件： `actual == true`
 
-`actual.should be_false`:: `acrual` が `false` かどうか。+
+`actual.should be_false`:: `acrual` が `false` かどうか。
 条件： `actual == false`
 
-`actual.should be_truthy`:: `acrual` が `if` 文で真とみなされる。+
+`actual.should be_truthy`:: `acrual` が `if` 文で真とみなされる。
 条件： `acrual` が `false`、`nil`、`Pointer.null` のいずれでもない
 
-`actual.should be_falsey`:: `acrual` が `if` 文で偽とみなされる。+
+`actual.should be_falsey`:: `acrual` が `if` 文で偽とみなされる。
 条件： `acrual` が `false`、`nil`、`Pointer.null` のいずれか
 
-`actual.should be < expected`:: `actual` が `expected` より小さいかどうか。+
+`actual.should be < expected`:: `actual` が `expected` より小さいかどうか。
 条件： `actual < expected`
 
-`actual.should be <= expected`:: `actual` が `expected` 以下かどうか。+
+`actual.should be <= expected`:: `actual` が `expected` 以下かどうか。
 条件： `actual <= expected`
 
-`actual.should be > expected`:: `actual` が `expected` より大きいかどうか。+
+`actual.should be > expected`:: `actual` が `expected` より大きいかどうか。
 条件： `actual > expected`
 
-`actual.should be >= expected`:: `actual` が `expected` 以上かどうか。+
+`actual.should be >= expected`:: `actual` が `expected` 以上かどうか。
 条件： `actual >= expected`
 
-`actual.should be_close(expected, delta)`:: `actual` と `expexted` の差が `delta` 以下かどうか。+
+`actual.should be_close(expected, delta)`:: `actual` と `expexted` の差が `delta` 以下かどうか。
 条件： `(actual - expected).abs <= delta`
 
-`actual.should contain expected`:: `actual` が `expexted` を含むかどうか。+
+`actual.should contain expected`:: `actual` が `expexted` を含むかどうか。
 条件： `actual.includes?(expected)`
 
-`actual.should match expected`:: `actual` が `expexted` にマッチするかどうか。+
+`actual.should match expected`:: `actual` が `expexted` にマッチするかどうか。
 条件： `actual =~ expected`
 
 ===== ◆ 例外の発生を確認する
