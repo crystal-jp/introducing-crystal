@@ -1,8 +1,10 @@
-# tag::file[]
+# tag::def[]
 # 可変長引数・名前付き引数の余りを受け取ってその型を返すメソッド
 def vararg_type(*tuple, **named_tuple)
   [typeof(tuple), typeof(named_tuple)]
 end
+
+# end::def[]
 
 # tag::main[]
 # 可変長引数の場合
@@ -23,4 +25,3 @@ named_tuple = {
 vararg_type(*tuple, **named_tuple)
 # => [Tuple(Int32, String), NamedTuple(foo: Int32, bar: String)]
 # end::main[]
-# end::file[]
