@@ -8,16 +8,22 @@ targets:
   kemal-sample:
     main: src/kemal-sample.cr
 
+# tag::dep[]
+# tag::db-dep[]
+# tag::kemal-dep[]
 dependencies:
   kemal:
     github: kemalcr/kemal
     version: 0.24.0
+# end::kemal-dep[]
   db:
     github: crystal-lang/crystal-db
   pg:
     github: will/crystal-pg
+# end::db-dep[]
   spec-kemal:
     github: kemalcr/spec-kemal
+# end::dep[]
 
 crystal: 0.26.0
 

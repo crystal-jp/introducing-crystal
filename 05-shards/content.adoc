@@ -27,7 +27,7 @@ RubyGems と Shards の大きな違いは、パッケージのインストール
 プロジェクト名は、shard として公開するのであればいくつかルール（後述）もありますが、そうでない場合にはそこまで深く考える必要はありません。今回はシンプル（simple）な HTML を返すアプリなので `simple_html` というプロジェクト名にすることにします。
 
 [source,console]
-.`sinple_html` コマンド利用イメージ
+.`simple_html` コマンド利用イメージ
 ----
 $ simple_html "Page Title" "Page body."
 <html><head><title>Page Title</title></head><body><h1>Page Title</h1><p>Page body.</p></body></html>

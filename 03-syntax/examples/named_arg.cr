@@ -1,4 +1,4 @@
-# tag::file[]
+# tag::def[]
 # 割り算をするメソッド
 def div(left, right)
   left / right
@@ -10,6 +10,8 @@ def even(if cond)
   cond
 end
 
+# end::def[]
+
 # tag::main[]
 # 名前付き引数を指定
 div(left: 1.0, right: 2.0) # => 0.5
@@ -19,4 +21,3 @@ div(right: 2.0, left: 1.0) # => 0.5
 # `cond` ではなく `if` を名前付き引数に指定する
 even if: true # => true
 # end::main[]
-# end::file[]
