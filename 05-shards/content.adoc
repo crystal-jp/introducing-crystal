@@ -26,8 +26,8 @@ RubyGems と Shards の大きな違いは、パッケージのインストール
 
 プロジェクト名は、shard として公開するのであればいくつかルール（後述）もありますが、そうでない場合にはそこまで深く考える必要はありません。今回はシンプル（simple）な HTML を返すアプリなので `simple_html` というプロジェクト名にすることにします。
 
-.● sinple_html コマンド利用イメージ
-
+[source,console]
+.`sinple_html` コマンド利用イメージ
 ----
 $ simple_html "Page Title" "Page body."
 <html><head><title>Page Title</title></head><body><h1>Page Title</h1><p>Page body.</p></body></html>
@@ -39,13 +39,13 @@ $ simple_html "Page Title" "Page body."
 
 `crystal init` コマンドを実行する際には、プロジェクトの種類（`app` もしくは `lib`）とプロジェクト名を指定します。例えば、`simple_html` をアプリケーションとして実装する場合のひな形生成コマンドは `crystal init app simple_html` です。このコマンドを実行するとカレントディレクトリの直下にプロジェクト名と同じ名前の simple_html ディレクトリができ、その中に各種ひな型が自動生成されます。
 
-.● simple_html アプリケーション用プロジェクトのひな形生成コマンド
-
+[source,console]
+.`simple_html` アプリケーション用プロジェクトのひな形生成コマンド
 ----
 $ crystal init app simple_html
 ----
 
-.● プロジェクトひな形として生成されるファイル/ディレクトリ
+.プロジェクトひな形として生成されるファイル/ディレクトリ
 
 `.git/`（ディレクトリ）:: このプロジェクト用の初期化済み git リポジトリ。
 
@@ -102,9 +102,8 @@ crystal-lang/html_builder:: link:https://github.com/crystal-lang/html_builder[]
 
 アプリケーションとして初期化された `shard.yaml` は以下のような内容になっています。
 
-.● ひな形生成時の shard.yml
-
 [source, yaml]
+.ひな形生成時の `shard.yml`
 ----
 include::projects/simple_html/shard.yml[lines=1..13]
 ----
@@ -113,21 +112,19 @@ include::projects/simple_html/shard.yml[lines=1..13]
 
 README に従って `dependencies` を追加した `shard.yaml` はこのようになりました。
 
-.● 依存ライブラリの設定追加後
-
 [source, yaml]
+.依存ライブラリの設定追加後
 ----
 include::projects/simple_html/shard.yml[]
 ----
 
 [suppress='InvalidSymbol']
-===== ◆ 使いたい shard のバージョン指定する
+===== 使いたい shard のバージョン指定する
 
 2018年3月時点の `html_builder` はバージョン `0.2.2` が最新です。そのため、バージョン指定をせず shard をインストールした場合には最新のバージョン `0.2.2` がインストールされます。しかし、`shard.yml` では、インストールする shard のバージョンを指定することもできます。例えば、`shard.yml` での記述を以下のようにすることで旧バージョンの `0.2.1` をインストールすることもできます。
 
-.● バージョン指定付きの shard 設定
-
 [source, yaml]
+.バージョン指定付きの `shard` 設定
 ----
 dependencies:
   html_builder:
@@ -148,11 +145,11 @@ dependencies:
 - `~> 2.1` は、`>= 2.1` かつ `< 3.0` と同じ。
 ====
 
-===== ◆ GitHub 以外で公開されている shard
+===== GitHub 以外で公開されている shard
 
 `html_builder` は GitHub で公開されていましたが、`shard.yml` ファイルには、GitHub だけでなく、以下のような方法で shard を指定可能です。
 
-.● shard の取得先
+.shard の取得先
 
 `github: user/repository`:: GitHub リポジトリを指定する。
 
@@ -168,8 +165,8 @@ dependencies:
 
 `shard.yaml` で指定した shard をプロジェクト環境にインストールするコマンドは `shards install` です。プロジェクトディレクトリの直下でこのコマンドを実行すると、プロジェクトディレクトリの下に lib ディレクトリが作られ、その中に必要なファイル一式が展開されます。
 
-.● shard のインストール
-
+[source,console]
+.shard のインストール
 ----
 $ shards install
 Fetching https://github.com/crystal-lang/html_builder.git
@@ -180,6 +177,7 @@ Installing html_builder (0.2.2)
 
 また、インストール済みの shard は `shard list` コマンドで確認できます。
 
+[source,console]
 ----
 $ shards list
 Shards installed:
@@ -190,9 +188,8 @@ Shards installed:
 
 ひな型生成直後のソースファイル `src/simple_html.cr` には、プロジェクト名 `simple_html` をキャメルケースに変換した `SimpleHtml` モジュールが定義されています。この `SimpleHtml` モジュールはこのプロジェクトの名前空間として使用するためものです。ですので、特に理由がない限りプロジェクト固有の機能 `SimpleHtml` モジュールか、もしくはその中で定義した型に対して実装することになります。
 
-.● ひな形生成時のメインソースコード
-
 [source, crystal]
+.ひな形生成時のメインソースコード
 ----
 include::projects/simple_html/src/simple_html_org.cr[]
 ----
@@ -201,9 +198,8 @@ shard として公開されている機能をプログラム中で利用する�
 
 指定された `require` 文と、HTML を生成する `SimpleHtml.build` メソッドを実装し、`simple_html` コマンドのソースコードが完成しました。
 
-.● 完成した simple_html コマンドのソースコード
-
 [source, crystal]
+.完成した simple_html コマンドのソースコード
 ----
 include::projects/simple_html/src/simple_html.cr[]
 ----
@@ -212,8 +208,8 @@ include::projects/simple_html/src/simple_html.cr[]
 
 ビルド後に試しに実行してみると `html_builder` の機能を使えていることが確認できました。
 
-.● simple_html コマンドのコパイルと実行結果
-
+[source,console]
+.`simple_html` コマンドのコパイルと実行結果
 ----
 $ crystal build src/simple_html.cr
 $ ./simple_html "Page Title" "Page body."
@@ -222,8 +218,8 @@ $ ./simple_html "Page Title" "Page body."
 
 動作に問題がないようであれば、最適化フラグ `--release` を付けた状態で再度ビルドしておきましょう。
 
-.● 最適化フラグを付けたビルド
-
+[source,console]
+.最適化フラグを付けたビルド
 ----
 $ crystal build --release src/simple_html.cr
 ----
@@ -232,7 +228,7 @@ $ crystal build --release src/simple_html.cr
 
 NOTE: 説明をシンプルにするため、今回の `simple_html` コマンドにはあえて省いている機能が多くあります。例えば、現状ではコマンドラインパラメータが足りなかったり多すぎたりする状況が全く考慮されていません。コマンドラインパラメータが足りなければ実行時例外（`IndexError`）を吐いて異常終了してしまいますし、多すぎた場合には3つめ以降が単に無視されてしまいます。実際に使用するコマンドラインツールを作成する場合には、コマンドラインパラメータのバリデーションやエラー処理などが必要になります。
 
-==== 補足： shards コマンドのもつ機能
+==== 補足： `shards` コマンドのもつ機能
 
 shard のインストールに使用した `shards` コマンドには、インストール以外にも shard を管理するための各種機能が用意されています。
 
@@ -298,7 +294,7 @@ shard.yml specification.:: link:https://github.com/crystal-lang/shards/blob/mast
 
 ここでは整数 `n` に対して `n` 番目のフィボナッチ数を返してくれる shard を作ってみることにしましょう。単機能のシンプルな shard ですので、shard 名はそのまま `fibonacci` としました。
 
-===== ◆ shard 名はスネークケースで
+===== shard 名はスネークケースで
 
 命名規則上はダッシュ記号も使えることになっていますが、shard 名には基本的には単語の区切りにアンダースコアを使用するスネークケースで命名することをお勧めします。何故かというと、shard 名がソースコードのファイル名にも使用される場合が多いことがその理由です。Crystal 公式ドキュメントの「コーディングスタイル」では、ソースファイルのパスを名前空間に合致させ、ファイル名として型名をスネークケースに変換したものを使用するよう推奨されています。
 
@@ -320,8 +316,8 @@ shard を作成する際も、それ用のプロジェクトを立ち上げる�
 
 独立したアプリケーションではなく、再利用可能なライブラリを作る場合のプロジェクトひな形生成コマンドは `crystal init lib プロジェクト名` です。
 
-.● fibonacci shard 用プロジェクトのひな形生成コマンド
-
+[source,console]
+.fibonacci shard 用プロジェクトのひな形生成コマンド
 ----
 $ crystal init lib fibonacci
 ----
@@ -332,7 +328,7 @@ $ crystal init lib fibonacci
 
 shard を使用する際にも使用した `shard.yml` ですが、本来このファイルはプロジェクトを shard として公開する際のメタデータを記述するためのものです。公開 shard にはメタデータとしては最低限以下のような情報が必要です。
 
-.● ひな形に含まれるメタデータ
+.ひな形に含まれるメタデータ
 
 `name`:: shard の名前。プロジェクト名がそのまま使用される。
 
@@ -346,15 +342,15 @@ shard を使用する際にも使用した `shard.yml` ですが、本来この�
 
 上のリストにもある通りこれらの情報はひな形生成時に自動生成されますので、もある程度そのままで利用可能な状態になっています。複数人で開発している場合に `authors` を追加したり、`MIT` 以外のライセンスを `license` に指定したりするなど、必要に応じてこれらの値を変更してください。また、作りたい shard に別の shard の機能が必要であれば、アプリケーションを作成した際と同様に `dependencies` の設定を追加します。
 
-.● ひな形生成時の shard.yml
 [source, yaml]
+.ひな形生成時の `shard.yml`
 ----
 include::projects/fibonacci/shard.yml[]
 ----
 
 `fibonacci` では他の shard を使用することもなく、特に変更すべき内容もありませんのでこのまま進めることにします。
 
-===== ◆ shard.yml ファイルのフォーマット
+===== shard.yml ファイルのフォーマット
 
 拡張子が `.yml` となっていることからもわかる通り、`shard.yml` ファイルは YAML で書かれています。
 
@@ -376,9 +372,8 @@ include::projects/fibonacci/shard.yml[]
 
 プロジェクトひな形にはあらかじめ spec テスト用の構成が含まれていますので、ソースファイルにコードを書き始める前に、まずは `fibonacci` のテストケースを書いてみましょう。
 
-.● fibonacci shard の使用イメージ
-
-[source, crystal]
+[source,crystal]
+.fibonacci shard の使用イメージ
 ----
 require "fibonacci"
 
@@ -390,8 +385,8 @@ Fibonacci.number(3)  #=>  2_big_i
 
 プロジェクトひな形にはテストケースを定義するための `spec/fibonacci_spec.cr` が含まれています。ただし、ここで定義されている内容は「 `fales` は `true` と等しいはず」という内容で、当然ながらこの状態で spec テストを実行しても必ず不合格になります。
 
-.● ひな形生成時の fibonacci_spec.cr
-[source, crystal]
+[source,crystal]
+.ひな形生成時の `fibonacci_spec.cr`
 ----
 require "./spec_helper"
 
@@ -406,9 +401,8 @@ end
 
 `fibonacci` の挙動に合わせて必要なテストケースを定義すると以下のようになりました。
 
-.● テストケースを定義した fibonacci_spec.cr
-
-[source, crystal]
+[source,crystal]
+.テストケースを定義した `fibonacci_spec.cr`
 ----
 include::projects/fibonacci/spec/fibonacci_spec.cr[]
 ----
@@ -421,9 +415,8 @@ include::projects/fibonacci/spec/fibonacci_spec.cr[]
 
 `fibonacci` の実装方法も何パターンか考えられますが、とりあえず、一度計算した内容のキャッシュくらいは持てるように実装してみたのが以下のコードです。
 
-.● fibonacci のソースコード
-
-[source, crystal]
+[source,crystal]
+.`fibonacci.cr` のソースコード
 ----
 include::projects/fibonacci/src/fibonacci.cr[]
 ----
@@ -432,8 +425,8 @@ include::projects/fibonacci/src/fibonacci.cr[]
 
 spec テストの実行コマンドは `crystal spec` です。プロジェクトディレクトリの直下でこのコマンドを実行すると用意したテストケースが順に評価され、実際の挙動が指定された内容通りかどうかが評価されます。
 
-.● spec テスト実行結果
-
+[source,crystal]
+.spec テスト実行結果
 ----
 $ crystal spec
 ...
@@ -452,7 +445,7 @@ Finished in 203 microseconds
 
 ひな形生成時に用意されている `README.md` ファイルは、以下の内容をカバーするように構成されています。
 
-.● README.md ひな形の構成
+.`README.md` ひな形の構成
 
 `# shard 名`:: README のタイトルに当たるパート。shard の概要を記載する。
 
@@ -477,7 +470,7 @@ Finished in 203 microseconds
 
 なお、ひな形の中で登場する `TODO:` は以下の3箇所です。
 
-.● README.md 中に登場する TODO: 項目
+.README.md 中に登場する TODO: 項目
 `TODO: Write a description here`:: その shard の概要。最低限、なにをする shard なのかくらいは書いておいた方が良い。
 
 `TODO: Write usage instructions here`:: その shard の使い方。ある程度サンプルコードで代用可能。
@@ -486,7 +479,7 @@ Finished in 203 microseconds
 
 `fibonacci` はメソッドが1つだけしかなく機能もシンプルなので、`Usage` は最低限のサンプルコードで済ませることにします。また、共同開発者を積極的に募るほどの者でもありませんので、最低限の項目を記載した `README.md` は以下のようになりました。
 
-.● 完成した README.md
+.完成した `README.md`
 
 [source, markdown]
 ----
@@ -551,7 +544,7 @@ shard を作る手順の最後に、shard のバージョン管理方法をご�
 セマンティックバージョニング:: link:https://semver.org/lang/ja/[]
 ====
 
-===== ◆ 3つのバージョン情報
+===== 3つのバージョン情報
 
 `fibonacci` プロジェクトでは、プロジェクトファイルの2箇所に shard のバージョンが登場します。まず `shard.yml` ファイル2行目の `version`、もう1つが `src/fibonacci/version.cr` ファイルで定義されている `Fibonacci::VERSION` 定数です。この2つの値は、ひな形生成時にはどちらも `0.1.0` となっており、これがプロジェクト（shard）のバージョンになります。
 
@@ -593,16 +586,15 @@ Crystal には、RSpec を参考にした spec テスト機能を提供するモ
 
 細かい説明は後にして、まずは spec テストの使い方をざっくり見てみましょう。
 
-===== ◆ spec ファイルを作る
+===== spec ファイルを作る
 
 まず、spec テストにはテストケースを定義した spec ファイルが必要です。spec ファイルは、`"spec"` とテスト対象となるコードを `require` した Crystal のソースファイルで、テストケース自体も Crystal のコードとして定義します。
 
 [suppress='InvalidSymbol']
 さて、ここでは簡単な例として `"がおー"` と吠える `Bear` クラスを実装する場合を考えてみましょう。`Bear` クラスが持つインスタンスメソッドは吠え声を文字列で返す `#bark` のみ、ソースファイル名は `bear.cr` です。spec ファイルの名前は `\\***_spec.cr` と付けられることが多く、`***` にはテスト対象とするソースファイルのベースネームが使用されることが一般的です。今回もその例に倣い、熊がちゃんと `"がおー"` と吠えるかどうかテストする `bear_spec.cr` を、ソースファイルと同じディレクトリに作ってみました。
 
-.● bear_spec.cr
-
 [source, crystal]
+.`bear_spec.cr`
 ----
 include::examples/bear_spec.cr[]
 ----
@@ -615,22 +607,21 @@ include::examples/bear_spec.cr[]
 
 そして、`it` ブロックの内で実行される `Bear.new.bark.should eq "がおー"` が実際に評価されるテスト内容の記述です。`Bear.new.bark` が `"がおー"` と等しく（`eq`）あるべき（`should`）といったように、実際に評価している内容が（英語として）比較的自然に読める構文になっています。
 
-===== ◆ プログラム本体を実装する
+===== プログラム本体を実装する
 
 さて、spec ファイルが用意できたので次に `Bear` クラスそのものを `bear.cr` へ実装していくのですが、ついうっかり熊に `"わん"` と吠えさせてしまいました。
 
-.● 実装ミスを含んだ bear.cr
-
-[source, crystal]
+[source,crystal]
+.実装ミスを含んだ `bear.cr`
 ----
 include::examples/bear0.cr[]
 ----
 
 この状態で spec テストを実行してみるとどうなるでしょうか。なお、spec テストの実行コマンドは `crystal spec` です。特定の spec ファイルを対象としたい場合には、その spec ファイル名をパラメータとして与えてください。
 
-.● spec テストの実行結果
+.spec テストの実行結果
 
-[source]
+[source,console]
 ----
 include::examples/spec_error.txt[]
 ----
@@ -639,21 +630,20 @@ include::examples/spec_error.txt[]
 
 このように何らかの理由でテストが不合格になると、`Failures:` に続いて具体的な問題点が出力されます。ここでは、期待された値（`Expected:`）が `"がおー"` なのに対して、実際の結果（`got:`）が `"わん"` になっていたことが確認できます。このように、spec テストを行うと、実装されたコードが想定外の挙動を示した際に、どの部分がどのように異なっていたのかを具体的に知ることができます。
 
-===== ◆ テスト結果を元にソースを修正する
+===== テスト結果を元にソースを修正する
 
 テスト結果から問題の箇所は明らかですので、`bear.cr` の実装を修正しました。
 
-.● 修正後の bear.cr
-
 [source, crystal]
+.修正後の `bear.cr`
 ----
 include::examples/bear.cr[]
 ----
 
 もう一度 spec テストを実行してみると、今度は `F` ではなく `.` が表示されましたので、実装したコードが当初想定した通りの機能を実現できていることが確認できました。
 
-.● spec テストの実行結果（ソース修正後）
-
+[source,console]
+.spec テストの実行結果（ソース修正後）
 ----
 include::examples/spec_success.txt[]
 ----
@@ -664,7 +654,7 @@ include::examples/spec_success.txt[]
 
 では次に、spec ファイルで使用する各構文についてみてみましょう。
 
-===== ◆ グルーピング用ブロック
+===== グルーピング用ブロック
 
 グルーピング用ブロックは、1つ以上のテストケースを何らかの基準でまとめるために使用されます。グルーピング用ブロックの内部には次に紹介するテストケース用のブロックだけでなく、別のグルーピング用ブロックをネストさせることも可能です。
 
@@ -672,34 +662,32 @@ include::examples/spec_success.txt[]
 
 Crystal の spec ファイルでは、グルーピング用のブロックとして `describe` 以外にもう1つ `context` 使用できます。`describe` ブロックがテスト対象をもとにしたグルーピングだとすると、`context` ブロックはその時の状況（条件）によるグルーピングです。例えば、配列が要素を含んでいるか否かで挙動が異なる場合に、それぞれの状況を明示することができます。
 
-.● describe と context
-
 [source, crystal]
+.`describe` と `context`
 ----
 include::examples/spec_example_00.cr[]
 ----
 
-===== ◆ テストケース用ブロック
+===== テストケース用ブロック
 
 こちらの例としては `it` がすでに登場しています。`it` はあるメソッドがもつ特定の挙動1つについてのテストケースを定義するためのブロックです。ですので、複数の挙動に対するテスト内容を1つの `it` ブロック内に記述すべきではありません。例えば、オブジェクトの状態にや引数の値によって異なる挙動を示すような場合は、同じメソッドであってもそれぞれに独立した `it` ブロックを設けてテストケースを定義すべきです。
 
 テストケースを書くためのブロックには `it` ともう1つ、`pending` があります。`pending` ブロックは文字通り、一時的にそのテストケースの実行を保留する場合に使用します。例えば、機能仕様としてのテストケースは用意されたものの対象となるメソッドがまだ実装されていないような場合に、`it` の代わりに `pending` ブロックを使用すると良いでしょう。ただし、あくまで **一時的に保留しておく** だけですので、最終的には `pending` ブロックを `it` ブロックに置き換えてテストに合格できるようにしなければいけません。
 
-.● it と pending
-
 [source, crystal]
+.`it` と `pending`
 ----
 include::examples/bear1_spec.cr[]
 ----
 
 [suppress='InvalidSymbol']
-===== ◆ オブジェクトの状態を確認する
+===== オブジェクトの状態を確認する
 
 `require "spec"` が実行されると、全てのオブジェクトに対して `#should` と `#should_not` という2つのインスタンスメソッドが追加されます。`#should` は、レシーバの状態に対する条件（`eq "がおー"` など）を引数に取り、実際の値がその条件を満たしていないとテストが不合格になります。一方、`#should_not` は逆に条件を満たしてしまうとテストが不合格になります。
 
 オブジェクトの状態に対する評価条件には以下のような種類があります。一部の評価条件は特定のインスタンスメソッドを持たないオブジェクトに対しては使用できません。例えば、`should be` を使用するには `#same?` が実装されている必要があります。
 
-.● 使用可能なオブジェクトの状態を評価する
+.使用可能なオブジェクトの状態を評価する
 
 `actual.sould eq expected`:: `actual` が `expected` と等しいかどうか。
 条件： `actual == expected`
@@ -746,20 +734,19 @@ include::examples/bear1_spec.cr[]
 `actual.should match expected`:: `actual` が `expexted` にマッチするかどうか。
 条件： `actual =~ expected`
 
-===== ◆ 例外の発生を確認する
+===== 例外の発生を確認する
 
 テストケース内で使用し、`expext_raises` ブロックに引数として例外の型を指定して使用すると、ブロック内で指定した型の例外が発生することを確認できます。
 
-.● 例外チェック
-
 [source, crystal]
+.例外チェック
 ----
 include::examples/spec_example_01.cr[lines=5..11]
 ----
 
 このとき、引数に文字列もしくは正規表現オブジェクトを追加することで、エラーメッセージに対する条件を指定することも可能です。
 
-.● メッセージ条件付き例外チェック
+.メッセージ条件付き例外チェック
 
 `expect_raises(SomeError, "message") { ... }`:: エラーメッセージに `"message"` が含まれる `SomeError` 型の例外が発生しなければ不合格。
 
@@ -785,20 +772,19 @@ include::examples/spec_example_01.cr[lines=5..11]
 
 ソース修正前の `bear_spec.cr` の実行結果を例に、それぞれの内容を詳しくみてみましょう。
 
-.● 失敗した spec テストの実行結果（再掲）
-
 [source]
+.失敗した spec テストの実行結果（再掲）
 ----
 include::examples/spec_error.txt[]
 ----
 
-===== ◆ テストケースの実行結果サマリ（1行目）
+===== テストケースの実行結果サマリ（1行目）
 
 テストケースの実行結果には成功（`.`）、不合格（`F`）、エラー（`E`）、ペンディング（`\*`）の4種類があります。spec テストの実行結果では、先頭行にテストケースの数だけ実行結果に対応した文字が並んで表示されます。もし spec テストを実行したのがカラー表示対応のターミナルであれば `.` は緑、`F` と `E` が赤、`\*` が黄色で表示されているかもしれません。
 
 ここで表示される実行結果が全て `.` になっていれば、spec テストに合格できたことになります。
 
-.● 実行結果の種類
+.実行結果の種類
 
 成功（`.`）:: テストケース内の評価条件を全てパスし、想定外の例外やエラーも発生しなかった場合。
 
@@ -808,11 +794,11 @@ include::examples/spec_error.txt[]
 
 ペンディング（`*`）:: テストケースが `pending` ブロックとして定義されており、テストの実行を保留している場合。
 
-===== ◆ 不合格となったテストケースの詳細情報（3〜11行目）
+===== 不合格となったテストケースの詳細情報（3〜11行目）
 
 `Failures:` に続いて、不合格となったテストケースの具体的な問題点が出力されます。
 
-.● 不合格テストケースの情報
+.不合格テストケースの情報
 
 1. 不合格テストケースの通し番号とテストケースの説明（3行目）
 
@@ -824,11 +810,11 @@ include::examples/spec_error.txt[]
 
 特に 3. で表示される想定値と実際の値との比較は、問題解決の大きな助けになってくれることでしょう。
 
-===== ◆ テストの実行に要した時間（13行目）
+===== テストの実行に要した時間（13行目）
 
 テスト全体にかかった時間ですので、あくまで参考までに。
 
-===== ◆ テスト結果の統計情報（14行目）
+===== テスト結果の統計情報（14行目）
 
 ここには `examples`、`failures`、`errors`、`pending` と4種類の数値が出力されます。
 
@@ -836,7 +822,7 @@ include::examples/spec_error.txt[]
 
 ここで後ろ3つの値がゼロになっていれば、テストに合格したことになります。
 
-===== ◆ 不合格となったテストケースの再テスト用コマンド一覧（16〜18行目）
+===== 不合格となったテストケースの再テスト用コマンド一覧（16〜18行目）
 
 最後に、不合格となったテストケースについて、個別に再テストする場合に使える `crystal spec` コマンドが一覧で表示されます。
 
@@ -848,7 +834,7 @@ include::examples/spec_error.txt[]
 
 spec テストを実行する `crystal spec` コマンドには、spec ファイル名を以外のパラメータを指定することができます。適切なパラメータを与えることで、ディレクトリ単位や spec ファイル単位、さらには特定のテストケース単位でのテストを実行可能です。
 
-.● crystal spec コマンドへのパラメータ指定
+.crystal spec コマンドへのパラメータ指定
 
 `crystal spec`:: パラメータを省略した場合、`spec/**/*_spec.cr` にマッチする全ての spec ファイルを対象とする。
 
