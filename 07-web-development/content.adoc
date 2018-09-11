@@ -62,12 +62,16 @@ Crystal で現在最も活発に開発されている Web フレームワーク�
 Ruby でいうところの Sinatra に似た設計思想で作られており、シンプルな実装で Web アプリを作成することが出来ます。
 本書では主に Kemal を用いて簡単な Web アプリを作成しながら Web 開発の方法を解説していきます。
 
-* URL http://kemalcr.com/
-* GitHub https://github.com/kemalcr/kemal
+====
+Web サイト :: http://kemalcr.com/
+GitHub :: https://github.com/kemalcr/kemal
+====
 
 また Kemal 以外の主なフレームワークとして以下のものがあります。
 
-* Amber https://www.amberframework.org
+====
+Amber :: https://www.amberframework.org
+====
 
 フルスタックの Web フレームワークです。
 様々なコードジェネレータや、 OR/M を備えています。 Rails 的な規約重視のフレームワークです。
