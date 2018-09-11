@@ -8,6 +8,7 @@ crystal-jp (5t111111; arcage; at-grandpa; MakeNowJust; msky026)
 :table-caption: テーブル
 :toc:
 :hardbreaks:
+:prewrap!:
 :data-uri:
 
 include::./01-introduction/content.adoc[]
