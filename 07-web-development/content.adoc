@@ -13,16 +13,9 @@
 以下のコードで解説します。
 
 [source,crystal]
+.server.cr
 ----
-require "http/server"
-
-server = HTTP::Server.new("0.0.0.0", 8080) do |context|
-  context.response.content_type = "text/plain"
-  context.response.print "Hello world"
-end
-
-puts "Listening on http://0.0.0.0:8080"
-server.listen
+include::./examples/server.cr[tag=file]
 ----
 
 ポート 8080 での HTTP アクセスを Listen する最小のプログラムです。
@@ -45,35 +38,7 @@ HTTP ハンドラを実装するには Rack 同様に call メソッドを定義
 
 [source,crystal]
 ----
-require "http/server"
-
-class InterruptTestFirst
-  include HTTP::Handler
-
-  def call(context)
-    response = call_next(context)
-    puts "aa"
-    response
-  end
-end
-
-class InterruptTestSecond
-  include HTTP::Handler
-
-  def call(context)
-    response = call_next(context)
-    puts "bb"
-    response
-  end
-end
-
-server = HTTP::Server.new("0.0.0.0", 8080, [InterruptTestFirst.new, InterruptTestSecond.new]) do |context|
-  context.response.content_type = "text/plain"
-  context.response.print "Hello world"
-end
-
-puts "Listening on http://0.0.0.0:8080"
-server.listen
+include::./examples/http_handler.cr[tag=file]
 ----
 
 上記の例で言いますと、 `InterruptTestFirst` `InterruptTestSecond` の順にスタックに積まれます。
@@ -126,8 +91,9 @@ $ cd kemal-sample
 shard.yml ファイルに以下の内容を追記します。
 
 [source,yaml]
+.shard.yml
 ----
-include::./projects/kemal-sample/shard.yml[lines=11..14]
+include::./projects/kemal-sample/shard.yml[tag=kemal-dep]
 ----
 
 以下のコマンドを実行することで Kemal 本体をインストールすることが出来ます。
@@ -232,7 +198,7 @@ $ psql -U your_owner -d kemal_sample_development -f sql/create_articles.sql
 
 [source,yaml]
 ----
-include::./projects/kemal-sample/shard.yml[lines=11..18]
+include::./projects/kemal-sample/shard.yml[tag=db-dep]
 ----
 
 編集後、以下のコマンドを実行します。
