@@ -329,9 +329,13 @@ end
 また、分からない構文はあれば最初に挙げた Crystal のドキュメントを確認してみるといいでしょう。
 これよりも詳細に書かれているはずです。
 
-https://crystal-lang.org/docs/syntax_and_semantics/[Syntax and Semantics]
+====
+Syntax and Semantics :: https://crystal-lang.org/docs/syntax_and_semantics/
+====
 
 加えて、 標準ライブラリの API ドキュメントは以下にあります。
 知らない型やメソッドが出てきたときに確認してみてください。
 
-https://crystal-lang.org/api/[API ドキュメント]
+====
+API ドキュメント :: https://crystal-lang.org/api/
+====
