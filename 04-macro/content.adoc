@@ -249,30 +249,26 @@ include::./examples/syntax/ast_node_array_literal.cr[tags=code;main]
 
 Macro にもスコープがあります。次の例をみてください。
 
-*global に定義した場合*
-
 [source,crystal,indent=0]
+.global に定義した場合
 ----
 include::./examples/syntax/macro_scope_global.cr[tags=code;main]
 ----
 
-*private を付けて global に定義した場合*
-
 [source,crystal,indent=0]
+.private を付けて global に定義した場合
 ----
 include::./examples/syntax/macro_scope_global_private.cr[tags=code;main]
 ----
 
-*class 内に定義した場合*
-
 [source,crystal,indent=0]
+.class 内に定義した場合
 ----
 include::./examples/syntax/macro_scope_class.cr[tags=code;main]
 ----
 
-*module 内に定義した場合*
-
 [source,crystal,indent=0]
+.module 内に定義した場合
 ----
 include::./examples/syntax/macro_scope_module.cr[tags=code;main]
 ----

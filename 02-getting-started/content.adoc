@@ -195,6 +195,7 @@ WSL 上での Crystal のインストール方法は、それぞれの Linux デ
 Crystal のインストールができたら、以下のコマンドを実行してみましょう。これで、Crystal がインストールされて利用できる状態かどうかが確認できます。
 
 [source,console]
+.hello.cr
 ----
 $ crystal -v
 ----
