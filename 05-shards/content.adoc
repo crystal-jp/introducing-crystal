@@ -109,9 +109,7 @@ crystal-lang/html_builder:: link:https://github.com/crystal-lang/html_builder[]
 include::projects/simple_html/shard.yml[lines=1..13]
 ----
 
-ここへ `html_builder` を指定するための設定を追加しましょう。大抵の場合 shard の README にはその shard を使用するために `shard.yaml` へ追加すべき内容が紹介されています。例えば、`html_builder` の README には以下のように書かれていました。
-
-image::05-shards/html_builder_installation.png[]
+ここへ `html_builder` を指定するための設定を追加しましょう。大抵の場合 shard の README にはその shard を使用するために `shard.yaml` へ追加すべき内容が紹介されています。
 
 README に従って `dependencies` を追加した `shard.yaml` はこのようになりました。
 
@@ -199,9 +197,7 @@ Shards installed:
 include::projects/simple_html/src/simple_html_org.cr[]
 ----
 
-shard として公開されている機能をプログラム中で利用するためには `require` 文を使用してその旨を明示する必要があります。大抵の場合 shard の README にはその shard の使用法も記載されており `requrie` 文の書き方もそこで確認できます。例えば、`html_builder` の場合は以下のように記述されています。
-
-image::05-shards/html_builder_usage.png[]
+shard として公開されている機能をプログラム中で利用するためには `require` 文を使用してその旨を明示する必要があります。大抵の場合 shard の README にはその shard の使用法も記載されており `requrie` 文の書き方もそこで確認できます。
 
 指定された `require` 文と、HTML を生成する `SimpleHtml.build` メソッドを実装し、`simple_html` コマンドのソースコードが完成しました。
 
