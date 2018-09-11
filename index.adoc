@@ -1,4 +1,4 @@
-= 入門Crystal
+= 入門 Crystal
 crystal-jp (5t111111; arcage; at-grandpa; MakeNowJust; msky026)
 :lang: ja
 :doctype: book
