@@ -8,7 +8,7 @@ targets:
   myecho_admiral:
     main: src/myecho_admiral.cr
 
-crystal: 0.24.1
+crystal: 0.26.1
 
 license: MIT
 
