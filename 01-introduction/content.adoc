@@ -122,25 +122,30 @@ Crystal には Shards というパッケージ管理のシステムがありま�
 
 プログラミング言語を使うときには、その言語自体の仕様はもちろんですが、その言語コミュニティが充実していることも同じくらい大事ですよね。ここでは、Crystal のコミュニティや公式の一次情報を得るためのサイトを紹介します。
 
-https://crystal-lang.org[Crystal 公式サイト（英語）]
-
+====
+Crystal 公式サイト（英語）:: https://crystal-lang.org
 Crystal の公式サイトです。リリースノートやブログ、そして API ドキュメントがあります。英語ですが、基本的には一次情報はこのサイトを中心として見ていれば得ることができます。
+====
 
-https://groups.google.com/forum/#!forum/crystal-lang[Crystal の Google グループ （英語）]
-
+====
+Crystal の Google グループ （英語） :: https://groups.google.com/forum/#!forum/crystal-lang
 Crystal に関することで何かあれば、まずこの Google グループに書き込むことが推奨されています。例えば Crystal に関する質問や Crystal を使ったプロジェクトの紹介など、Crystal に関することであれば何でも OK です。活発にやりとりが行われています。
+====
 
-https://gitter.im/crystal-lang/crystal[Gitter の Crystal 公式チャットルーム（英語）]
-
+====
+Gitter の Crystal 公式チャットルーム（英語） :: https://gitter.im/crystal-lang/crystal
 Crystal に関する Gitter の公式チャットルームです。チャットなので Google グループより気軽に質問などができて、レスポンスも早いことが期待できます。こちらもとても活発で、IRC との連携もされています。
+====
 
-https://github.com/crystal-lang/crystal[Crystal の GitHub リポジトリ]
-
+====
+Crystal の GitHub リポジトリ :: https://github.com/crystal-lang/crystal
 Crystal の開発は GitHub 上で行われています。Crystal の不具合を見つけたときに issues に報告したり、何か素晴らしい新機能や修正について直接 pull request を送ることもできます。
+====
 
-http://crystal.pine.moe[Crystal-JP の Slack（日本語）]
-
+====
+Crystal-JP の Slack（日本語） :: http://crystal.pine.moe
 日本の Crystal ユーザコミュニティ「 Crystal-JP 」の Slack への招待ページです。Crystal-JP の Slack では日本語で Crystal の情報交換を行うことができます。お気軽に参加ください。また、Crystal-JP では不定期に（今のところ東京のみですが）イベントを開催しており、そのお知らせなども主にこの Slack で告知されます。
+====
 
 また、Crystal のライブラリなどを探したい場合には https://github.com/veelenga/awesome-crystal[Awesome Crystal] や https://crystalshards.xyz[CrystalShards] が参考になるでしょう。
 
