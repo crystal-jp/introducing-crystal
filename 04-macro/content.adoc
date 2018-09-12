@@ -247,19 +247,26 @@ include::./examples/syntax/ast_node_array_literal.cr[tags=code;main]
 
 ==== スコープ
 
-Macro にもスコープがあります。次の例をみてください。
+マクロにもスコープがあります。
+
+トップレベルに定義した場合は、通常のメソッドと同じようにどこからでも呼び出せるようになります。
 
 [source,crystal,indent=0]
-.global に定義した場合
+.トップレベルに定義した場合
 ----
 include::./examples/syntax/macro_scope_global.cr[tags=code;main]
 ----
 
+また、トップレベルにマクロを定義する際に `private` 修飾子を付けると、そのファイル内からのみ呼び出せるようになります。
+
 [source,crystal,indent=0]
-.private を付けて global に定義した場合
+.`private` を付けてトップレベルに定義した場合
 ----
 include::./examples/syntax/macro_scope_global_private.cr[tags=code;main]
 ----
+
+class 内にマクロを定義した場合は、インスタンスメソッドではなくクラスメソッドと似たような扱いになることに注意してください。
+また、module や struct でも同様に、クラスメソッドのような扱いになります。
 
 [source,crystal,indent=0]
 .class 内に定義した場合
@@ -267,13 +274,7 @@ include::./examples/syntax/macro_scope_global_private.cr[tags=code;main]
 include::./examples/syntax/macro_scope_class.cr[tags=code;main]
 ----
 
-[source,crystal,indent=0]
-.module 内に定義した場合
-----
-include::./examples/syntax/macro_scope_module.cr[tags=code;main]
-----
-
-global スコープでは通常のメソッド定義と同じです。class や module に関してはクラスメソッドの定義と同じです。「 Macro 定義が呼び出せない」という問題に陥った場合は、こちらの例を思い出してください。
+「マクロが呼び出せない」という問題に陥った場合は、こちらの例を思い出してください。
 
 ==== if
 
