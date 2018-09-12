@@ -83,12 +83,15 @@ Shards には公式のリポジトリがなく、shard の検索機能が提供�
 
 今のところ、この問題を解決する決定打は出てきていませんが、以下の2サイトは必要な shard を探す際の助けになってくれるはずです。
 
-[suppress='SuggestExpression']
+====
 Awesome Crystal:: link:https://github.com/veelenga/awesome-crystal[]
 一定の条件を満たした自薦他薦の shard をカテゴリ分類してリスト化。リストの更新も人の手で管理されているため、限定的ではあるもののある程度の基準をクリアした shard が見つかる。
+====
 
+====
 CrystalShards.xyz:: link:http://crystalshards.xyz/[]
 GitHub で公開されている shard のキーワード検索機能を提供。GitHub で公開されている shard を自動的に収集しているため玉石混こうではあるものの、Awesome Crytstal より網羅的にマイナな shard も見つけられる。
+====
 
 試しに Awesome Crystal 内を「 html 」で検索してみると、HTML 構築専用の構文を提供してくれる `html_builder` という shard が見つかりました。早速これを使ってみることにしましょう。
 
@@ -102,7 +105,7 @@ crystal-lang/html_builder:: link:https://github.com/crystal-lang/html_builder[]
 
 アプリケーションとして初期化された `shard.yaml` は以下のような内容になっています。
 
-[source, yaml]
+[source,yaml]
 .ひな形生成時の `shard.yml`
 ----
 include::projects/simple_html/shard.yml[lines=1..13]
@@ -112,7 +115,7 @@ include::projects/simple_html/shard.yml[lines=1..13]
 
 README に従って `dependencies` を追加した `shard.yaml` はこのようになりました。
 
-[source, yaml]
+[source,yaml]
 .依存ライブラリの設定追加後
 ----
 include::projects/simple_html/shard.yml[]
@@ -123,7 +126,7 @@ include::projects/simple_html/shard.yml[]
 
 2018年3月時点の `html_builder` はバージョン `0.2.2` が最新です。そのため、バージョン指定をせず shard をインストールした場合には最新のバージョン `0.2.2` がインストールされます。しかし、`shard.yml` では、インストールする shard のバージョンを指定することもできます。例えば、`shard.yml` での記述を以下のようにすることで旧バージョンの `0.2.1` をインストールすることもできます。
 
-[source, yaml]
+[source,yaml]
 .バージョン指定付きの `shard` 設定
 ----
 dependencies:
@@ -188,7 +191,7 @@ Shards installed:
 
 ひな型生成直後のソースファイル `src/simple_html.cr` には、プロジェクト名 `simple_html` をキャメルケースに変換した `SimpleHtml` モジュールが定義されています。この `SimpleHtml` モジュールはこのプロジェクトの名前空間として使用するためものです。ですので、特に理由がない限りプロジェクト固有の機能 `SimpleHtml` モジュールか、もしくはその中で定義した型に対して実装することになります。
 
-[source, crystal]
+[source,crystal]
 .ひな形生成時のメインソースコード
 ----
 include::projects/simple_html/src/simple_html_org.cr[]
@@ -198,7 +201,7 @@ shard として公開されている機能をプログラム中で利用する�
 
 指定された `require` 文と、HTML を生成する `SimpleHtml.build` メソッドを実装し、`simple_html` コマンドのソースコードが完成しました。
 
-[source, crystal]
+[source,crystal]
 .完成した simple_html コマンドのソースコード
 ----
 include::projects/simple_html/src/simple_html.cr[]
@@ -342,7 +345,7 @@ shard を使用する際にも使用した `shard.yml` ですが、本来この�
 
 上のリストにもある通りこれらの情報はひな形生成時に自動生成されますので、もある程度そのままで利用可能な状態になっています。複数人で開発している場合に `authors` を追加したり、`MIT` 以外のライセンスを `license` に指定したりするなど、必要に応じてこれらの値を変更してください。また、作りたい shard に別の shard の機能が必要であれば、アプリケーションを作成した際と同様に `dependencies` の設定を追加します。
 
-[source, yaml]
+[source,yaml]
 .ひな形生成時の `shard.yml`
 ----
 include::projects/fibonacci/shard.yml[]
@@ -425,7 +428,7 @@ include::projects/fibonacci/src/fibonacci.cr[]
 
 テストの実行コマンドは `crystal spec` です。プロジェクトディレクトリの直下でこのコマンドを実行すると用意したテストケースが順に評価され、実際の挙動が指定された内容通りかどうかが評価されます。
 
-[source,crystal]
+[source,console]
 .テスト実行結果
 ----
 $ crystal spec
@@ -481,7 +484,7 @@ Finished in 203 microseconds
 
 .完成した `README.md`
 
-[source, markdown]
+[source,markdown]
 ----
 include::projects/fibonacci/README.md[]
 ----
@@ -506,7 +509,7 @@ OSI ライセンス名:: link:https://opensource.org/licenses/alphabetical[]
 
 プロジェクトが GitHub へ公開された結果、別のプロジェクトが `shard.yml` に以下の記述を追加すると  `fibonacci` をインストール可能になりました。
 
-[source, yaml]
+[source,yaml]
 ----
 dependencies:
   fibonacci:
@@ -593,7 +596,7 @@ Crystal には、RSpec を参考にしたテスト機能を提供するモジュ
 [suppress='InvalidSymbol']
 さて、ここでは簡単な例として `"がおー"` と吠える `Bear` クラスを実装する場合を考えてみましょう。`Bear` クラスが持つインスタンスメソッドは吠え声を文字列で返す `#bark` のみ、ソースファイル名は `bear.cr` です。spec ファイルの名前はテスト対象とするファイルのベースネームに続けて `_spec.cr` を加えたものが使用されることが一般的です。今回もその例に倣い、熊がちゃんと `"がおー"` と吠えるかどうかテストする `bear_spec.cr` を、ソースファイルと同じディレクトリに作ってみました。
 
-[source, crystal]
+[source,crystal]
 .`bear_spec.cr`
 ----
 include::examples/bear_spec.cr[]
@@ -634,7 +637,7 @@ include::examples/spec_error.txt[]
 
 テスト結果から問題の箇所は明らかですので、`bear.cr` の実装を修正しました。
 
-[source, crystal]
+[source,crystal]
 .修正後の `bear.cr`
 ----
 include::examples/bear.cr[]
@@ -662,7 +665,7 @@ include::examples/spec_success.txt[]
 
 Crystal の spec ファイルでは、グルーピング用のブロックとして `describe` 以外にもう1つ `context` 使用できます。`describe` ブロックがテスト対象をもとにしたグルーピングだとすると、`context` ブロックはその時の状況（条件）によるグルーピングです。例えば、配列が要素を含んでいるか否かで挙動が異なる場合に、それぞれの状況を明示することができます。
 
-[source, crystal]
+[source,crystal]
 .`describe` と `context`
 ----
 include::examples/spec_example_00.cr[]
@@ -674,7 +677,7 @@ include::examples/spec_example_00.cr[]
 
 テストケースを書くためのブロックには `it` ともう1つ、`pending` があります。`pending` ブロックは文字通り、一時的にそのテストケースの実行を保留する場合に使用します。例えば、機能仕様としてのテストケースは用意されたものの対象となるメソッドがまだ実装されていないような場合に、`it` の代わりに `pending` ブロックを使用すると良いでしょう。ただし、あくまで **一時的に保留しておく** だけですので、最終的には `pending` ブロックを `it` ブロックに置き換えてテストに合格できるようにしなければいけません。
 
-[source, crystal]
+[source,crystal]
 .`it` と `pending`
 ----
 include::examples/bear1_spec.cr[]
@@ -738,7 +741,7 @@ include::examples/bear1_spec.cr[]
 
 テストケース内で使用し、`expext_raises` ブロックに引数として例外の型を指定して使用すると、ブロック内で指定した型の例外が発生することを確認できます。
 
-[source, crystal]
+[source,crystal]
 .例外チェック
 ----
 include::examples/spec_example_01.cr[lines=5..11]
