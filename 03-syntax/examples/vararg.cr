@@ -15,7 +15,7 @@ vararg_type(42, "str")
 vararg_type(foo: 42, bar: "str")
 # => [Tuple(), NamedTuple(foo: Int32, bar: String)]
 
-# スプラット展開
+# splat 展開
 tuple = {42, "str"} # タプルのリテラルは配列の `{ }` 版
 # 名前付きタプルはハッシュの `:` 区切り版
 named_tuple = {
