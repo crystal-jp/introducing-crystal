@@ -1,5 +1,5 @@
 # tag::code[]
-# global で定義された Macro は、どこからでも参照可能
+# トップレベルで定義されたマクロは、どこからでも参照可能
 macro my_macro
   "expanded my macro!!!"
 end
