@@ -19,7 +19,7 @@ Crystal の Macro は次のようなものです。
 include::./examples/example_01.cr[tags=code;main]
 ----
 
-. `macro` ディレクティブを用いて Macro を定義します
+. `macro` を用いて Macro を定義します
 . 定義した Macro を呼び出します
 .. 引数 `my_method`, `"hoge"` が Macro に渡されます
 .. 引数をもとに処理が行われ、呼び出し箇所に Crystal コードが展開されます
@@ -293,7 +293,7 @@ include::./examples/syntax/if.cr[tags=code;main]
 * `true` として扱われるもの
 ** 上記以外
 
-また、 `if` は `macro` ディレクティブの外でも使うことができます。
+また、 `if` は `macro` の外でも利用できます。
 
 [source,crystal,indent=0]
 ----
@@ -318,7 +318,7 @@ include::./examples/syntax/for.cr[tags=code;main]
 include::./examples/syntax/for_hash.cr[tags=code;main]
 ----
 
-`for` も `if` と同様、 `macro` ディレクティブ以外の場所でも定義できます。
+`for` も `if` と同様、 `macro` の外でも利用できます。
 
 [source,crystal,indent=0]
 ----
@@ -393,7 +393,9 @@ ret = case var
 end
 ----
 
-一見、Macro が展開されたら正しい Crystal のコードが生成されるように見えます。しかし、 Macro で生成されるコードは `when` ディレクティブのみなので、それだけでは Crystal の syntax を満たしません。エラーになってしまいます。この場合は、 `{% begin %} ... {% end %}` を使用してコードを括ってしまいます。
+一見、マクロが展開されたら正しい Crystal のコードが生成されるように見えます。しかし、マクロで生成されるコードは `when` から始まる部分だけなので、Crystal のコードとしては不完全で、エラーとなります。
+
+この場合は、 `{% begin %} ... {% end %}` でコードを括りましょう。
 
 [source,crystal,indent=0]
 ----
@@ -417,7 +419,7 @@ include::./examples/syntax/type_instance_vars.cr[tags=code;main]
 
 ===== TypeNode#methods
 
-型に定義されているメソッドの情報を返します。返り値は `Crystal::Macros::Def` クラスの配列です。`Def` クラスは、 `def` ディレクティブを表す型で、メソッド定義に関するさまざまな情報を持っています。例えば、 `Def#args` は引数の情報、 `Def#return_type` はメソッドの返り値の型を表します。
+型に定義されているメソッドの情報を返します。返り値は `Crystal::Macros::Def` クラスの配列です。`Def` クラスは、 `def` 文を表す型で、メソッド定義に関するさまざまな情報を持っています。例えば、 `Def#args` は引数の情報、 `Def#return_type` はメソッドの返り値の型を表します。
 
 [source,crystal,indent=0]
 ----
