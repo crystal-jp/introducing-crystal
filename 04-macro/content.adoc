@@ -61,19 +61,14 @@ include::./examples/duplication_01_getter.cr[tags=code;main]
 
 かなりすっきりしました。このように、 Macro を利用することですっきりとしたコードを書くことができます。
 
-=== Macro の可読性
+=== マクロの展開
 
-重複の除去によって、 Macro 呼び出しのコードはすっきりしました。しかし、 Macro 定義のコードはどうしても複雑になってしまいます。Macro の理解に加え、展開後の Crystal コードも理解しければならないからです。
+重複の除去によって、マクロ呼び出しのコードはすっきりしました。しかし、マクロ定義のコードはどうしても複雑になってしまいます。マクロの理解に加え、展開後の Crystal コードも理解しなければならないからです。
 
-Crystal のバージョン `0.20.4` 以前は、 Macro 展開後のコードを知るすべはありませんでした。唯一のヒントは、エラーメッセージだけでした。しかし、 Crystal のバージョン `0.20.5` から `crystal tool expand` コマンドが追加されました。
+Crystal のバージョン `0.20.4` 以前は、マクロ展開後のコードを知るすべはありませんでした。唯一のヒントは、エラーメッセージだけでした。しかし、 Crystal のバージョン `0.20.5` から `crystal tool expand` コマンドが追加されました。
 
 [source,console]
 ----
-$ crystal -v
-Crystal 0.24.1 (2017-12-26)
-
-LLVM: 5.0.1
-Default target: x86_64-apple-macosx
 $ crystal tool expand --help
 Usage: crystal tool expand [options] [programfile] [--] [arguments]
 
@@ -91,7 +86,7 @@ Options:
     --stdin-filename                 Source file name to be read from STDIN
 ----
 
-`--cursor` オプションでカーソル位置を指定すると、カーソル上の Macro の展開結果を表示することができます。先程の `getter` で試してみましょう。
+`--cursor` オプションでカーソル位置を指定すると、カーソル上のマクロを展開した結果を表示することができます。先程の `getter` で試してみましょう。
 
 [source,console]
 ----
@@ -100,7 +95,7 @@ $ crystal tool expand --cursor /path/to/getter.cr:5:3 /path/to/getter.cr
 expansion 1:
    getter(name, age)
 
-# expand macro 'getter' (/path/to/crystal-lang/0.24.1_1/src/object.cr:230:3)
+# expand macro 'getter' (/path/to/crystal-lang/src/object.cr:230:3)
 ~> def name
      @name
    end
@@ -109,7 +104,7 @@ expansion 1:
    end
 ----
 
-Macro が展開されました。意図していた定義です。このコマンドはエディタから実行できるようにすると便利です。設定方法は、エディタそれぞれの方法を参照してください。この `crystal tool expand` のおかげで、 Macro のデバッグが格段にしやすくなりました。Macro を記述する際はぜひ活用してみてください。
+マクロが展開されました。意図していた定義です。このコマンドはエディタから実行できるようにすると便利です。設定方法は、エディタそれぞれの方法を参照してください。この `crystal tool expand` のおかげで、マクロのデバッグが格段にしやすくなりました。マクロを記述する際はぜひ活用してみてください。
 
 === 標準搭載の Macro
 
