@@ -323,7 +323,7 @@ include::./examples/syntax/for_outside.cr[tags=code;main]
 
 ==== 可変長引数
 
-通常の Crystal コードの感覚で可変長引数を扱うことができます。引数の定義に `*` を付けるだけです。受け取った引数は `ArrayLiteral` になります。
+通常の Crystal コードの感覚で可変長引数を扱うことができます。引数の定義に `*` を付けるだけです。受け取った引数は `TupleLiteral` になります。
 
 [source,crystal,indent=0]
 ----
@@ -332,14 +332,14 @@ include::./examples/syntax/variadic_arguments.cr[tags=code;main]
 
 ==== splat 展開
 
-`*` は、`ArrayLiteral` の splat 展開にも使用できます。次のコードを見てください。
+`*` は、`TupleLiteral` の splat 展開にも使用できます。次のコードを見てください。
 
 [source,crystal,indent=0]
 ----
 include::./examples/syntax/splat.cr[]
 ----
 
-splat 展開は `ArrayLiteral` の各要素をカンマで区切った形になります。
+splat 展開は `TupleLiteral` の各要素をカンマで区切った形になります。
 
 ==== 定数
 
