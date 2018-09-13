@@ -1,6 +1,8 @@
-== 構文
+= 構文
 
 著者: MakeNowJust
+
+// tag::body[]
 
 この章では Crystal の構文について説明します。
 
@@ -11,14 +13,18 @@ Crystal の構文を全て説明すると膨大になってしまうので、こ
 
 Ruby の構文については次のサイトを参考にしてください。
 
-https://docs.ruby-lang.org/ja/latest/doc/index.html[オブジェクト指向スクリプト言語 Ruby リファレンスマニュアル]
+====
+オブジェクト指向スクリプト言語 Ruby リファレンスマニュアル :: https://docs.ruby-lang.org/ja/latest/doc/index.html
+====
 
 また、Crystal の完全な構文は、公式サイトにある次のドキュメントを参考にしてください。
 
-https://crystal-lang.org/docs/syntax_and_semantics/[Syntax and Semantics]
+====
+Syntax and Semantics :: https://crystal-lang.org/docs/syntax_and_semantics/
+====
 
 
-=== Crystal と Ruby の違い
+== Crystal と Ruby の違い
 
 Crystal と Ruby は構文こそよく似ていますが、言語としては次のような大きな違いがあります。
 
@@ -54,7 +60,7 @@ include::./examples/example2.cr[]
 
 これらの違いを意識しながら読み進めていってください。
 
-=== 型システム
+== 型システム
 
 はじめに Crystal の型システムについて簡単に説明しておきます。
 
@@ -74,7 +80,7 @@ Crystal の型には次のようなものがあります。
 
 こんなものがあるんだな、となんとなく覚えておいてください。
 
-=== `typeof`
+== `typeof`
 
 Ruby には無い構文として `typeof` というものが Crystal にはあります。
 
@@ -86,7 +92,7 @@ Ruby には無い構文として `typeof` というものが Crystal にはあ�
 include::./examples/typeof.cr[]
 ----
 
-=== リテラル
+== リテラル
 
 リテラル関連で Ruby と大きく異なるところは、次のものが挙げられます。
 
@@ -106,7 +112,7 @@ include::./examples/typeof.cr[]
 ====
 
 [suppress=LongKanjiChain]
-==== 数値リテラルの型指定
+=== 数値リテラルの型指定
 
 Ruby の数値は基本的には `Integer` と `Float` だけです。
 しかし、Crystal の数値はその大きさや符号の有無によって `Int32` ・ `Int64` ・ `UInt32` ・ `Float32` ・ `Float64` などが存在します。
@@ -120,7 +126,7 @@ Ruby の数値は基本的には `Integer` と `Float` だけです。
 include::./examples/number.cr[]
 ----
 
-==== 空の配列と空のハッシュに対する型指定
+=== 空の配列と空のハッシュに対する型指定
 
 空の配列は `[]` 、空のハッシュは `{}` のように書けますが、これだと要素やキーの型が分からないためコンパイルすることができません。
 そこで Crystal では、空のリテラルに `of 型` と続けることで型を指定します。
@@ -131,11 +137,11 @@ include::./examples/number.cr[]
 include::./examples/empty.cr[]
 ----
 
-==== タプルと名前付きタプル
+=== タプルと名前付きタプル
 
 これは可変長引数、名前付き引数と関連の深い概念なので、そこで説明します。
 
-=== 変数
+== 変数
 
 変数名は小文字から始めなければならず、定数は大文字から始めねけらばいけません。
 インスタンス変数は `@` から、クラス変数は `@@` から始めなければいけません。
@@ -144,7 +150,7 @@ include::./examples/empty.cr[]
 しかし Crystal にグローバル変数はありません。
 代わりにクラス変数や定数を使ってください。
 
-=== クラス・メソッド
+== クラス・メソッド
 
 クラス・メソッド関連で Ruby と大きく異なるところは、次のものが挙げられます。
 
@@ -157,7 +163,7 @@ include::./examples/empty.cr[]
 また、 Crystal ではコンパイル時に全てのメソッドが定義されていなければいけません。
 なので Ruby の `define_method` のようなことはできません。
 
-==== メソッドの型指定・オーバーロード・ `previous_def`
+=== メソッドの型指定・オーバーロード・ `previous_def`
 
 メソッドの型指定・オーバーロードは前述しましたが、異なる引数の型を持った同名のメソッドを定義すると、呼び出し時に適切なものが選択される、という機能です。
 
@@ -176,7 +182,7 @@ include::./examples/empty.cr[]
 include::./examples/previous_def.cr[tag=file]
 ----
 
-==== 名前付き引数
+=== 名前付き引数
 
 名前付き引数とは、 Ruby ではキーワード引数と呼ばれるものです。
 
@@ -199,7 +205,7 @@ include::./examples/named_arg.cr[tag=def]
 include::./examples/named_arg.cr[tag=main]
 ----
 
-==== 可変長引数
+=== 可変長引数
 
 Ruby 同様、引数名の前に `\*` を置くと可変長引数を受け取るものとして、 `**` を置くと名前付き引数の余った引数を受け取るものとしてマークされます。
 
@@ -226,7 +232,7 @@ include::./examples/vararg.cr[tag=def]
 include::./examples/vararg.cr[tag=main]
 ----
 
-==== インスタンス変数の型
+=== インスタンス変数の型
 
 Crystal ではインスタンス変数・クラス変数の型がコンパイル時に決定できなければいけません。
 
@@ -238,7 +244,7 @@ Crystal ではインスタンス変数・クラス変数の型がコンパイル
 
 // TODO: 例
 
-==== `struct`
+=== `struct`
 
 `class` とよく似たものとして `struct` があります。
 
@@ -248,7 +254,7 @@ Crystal ではインスタンス変数・クラス変数の型がコンパイル
 
 しかし、 `struct` は自分自身をインスタンス変数に持つことができないという制約があります。
 
-=== `enum`
+== `enum`
 
 Crystal には `enum` があります。
 これは連番の数値型に分かりやすい名前を付けたもので、さらにメソッドを定義することもできます。
@@ -257,7 +263,7 @@ Crystal には `enum` があります。
 
 // TODO: 例
 
-=== メソッド呼び出し
+== メソッド呼び出し
 
 メソッド呼び出しの構文はほとんど Ruby と同じですが、1つだけ異なる点があります。
 
@@ -271,7 +277,7 @@ include::./examples/call.cr[tag=file]
 ----
 
 [suppress=InvalidSymbol]
-=== 条件分岐・繰り返し
+== 条件分岐・繰り返し
 
 条件分岐・繰り返しの構文は Ruby とほとんど同じです。
 ただし `redo` はありません。
@@ -311,7 +317,7 @@ end
 
 // TODO: 例
 
-=== まとめ
+== まとめ
 
 説明しなかった構文はいくつもありますが、この辺りの構文を覚えておけば Crystal のソースコードがそれなりに読めるようになるはずです。
 
@@ -339,3 +345,5 @@ Syntax and Semantics :: https://crystal-lang.org/docs/syntax_and_semantics/
 ====
 API ドキュメント :: https://crystal-lang.org/api/
 ====
+
+// end::body[]
