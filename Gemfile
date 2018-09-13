@@ -12,5 +12,11 @@ gem 'asciidoctor-rouge',
     branch: 'rouge-3'
 gem 'rouge'
 
+gem 'jekyll'
+gem 'jekyll-theme-prologue'
+group :jekyll_plugins do
+  gem 'jekyll-asciidoc'
+end
+
 gem 'rake'
 gem 'rubocop'
