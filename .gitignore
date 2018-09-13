@@ -3,3 +3,4 @@
 /.bundle/
 /Makefile.local
 /redpen-distribution-*
+/.sass-cache/

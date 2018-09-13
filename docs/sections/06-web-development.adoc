@@ -1,0 +1,8 @@
+= 06. Web 開発
+:page-layout: page
+:page-order: 400
+:toc:
+
+include::../_includes/options.adoc[]
+
+include::../../06-web-development/content.adoc[tag=body]

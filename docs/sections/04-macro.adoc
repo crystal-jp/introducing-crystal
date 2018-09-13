@@ -1,0 +1,8 @@
+= 04. マクロ
+:page-layout: page
+:page-order: 400
+:toc:
+
+include::../_includes/options.adoc[]
+
+include::../../04-macro/content.adoc[tag=body]

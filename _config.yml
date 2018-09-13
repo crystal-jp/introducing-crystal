@@ -1,0 +1,23 @@
+source: docs
+destination: build/docs
+
+title: 入門 Crystal
+author: Crystal-JP
+avatar: assets/images/avatar.png
+
+theme: jekyll-theme-prologue
+
+plugins:
+  - asciidoctor-rouge
+  - jekyll-asciidoc
+
+asciidoc: {}
+asciidoctor:
+  base_dir: :docdir
+  safe: unsafe
+  attributes:
+    source-highlighter: rouge
+    rouge-theme: base16
+    rouge-css: style
+
+sections: []

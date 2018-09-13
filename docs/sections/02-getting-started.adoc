@@ -1,0 +1,8 @@
+= 02. Getting Started
+:page-layout: page
+:page-order: 200
+:toc:
+
+include::../_includes/options.adoc[]
+
+include::../../02-getting-started/content.adoc[tag=body]

@@ -6,7 +6,6 @@ ASCIIDOCTOR_PDF_FLAGS = \
   -r asciidoctor-pdf-cjk
 ASCIIDOCTOR_ROUGE_FLAGS = \
   -a source-highlighter=rouge \
-  -a rouge-style=base16 \
   -a rouge-theme=base16
 
 ASCIIDOCTOR_PRINT_PDF_FLAGS = \
@@ -27,32 +26,33 @@ WEB_PDF = $(PREFIX)/introducing-crystal-web.pdf
 PDFS = $(PRINT_PDF) $(WEB_PDF)
 HTML = $(PREFIX)/introducing-crystal.html
 
-ADOCS = \
-  index.adoc \
-  $(wildcard */*.adoc)
+CONTENT_ADOCS = $(shell find [0-9][0-9]-* -name '*.adoc')
+PDF_ADOCS = index.adoc $(CONTENT_ADOCS)
+JEKYLL_ADOCS = $(CONTENT_ADOCS) $(shell find docs -name '*.adoc')
+ADOCS = index.adoc $(shell find [0-9][0-9]-* docs -name '*.adoc')
 EXAMPLES = $(wildcard */examples/*.cr) $(wildcard */examples/**/*.cr)
 PROJECTS = $(wildcard */projects/*)
 PROJECT_CRS = $(and $(PROJECTS), $(shell find $(PROJECTS) -type d -name lib -prune -o -name '*.cr' -print))
-ASSETS = $(shell find [0-9][0-9]-* -not -name '*.adoc')
+PDF_ASSETS = $(shell find [0-9][0-9]-* docs/assets/images -not -name '*.adoc')
 CRS = $(EXAMPLES) $(PROJECT_CRS)
 
 .PHONY: all
-all: pdf html
+all: pdf jekyll
 
-.PHONY: pdf print-pdf web-pdf html
+.PHONY: pdf print-pdf web-pdf
 pdf: print-pdf web-pdf
 print-pdf: $(PRINT_PDF)
 web-pdf: $(WEB_PDF)
-html: $(HTML)
 
-$(PRINT_PDF): $(ADOCS) $(ASSETS)
+$(PRINT_PDF): $(PDF_ADOCS) $(PDF_ASSETS)
 	bundle exec asciidoctor-pdf $(ASCIIDOCTOR_PRINT_PDF_FLAGS) -o $@ $<
 
-$(WEB_PDF): $(ADOCS) $(ASSETS)
+$(WEB_PDF): $(PDF_ADOCS) $(PDF_ASSETS)
 	bundle exec asciidoctor-pdf $(ASCIIDOCTOR_WEB_PDF_FLAGS) -o $@ $<
 
-$(HTML): $(ADOCS) $(ASSETS)
-	bundle exec asciidoctor $(ASCIIDOCTOR_HTML_FLAGS) -o $@ $<
+.PHONY: jekyll
+jekyll:
+	bundle exec jekyll build
 
 .PHONY: lint lint-full redpen rubocop crystal-format format backspace
 lint: redpen crystal-format backspace

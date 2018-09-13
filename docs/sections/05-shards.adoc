@@ -1,0 +1,8 @@
+= 05. Shards
+:page-layout: page
+:page-order: 400
+:toc:
+
+include::../_includes/options.adoc[]
+
+include::../../05-shards/content.adoc[tag=body]

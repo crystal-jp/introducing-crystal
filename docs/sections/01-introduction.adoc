@@ -1,0 +1,8 @@
+= 01. はじめに
+:page-layout: page
+:page-order: 100
+:toc:
+
+include::../_includes/options.adoc[]
+
+include::../../01-introduction/content.adoc[tag=body]
