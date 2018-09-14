@@ -342,14 +342,14 @@ include::./examples/syntax/variadic_arguments.cr[tags=code;main]
 
 ==== splat 展開
 
-`*` は、`TupleLiteral` の splat 展開にも使用できます。次のコードを見てください。
+`\*` は、 `ArrayLiteral` と `TupleLiteral` の splat 展開にも使用できます。また、 `**` は `HashLiteral` と `NamedTupleLiteral` の splat 展開に使用できます。次のコードを見てください。
 
 [source,crystal,indent=0]
 ----
 include::./examples/syntax/splat.cr[]
 ----
 
-splat 展開は `TupleLiteral` の各要素をカンマで区切った形になります。
+展開は、各要素をカンマで区切った形になります。 `HashLiteral` もそのままカンマ区切りで出力されますが、使い所によっては上記のように `Syntax error` になります。
 
 ==== 定数
 
