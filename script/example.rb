@@ -31,9 +31,9 @@ end
 
 # Convert part:
 class Example
-  RE_ASSERT_FULL = /\A *?# => (.*)\n\z/
-  RE_ASSERT      = /\A([^#]*?) # => (.*)\n\z/
-  RE_RAISE       = /\A([^#]*?) # raises (\w+)(?: \((.*)\))?\n\z/
+  RE_ASSERT_FULL = /\A\s*?# => (.*)\n\z/
+  RE_ASSERT      = /\A((?~#)) # => (.*)\n\z/
+  RE_RAISE       = /\A((?~#)) # raises (\w+)(?: \((.*)\))?\n\z/
 
   private def convert(line, offset)
     result = convert_assert_all(line)
