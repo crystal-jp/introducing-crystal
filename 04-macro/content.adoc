@@ -173,6 +173,16 @@ include::./projects/macro/src/parallel.cr[tags=main]
 
 実行された時刻を見ると、並行に実行されていることがわかります。また、返り値も適切に受け取っていることがわかります。このように、 `parallel` を使えば簡単に並行処理を記述できます。
 
+[suppress='InvalidSymbol']
+==== `p!`, `pp!`
+
+`p` や `pp` と同じく、引数として渡された値を標準出力に出力しますが、渡された式自身も表示してくれます。デバッグ時に重宝します。
+
+[source,crystal]
+----
+include::./examples/pp_exp.cr[]
+----
+
 　
 
 いかがでしたでしょうか。いくつかのマクロを紹介しましたが、この他にも標準のマクロは存在します。興味のある方は探してみてください。今までのコードがずっとすっきりするはずです。
@@ -325,7 +335,7 @@ include::./examples/syntax/for_outside.cr[tags=code;main]
 
 === 可変長引数
 
-通常の Crystal コードの感覚で可変長引数を扱うことができます。引数の定義に `*` を付けるだけです。受け取った引数は `ArrayLiteral` になります。
+通常の Crystal コードの感覚で可変長引数を扱うことができます。引数の定義に `*` を付けるだけです。受け取った引数は `TupleLiteral` になります。
 
 [source,crystal,indent=0]
 ----
@@ -334,14 +344,14 @@ include::./examples/syntax/variadic_arguments.cr[tags=code;main]
 
 === splat 展開
 
-`*` は、`ArrayLiteral` の splat 展開にも使用できます。次のコードを見てください。
+`\*` は、 `ArrayLiteral` と `TupleLiteral` の splat 展開にも使用できます。また、 `**` は `HashLiteral` と `NamedTupleLiteral` の splat 展開に使用できます。次のコードを見てください。
 
 [source,crystal,indent=0]
 ----
 include::./examples/syntax/splat.cr[]
 ----
 
-splat 展開は `ArrayLiteral` の各要素をカンマで区切った形になります。
+展開は、各要素をカンマで区切った形になります。 `HashLiteral` もそのままカンマ区切りで出力されますが、使い所によっては上記のように `Syntax error` になります。
 
 === 定数
 
