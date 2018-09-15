@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/MakeNowJust/asciidoctor-rouge.git
+  remote: https://github.com/MakeNowJust/asciidoctor-rouge.git
   revision: b9a70a714a25a7dfa0098528397bb9241a7a8101
   branch: rouge-3
   specs:
