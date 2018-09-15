@@ -4,7 +4,7 @@
 
 ## 必要なもの
 
-  - Ruby 2.5.0
+  - Ruby 2.5.1
   - Bundler
   - [Redpen](https://redpen.cc)
 
@@ -21,10 +21,11 @@ $ make
 
 ```console
 $ ls build
-introducing-crystal-print.pdf introducing-crystal-web.pdf introducing-crystal.html
+docs/  introducing-crystal-print.pdf  introducing-crystal-web.pdf
 ```
 
-それぞれ印刷用の PDF、Web 公開用の PDF、HTML です。
+`introducing-crystal-print.pdf` は印刷用の PDF で、 `introducing-crystal-web.pdf` は Web 公開用の PDF です。
+`docs/` 以下には [Jekyll](https://jekyllrb.com) で生成されたドキュメントがあります。
 
 ## テスト
 
