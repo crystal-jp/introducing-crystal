@@ -2,13 +2,13 @@ name: simple_html
 version: 0.1.0
 
 authors:
-  - Your Git Name <your_mail@example.org>
+  - ʕ·ᴥ·ʔAKJ <arcage@denchu.org>
 
 targets:
   simple_html:
     main: src/simple_html.cr
 
-crystal: 0.24.2
+crystal: 0.26.1
 
 license: MIT
 

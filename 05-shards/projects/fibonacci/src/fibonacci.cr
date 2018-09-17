@@ -1,20 +1,22 @@
 require "big"
-require "./fibonacci/*"
 
+# Retuen fibonacci number.
 module Fibonacci
+  VERSION = "0.1.0"
+
   @@numbers = [BigInt.new(0), BigInt.new(1)]
 
   def self.number(n : Int)
     negative = (n < 0)
     even = n.even?
-    _n = n.abs
-    while @@numbers.size < _n + 1
+    n = n.abs
+    while @@numbers.size < n + 1
       @@numbers << @@numbers[-1] + @@numbers[-2]
     end
     if negative && even
-      -@@numbers[_n]
+      -@@numbers[n]
     else
-      @@numbers[_n]
+      @@numbers[n]
     end
   end
 end
