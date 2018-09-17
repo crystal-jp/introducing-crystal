@@ -20,12 +20,12 @@ jobs:
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
       - run:
           name: Build
-          command: make -j
+          command: bundle exec rake -j
       - store_artifacts:
           path: build
       - run:
           name: Lint
-          command: make lint-full
+          command: bundle exec rake lint
       - run:
           name: Test
-          command: make test
+          command: bundle exec rake test

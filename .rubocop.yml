@@ -7,3 +7,6 @@ AllCops:
 Style/AccessModifierDeclarations:
   EnforcedStyle: inline
 
+Metrics/BlockLength:
+  Exclude:
+    - Rakefile

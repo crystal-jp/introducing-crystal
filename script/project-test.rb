@@ -4,10 +4,10 @@
 require 'pathname'
 require_relative './util'
 
-PROJECTS = ARGV.to_a
+PROJECTS = Pathname.glob('[0-9][0-9]-*/projects/*/')
 
 PROJECTS.each do |project|
-  path = Pathname.new(project).realpath
+  path = project.realpath
 
   cd(path) do
     if (path / 'Makefile').exist?

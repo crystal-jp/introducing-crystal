@@ -1,4 +1,5 @@
 /build/
+/.tmp/
 /vendor/bundle
 /.bundle/
 /Makefile.local

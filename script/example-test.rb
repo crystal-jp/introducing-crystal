@@ -6,10 +6,10 @@ require 'tmpdir'
 require_relative './util'
 require_relative './example'
 
-EXAMPLES = ARGV.to_a.sort
+EXAMPLES = Pathname.glob('[0-9][0-9]-*/examples/**/*.cr')
 
 EXAMPLES.each do |example|
-  example = Example.new Pathname.new(example)
+  example = Example.new example
 
   example.path.dirname.mkpath
   example.path.write example.code

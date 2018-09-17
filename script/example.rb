@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-EXAMPLE_DIR = Pathname.new(ENV.fetch('PREFIX', 'build')) / 'example'
+EXAMPLE_DIR = Pathname.new(ENV.fetch('TEMP_DIR', '.tmp')) / 'example'
 
 # Example represents example code.
 class Example

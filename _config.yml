@@ -1,5 +1,6 @@
 source: docs
 destination: build/docs
+baseurl: /introducing-crystal
 
 title: 入門 Crystal
 author: Crystal-JP
