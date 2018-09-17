@@ -1,7 +1,9 @@
 require "big"
-require "./fibonacci/*"
 
+# Retuen fibonacci number.
 module Fibonacci
+  VERSION = "0.1.0"
+
   @@numbers = [BigInt.new(0), BigInt.new(1)]
 
   def self.number(n : Int)
