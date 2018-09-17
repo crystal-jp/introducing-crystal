@@ -1,6 +1,6 @@
 = マクロ
 
-著者: at-grandpa
+著者: @at_grandpa
 
 // tag::body[]
 
