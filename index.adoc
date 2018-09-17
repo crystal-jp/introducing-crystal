@@ -2,7 +2,6 @@
 Crystal-JP (5t111111; AKJ; @at_grandpa; MakeNowJust; msky026)
 :lang: ja
 :doctype: book
-:pdf-page-size: b5
 :sectnums:
 :chapter-label:
 :table-caption: テーブル
