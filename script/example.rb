@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-EXAMPLE_DIR = Pathname.new(ENV.fetch('TEMP_DIR', '.tmp')) / 'example'
+require_relative './util'
+
+EXAMPLE_DIR = TEMP_DIR / 'example'
 
 # Example represents example code.
 class Example
@@ -11,7 +13,7 @@ class Example
     @output = []
   end
 
-  attr_reader :mode
+  attr_reader :original_path, :mode
 
   def path
     EXAMPLE_DIR / @original_path
