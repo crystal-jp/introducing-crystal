@@ -1,6 +1,6 @@
 = Web 開発
 
-著者: msky026
+著者: msky
 
 // tag::body[]
 
