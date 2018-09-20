@@ -52,6 +52,7 @@ class Example
   private def convert_assert_full(line)
     match = line.match(RE_ASSERT_FULL)
     return unless match
+
     mode! :assert
     expection = convert_expection match[1]
     ".inspect.should #{expection}\n"
@@ -60,6 +61,7 @@ class Example
   private def convert_assert(line)
     match = line.match(RE_ASSERT)
     return unless match
+
     mode! :assert
     expr = match[1]
     expection = convert_expection match[2]
@@ -69,14 +71,17 @@ class Example
   private def convert_raise(line)
     match = line.match(RE_RAISE)
     return unless match
+
     mode! :assert
     *, expr, klass, text = *match
     return "expect_raises(#{klass}, #{text.inspect}) { #{expr} }\n" if text
+
     "expect_raises(#{klass}) { #{expr} }\n"
   end
 
   private def convert_compileonly(line)
     return unless line == "# tag::compileonly\[\]\n"
+
     mode! :compileonly
     line
   end
@@ -88,6 +93,7 @@ class Example
   private def main_header(line, offset)
     return unless line == "# tag::main[]\n"
     raise '"# tag::main[]" is duplicated' if @main_start
+
     @main_start = offset
     line
   end
@@ -96,15 +102,18 @@ class Example
     return unless line == "# end::main[]\n"
     raise '"# tag::main[]" is missing' unless @main_start
     raise '"# end::main[]" is duplicated' if @main_end
+
     @main_end = offset
     line
   end
 
   private def save_output(line, offset)
     return unless line == "# output:\n"
+
     mode! :output
     (offset + 1...@lines.size).each do |i|
       break unless @lines[i].start_with? '# '
+
       @output << @lines[i][2..-1]
     end
     line
@@ -124,6 +133,7 @@ class Example
     unless @mode == :normal || @mode == mode
       raise "Expected mode is normal or #{mode}, but current mode is #{@mode}"
     end
+
     @mode = mode
   end
 end
@@ -140,6 +150,7 @@ class Example
   private def inject_assert(lines)
     if @main_start
       raise '"# end::main[]" is missing' unless @main_end
+
       lines[@main_start] = assert_header
       lines[@main_end] = assert_footer
     else

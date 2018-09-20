@@ -18,6 +18,7 @@ module Spinner
       else
         message = SPINNER_QUEUE.shift || message
         break if SPINNER_QUEUE.closed?
+
         print "\e[G\e[K  \e[33m#{spinners[clock % spinners.size]}\e[0m "
         print message
         clock += 1
@@ -29,6 +30,7 @@ module Spinner
     loop do
       sleep 0.125
       break if SPINNER_QUEUE.closed?
+
       SPINNER_QUEUE << nil
     end
   end
