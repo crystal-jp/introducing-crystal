@@ -2,7 +2,7 @@ name: fibonacci
 version: 0.1.0
 
 authors:
-  - ʕ·ᴥ·ʔAKJ <arcage@denchu.org>
+  - Your Git Name <your_mail@example.org>
 
 crystal: 0.26.1
 
