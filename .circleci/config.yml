@@ -45,8 +45,8 @@ jobs:
       - run:
           name: Deploy
           command: |
-            git config --global user.email $GH_EMAIL
-            git config --global user.name $GH_NAME
+            git config --global user.email 'make.just.on@gmail.com'
+            git config --global user.name 'TSUYUSATO Kitsune (bot)'
 
             git clone $CIRCLE_REPOSITORY_URL out
 
