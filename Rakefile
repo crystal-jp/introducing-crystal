@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
-require 'pathname'
-
-require 'rake/clean'
-
 unless ENV['BUNDLE_BIN_PATH']
   print "\e[1;31mDetect not bundler environment!! "
   puts "Re-execute with 'bundle exec'.\e[0m"
   sh 'bundle', 'exec', 'rake', *ARGV, verbose: false
   exit 0
 end
+
+require 'combine_pdf'
+require 'pathname'
 
 # =================
 # === Variables ===
@@ -41,6 +40,8 @@ adoc_print_theme = adoc_themes_dir / 'print-theme.yml'
 image_files = `git ls-files docs/assets/images/[0-9][0-9]-*`
               .lines(chomp: true)
               .map { |filename| Pathname.new filename }
+# PDF of front-cover page
+cover_pdf = Pathname.new 'docs/assets/pdfs/cover.pdf'
 # Crystal sources
 crystal_files = `git ls-files *.cr`
                 .lines(chomp: true)
@@ -76,6 +77,8 @@ redpen_flags = '-c config/redpen/conf.xml -L ja'
 # === Tasks     ===
 # =================
 
+require 'rake/clean'
+
 CLEAN.include(temp_dir)
 directory temp_dir
 CLOBBER.include(build_dir)
@@ -96,9 +99,16 @@ namespace 'pdf' do
   file web_pdf => [
     'index.adoc', *content_adoc_files,
     *crystal_files, *image_files,
-    adoc_web_theme, build_dir
+    adoc_web_theme, cover_pdf, build_dir
   ] do |t|
-    sh 'asciidoctor-pdf', *adoc_web_flags, '-o', t.name, t.source
+    temp_output = temp_dir / 'introducing-crystal-web.pdf'
+
+    sh 'asciidoctor-pdf', *adoc_web_flags, '-o', temp_output.to_s, t.source
+
+    pdf = CombinePDF.new
+    pdf << CombinePDF.load(cover_pdf)
+    pdf << CombinePDF.load(temp_output)
+    pdf.save t.name
   end
 
   file print_pdf => [

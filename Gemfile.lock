@@ -29,6 +29,8 @@ GEM
       asciidoctor-pdf (~> 1.5.0.alpha.8)
     ast (2.4.0)
     colorator (1.1.0)
+    combine_pdf (1.0.15)
+      ruby-rc4 (>= 0.1.5)
     concurrent-ruby (1.0.5)
     css_parser (1.6.0)
       addressable
@@ -136,6 +138,7 @@ DEPENDENCIES
   asciidoctor-pdf
   asciidoctor-pdf-cjk
   asciidoctor-rouge!
+  combine_pdf
   jekyll
   jekyll-asciidoc
   jekyll-theme-prologue

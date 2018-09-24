@@ -18,6 +18,8 @@ gem 'asciidoctor-rouge',
     branch: 'rouge-3'
 gem 'rouge'
 
+gem 'combine_pdf'
+
 gem 'jekyll'
 gem 'jekyll-theme-prologue'
 group :jekyll_plugins do
