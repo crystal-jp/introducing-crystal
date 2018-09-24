@@ -1,6 +1,10 @@
 # introducing-crystal
 
-『入門 Crystal 』の原稿を管理するリポジトリです。
+『Introducing Crystal Programming Language』の原稿を管理するリポジトリです。
+
+<p align="center">
+  <img alt="表紙の画像" src="./cover.png" width="600px">
+</p>
 
 ## 必要なもの
 

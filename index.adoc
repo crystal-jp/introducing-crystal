@@ -1,4 +1,4 @@
-= 入門 Crystal
+= Introducing Crystal Programming Language
 Crystal-JP (5t111111; AKJ; @at_grandpa; MakeNowJust; msky)
 :lang: ja
 :doctype: book
