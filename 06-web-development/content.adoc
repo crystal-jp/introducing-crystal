@@ -1,11 +1,13 @@
-== Web 開発
+= Web 開発
 
-著者: msky026
+著者: msky
+
+// tag::body[]
 
 この章では、 Crystal を用いて Web 開発を行う方法について解説します。
 本サンプルで使用する Crystal のバージョンは `0.26.0` で確認しています。
 
-=== Crystal での Web 開発の前提知識
+== Crystal での Web 開発の前提知識
 
 まず、 Crystal では HTTP でのサービスをどのように処理するかについて解説します。
 前の章でも既に解説済みですが、改めて Crystal での Web 開発の基本となる部分について解説します。
@@ -28,7 +30,7 @@ $ crystal server.cr
 Listening on http://0.0.0.0:8080
 ----
 
-==== HTTP ハンドラ
+=== HTTP ハンドラ
 
 基本的に Crystal の HTTP サーバが返却するパラメータは レスポンス本文、ヘッダ、ステータスコードの3種です。
 その3種を持っている限りにおいて、処理をスタックすることが出来ます。
@@ -76,12 +78,12 @@ Amber :: https://www.amberframework.org
 フルスタックの Web フレームワークです。
 様々なコードジェネレータや、 OR/M を備えています。 Rails 的な規約重視のフレームワークです。
 
-=== Kemal による Web 開発
+== Kemal による Web 開発
 
 それでは本章から Kemal による Web 開発を、サンプルを交えながら説明します。
 また本サンプルに使用する Kemal のバージョンは `0.24.0` を想定しています。
 
-==== Kemal インストール
+=== Kemal インストール
 
 適当な作業用のディレクトリ以下で、以下のコードを実行してみます。ディレクトリが作成され幾つかのファイルがひな形から作成されます。
 本稿ではサンプルアプリを kemal-sample として進めます。
@@ -107,7 +109,7 @@ include::./projects/kemal-sample/shard.yml[tag=kemal-dep]
 $ shards install
 ----
 
-==== Kemal FirstStep
+=== Kemal FirstStep
 
 インストールまで問題なく動かせたら続いて簡単なサンプルを作成してみましょう。
 カレントの src ディレクトリ以下の `kemal-sample.cr` に以下の追記を行います。
@@ -166,7 +168,7 @@ $ ./kemal-sample
 ブラウザで `http://localhost:3000/` でアクセスします。
 `Hello World` と表示されていれば問題ありません。
 
-==== DB と連動する
+=== DB と連動する
 
 通常、 Web アプリでは DB が必須です。 Kemal で作ったアプリから DB にアクセスすることも可能です。
 ライブラリを使用することで PostgreSQL か、もしくは MySQL を使用することが出来ます。
@@ -212,13 +214,13 @@ include::./projects/kemal-sample/shard.yml[tag=db-dep]
 $ shards install
 ----
 
-==== 投稿一覧ページの編集
+=== 投稿一覧ページの編集
 
 これからいよいよ Web アプリらしく記事の一覧ページと詳細ページ、新規投稿ページをそれぞれ作成していきます。
 まず全ページで共通で使用するテンプレートは別に作成します。
 テンプレートヘッダに新規投稿ページと投稿リストページヘのリンクを表示し、ページ内に各ページのコンテンツを表示するように修正していきます。
 
-==== レイアウトページの作成
+=== レイアウトページの作成
 
 まずひな形のページを `application.ecr` という名前で作成します。
 
@@ -230,7 +232,7 @@ include::./projects/kemal-sample/src/views/application.ecr[]
 本サンプルでは BootStrap を使用します。
 CDN を使用しますので特にダウンロード不要ですが、ダウンロードする場合は別途 `http://getbootstrap.com/` から必要なファイルをダウンロードし、プロジェクトカレントの `/public` 以下に配置してください。
 
-==== CSS の作成
+=== CSS の作成
 
 ページ修飾用の CSS を作成します。本サンプルでは rails tutorial をそのまま参考にします。
 
@@ -239,7 +241,7 @@ CDN を使用しますので特にダウンロード不要ですが、ダウン�
 include::./projects/kemal-sample/public/css/custom.css[]
 ----
 
-==== 一覧ページの作成
+=== 一覧ページの作成
 
 記事一覧ページを以下の内容で作成します。
 
@@ -248,7 +250,7 @@ include::./projects/kemal-sample/public/css/custom.css[]
 include::./projects/kemal-sample/src/views/index.ecr[]
 ----
 
-==== 新規投稿ページ
+=== 新規投稿ページ
 
 記事投稿用のページを新規作成します。
 
@@ -259,7 +261,7 @@ include::./projects/kemal-sample/src/views/index.ecr[]
 include::./projects/kemal-sample/src/views/articles/new.ecr[]
 ----
 
-==== 詳細ページ
+=== 詳細ページ
 
 一覧ページから記事タイトルをクリックした時に遷移する詳細ページを作成します。
 データへの更新については後述します。
@@ -269,7 +271,7 @@ include::./projects/kemal-sample/src/views/articles/new.ecr[]
 include::./projects/kemal-sample/src/views/articles/show.ecr[]
 ----
 
-==== Kemal プログラム改修
+=== Kemal プログラム改修
 
 kemal-sample.cr を以下の内容で修正します。
 
@@ -292,7 +294,7 @@ include::./projects/kemal-sample/src/kemal-sample.cr[tags=main]
 修正は以上です。次項から処理について解説します。
 
 [suppress=InvalidSymbol]
-==== クエリ
+=== クエリ
 
 まずクエリは以下のように記述します。
 
@@ -337,7 +339,7 @@ $1::int8
 * geo types
 * array types: int8 int4 int2 float8 float4 bool text
 
-==== データの更新
+=== データの更新
 
 更新系のクエリは以下のような記述で行います。
 データの投入は以下のように行います。
@@ -349,7 +351,7 @@ db.exec("insert into articles(title, content) values($1::text, $2::text)", param
 
 SQL 文に update や delete も設定ができます。
 
-==== レンダリング
+=== レンダリング
 
 View の構造はテンプレート形式で設定することが出来ます。
 
@@ -364,7 +366,7 @@ Web アプリ再起動後に `http://localhost:3000/` にアクセスすると�
 `http://localhost:3000/articles/new` にアクセスすると、タイトルと本文を入力する画面が表示されており、入力後に一覧に遷移すると成功です。
 記事タイトルをクリックすると詳細画面に遷移すると成功です。
 
-==== オブジェクトの CRUD
+=== オブジェクトの CRUD
 
 Kemal は RESTful に対応しており、 GET POST 以外にも、 PUT DELETE にも対応しております。
 記事の編集をサンプルに追加しながら説明します。
@@ -403,11 +405,11 @@ end
 これでデータの作成、表示、更新、削除の機能を持ったアプリを作ることが出来ます。
 本稿では省略しますが、セッションを用いて認証機能を追加することも出来ます。
 
-=== 補注
+== 補注
 
 本稿のコードでは取り上げませんでしたが、 Web アプリを書く上で注意すべき事項を以下に記載します。
 
-==== トランザクション
+=== トランザクション
 
 データの原子性を保つ上で、トランザクション制御は必須です。
 以下の設定でトランザクションのコミット、およびロールバックを設定します。
@@ -427,7 +429,7 @@ db.transaction do |tx|
 end
 ----
 
-==== MySQL
+=== MySQL
 
 MySQL を使用する場合は、以下の設定を行います。
 `shard.yml` に以下の記述を行います。
@@ -449,3 +451,5 @@ DB.open "mysql://root@localhost/test" do |db|
   db.exec "insert into contacts values (?, ?)", "John", 30
 end
 ----
+
+// end::body[]

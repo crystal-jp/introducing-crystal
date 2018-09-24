@@ -1,5 +1,7 @@
 /build/
+/.tmp/
 /vendor/bundle
 /.bundle/
 /Makefile.local
-/redpen-distribution-*
+/vendor/redpen-distribution-*
+/.sass-cache/

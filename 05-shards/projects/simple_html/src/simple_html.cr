@@ -1,7 +1,9 @@
 require "html_builder"
-require "./simple_html/*"
 
+# Build simple HTML source.
 module SimpleHtml
+  VERSION = "0.1.0"
+
   def self.build(args : Array(String))
     title = args[0]
     body = args[1]

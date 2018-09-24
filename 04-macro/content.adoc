@@ -1,10 +1,12 @@
-== マクロ
+= マクロ
 
-著者: at-grandpa
+著者: @at_grandpa
+
+// tag::body[]
 
 この章では、Crystal のマクロについて説明します。
 
-=== マクロとは
+== マクロとは
 
 Crystal のマクロは次のようなものです。
 
@@ -34,7 +36,7 @@ include::./examples/example_01_expanded.cr[tags=code;main]
 
 単純なメソッド定義とメソッド呼び出しに展開されています。その後、実際のコンパイルが行われます。マクロのイメージが湧きましたでしょうか。
 
-=== マクロの利点
+== マクロの利点
 
 マクロを利用することで、コードの重複を排除できます。次のコードを見てください。
 
@@ -61,7 +63,7 @@ include::./examples/duplication_01_getter.cr[tags=code;main]
 
 かなりすっきりしました。このように、マクロを利用することですっきりとしたコードを書くことができます。
 
-=== マクロの展開
+== マクロの展開
 
 重複の除去によって、マクロ呼び出しのコードはすっきりしました。しかし、マクロ定義のコードはどうしても複雑になってしまいます。マクロの理解に加え、展開後の Crystal コードも理解しなければならないからです。
 
@@ -106,11 +108,11 @@ expansion 1:
 
 マクロが展開されました。意図していた定義です。このコマンドはエディタから実行できるようにすると便利です。設定方法は、エディタそれぞれの方法を参照してください。この `crystal tool expand` のおかげで、マクロのデバッグが格段にしやすくなりました。マクロを記述する際はぜひ活用してみてください。
 
-=== 標準搭載のマクロ
+== 標準搭載のマクロ
 
 Crystal には、標準で搭載されているマクロがあります。便利なものが多いのでいくつかご紹介します。`crystal tool expand` を用いれば内容を把握できます。また、公式の API ドキュメントの各マクロの説明には、そのマクロの定義へのリンクがあるので、興味のある方は確認してみてください。
 
-==== `def_equales`
+=== `def_equales`
 
 オブジェクトの同値性比較を行う `==` メソッドを定義します。同値性比較を行う場合、複数あるインスタンス変数の比較を行います。通常の場合、コードは次のようになります。
 
@@ -128,7 +130,7 @@ include::./examples/def_equals_01_macro.cr[tags=code;main]
 
 とてもすっきりしました。マクロがいかに強力かがわかります。
 
-==== `record`
+=== `record`
 
 `record` は Struct を簡単に定義できるマクロです。通常、 Struct の定義は次のように行います。
 
@@ -152,7 +154,7 @@ include::./examples/record_01_macro.cr[tags=code;main]
 
 という機能もあります。気になる方は `record` のマニュアルを読んでみてください。
 
-==== `parallel`
+=== `parallel`
 
 引数に与えた処理を並行処理します。各処理の返り値も受け取ることができます。次のコードは、`job1` `job2` `job3` を並行に実行し、返り値を受け取るコードです。
 
@@ -171,15 +173,25 @@ include::./projects/macro/src/parallel.cr[tags=main]
 
 実行された時刻を見ると、並行に実行されていることがわかります。また、返り値も適切に受け取っていることがわかります。このように、 `parallel` を使えば簡単に並行処理を記述できます。
 
+[suppress='InvalidSymbol']
+==== `p!`, `pp!`
+
+`p` や `pp` と同じく、引数として渡された値を標準出力に出力しますが、渡された式自身も表示してくれます。デバッグ時に重宝します。
+
+[source,crystal]
+----
+include::./examples/pp_exp.cr[]
+----
+
 　
 
 いかがでしたでしょうか。いくつかのマクロを紹介しましたが、この他にも標準のマクロは存在します。興味のある方は探してみてください。今までのコードがずっとすっきりするはずです。
 
-=== マクロの文法
+== マクロの文法
 
 マクロの文法は https://crystal-lang.org/docs/syntax_and_semantics/macros.html[公式マニュアル] に記載されています。この章では公式マニュアルを基本とし、より詳しく解説していきます。
 
-==== マクロのおさらい
+=== マクロのおさらい
 
 マクロの基本的な使い方をおさらいしましょう。次のコードを見てください。この章の冒頭で出たコードです。
 
@@ -198,13 +210,13 @@ include::./examples/syntax/basic_syntax.cr[tags=code;main]
 
 この流れを頭の中に入れつつ、次のステップに進みましょう。
 
-==== マクロと抽象構文木
+=== マクロと抽象構文木
 
 Crystal のコードはパーサによって、抽象構文木（  Abstract Syntax Tree ）にパースされます。抽象構文木を構成する木構造の各要素を AST node と言います。つまり、 Crystal のコードは各 AST node で構成されています。
 
 ここでマクロに話を戻します。マクロは Crystal のコードを組み立てるものでした。言い換えると「マクロは AST node を操作して Crystal コードを組み立てるもの」ということになります。実際、マクロが引数として受け取るのは AST node です。そのことを確かめてみましょう。
 
-==== AST node
+=== AST node
 
 マクロが受け取る AST node の型を見てみましょう。
 
@@ -240,7 +252,7 @@ include::./examples/syntax/ast_node_array_literal.cr[tags=code;main]
 
 次からは、実際の文法を具体的に見ていきましょう。
 
-==== スコープ
+=== スコープ
 
 マクロにもスコープがあります。
 
@@ -271,7 +283,7 @@ include::./examples/syntax/macro_scope_class.cr[tags=code;main]
 
 「マクロが呼び出せない」という問題に陥った場合は、こちらの例を思い出してください。
 
-==== if
+=== if
 
 マクロでの条件分岐は `if` を使います。次のコードを見てください。
 
@@ -298,7 +310,7 @@ include::./examples/syntax/if_outside.cr[tags=code]
 
 これでちょっとしたマクロを素早く書くことができます。
 
-==== for
+=== for
 
 マクロでのループは `for` を使います。次のコードを見てください。
 
@@ -321,27 +333,27 @@ include::./examples/syntax/for_hash.cr[tags=code;main]
 include::./examples/syntax/for_outside.cr[tags=code;main]
 ----
 
-==== 可変長引数
+=== 可変長引数
 
-通常の Crystal コードの感覚で可変長引数を扱うことができます。引数の定義に `*` を付けるだけです。受け取った引数は `ArrayLiteral` になります。
+通常の Crystal コードの感覚で可変長引数を扱うことができます。引数の定義に `*` を付けるだけです。受け取った引数は `TupleLiteral` になります。
 
 [source,crystal,indent=0]
 ----
 include::./examples/syntax/variadic_arguments.cr[tags=code;main]
 ----
 
-==== splat 展開
+=== splat 展開
 
-`*` は、`ArrayLiteral` の splat 展開にも使用できます。次のコードを見てください。
+`\*` は、 `ArrayLiteral` と `TupleLiteral` の splat 展開にも使用できます。また、 `**` は `HashLiteral` と `NamedTupleLiteral` の splat 展開に使用できます。次のコードを見てください。
 
 [source,crystal,indent=0]
 ----
 include::./examples/syntax/splat.cr[]
 ----
 
-splat 展開は `ArrayLiteral` の各要素をカンマで区切った形になります。
+展開は、各要素をカンマで区切った形になります。 `HashLiteral` もそのままカンマ区切りで出力されますが、使い所によっては上記のように `Syntax error` になります。
 
-==== 定数
+=== 定数
 
 マクロは定数にアクセスできます。次のコードを見てください。
 
@@ -373,7 +385,7 @@ include::./examples/syntax/nested_macros.cr[tags=code;main]
 
 の部分では、外側のマクロで `{{name.id}}` の部分は展開されますが、 `\{{greeting.id}}` の部分は展開されません。`\{{greeting.id}}` の部分は内側のマクロで展開されます。Nested macros は、マクロの記述で重複が多い場合に有効です。しかし、可読性が損なわれやすいので注意が必要です。
 
-==== 生成コードの注意点
+=== 生成コードの注意点
 
 マクロで生成するコードは、それ単体で Crystal のコードとして完結していなければなりません。言い替えれば、 生成されたコードを別のファイルに書き出して正しくパースされるようなコードでなければなりません。この制約は忘れてしまいがちなので気をつけましょう。次の例を見てください。
 
@@ -400,11 +412,11 @@ include::./examples/syntax/pitfalls_begin_end.cr[tags=code;main]
 
 こうすることで、マクロが生成するコードが正しい Crystal のコードとなるため、コンパイルが通るようになります。陥りやすい間違いなので気をつけてください。
 
-==== 型の情報にアクセスできる `@type`
+=== 型の情報にアクセスできる `@type`
 
 マクロには特別なインスタンス変数 `@type` が用意されています。これを使うと、コンパイル時の型情報にアクセスできます。実際どんなメソッドが存在しているかを見たほうがわかりやすいので、いくつかご紹介します。`@type` は `Crystal::Macros::TypeNode` クラスです。
 
-===== `TypeNode#instance_vars`
+==== `TypeNode#instance_vars`
 
 型に定義されているインスタンス変数を返します。返り値は `Crystal::Macros::MetaVar` クラスの配列です。`MetaVar` クラスは、変数やインスタンス変数を表す型で、名前（ `MetaVar#name` ）と型（ `MetaVar#type` ）を持っています。
 
@@ -413,7 +425,7 @@ include::./examples/syntax/pitfalls_begin_end.cr[tags=code;main]
 include::./examples/syntax/type_instance_vars.cr[tags=code;main]
 ----
 
-===== `TypeNode#methods`
+==== `TypeNode#methods`
 
 型に定義されているメソッドの情報を返します。返り値は `Crystal::Macros::Def` クラスの配列です。`Def` クラスは、 `def` 文を表す型で、メソッド定義に関するさまざまな情報を持っています。例えば、 `Def#args` は引数の情報、 `Def#return_type` はメソッドの返り値の型を表します。
 
@@ -424,7 +436,7 @@ include::./examples/syntax/type_methods.cr[tags=code;main]
 
 これらの他にもメソッドはたくさんあります。私の調べた限りでは、組み合わせればやりたいことはできるという、必要最低限なメソッドはそろっていました。興味のある方はぜひ調べてみてください。
 
-==== Hooks
+=== Hooks
 
 一部の特別な名前を持ったマクロは hooks と呼ばれ、特定のタイミングでコンパイル時に実行されます。
 
@@ -472,7 +484,7 @@ include::./examples/syntax/hooks_method_missing.cr[]
 
 `method_missing` の引数は `Crystal::Macros::Call` です。これはメソッドの呼び出しを表すクラスです。`#args` や `#receiver` などがあります。
 
-==== Fresh variables
+=== Fresh variables
 
 マクロが展開されると、マクロ内で定義した変数もそのまま展開され、 Crystal コードとして解釈されます。次の例を見てください。
 
@@ -505,6 +517,8 @@ expansion 1:
 
 `__temp_20` のような変数に置き換わっています。このように、マクロの実行フェーズで変数名を置き換えています。
 
-=== まとめ
+== まとめ
 
 以上で、マクロとはどういうものか、マクロの文法はどうなっているのかなどの説明を終わります。マクロのおおまかなイメージは湧きましたでしょうか。自分はライブラリを書く際にマクロを使いますが、やはり重複排除の効果はすごいと思います。また、 DSL の提供も比較的簡単にできるのではないでしょうか。マクロに慣れてくると、 Crystal 本来のコードを書くよりもマクロを書いている比率が多くなる印象が強いです。今回のこの章を読み、「マクロが読めるようになった」「マクロが書けるようになった」という方が一人でも増えて頂けると幸いです。
+
+// end::body[]

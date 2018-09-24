@@ -3,7 +3,7 @@ version: 2.0
 jobs:
   build:
     docker:
-      - image: makenowjust/techbookfest-build:0.26.1-2
+      - image: makenowjust/techbookfest-build:0.26.1-4
     steps:
       - checkout
       - restore_cache:
@@ -20,12 +20,61 @@ jobs:
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
       - run:
           name: Build
-          command: make -j
+          command: bundle exec rake -j
       - store_artifacts:
           path: build
       - run:
           name: Lint
-          command: make lint-full
+          command: bundle exec rake lint
       - run:
           name: Test
-          command: make test
+          command: bundle exec rake test
+      - persist_to_workspace:
+          root: build
+          paths:
+            - docs
+  deploy:
+    docker:
+      - image: makenowjust/techbookfest-build:0.26.1-4
+    steps:
+      - attach_workspace:
+          at: build
+      - add_ssh_keys:
+          fingerprints:
+            - "ad:ae:94:c4:a1:35:a3:9f:10:dd:ae:d7:ea:b6:89:1d"
+      - run:
+          name: Deploy
+          command: |
+            git config --global user.email $GH_EMAIL
+            git config --global user.name $GH_NAME
+
+            git clone $CIRCLE_REPOSITORY_URL out
+
+            cd out
+            git checkout gh-pages || git checkout --orphan gh-pages
+            git rm -rf .
+            cd ..
+
+            cp -a build/docs/. out/.
+
+            mkdir -p out/.circleci && cp -a .ciecleci/. out/.circleci
+
+            cd out
+            git add -A
+            git commit --allow-empty -m "Deploy: ${CIRCLE_SHA1}"
+            git push origin gh-pages
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore: gh-pages
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master

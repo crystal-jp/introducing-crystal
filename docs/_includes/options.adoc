@@ -1,0 +1,4 @@
+:table-caption: テーブル
+:hardbreaks:
+:prewrap!:
+:imagesdir: ../assets/images

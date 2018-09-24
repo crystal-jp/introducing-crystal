@@ -1,6 +1,8 @@
-== Getting Started
+= Getting Started
 
 著者: 5t111111
+
+// tag::body[]
 
 「はじめに」の章で説明したように、 Crystal はコンパイラ言語なので、プログラムのソースコードをコンパイルするためのコンパイラが必要になります。
 
@@ -8,11 +10,11 @@
 
 そして、プログラムを書くために大事なエディタのサポート状況や、 Web ブラウザ上で Crystal プログラムを実行することのできる Playground というツールについても紹介します。
 
-=== Crystal のインストール
+== Crystal のインストール
 
 Crystal のインストール方法は OS ごとに異なります。ここでは、主要な Linux ディストリビューションや macOS 、そして Windows へのインストール方法を紹介します。
 
-==== Debian や Ubuntu
+=== Debian や Ubuntu
 
 Debian 系のディストリビューションでは、 Crystal の公式リポジトリを利用することができます。
 
@@ -58,7 +60,7 @@ $ sudo apt update
 $ sudo apt install crystal
 ----
 
-==== Red Hat や CentOS
+=== Red Hat や CentOS
 
 Red Hat 系のディストリビューションでも、 Crystal の公式リポジトリを利用することができます。
 
@@ -96,7 +98,7 @@ $ sudo yum install crystal
 $ sudo yum update crystal
 ----
 
-==== Arch Linux
+=== Arch Linux
 
 Arch Linux では、ユーザリポジトリから Crystal をインストールできます。パッケージの依存関係を管理するための `shards` も必要になるので同様にインストールしてください。
 
@@ -105,7 +107,7 @@ Arch Linux では、ユーザリポジトリから Crystal をインストール
 $ sudo pacman -S crystal shards
 ----
 
-==== Gentoo Linux
+=== Gentoo Linux
 
 Gentoo Linux では、メインの overlay に Crystal が含まれています。
 
@@ -133,7 +135,7 @@ $ su -
 # emerge -a dev-lang/crystal
 ----
 
-==== macOS
+=== macOS
 
 macOS では、 http://brew.sh/[Homebrew] を利用して簡単に Crystal をインストールすることができます。
 
@@ -158,7 +160,7 @@ $ xcode-select --install
 $ xcode-select --switch /Library/Developer/CommandLineTools
 ----
 
-==== Linuxbrew
+=== Linuxbrew
 
 http://linuxbrew.sh/[Linuxbrew] を使って Linux に Crystal をインストールすることもできます。
 
@@ -175,22 +177,22 @@ $ brew install crystal-lang
 $ brew install crystal-lang --with-llvm
 ----
 
-==== Windows
+=== Windows
 
 残念ながら、まだ Crystal は Windows での実行をサポートしていません。ですが、 https://docs.microsoft.com/en-us/windows/wsl/about[Windows Subsystem for Linux] を利用することで Windows 10 上で Crystal を使うことが可能です。
 
 WSL 上での Crystal のインストール方法は、それぞれの Linux ディストリビューションにおけるインストール方法と同様です。例えば、もし WSL に Ubuntu を導入したのであれば、前掲の「 Debian や Ubuntu 」でのインストール方法を参照してください。
 
-==== その他のインストール方法
+=== その他のインストール方法
 
 ここまで、プラットフォームごとのインストール方法を説明しましたが、自分の使っている環境が対応していない場合や、より最新のバージョンを使いたい場合のインストール方法を紹介します。入門書の範囲を超えてしまうため、詳細についてはリンク先をご覧ください。
 
 - https://crystal-lang.org/docs/installation/from_a_targz.html[tar ボールからのバイナリインストール]
 - https://crystal-lang.org/docs/installation/from_source_repository.html[ソースコードからのビルド]
 
-=== Hello Crystal
+== Hello Crystal
 
-==== インストールの確認
+=== インストールの確認
 
 Crystal のインストールができたら、以下のコマンドを実行してみましょう。これで、Crystal がインストールされて利用できる状態かどうかが確認できます。
 
@@ -214,7 +216,7 @@ Crystal 0.26.1 (2018-08-27)
 
 を確認してください。
 
-==== はじめての Crystal プログラム
+=== はじめての Crystal プログラム
 
 無事にインストールして使える状態になっていたら、はじめての Crystal のプログラムを書いてみましょう。ご多分に漏れず、ここでも最初のプログラムは「 Hello world 」とします。
 
@@ -250,7 +252,7 @@ $ crystal run hello.cr
 
 と実行しても同様です。
 
-=== Crystal を書くためのエディタ
+== Crystal を書くためのエディタ
 
 さて、これで Crystal を書くための準備が整ったので、次の章からは文法など実際にプログラムを書くための内容に入っていきます。ですが、プログラムを快適に書くためにはエディタのサポートも欠かせません。
 
@@ -261,7 +263,7 @@ $ crystal run hello.cr
 - Vim
 - Emacs
 
-==== Visual Studio Code
+=== Visual Studio Code
 
 Visual Studio Code、通称 VSCode は機能の豊富さとシンプルさ軽さを両立したエディタとしてとても人気のエディタです。
 
@@ -279,7 +281,7 @@ VSCode で Crystal プログラミングをサポートするエクステンシ�
 
 vscode-crystal-lang の GitHub 上の Wiki にはより詳しい設定などの情報も記載されています。例えば、エラーの検知レベルをカスタマイズしたり、 https://github.com/crystal-lang-tools/scry[scry] という Crystal の Language Server との連携などのより便利に使うための設定も書かれていますので合わせてご覧ください。
 
-==== Atom
+=== Atom
 
 GitHub 社製のエディタ Atom では、以下のパッケージを導入することで快適に Crystal プログラミングができます。
 
@@ -290,7 +292,7 @@ language-crystal は Atom のパッケージとしては language-crystal-actual
 
 atom-ide-crystal は、 前節でも触れた scry という Language Server と連携して IDE のような機能を追加するものです。まだ機能的には充実していない面もありますが、エラー検知をサポートするなど少しずつ開発が進んでいます。
 
-==== Vim
+=== Vim
 
 言わずと知れた Vim でも、プラグインを使うことで Crystal プログラミングにエディタのサポートを受けることができます。
 
@@ -300,7 +302,7 @@ https://github.com/rhysd/vim-crystal[rhysd/vim-crystal] をインストールす
 
 エラー検知をしたい場合には、 https://github.com/vim-syntastic/syntastic[vim-syntastic/syntastic] などの統合解析プラグインを導入が必要です。前述の vim-crystal にはこの syntastic 用のチェッカもバンドルされているため、特別な設定をせずとも利用することができます。
 
-==== Emacs
+=== Emacs
 
 Emacs で Crystal のプログラムを書く場合は https://github.com/crystal-lang-tools/emacs-crystal-mode[crystal-lang-tools/emacs-crystal-mode] を使うのがよいでしょう。
 
@@ -308,11 +310,11 @@ Emacs で Crystal のプログラムを書く場合は https://github.com/crysta
 
 emacs-crystal-mode パッケージは https://melpa.org/#/crystal-mode[MELPA] に登録されているので導入も簡単です。
 
-=== Crystal Playground
+== Crystal Playground
 
 Crystal Playground を使うと Web ブラウザ上で Crystal のコードを実行することができます。
 
-image::02-getting-started/02-crystal-playground.png[]
+image::02-crystal-playground.png[width=75%,pdfwidth=100%]
 
 この画像を見るとわかるように、 Playground では、
 
@@ -332,10 +334,10 @@ $ crystal play
 
 Playground を立ち上げておけば、本書を読み進めるときに、記載されているコードをその場で実行して試したいときにも便利に活用できることでしょう。
 
-また、Playground にはコードを実行するだけに留まらない色々な機能があります。詳細については改めて後の章で紹介します。
-
-=== まとめ
+== まとめ
 
 この章では、Crystal のインストール方法とエディタのサポート状況、そして Playground について紹介しました。まだ発展途上であり入門書の範囲を超えてしまうのでここでは記載しませんが、 もし Crystal に慣れてきたらエディタと連携したデバッグ方法なども調べてみるとよいでしょう。
 
 次の章では Crystal の構文について説明します。
+
+// end::body[]

@@ -1,0 +1,8 @@
+= 03. 構文
+:page-layout: page
+:page-order: 300
+:toc:
+
+include::../_includes/options.adoc[]
+
+include::../../03-syntax/content.adoc[tag=body]
