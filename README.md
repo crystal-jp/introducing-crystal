@@ -3,7 +3,7 @@
 『Introducing Crystal Programming Language』の原稿を管理するリポジトリです。
 
 <p align="center">
-  <img alt="表紙の画像" src="./cover.png" width="600px">
+  <img alt="表紙の画像" src="./docs/assets/images/cover.png" width="600px">
 </p>
 
 ## 必要なもの
