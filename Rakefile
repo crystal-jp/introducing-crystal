@@ -160,12 +160,12 @@ task 'test' => %w[test:example test:project]
 namespace 'test' do
   desc 'Run example tests'
   task 'example' do
-    sh 'ruby', 'script/example-test.rb'
+    ruby 'script/example-test.rb', verbose: false
   end
 
   desc 'Run project tests'
   task 'project' do
-    sh 'ruby', 'script/project-test.rb'
+    ruby 'script/project-test.rb', verbose: false
   end
 end
 
