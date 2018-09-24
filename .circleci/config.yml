@@ -37,6 +37,7 @@ jobs:
     docker:
       - image: makenowjust/techbookfest-build:0.26.1-4
     steps:
+      - checkout
       - attach_workspace:
           at: build
       - add_ssh_keys:
@@ -50,16 +51,17 @@ jobs:
 
             git clone $CIRCLE_REPOSITORY_URL out
 
-            cd out
+            mkdir -p build/out
+            cd build/out
             git checkout gh-pages || git checkout --orphan gh-pages
             git rm -rf .
-            cd ..
+            cd ../..
 
-            cp -a build/docs/. out/.
+            cp -a build/docs/. build/out/.
 
-            mkdir -p out/.circleci && cp -a .ciecleci/. out/.circleci
+            mkdir -p build/out/.circleci && cp -a .ciecleci/. build/out/.circleci
 
-            cd out
+            cd build/out
             git add -A
             git commit --allow-empty -m "Deploy: ${CIRCLE_SHA1}"
             git push origin gh-pages
