@@ -222,6 +222,7 @@ Crystal 0.26.1 (2018-08-27)
 好きなエディタで、以下のプログラムを書いて `hello.cr` として保存してください。Crystal の拡張子は `.cr` です。
 
 [source,crystal]
+.hello.cr
 ----
 puts "Hello world!"
 ----

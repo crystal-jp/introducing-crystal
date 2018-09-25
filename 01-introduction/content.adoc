@@ -74,7 +74,7 @@ NOTE: https://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mis
 次のプログラムを見てください。
 
 [source,crystal]
-.`hello_world.cr`
+.hello_world.cr
 ----
 if rand(2) > 0
   my_string = "hello world"
