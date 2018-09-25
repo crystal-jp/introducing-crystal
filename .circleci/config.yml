@@ -63,7 +63,7 @@ jobs:
             cd build/out
             git add -A
             git commit --allow-empty -m "Deploy: ${CIRCLE_SHA1}"
-            GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_adae94c4a135a39f10ddaed7eab6891d -F /dev/null" git push origin gh-pages
+            git push origin gh-pages
 
 workflows:
   version: 2
