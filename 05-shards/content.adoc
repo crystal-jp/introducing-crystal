@@ -690,16 +690,16 @@ include::examples/bear1_spec.cr[]
 
 .使用可能なオブジェクトの状態を評価する
 
-`actual.sould eq expected`:: `actual` が `expected` と等しいかどうか。
+`actual.should eq expected`:: `actual` が `expected` と等しいかどうか。
 条件： `actual == expected`
 
-`actual.sould be expected`:: `actual` が `expected` と同値とみなせるかどうか。
+`actual.should be expected`:: `actual` が `expected` と同値とみなせるかどうか。
 条件： `actual.same?(expected)`
 
-`actual.sould be_a expected`:: `actual` が `expected` 型の値かどうか。
+`actual.should be_a expected`:: `actual` が `expected` 型の値かどうか。
 条件： `actual.is_a?(expected)`
 
-`actual.sould be_nil`:: `actual` が `nil` かどうか。
+`actual.should be_nil`:: `actual` が `nil` かどうか。
 条件： `actual.nil?`
 
 `actual.should be_true`:: `acrual` が `true` かどうか。
@@ -742,7 +742,7 @@ include::examples/bear1_spec.cr[]
 [source,crystal]
 .例外チェック
 ----
-include::examples/spec_example_01.cr[lines=5..11]
+include::examples/spec_example_01.cr[lines=6..11]
 ----
 
 このとき、引数に文字列もしくは正規表現オブジェクトを追加することで、エラーメッセージに対する条件を指定することも可能です。
@@ -781,7 +781,7 @@ include::examples/spec_error.txt[]
 
 ==== テストケースの実行結果サマリ（1行目）
 
-テストケースの実行結果には成功（`.`）、不合格（`F`）、エラー（`E`）、ペンディング（`\*`）の4種類があります。テストの実行結果では、先頭行にテストケースの数だけ実行結果に対応した文字が並んで表示されます。もしテストを実行したのがカラー表示対応のターミナルであれば `.` は緑、`F` と `E` が赤、`\*` が黄色で表示されているかもしれません。
+テストケースの実行結果には成功（`.`）、不合格（`F`）、エラー（`E`）、ペンディング（`\*`）の4種類があります。テストの実行結果では、先頭行にテストケースの数だけ実行結果に対応した文字が並んで表示されます。もしテストを実行したのがカラー表示対応のターミナルであれば `.` は緑、`F` と `E` が赤、`*` が黄色で表示されているかもしれません。
 
 ここで表示される実行結果が全て `.` になっていれば、テストに合格できたことになります。
 
@@ -903,7 +903,7 @@ spec ヘルパは、spec ファイルが1つだけの場合それほどありが
 `it` ブロック:: ある振る舞いに対するテストケースを記述する。
 `pending` ブロック:: 一時的にテストを保留するテストケースに使用する。
 `Object#should` メソッド:: レシーバがある条件を満たさなければテストに不合格とする。
-`Object##should_not` メソッド:: レシーバがある条件を満たした場合にテストに不合格とする。
+`Object#should_not` メソッド:: レシーバがある条件を満たした場合にテストに不合格とする。
 `expect_raises` ブロック:: ブロック内で指定された例外が発生しなかったらテストに不合格とする。
 ****
 
