@@ -1,5 +1,7 @@
 = 著者紹介
 
+// tag::body[]
+
 == 5t111111
 
 GitHub のアカウント :: https://github.com/5t111111[@5t111111]
@@ -19,7 +21,7 @@ Twitter のアカウント :: https://twitter.com/arcage[@arcage]
 GitHub のアカウント :: https://github.com/at-grandpa[@at-grandpa]
 Twitter のアカウント :: https://twitter.com/at_grandpa[@at_grandpa]
 自己紹介 ::
-Crystal と出会い、衝撃を受けて好きになり、コードを書いたり活動をしていたところ、このような執筆の機会をいただきました。ありがとうございます。 Crystal 言語はとてもおもしろいのでぜひ触れてみてください。 Happy crystalling!!
+Crystal と出会い、衝撃を受けて好きになり、コードを書いたり活動をしていたところ、このような執筆の機会をいただきました。ありがとうございます。 Crystal 言語はとてもおもしろいのでぜひ触れてみてください。 Happy crystalling ！！
 
 == MakeNowJust
 
@@ -28,10 +30,12 @@ Twitter のアカウント :: https://twitter.com/make_now_just[@make_now_just]
 自己紹介 ::
 仕事で TypeScript を書く傍らで、趣味で Crystal のコンパイラやフォーマッタにコントリビュートしています。Crystal のコンパイラは Crystal 自身で書かれていて、他の C 言語などで書かれたコンパイラよりはコントリビュートの障壁は低いかと思います。 Crystal に興味を持ったらコンパイラや標準ライブラリのコードを読んでみると良いかもしれません。
 
-
+[suppress='KatakanaEndHyphen JapaneseStyle']
 == msky
 
 GitHub のアカウント :: https://github.com/msky026[@msky026]
 Twitter のアカウント :: https://twitter.com/msky026[@msky026]
 自己紹介 ::
-本業はスマホゲーの人。RubyやUnityなど業務や趣味で使ってたりします。CrystalはビルドできるRubyがあったらいいなと思ってた時に存在を知り、そのタイミングで第2回Crystal勉強会が開催されてたのでそのままどっぷりと。
+本業はスマホゲーの人。Ruby や Unity など業務や趣味で使ってたりします。 Crystal はビルドできる Ruby があったらいいなと思ってた時に存在を知り、そのタイミングで第2回 Crystal 勉強会が開催されてたのでそのままどっぷりと。
+
+// end::body[]

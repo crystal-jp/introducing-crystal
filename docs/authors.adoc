@@ -1,0 +1,7 @@
+= 著者紹介
+:page-layout: page
+:page-order: 10000
+
+include::./_includes/options.adoc[]
+
+include::../authors.adoc[tag=body]
