@@ -6,9 +6,9 @@
 発行者名 :: Crystal-JP
 印刷会社 :: 有限会社ねこのしっぽ
 [suppress='SuggestExpression']
-連絡先 :: <make.just.on@gmail.com>
+連絡先 :: make.just.on@gmail.com
 
-== ライセンスの表記
+ライセンスの表記
 
 Roboto[https://fonts.google.com/specimen/Roboto] を使用しています。
 
