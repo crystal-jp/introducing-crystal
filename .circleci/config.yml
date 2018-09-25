@@ -59,7 +59,7 @@ jobs:
 
             cp -a build/docs/. build/out/.
 
-            mkdir -p build/out/.circleci && cp -a .ciecleci/. build/out/.circleci
+            mkdir -p build/out/.circleci && cp -a .circleci/. build/out/.circleci
 
             cd build/out
             git add -A
