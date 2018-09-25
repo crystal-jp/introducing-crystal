@@ -54,7 +54,7 @@ jobs:
             mkdir -p build/out
             cd build/out
             git checkout gh-pages || git checkout --orphan gh-pages
-            git rm -rf .
+            git rm -rf . || true
             cd ../..
 
             cp -a build/docs/. build/out/.
