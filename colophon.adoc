@@ -5,10 +5,12 @@
 発行日 :: 2018年10月8日
 発行者名 :: Crystal-JP
 印刷会社 :: 有限会社ねこのしっぽ
-連絡先 :: make.just.on@gmail.com
+[suppress='SuggestExpression']
+連絡先 :: <make.just.on@gmail.com>
 
 == ライセンスの表記
 
 Roboto[https://fonts.google.com/specimen/Roboto] を使用しています。
 
-Roboto のライセンス :: https://github.com/google/roboto/blob/master/LICENSE
+Copyright 2015 Google Inc. All Rights Reserved.
+https://github.com/google/roboto/blob/master/LICENSE
