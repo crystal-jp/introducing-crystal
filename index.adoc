@@ -1,5 +1,5 @@
 = Introducing Crystal Programming Language
-Crystal-JP (5t111111; AKJ; @at_grandpa; MakeNowJust; msky)
+Crystal-JP (5t111111; AKJ; at_grandpa; MakeNowJust; msky)
 :lang: ja
 :doctype: book
 :sectnums:
@@ -25,3 +25,5 @@ include::./05-shards/content.adoc[]
 include::./06-web-development/content.adoc[]
 
 include::./07-cli-development/content.adoc[]
+
+include::./authors.adoc[]

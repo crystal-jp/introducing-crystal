@@ -1,0 +1,37 @@
+= 著者紹介
+
+== 5t111111
+
+GitHub のアカウント :: https://github.com/5t111111[@5t111111]
+Twitter のアカウント :: https://twitter.com/5t111111[@5t111111]
+自己紹介 ::
+Crystal-JP の第一回イベントに参加した流れでドキュメントの日本語化を担当したことからずっと Crystal に関わっています。現在日本語ドキュメントの更新は停止していますが、バージョン 1.0.0 がリリースされた暁にはどんな形であれ再開したいです。
+
+== AKJ
+
+GitHub のアカウント :: https://github.com/arcage[@arcage]
+Twitter のアカウント :: https://twitter.com/arcage[@arcage]
+自己紹介 ::
+地方でシスアド業の傍ら、趣味でコードを書いてます。常々型に厳格な Ruby が欲しいと思っていたところに Crystal と出会い、以来 Crystal にどっぷりとハマっています。
+
+== at_grandpa
+
+GitHub のアカウント :: https://github.com/at-grandpa[@at-grandpa]
+Twitter のアカウント :: https://twitter.com/at_grandpa[@at_grandpa]
+自己紹介 ::
+Crystal と出会い、衝撃を受けて好きになり、コードを書いたり活動をしていたところ、このような執筆の機会をいただきました。ありがとうございます。 Crystal 言語はとてもおもしろいのでぜひ触れてみてください。 Happy crystalling!!
+
+== MakeNowJust
+
+GitHub のアカウント :: https://github.com/MakeNowJust[@MakeNowJust]
+Twitter のアカウント :: https://twitter.com/make_now_just[@make_now_just]
+自己紹介 ::
+仕事で TypeScript を書く傍らで、趣味で Crystal のコンパイラやフォーマッタにコントリビュートしています。Crystal のコンパイラは Crystal 自身で書かれていて、他の C 言語などで書かれたコンパイラよりはコントリビュートの障壁は低いかと思います。 Crystal に興味を持ったらコンパイラや標準ライブラリのコードを読んでみると良いかもしれません。
+
+
+== msky
+
+GitHub のアカウント :: https://github.com/msky026[@msky026]
+Twitter のアカウント :: https://twitter.com/msky026[@msky026]
+自己紹介 ::
+本業はスマホゲーの人。RubyやUnityなど業務や趣味で使ってたりします。CrystalはビルドできるRubyがあったらいいなと思ってた時に存在を知り、そのタイミングで第2回Crystal勉強会が開催されてたのでそのままどっぷりと。

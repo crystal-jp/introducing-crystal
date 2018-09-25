@@ -27,7 +27,7 @@ web_pdf   = build_dir / 'introducing-crystal-web.pdf'
 print_pdf = build_dir / 'introducing-crystal-print.pdf'
 
 # Asciidoctor files of contents
-content_adoc_files = `git ls-files */content.adoc`
+content_adoc_files = `git ls-files authors.adoc */content.adoc`
                      .lines(chomp: true)
                      .map { |filename| Pathname.new filename }
 # Asciidoctor theme directory name

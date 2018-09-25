@@ -1,6 +1,6 @@
 = CLI 開発
 
-著者: @at_grandpa
+著者: at_grandpa
 
 // tag::body[]
 
