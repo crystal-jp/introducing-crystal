@@ -1408,22 +1408,22 @@ GitHub で公開されている shard のキーワード検索機能を提供。
 <div class="dlist">
 <div class="title">使用可能なオブジェクトの状態を評価する</div>
 <dl>
-<dt class="hdlist1"><code>actual.sould eq expected</code></dt>
+<dt class="hdlist1"><code>actual.should eq expected</code></dt>
 <dd>
 <p><code>actual</code> が <code>expected</code> と等しいかどうか。<br>
 条件： <code>actual == expected</code></p>
 </dd>
-<dt class="hdlist1"><code>actual.sould be expected</code></dt>
+<dt class="hdlist1"><code>actual.should be expected</code></dt>
 <dd>
 <p><code>actual</code> が <code>expected</code> と同値とみなせるかどうか。<br>
 条件： <code>actual.same?(expected)</code></p>
 </dd>
-<dt class="hdlist1"><code>actual.sould be_a expected</code></dt>
+<dt class="hdlist1"><code>actual.should be_a expected</code></dt>
 <dd>
 <p><code>actual</code> が <code>expected</code> 型の値かどうか。<br>
 条件： <code>actual.is_a?(expected)</code></p>
 </dd>
-<dt class="hdlist1"><code>actual.sould be_nil</code></dt>
+<dt class="hdlist1"><code>actual.should be_nil</code></dt>
 <dd>
 <p><code>actual</code> が <code>nil</code> かどうか。<br>
 条件： <code>actual.nil?</code></p>
@@ -1494,13 +1494,12 @@ GitHub で公開されている shard のキーワード検索機能を提供。
 <div class="listingblock">
 <div class="title">例外チェック</div>
 <div class="content">
-<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line">    <span style="color: #303030">context</span> <span style="color: #90a959">"self is empty."</span> <span style="color: #aa759f">do</span></span>
-<span id="L2" class="line">      <span style="color: #303030">it</span> <span style="color: #90a959">"raises an IndexError."</span> <span style="color: #aa759f">do</span></span>
-<span id="L3" class="line">        <span style="color: #303030">expect_raises</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">IndexError</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">{</span></span>
-<span id="L4" class="line">          <span style="color: #505050"># IndexError が発生しなければテスト失敗</span></span>
-<span id="L5" class="line">          <span style="color: #f4bf75">Array</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">).</span><span style="color: #303030">new</span><span style="color: #d0d0d0">.</span><span style="color: #303030">first</span></span>
-<span id="L6" class="line">        <span style="color: #d0d0d0">}</span></span>
-<span id="L7" class="line">      <span style="color: #aa759f">end</span></span></code></pre>
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line">      <span style="color: #303030">it</span> <span style="color: #90a959">"raises an IndexError."</span> <span style="color: #aa759f">do</span></span>
+<span id="L2" class="line">        <span style="color: #303030">expect_raises</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">IndexError</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">{</span></span>
+<span id="L3" class="line">          <span style="color: #505050"># IndexError が発生しなければテスト失敗</span></span>
+<span id="L4" class="line">          <span style="color: #f4bf75">Array</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">).</span><span style="color: #303030">new</span><span style="color: #d0d0d0">.</span><span style="color: #303030">first</span></span>
+<span id="L5" class="line">        <span style="color: #d0d0d0">}</span></span>
+<span id="L6" class="line">      <span style="color: #aa759f">end</span></span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1581,7 +1580,7 @@ GitHub で公開されている shard のキーワード検索機能を提供。
 <div class="sect3">
 <h4 id="テストケースの実行結果サマリ1行目">テストケースの実行結果サマリ（1行目）</h4>
 <div class="paragraph">
-<p>テストケースの実行結果には成功（<code>.</code>）、不合格（<code>F</code>）、エラー（<code>E</code>）、ペンディング（<code>*</code>）の4種類があります。テストの実行結果では、先頭行にテストケースの数だけ実行結果に対応した文字が並んで表示されます。もしテストを実行したのがカラー表示対応のターミナルであれば <code>.</code> は緑、<code>F</code> と <code>E</code> が赤、<code>\*</code> が黄色で表示されているかもしれません。</p>
+<p>テストケースの実行結果には成功（<code>.</code>）、不合格（<code>F</code>）、エラー（<code>E</code>）、ペンディング（<code>*</code>）の4種類があります。テストの実行結果では、先頭行にテストケースの数だけ実行結果に対応した文字が並んで表示されます。もしテストを実行したのがカラー表示対応のターミナルであれば <code>.</code> は緑、<code>F</code> と <code>E</code> が赤、<code>*</code> が黄色で表示されているかもしれません。</p>
 </div>
 <div class="paragraph">
 <p>ここで表示される実行結果が全て <code>.</code> になっていれば、テストに合格できたことになります。</p>
@@ -1800,7 +1799,7 @@ GitHub で公開されている shard のキーワード検索機能を提供。
 <dd>
 <p>レシーバがある条件を満たさなければテストに不合格とする。</p>
 </dd>
-<dt class="hdlist1"><code>Object##should_not</code> メソッド</dt>
+<dt class="hdlist1"><code>Object#should_not</code> メソッド</dt>
 <dd>
 <p>レシーバがある条件を満たした場合にテストに不合格とする。</p>
 </dd>
