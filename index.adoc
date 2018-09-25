@@ -27,3 +27,5 @@ include::./06-web-development/content.adoc[]
 include::./07-cli-development/content.adoc[]
 
 include::./authors.adoc[]
+
+include::./colophon.adoc[]
