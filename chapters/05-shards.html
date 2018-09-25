@@ -1,0 +1,1831 @@
+<!DOCTYPE HTML>
+<!--
+Prologue by HTML5 UP
+html5up.net | @ajlkn
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+Jekyll integration by Chris Bobbe | chrisbobbe.github.io
+-->
+<html><head><!-- Robots -->
+  <meta name="robots" content="index, follow" /><link rel="canonical" href="/introducing-crystal/chapters/05-shards.html" /><!-- Title, description, author --><title>05. Shards | Intducing Crystal Programming Language</title>
+  <meta name="description" content="『Introducing Crystal Programming Language』はプログラミング言語 Crystal の初心者〜中級者向け解説書です。" />
+  <meta name="author" content="Crystal-JP" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="05. Shards | Intducing Crystal Programming Language" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/introducing-crystal/assets/images/avatar.png" />
+  <meta property="og:url" content="/introducing-crystal/chapters/05-shards.html" />
+  <meta property="og:site_name" content="Intducing Crystal Programming Language" />
+  <meta property="og:description" content="『Introducing Crystal Programming Language』はプログラミング言語 Crystal の初心者〜中級者向け解説書です。" />
+  
+  <!-- Styles -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--[if lte IE 8]><script src="/introducing-crystal/assets/js/ie/html5shiv.js" defer></script><![endif]-->
+  <link rel="stylesheet" href="/introducing-crystal/assets/css/main.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="/introducing-crystal/assets/css/ie8.css" /><![endif]-->
+  <!--[if lte IE 9]><link rel="stylesheet" href="/introducing-crystal/assets/css/ie9.css" /><![endif]-->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+
+  <!-- Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/jquery.scrolly.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/jquery.scrollzer.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/skel.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/util.js" defer></script>
+  <!--[if lte IE 8]><script src="/introducing-crystal/assets/js/ie/respond.min.js" defer></script><![endif]-->
+  <script src="/introducing-crystal/assets/js/main.js" defer></script>
+
+</head><body><!-- Header -->
+<div id="header">
+  <div class="top"><!-- Logo -->
+<div id="logo">
+  <a href="/introducing-crystal/" id="home-link">
+    <span class="image avatar48"><img src="/introducing-crystal/assets/images/avatar.png" alt="Avatar of Crystal-JP" /></span>
+    <h1 id="title">Intducing Crystal Programming Language</h1>
+    <p></p>
+  </a>
+</div><!-- Nav -->
+<nav id="nav">
+  <ul><li><a href="/introducing-crystal/" id="トップページ-link">
+            <span class="icon fa-link">トップページ</span>
+          </a></li><li><a href="/introducing-crystal/chapters/01-introduction.html" id="01-はじめに-link">
+            <span class="icon fa-link">01. はじめに</span>
+          </a></li><li><a href="/introducing-crystal/chapters/02-getting-started.html" id="02-getting-started-link">
+            <span class="icon fa-link">02. Getting Started</span>
+          </a></li><li><a href="/introducing-crystal/chapters/03-syntax.html" id="03-構文-link">
+            <span class="icon fa-link">03. 構文</span>
+          </a></li><li><a href="/introducing-crystal/chapters/06-web-development.html" id="06-web-開発-link">
+            <span class="icon fa-link">06. Web 開発</span>
+          </a></li><li><a href="/introducing-crystal/chapters/04-macro.html" id="04-マクロ-link">
+            <span class="icon fa-link">04. マクロ</span>
+          </a></li><li><a href="/introducing-crystal/chapters/07-cli-development.html" id="07-cli-開発-link">
+            <span class="icon fa-link">07. CLI 開発</span>
+          </a></li><li><a href="#" id="05-shards" class="active">
+            <span class="icon fa-link">05. Shards</span>
+          </a></li><li><a href="/introducing-crystal/authors.html" id="著者紹介-link">
+            <span class="icon fa-link">著者紹介</span>
+          </a></li></ul>
+</nav></div>
+  <div class="bottom"><!-- Social Icons -->
+<ul class="icons"></ul>
+</div>
+</div>
+<!-- Main -->
+<div id="main">
+	<!-- Page -->
+	<article class="shade-two">
+	  <div class="container">
+			<header>
+				<h2>05. Shards</h2></header><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#shard-を使う">shard を使う</a>
+<ul class="sectlevel2">
+<li><a href="#プロジェクトの機能と名前を決める">プロジェクトの機能と名前を決める</a></li>
+<li><a href="#プロジェクトひな形を作る">プロジェクトひな形を作る</a></li>
+<li><a href="#shard-を探す">shard を探す</a></li>
+<li><a href="#使用する-shard-を指定する">使用する shard を指定する</a></li>
+<li><a href="#shard-をインストールする">shard をインストールする</a></li>
+<li><a href="#ソースコード内で-shard-を使う">ソースコード内で shard を使う</a></li>
+<li><a href="#実行してみる">実行してみる</a></li>
+<li><a href="#補足-shards-コマンドのもつ機能">補足： <code>shards</code> コマンドのもつ機能</a></li>
+</ul>
+</li>
+<li><a href="#shard-を作る">shard を作る</a>
+<ul class="sectlevel2">
+<li><a href="#shard-の名前">shard の名前</a></li>
+<li><a href="#プロジェクトひな形の作成">プロジェクトひな形の作成</a></li>
+<li><a href="#shard-yml-の記述確認">shard.yml の記述確認</a></li>
+<li><a href="#テストケースを書く">テストケースを書く</a></li>
+<li><a href="#機能の実装">機能の実装</a></li>
+<li><a href="#テストの実行">テストの実行</a></li>
+<li><a href="#readme-を書く">README を書く</a></li>
+<li><a href="#ライセンスを選ぶ">ライセンスを選ぶ</a></li>
+<li><a href="#github-へ公開する">GitHub へ公開する</a></li>
+<li><a href="#shard-のバージョン管理">shard のバージョン管理</a></li>
+</ul>
+</li>
+<li><a href="#テスト">テスト</a>
+<ul class="sectlevel2">
+<li><a href="#テストの使い方">テストの使い方</a></li>
+<li><a href="#テスト関連の構文">テスト関連の構文</a></li>
+<li><a href="#テスト実行結果の見方">テスト実行結果の見方</a></li>
+<li><a href="#crystal-spec-コマンドのパラメータ">crystal spec コマンドのパラメータ</a></li>
+<li><a href="#spec-ヘルパファイル">spec ヘルパファイル</a></li>
+</ul>
+</li>
+<li><a href="#まとめ">まとめ</a></li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Ruby に RubyGems があるように、Crystal にも Shards というパケージ管理の仕組みが存在しています。Shards は Crystal 標準のパッケージマネージャとして採用されており、Shards 関連の操作に使用する <code>shards</code> コマンドも Crystal コンパイラに同梱されています。ですので、Shards を利用するための特別な準備は必要ありません。</p>
+</div>
+<div class="paragraph">
+<p>Shards における個々のパッケージは shard （シャード）と呼ばれ、これは鉱物などの「欠片」や「破片」といった意味の単語です。Ruby や Python といった先行する言語と比べると充分ではないかもしれませんが、それでも GitHub などを利用して 2000 を超える shard が公開されています。</p>
+</div>
+<div class="paragraph">
+<p>RubyGems と Shards の大きな違いは、パッケージのインストール先です。RubyGems は基本的にグローバルな Ruby の実行環境に対してパッケージをインストールする仕組みで、それをプロジェクト単位で個別管理するために別途 Bundler が登場しました。一方、Shards では導入パッケージをプロジェクト単位で管理することが前提となっています。</p>
+</div>
+<div class="paragraph">
+<p>また、他言語のパッケージ管理手法と異なり、Shards には集中管理された公式のリポジトリが存在しません。ほとんどの shard は、git リポジトリとして（多くの場合 GitHub 上で）公開されています。このことは、shard を公開することへのハードルを大きく下げてくれていますが、一方で公開されている shard のクォリティ確保や、検索性の面では足かせにもなっています。</p>
+</div>
+<div class="paragraph">
+<p>ただし、この原稿を執筆している2018年9月時点で Crystal がバージョン <code>1.0</code> に至っていないように、Shards の開発は現在も継続中です。現時点で課題となっている点も、今後のバージョンアップで改善されることを期待しましょう。</p>
+</div>
+<div class="paragraph">
+<p>この章では、shard の使い方と作り方、および shard 作成において使用することになるテストの実行方法について簡単に説明します。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="shard-を使う">shard を使う</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>まずはインターネット上に公開されている shard を自分のプログラムから利用するための手順を見てみましょう。</p>
+</div>
+<div class="sect2">
+<h3 id="プロジェクトの機能と名前を決める">プロジェクトの機能と名前を決める</h3>
+<div class="paragraph">
+<p>前述の通り、Shards では導入パッケージの管理をプロジェクト単位でおこなうため、なにはともあれそのプロジェクトで実現したい機能とプロジェクトの名前を決めなければいけません。とはいえ、通常はやりたいことがあってプログラムを書き始めるはずですので、この辺りでつまずくこともそうないとは思います。</p>
+</div>
+<div class="paragraph">
+<p>というわけで、実用的かどうかはさておき、ページタイトルと本文をパラメータとして受け取って最低限の HTML ソースを出力する、というだけのシンプルなコマンドラインツールを作ってみることにしましょう。</p>
+</div>
+<div class="paragraph">
+<p>プロジェクト名は、shard として公開するのであればいくつかルール（後述）もありますが、そうでない場合にはそこまで深く考える必要はありません。今回はシンプル（simple）な HTML を返すアプリなので <code>simple_html</code> というプロジェクト名にすることにします。</p>
+</div>
+<div class="listingblock">
+<div class="title"><code>simple_html</code> コマンド利用イメージ</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> simple_html <span style="color: #90a959">"Page Title"</span> <span style="color: #90a959">"Page body."</span></span>
+<span id="L2" class="line"><span style="color: #303030">&lt;html&gt;</span>&lt;<span style="color: #303030">head</span><span style="color: #d0d0d0">&gt;</span>&lt;title&gt;Page Title&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;Page Title&lt;/h1&gt;&lt;p&gt;Page body.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="プロジェクトひな形を作る">プロジェクトひな形を作る</h3>
+<div class="paragraph">
+<p><code>crystal</code> コマンドにはソースコードのコンパイル以外にもいくつか便利な機能が実装されており、その中の1つにプロジェクトひな形の生成機能（<code>crystal init</code> コマンド）があります。</p>
+</div>
+<div class="paragraph">
+<p><code>crystal init</code> コマンドを実行する際には、プロジェクトの種類（<code>app</code> もしくは <code>lib</code>）とプロジェクト名を指定します。例えば、<code>simple_html</code> をアプリケーションとして実装する場合のひな形生成コマンドは <code>crystal init app simple_html</code> です。このコマンドを実行するとカレントディレクトリの直下にプロジェクト名と同じ名前の simple_html ディレクトリができ、その中に各種ひな形が自動生成されます。</p>
+</div>
+<div class="listingblock">
+<div class="title"><code>simple_html</code> アプリケーション用プロジェクトのひな形生成コマンド</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal init app simple_html</span></code></pre>
+</div>
+</div>
+<div class="dlist">
+<div class="title">プロジェクトひな形として生成されるファイル/ディレクトリ</div>
+<dl>
+<dt class="hdlist1"><code>.editorconfig</code></dt>
+<dd>
+<p>文字コードや改行コード、インデントなどの設定を異なるエディタ間で共通利用するための設定ファイル。詳細を知りたければ EditorConfig で検索。</p>
+</dd>
+<dt class="hdlist1"><code>.git/</code>（ディレクトリ）</dt>
+<dd>
+<p>このプロジェクト用の初期化済み git リポジトリ。</p>
+</dd>
+<dt class="hdlist1"><code>.gitignore</code></dt>
+<dd>
+<p>git 管理除外ファイルの指定用。</p>
+</dd>
+<dt class="hdlist1"><code>.travis.yml</code></dt>
+<dd>
+<p>Travis CI を使用してテストやビルドを自動化するための設定ファイル。使いこなせば強力なツール。ただ、最初のうちはあまり気にしなくても良い。</p>
+</dd>
+<dt class="hdlist1"><code>LICENSE</code></dt>
+<dd>
+<p>このプロジェクトのライセンスを明示するためのテキストファイル。自分で使うだけのアプリケーションなら気にする必要はない。標準では MIT ライセンス前提の内容になっているので、必要に応じて適宜変更する。</p>
+</dd>
+<dt class="hdlist1"><code>README.md</code></dt>
+<dd>
+<p>Markdown フォーマットで書かれたこのプロジェクトの README ファイル。GitHub などを通じて公開する予定ならちゃんと書いた方が良い。</p>
+</dd>
+<dt class="hdlist1"><code>shard.yml</code></dt>
+<dd>
+<p>プロジェクトに関連したメタデータ（名前やバージョン、作者など）やプロジェクトが利用する shard などの情報を記述するための設定ファイル。</p>
+</dd>
+<dt class="hdlist1"><code>src/</code>（ディレクトリ）</dt>
+<dd>
+<p>プログラムのソースディレクトリ。ソースコードはすべてこの配下に置く。</p>
+</dd>
+<dt class="hdlist1"><code>src/[プロジェクト名].cr</code></dt>
+<dd>
+<p>プロジェクトのメインソースファイル。プログラムのエントリポイントはここ。</p>
+</dd>
+<dt class="hdlist1"><code>spec/</code>（ディレクトリ）</dt>
+<dd>
+<p>テスト用ディレクトリ。テスト関連のファイルはここへ置く。</p>
+</dd>
+<dt class="hdlist1"><code>spec/spec_helper.cr</code></dt>
+<dd>
+<p>テスト関連ファイルその1。あまり触らない方。</p>
+</dd>
+<dt class="hdlist1"><code>spec/[プロジェクト名]_spec.cr</code></dt>
+<dd>
+<p>テスト関連ファイルその2（spec ファイル）。実際のテスト内容を記述する方。</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="shard-を探す">shard を探す</h3>
+<div class="paragraph">
+<p><code>simple_html</code> を実装するにあたり HTML をすべて手打ちすることもできますが、それはいささか面倒なので HTML を出力するのに便利な shard を探してみることにします。</p>
+</div>
+<div class="paragraph">
+<p>Shards には公式のリポジトリがなく、shard の検索機能が提供されていません。そのため、標準ライブラリで提供されていない機能を使いたい場合に、その機能を提供する shard が存在するかどうかを調べるのが最初のハードルになります。</p>
+</div>
+<div class="paragraph">
+<p>今のところ、この問題を解決する決定打は出てきていませんが、以下の2サイトは必要な shard を探す際の助けになってくれるはずです。</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Awesome Crystal</dt>
+<dd>
+<p><a href="https://github.com/veelenga/awesome-crystal" class="bare">https://github.com/veelenga/awesome-crystal</a><br>
+一定の条件を満たした自薦他薦の shard をカテゴリ分類してリスト化。リストの更新も人の手で管理されているため、限定的ではあるもののある程度の基準をクリアした shard が見つかる。</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">CrystalShards.xyz</dt>
+<dd>
+<p><a href="http://crystalshards.xyz/" class="bare">http://crystalshards.xyz/</a><br>
+GitHub で公開されている shard のキーワード検索機能を提供。GitHub で公開されている shard を自動的に収集しているため玉石混こうではあるものの、Awesome Crytstal より網羅的にマイナな shard も見つけられる。</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>試しに Awesome Crystal 内を「 html 」で検索してみると、HTML 構築専用の構文を提供してくれる <code>html_builder</code> という shard が見つかりました。早速これを使ってみることにしましょう。</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">crystal-lang/html_builder</dt>
+<dd>
+<p><a href="https://github.com/crystal-lang/html_builder" class="bare">https://github.com/crystal-lang/html_builder</a></p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="使用する-shard-を指定する">使用する shard を指定する</h3>
+<div class="paragraph">
+<p>プロジェクトディレクトリ内にある <code>shard.yaml</code> ファイルは、shard 関係の設定を記述するファイルです。</p>
+</div>
+<div class="paragraph">
+<p>アプリケーションとして初期化された <code>shard.yaml</code> は以下のような内容になっています。</p>
+</div>
+<div class="listingblock">
+<div class="title">ひな形生成時の <code>shard.yml</code></div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-yaml" data-lang="yaml"><span id="L1" class="line"><span style="color: #6a9fb5">name</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">simple_html</span></span>
+<span id="L2" class="line"><span style="color: #6a9fb5">version</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">0.1.0</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #6a9fb5">authors</span><span style="color: #d0d0d0">:</span></span>
+<span id="L5" class="line">  <span style="color: #d0d0d0">-</span> <span style="color: #90a959">Your Git Name &lt;your_mail@example.org&gt;</span></span>
+<span id="L6" class="line"></span>
+<span id="L7" class="line"><span style="color: #6a9fb5">targets</span><span style="color: #d0d0d0">:</span></span>
+<span id="L8" class="line">  <span style="color: #6a9fb5">simple_html</span><span style="color: #d0d0d0">:</span></span>
+<span id="L9" class="line">    <span style="color: #6a9fb5">main</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">src/simple_html.cr</span></span>
+<span id="L10" class="line"></span>
+<span id="L11" class="line"><span style="color: #6a9fb5">crystal</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">0.26.1</span></span>
+<span id="L12" class="line"></span>
+<span id="L13" class="line"><span style="color: #6a9fb5">license</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">MIT</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ここへ <code>html_builder</code> を指定するための設定を追加しましょう。大抵の場合 shard の README にはその shard を使用するために <code>shard.yaml</code> へ追加すべき内容が紹介されています。</p>
+</div>
+<div class="paragraph">
+<p>README に従って <code>dependencies</code> を追加した <code>shard.yaml</code> はこのようになりました。</p>
+</div>
+<div class="listingblock">
+<div class="title">依存ライブラリの設定追加後</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-yaml" data-lang="yaml"><span id="L1" class="line"><span style="color: #6a9fb5">name</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">simple_html</span></span>
+<span id="L2" class="line"><span style="color: #6a9fb5">version</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">0.1.0</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #6a9fb5">authors</span><span style="color: #d0d0d0">:</span></span>
+<span id="L5" class="line">  <span style="color: #d0d0d0">-</span> <span style="color: #90a959">Your Git Name &lt;your_mail@example.org&gt;</span></span>
+<span id="L6" class="line"></span>
+<span id="L7" class="line"><span style="color: #6a9fb5">targets</span><span style="color: #d0d0d0">:</span></span>
+<span id="L8" class="line">  <span style="color: #6a9fb5">simple_html</span><span style="color: #d0d0d0">:</span></span>
+<span id="L9" class="line">    <span style="color: #6a9fb5">main</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">src/simple_html.cr</span></span>
+<span id="L10" class="line"></span>
+<span id="L11" class="line"><span style="color: #6a9fb5">crystal</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">0.26.1</span></span>
+<span id="L12" class="line"></span>
+<span id="L13" class="line"><span style="color: #6a9fb5">license</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">MIT</span></span>
+<span id="L14" class="line"></span>
+<span id="L15" class="line"><span style="color: #6a9fb5">dependencies</span><span style="color: #d0d0d0">:</span></span>
+<span id="L16" class="line">  <span style="color: #6a9fb5">html_builder</span><span style="color: #d0d0d0">:</span></span>
+<span id="L17" class="line">    <span style="color: #6a9fb5">github</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">crystal-lang/html_builder</span></span></code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="使いたい-shard-のバージョン指定する">使いたい shard のバージョン指定する</h4>
+<div class="paragraph">
+<p>2018年9月時点の <code>html_builder</code> はバージョン <code>0.2.2</code> が最新です。そのため、バージョン指定をせず shard をインストールした場合には最新のバージョン <code>0.2.2</code> がインストールされます。しかし、<code>shard.yml</code> では、インストールする shard のバージョンを指定することもできます。例えば、<code>shard.yml</code> での記述を以下のようにすると、旧バージョンの <code>0.2.1</code> をインストールすることができます。</p>
+</div>
+<div class="listingblock">
+<div class="title">バージョン指定付きの <code>shard</code> 設定</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-yaml" data-lang="yaml"><span id="L1" class="line"><span style="color: #6a9fb5">dependencies</span><span style="color: #d0d0d0">:</span></span>
+<span id="L2" class="line">  <span style="color: #6a9fb5">html_builder</span><span style="color: #d0d0d0">:</span></span>
+<span id="L3" class="line">    <span style="color: #6a9fb5">github</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">crystal-lang/html_builder</span></span>
+<span id="L4" class="line">    <span style="color: #6a9fb5">version</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">0.2.1</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ここで指定する <code>version</code> には、特定のバージョンを直接記述する以外に、バージョンと <code>&gt;</code>/<code>&lt;</code>/<code>&gt;=</code>/<code>&lt;=</code>/<code>~&gt;</code> 演算子を組み合わせて使用することもできます。</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">例</dt>
+<dd>
+<p><code>&gt;= 0.2.0</code> でバージョン0.2.0以上。</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>これら演算子のうち、<code>&gt;</code>/<code>&lt;</code>/<code>&gt;=</code>/<code>&lt;=</code> 辺りはどのバージョンが対象となるのか直感的に理解できると思いますが、<code>~&gt;</code> は以下のようなやや特殊な挙動をします。</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>~&gt; 2.0.3</code> は、<code>&gt;= 2.0.3</code> かつ <code>&lt; 2.1</code> と同じ。</p>
+</li>
+<li>
+<p><code>~&gt; 2.1</code> は、<code>&gt;= 2.1</code> かつ <code>&lt; 3.0</code> と同じ。</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="github-以外で公開されている-shard">GitHub 以外で公開されている shard</h4>
+<div class="paragraph">
+<p><code>html_builder</code> は GitHub で公開されていましたが、<code>shard.yml</code> ファイルには、GitHub だけでなく、以下のような方法で shard を指定可能です。</p>
+</div>
+<div class="dlist">
+<div class="title">shard の取得先</div>
+<dl>
+<dt class="hdlist1"><code>github: user/repository</code></dt>
+<dd>
+<p>GitHub リポジトリを指定する。</p>
+</dd>
+<dt class="hdlist1"><code>gitlab: user/repository</code></dt>
+<dd>
+<p>GitLab リポジトリを指定する。</p>
+</dd>
+<dt class="hdlist1"><code>bitbucket: user/repository</code></dt>
+<dd>
+<p>Bitbucket リポジトリを指定する。</p>
+</dd>
+<dt class="hdlist1"><code>git: git://git.example.org/repository.git</code></dt>
+<dd>
+<p>任意の git リポジトリを指定する。</p>
+</dd>
+<dt class="hdlist1"><code>path: ../path/to/shard</code></dt>
+<dd>
+<p>ファイルシステム上のディレクトリパスで指定する。</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="shard-をインストールする">shard をインストールする</h3>
+<div class="paragraph">
+<p><code>shard.yaml</code> で指定した shard をプロジェクト環境にインストールするコマンドは <code>shards install</code> です。プロジェクトディレクトリの直下でこのコマンドを実行すると、プロジェクトディレクトリの下に lib ディレクトリが作られ、その中に必要なファイル一式が展開されます。</p>
+</div>
+<div class="listingblock">
+<div class="title">shard のインストール</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> shards <span style="color: #303030">install</span></span>
+<span id="L2" class="line"><span style="color: #303030">Fetching https://github.com/crystal-lang/html_builder.git</span></span>
+<span id="L3" class="line"><span style="color: #303030">Installing html_builder (0.2.2)</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これだけで shard のインストールは完了です。</p>
+</div>
+<div class="paragraph">
+<p>また、インストール済みの shard は <code>shards list</code> コマンドで確認できます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> shards list</span>
+<span id="L2" class="line"><span style="color: #303030">Shards installed:</span></span>
+<span id="L3" class="line"><span style="color: #303030">  * html_builder (0.2.2)</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ソースコード内で-shard-を使う">ソースコード内で shard を使う</h3>
+<div class="paragraph">
+<p>ひな形生成直後のソースファイル <code>src/simple_html.cr</code> には、プロジェクト名 <code>simple_html</code> をキャメルケースに変換した <code>SimpleHtml</code> モジュールと定義されています。この <code>SimpleHtml</code> モジュールはこのプロジェクトの名前空間として使用するためものです。ですので、特に理由がない限りプロジェクト固有の機能は <code>SimpleHtml</code> モジュールか、もしくはその中で定義した型に対して実装することになります。ただし、この時点ではまだバージョンを表す <code>VERSION</code> 定数が定義されているだけの状態です。</p>
+</div>
+<div class="listingblock">
+<div class="title">ひな形生成時のメインソースコード</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #505050"># TODO: Write documentation for `SimpleHtml`</span></span>
+<span id="L2" class="line"><span style="color: #aa759f">module</span> <span style="color: #f4bf75">SimpleHtml</span></span>
+<span id="L3" class="line">  <span style="color: #f4bf75">VERSION</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"0.1.0"</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line">  <span style="color: #505050"># TODO: Put your code here</span></span>
+<span id="L6" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>shard として公開されている機能をプログラム中で利用するためには <code>require</code> 文を使用してその旨を明示する必要があります。大抵の場合 shard の README にはその shard の使用法も記載されており <code>requrie</code> 文の書き方もそこで確認できます。</p>
+</div>
+<div class="paragraph">
+<p>指定された <code>require</code> 文と、HTML を生成する <code>SimpleHtml.build</code> メソッドを実装し、<code>simple_html</code> コマンドのソースコードが完成しました。</p>
+</div>
+<div class="listingblock">
+<div class="title">完成した simple_html コマンドのソースコード</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"html_builder"</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #505050"># Build simple HTML source.</span></span>
+<span id="L4" class="line"><span style="color: #aa759f">module</span> <span style="color: #f4bf75">SimpleHtml</span></span>
+<span id="L5" class="line">  <span style="color: #f4bf75">VERSION</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"0.1.0"</span></span>
+<span id="L6" class="line"></span>
+<span id="L7" class="line">  <span style="color: #aa759f">def</span> <span style="color: #f4bf75">self</span><span style="color: #d0d0d0">.</span><span style="color: #303030">build</span><span style="color: #d0d0d0">(</span><span style="color: #303030">args</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">Array</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">String</span><span style="color: #d0d0d0">))</span></span>
+<span id="L8" class="line">    <span style="color: #303030">title</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">args</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">0</span><span style="color: #d0d0d0">]</span></span>
+<span id="L9" class="line">    <span style="color: #303030">body</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">args</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">1</span><span style="color: #d0d0d0">]</span></span>
+<span id="L10" class="line">    <span style="color: #f4bf75">HTML</span><span style="color: #d0d0d0">.</span><span style="color: #303030">build</span> <span style="color: #d0d0d0">{</span></span>
+<span id="L11" class="line">      <span style="color: #303030">html</span> <span style="color: #d0d0d0">{</span></span>
+<span id="L12" class="line">        <span style="color: #303030">head</span> <span style="color: #d0d0d0">{</span></span>
+<span id="L13" class="line">          <span style="color: #303030">title</span> <span style="color: #d0d0d0">{</span> <span style="color: #303030">text</span> <span style="color: #303030">title</span> <span style="color: #d0d0d0">}</span></span>
+<span id="L14" class="line">        <span style="color: #d0d0d0">}</span></span>
+<span id="L15" class="line">        <span style="color: #303030">body</span> <span style="color: #d0d0d0">{</span></span>
+<span id="L16" class="line">          <span style="color: #303030">h1</span> <span style="color: #d0d0d0">{</span> <span style="color: #303030">text</span> <span style="color: #303030">title</span> <span style="color: #d0d0d0">}</span></span>
+<span id="L17" class="line">          <span style="color: #303030">p</span> <span style="color: #d0d0d0">{</span> <span style="color: #303030">text</span> <span style="color: #303030">body</span> <span style="color: #d0d0d0">}</span></span>
+<span id="L18" class="line">        <span style="color: #d0d0d0">}</span></span>
+<span id="L19" class="line">      <span style="color: #d0d0d0">}</span></span>
+<span id="L20" class="line">    <span style="color: #d0d0d0">}</span></span>
+<span id="L21" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L22" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L23" class="line"></span>
+<span id="L24" class="line"><span style="color: #aa759f">if</span> <span style="color: #f4bf75">File</span><span style="color: #d0d0d0">.</span><span style="color: #303030">basename</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">PROGRAM_NAME</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">==</span> <span style="color: #f4bf75">File</span><span style="color: #d0d0d0">.</span><span style="color: #303030">basename</span><span style="color: #d0d0d0">(</span><span style="color: #aa759f">__FILE__</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">".cr"</span><span style="color: #d0d0d0">)</span></span>
+<span id="L25" class="line">  <span style="color: #303030">puts</span> <span style="color: #f4bf75">SimpleHtml</span><span style="color: #d0d0d0">.</span><span style="color: #303030">build</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">ARGV</span><span style="color: #d0d0d0">)</span></span>
+<span id="L26" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="実行してみる">実行してみる</h3>
+<div class="paragraph">
+<p>ビルド後に試しに実行してみると <code>html_builder</code> の機能を使えていることが確認できました。</p>
+</div>
+<div class="listingblock">
+<div class="title"><code>simple_html</code> コマンドのコパイルと実行結果</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal build src/simple_html.cr</span>
+<span id="L2" class="line"><span style="color: #303030">$</span> ./simple_html <span style="color: #90a959">"Page Title"</span> <span style="color: #90a959">"Page body."</span></span>
+<span id="L3" class="line"><span style="color: #303030">&lt;html&gt;</span>&lt;<span style="color: #303030">head</span><span style="color: #d0d0d0">&gt;</span>&lt;title&gt;Page Title&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;Page Title&lt;/h1&gt;&lt;p&gt;Page body.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>動作に問題がないようであれば、最適化フラグ <code>--release</code> を付けた状態で再度ビルドしておきましょう。</p>
+</div>
+<div class="listingblock">
+<div class="title">最適化フラグを付けたビルド</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal build <span style="color: #f4bf75">--release</span> src/simple_html.cr</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>以上がインターネット上で公開されている shard を利用する際のざっくりとした手順になります。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+説明をシンプルにするため、今回の <code>simple_html</code> コマンドにはあえて省いている機能が多くあります。例えば、現状ではコマンドラインパラメータが足りなかったり多すぎたりする状況が全く考慮されていません。コマンドラインパラメータが足りなければ実行時例外（<code>IndexError</code>）を吐いて異常終了してしまいますし、多すぎた場合には3つめ以降が単に無視されてしまいます。実際に使用するコマンドラインツールを作成する場合には、コマンドラインパラメータのバリデーションやエラー処理などが必要になります。
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="補足-shards-コマンドのもつ機能">補足： <code>shards</code> コマンドのもつ機能</h3>
+<div class="paragraph">
+<p>shard のインストールに使用した <code>shards</code> コマンドには、インストール以外にも shard を管理するための各種機能が用意されています。</p>
+</div>
+<div class="paragraph">
+<p>例えば、Crystal 本体のバージョンを上げたら shard が動かなくなった場合など、インストール済みの shard をアップデートしなければならない場面に遭遇することがあります。しかし、shard のインストール時に使用した <code>shards install</code> コマンドは、すでにインストールされている shard については処理を行いません。そのため、<code>shards install</code> を再度実行したとしてもインストール済みの shard はバージョンアップできません。これは、たとえ <code>shard.yml</code> で新しいバージョンを明示的に指定したとしても同様です。</p>
+</div>
+<div class="paragraph">
+<p>こうした場面では、替わりに <code>shards update</code> コマンドを使用します。このコマンドはインストール済みの shard が <code>shard.yml</code> で指定したバージョンと異なっていれば再取得してくれます。また、<code>shard.yml</code> でバージョンが指定されていない場合は、該当の shard を最新の状態に更新します。</p>
+</div>
+<div class="paragraph">
+<p>この他にも、インストール済みの shard を一覧表示してくれる <code>shards list</code> などいくつかの機能が用意されており、使用可能なコマンドやオプションは <code>shards help</code> で確認できます。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="shard-を作る">shard を作る</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Crystal が標準で提供していない様々な機能を使えるようになる、というだけでも Shards が有用な仕組みだということはご理解いただけると思います。では、自作のライブラリを shard として公開するモチベーションとは何でしょう？</p>
+</div>
+<div class="paragraph">
+<p>「世界中の Crystal 使いの人々に便利な機能を提供したい」という理由も当然アリです。ただ、そこまで肩肘を張らず「自分が便利だから」というだけでも、自作ライブラリを shard として公開する理由としては十分です。実際、複数のプロジェクトで共通使用する汎用部品は、仮に自分だけしか使わなさそうであっても shard として公開しておくことでデプロイ時の手間やその後のメンテナンスをかなり省力化できます。</p>
+</div>
+<div class="paragraph">
+<p>例えば、ライブラリを開発環境とは別の本番環境で使用したい場合、プロジェクト全体を tar で固めて scp で転送、なんてことをしがちです。こうした作業はただでさえ手間がかかりますが、使用するライブラリのバージョンが異なる複数のプロジェクトを維持していこうと思うと気が遠くなります。しかし、もしそのライブラリが shard として公開されていれば、<code>shard.yml</code> に2〜3行追加してから <code>shards install</code> を実行するだけですみます。さらに、必要であれば個々のプロジェクトごとに過去のバージョンを指定してインストールすることもできます。</p>
+</div>
+<div class="paragraph">
+<p>これだけでも、自作ライブラリを shard 化しておくメリットはあるのではないでしょうか。</p>
+</div>
+<div class="paragraph">
+<p>「プログラミング言語の拡張ライブラリを公開する」というと敷居が高く感じられるかもしれませんが、Crystal の shard を公開する手順は比較的シンプルです。実際、<code>crystal init</code> コマンドで作成したひな形をベースにコードを書いて、特に何も考えずにそのまま GitHub へ公開するだけでも、とりあえず shard として使えてしまったりします。</p>
+</div>
+<div class="paragraph">
+<p>とはいえ、ある程度は shard の体裁というものもありますので、ここからは公開リポジトリで shard を公開する際に必要な最低限の手順について説明したいと思います。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+今回は作成した shard を GitHub 上で公開することを想定しています。GitHub や git の操作方法についてはすでにご存知だということを前提としていますので、これらの使い方については各種 Web サイトや書籍などをご参照ください。
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="shard-の名前">shard の名前</h3>
+<div class="paragraph">
+<p>アプリケーションを作成する場合と同様、何はともあれ shard として再利用したいライブラリに持たせる機能と、その名前を決める必要があります。機能については既にやりたいことがあるはずですが、一般に公開する shard の名前は意外と悩みどころです。</p>
+</div>
+<div class="paragraph">
+<p><code>shard.yml</code> ファイルの記述方法を定義した「 shard.yml specification. 」には、shard の名前として以下のような命名規則が規定されています。</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>他の shard と重複しないこと</p>
+</li>
+<li>
+<p>50 文字以下</p>
+</li>
+<li>
+<p>英文字は小文字（<code>a</code>-<code>z</code>）を使用すべき</p>
+</li>
+<li>
+<p>名前の一部に「 crystal 」を含むべきではない</p>
+</li>
+<li>
+<p>数字（<code>0</code>-<code>9</code>）を含んでも良いが、先頭に置いてはならない</p>
+</li>
+<li>
+<p>アンダースコア（<code>_</code>）やダッシュ（<code>-</code>）を含んでも良いが、先頭や末尾に置いてはならない</p>
+</li>
+<li>
+<p>アンダースコアやダッシュが連続してはならない</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">shard.yml specification.</dt>
+<dd>
+<p><a href="https://github.com/crystal-lang/shards/blob/master/SPEC.md" class="bare">https://github.com/crystal-lang/shards/blob/master/SPEC.md</a></p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>基本的にこれらの条件に従う必要がありますが、shard 名の重複についてはそこまで厳密に考えなくても問題になることは少ないでしょう。単機能の shard 名は割とカブりがちですし、その名前を世界中の誰も使っていないことを確認することは現実的には不可能です。とはいえ、最低でも標準添付のライブラリとカブるような名前は避ける必要があります。また、余裕があれば CrystalShards.xyz で使いたい名前を検索して、ヒットするかどうか確認くらいはしてみても良いかもしれません。</p>
+</div>
+<div class="paragraph">
+<p>また、既存 shard の例をいくつかみてみると、shard の命名スタイルには大きく分けて2つのパターンがあるようです。</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>html_builder</code> や <code>mysql</code> など、機能をそのまま表した名前。単機能とは言わないまでも何か1つの対象に焦点を絞った shard に多い。</p>
+</li>
+<li>
+<p><code>kemal</code> や <code>topaz</code> など、機能とは関係なくプロダクトイメージなどからつけられた独自の名前。フレームワークなどある程度の規模を持ち、複数の機能から構成されている shard に多い。</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>これらを参考にわかり易い、またはカッコいい shard 名を考えてみてください。</p>
+</div>
+<div class="paragraph">
+<p>ここでは整数 <code>n</code> に対して <code>n</code> 番目のフィボナッチ数を返してくれる shard を作ってみることにしましょう。単機能のシンプルな shard ですので、shard 名はそのまま <code>fibonacci</code> としました。</p>
+</div>
+<div class="sect3">
+<h4 id="shard-名はスネークケースで">shard 名はスネークケースで</h4>
+<div class="paragraph">
+<p>命名規則上はダッシュ記号も使えることになっていますが、shard 名には基本的には単語の区切りにアンダースコアを使用するスネークケースで命名することをお勧めします。何故かというと、shard 名がソースコードのファイル名にも使用される場合が多いことがその理由です。Crystal 公式ドキュメントの「コーディングスタイル」では、ソースファイルのパスを名前空間に合致させ、ファイル名として型名をスネークケースに変換したものを使用するよう推奨されています。</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">例</dt>
+<dd>
+<p><code>HTTP::WebSocket</code> &#8594; http/web_socket.cr</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Crystal公式ドキュメント「コーディングスタイル」</dt>
+<dd>
+<p><a href="https://crystal-lang.org/docs/conventions/coding_style.html" class="bare">https://crystal-lang.org/docs/conventions/coding_style.html</a></p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>ちなみに、shard 名をスネークケースで命名してプロジェクト名にも使用すれば、プロジェクトひな形で生成されたソースファイル名をそのまま使用できます。</p>
+</div>
+<div class="paragraph">
+<p>また、同コーディングスタイルでは、型名（クラス名やモジュール名）として複数の単語を先頭文字のみ大文字にしてそのまま連結したアッパーキャメルケースを使用することが推奨されています。例えば、<code>crystal init</code> コマンドによるプロジェクトひな形の自動生成では、プロジェクト名をアッパーキャメルケースへ変換した名前で名前空間用のモジュールが定義されます。この点からも shard 名はスネークケースで付けておくと便利です。</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="プロジェクトひな形の作成">プロジェクトひな形の作成</h3>
+<div class="paragraph">
+<p>shard を作成する際も、それ用のプロジェクトを立ち上げることになります。プロジェクト名は特にこだわりがなければ shard 名と同じで構いません。というよりむしろ、ひな形で提供される各種ファイルを有効利用するには、プロジェクト名と shard 名をそろえておく方が良いでしょう。</p>
+</div>
+<div class="paragraph">
+<p>独立したアプリケーションではなく、再利用可能なライブラリを作る場合のプロジェクトひな形生成コマンドは <code>crystal init lib プロジェクト名</code> です。</p>
+</div>
+<div class="listingblock">
+<div class="title">fibonacci shard 用プロジェクトのひな形生成コマンド</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal init lib fibonacci</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>なお、ライブラリを作る場合もアプリケーションを作る場合も、<code>crystal init</code> コマンドで生成されるファイルやディレクトリの構成に違いはありません。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="shard-yml-の記述確認">shard.yml の記述確認</h3>
+<div class="paragraph">
+<p>shard を使用する際にも使用した <code>shard.yml</code> ですが、本来このファイルはプロジェクトを shard として公開する際のメタデータを記述するためのものです。公開 shard にはメタデータとして最低限以下のような情報が必要です。</p>
+</div>
+<div class="dlist">
+<div class="title">ひな形に含まれるメタデータ</div>
+<dl>
+<dt class="hdlist1"><code>name</code></dt>
+<dd>
+<p>shard の名前。プロジェクト名がそのまま使用される。</p>
+</dd>
+<dt class="hdlist1"><code>version</code></dt>
+<dd>
+<p>shard のバージョン情報。ひな形生成時は <code>0.1.0</code>。</p>
+</dd>
+<dt class="hdlist1"><code>authors</code></dt>
+<dd>
+<p>shard 作成者のリスト（配列）。git の設定で <code>user.name</code> と <code>user.mail</code> が設定されていればそれらが使用される。</p>
+</dd>
+<dt class="hdlist1"><code>crystal</code></dt>
+<dd>
+<p>shard が対応する Crystal のバージョン。ひな形を生成した <code>crystal</code> コマンドのバージョンが使用される。</p>
+</dd>
+<dt class="hdlist1"><code>license</code></dt>
+<dd>
+<p>shard 公開時に採用するライセンスの種類。デフォルトでは <code>MIT</code> ライセンスが設定されている。</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>上のリストにもある通りこれらの情報はひな形生成時に自動生成されますので、もある程度そのままで利用可能な状態になっています。複数人で開発している場合に <code>authors</code> を追加したり、<code>MIT</code> 以外のライセンスを <code>license</code> に指定したりするなど、必要に応じてこれらの値を変更してください。また、作りたい shard に別の shard の機能が必要であれば、アプリケーションを作成した際と同様に <code>dependencies</code> の設定を追加します。</p>
+</div>
+<div class="listingblock">
+<div class="title">ひな形生成時の <code>shard.yml</code></div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-yaml" data-lang="yaml"><span id="L1" class="line"><span style="color: #6a9fb5">name</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">fibonacci</span></span>
+<span id="L2" class="line"><span style="color: #6a9fb5">version</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">0.1.0</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #6a9fb5">authors</span><span style="color: #d0d0d0">:</span></span>
+<span id="L5" class="line">  <span style="color: #d0d0d0">-</span> <span style="color: #90a959">Your Git Name &lt;your_mail@example.org&gt;</span></span>
+<span id="L6" class="line"></span>
+<span id="L7" class="line"><span style="color: #6a9fb5">crystal</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">0.26.1</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line"><span style="color: #6a9fb5">license</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">MIT</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>fibonacci</code> では他の shard を使用することもなく、特に変更すべき内容もありませんのでこのまま進めることにします。</p>
+</div>
+<div class="sect3">
+<h4 id="shard-yml-ファイルのフォーマット">shard.yml ファイルのフォーマット</h4>
+<div class="paragraph">
+<p>拡張子が <code>.yml</code> となっていることからもわかる通り、<code>shard.yml</code> ファイルは YAML で書かれています。</p>
+</div>
+<div class="paragraph">
+<p>「 shard.yml specification.」には、<code>shard.yml</code> 自体のルールも以下のように定義されています。<code>shard.yml</code> を修正した場合は、これらの条件から外れないように注意しましょう。このほか、「 shard.yml specification.」ではひな形に登場しない項目がいくつも説明されています。状況によっては便利な項目もありますので、一度詳しく目を通しておくことをお勧めします。</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>YAML ドキュメントとして構文的に正しいこと</p>
+</li>
+<li>
+<p>文字コードは UTF-8 を使用すること</p>
+</li>
+<li>
+<p>空白2文字でインデントすること</p>
+</li>
+<li>
+<p>文字列、配列、ハッシュ以外の YAML の要素を使用しないこと</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="テストケースを書く">テストケースを書く</h3>
+<div class="paragraph">
+<p>最近ではテスト駆動開発（test-driven development）や振る舞い駆動開発（behavior driven development）が流行りのようです。テスト実行機能がコンパイラに標準で用意されていたりすることから、Crystal としてはこうした開発手法が想定されているようです。これらの方式では、まず想定されるパブリックメソッドの挙動（テストケース）を定義し、その後にテストケースを満足させるようにコードを実装する、という流れで開発を進めます。</p>
+</div>
+<div class="paragraph">
+<p>プロジェクトひな形にはあらかじめテスト用の構成が含まれていますので、ソースファイルにコードを書き始める前に、まずは <code>fibonacci</code> のテストケースを書いてみましょう。</p>
+</div>
+<div class="listingblock">
+<div class="title">fibonacci shard の使用イメージ</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"fibonacci"</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #f4bf75">Fibonacci</span><span style="color: #d0d0d0">.</span><span style="color: #303030">number</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">3</span><span style="color: #d0d0d0">)</span>  <span style="color: #505050">#=&gt;  2_big_i</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>今回は shard 名（プロジェクト名）が <code>fibonacci</code> ですので、名前空間用のモジュールは <code>Fibonacci</code> です。提供するメソッドは n 番目のフィボナッチ数を返す <code>Fibonacci.number(n)</code> のみ。引数 <code>n</code> は整数（<code>Int</code> 型のいずれか）でさえあれば良いでしょう。ただし、結果として受け取るフィボナッチ数は <code>n</code> が大きくなると急激に大きくなります。<code>n</code> が200を超える頃には128ビット整数でも表現しきれないサイズになりますので、こちらは可変長整数（<code>BigInt</code>）型を使用することにします。また、あまり一般的ではありませんが、フィボナッチ数は <code>n</code> が負の場合も定義されています。せっかくですので、<code>n</code> が負のフィボナッチ数にも対応させることにしましょう。</p>
+</div>
+<div class="paragraph">
+<p>プロジェクトひな形にはテストケースを定義するための <code>spec/fibonacci_spec.cr</code> が含まれています。ただし、ここで定義されている内容は「 <code>fales</code> は <code>true</code> と等しいはず」という内容で、当然ながらこの状態でテストを実行しても必ず不合格になります。</p>
+</div>
+<div class="listingblock">
+<div class="title">ひな形生成時の <code>fibonacci_spec.cr</code></div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"./spec_helper"</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #303030">describe</span> <span style="color: #f4bf75">Fibonacci</span> <span style="color: #aa759f">do</span></span>
+<span id="L4" class="line">  <span style="color: #505050"># TODO: Write tests</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line">  <span style="color: #303030">it</span> <span style="color: #90a959">"works"</span> <span style="color: #aa759f">do</span></span>
+<span id="L7" class="line">    <span style="color: #aa759f">false</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span><span style="color: #d0d0d0">(</span><span style="color: #aa759f">true</span><span style="color: #d0d0d0">)</span></span>
+<span id="L8" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L9" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>fibonacci</code> の挙動に合わせて必要なテストケースを定義すると以下のようになりました。</p>
+</div>
+<div class="listingblock">
+<div class="title">テストケースを定義した <code>fibonacci_spec.cr</code></div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"./spec_helper"</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #303030">describe</span> <span style="color: #f4bf75">Fibonacci</span> <span style="color: #aa759f">do</span></span>
+<span id="L4" class="line">  <span style="color: #303030">describe</span> <span style="color: #90a959">".number(n : Int)"</span> <span style="color: #aa759f">do</span></span>
+<span id="L5" class="line">    <span style="color: #303030">it</span> <span style="color: #90a959">"returns fibonacci numbers correctly."</span> <span style="color: #aa759f">do</span></span>
+<span id="L6" class="line">      <span style="color: #f4bf75">Fibonacci</span><span style="color: #d0d0d0">.</span><span style="color: #303030">number</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">5</span><span style="color: #d0d0d0">).</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #f4bf75">BigInt</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">5</span><span style="color: #d0d0d0">)</span></span>
+<span id="L7" class="line">      <span style="color: #f4bf75">Fibonacci</span><span style="color: #d0d0d0">.</span><span style="color: #303030">number</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">10</span><span style="color: #d0d0d0">).</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #f4bf75">BigInt</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">55</span><span style="color: #d0d0d0">)</span></span>
+<span id="L8" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L9" class="line"></span>
+<span id="L10" class="line">    <span style="color: #303030">it</span> <span style="color: #90a959">"returns negative fibonacci numbers correctly."</span> <span style="color: #aa759f">do</span></span>
+<span id="L11" class="line">      <span style="color: #f4bf75">Fibonacci</span><span style="color: #d0d0d0">.</span><span style="color: #303030">number</span><span style="color: #d0d0d0">(</span><span style="color: #d0d0d0">-</span><span style="color: #90a959">5</span><span style="color: #d0d0d0">).</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #f4bf75">BigInt</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">5</span><span style="color: #d0d0d0">)</span></span>
+<span id="L12" class="line">      <span style="color: #f4bf75">Fibonacci</span><span style="color: #d0d0d0">.</span><span style="color: #303030">number</span><span style="color: #d0d0d0">(</span><span style="color: #d0d0d0">-</span><span style="color: #90a959">10</span><span style="color: #d0d0d0">).</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #f4bf75">BigInt</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #d0d0d0">-</span><span style="color: #90a959">55</span><span style="color: #d0d0d0">)</span></span>
+<span id="L13" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L14" class="line"></span>
+<span id="L15" class="line">    <span style="color: #303030">it</span> <span style="color: #90a959">"returns very large fibonacci number correctly."</span> <span style="color: #aa759f">do</span></span>
+<span id="L16" class="line">      <span style="color: #f4bf75">Fibonacci</span><span style="color: #d0d0d0">.</span><span style="color: #303030">number</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">200</span><span style="color: #d0d0d0">).</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #f4bf75">BigInt</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"280571172992510140037611932413038677189525"</span><span style="color: #d0d0d0">)</span></span>
+<span id="L17" class="line">      <span style="color: #f4bf75">Fibonacci</span><span style="color: #d0d0d0">.</span><span style="color: #303030">number</span><span style="color: #d0d0d0">(</span><span style="color: #d0d0d0">-</span><span style="color: #90a959">200</span><span style="color: #d0d0d0">).</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #f4bf75">BigInt</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"-280571172992510140037611932413038677189525"</span><span style="color: #d0d0d0">)</span></span>
+<span id="L18" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L19" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L20" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>テストケースの書き方はこの章の最後で詳しく紹介しますので、ひとまずは「そういうもの」として先へ進んでください。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="機能の実装">機能の実装</h3>
+<div class="paragraph">
+<p>必要なテストケースが準備できたら、次はそのテストケースを満足させる機能を実装していきます。テストはパブリックなインタフェース（メソッド）の入出力を定義しているだけですので、メソッドがどう実装されるかは気にしません。</p>
+</div>
+<div class="paragraph">
+<p><code>fibonacci</code> の実装方法も何パターンか考えられますが、とりあえず、一度計算した内容のキャッシュくらいは持てるように実装してみたのが以下のコードです。</p>
+</div>
+<div class="listingblock">
+<div class="title"><code>fibonacci.cr</code> のソースコード</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"big"</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #505050"># Retuen fibonacci number.</span></span>
+<span id="L4" class="line"><span style="color: #aa759f">module</span> <span style="color: #f4bf75">Fibonacci</span></span>
+<span id="L5" class="line">  <span style="color: #f4bf75">VERSION</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"0.1.0"</span></span>
+<span id="L6" class="line"></span>
+<span id="L7" class="line">  <span style="color: #303030">@@numbers</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[</span><span style="color: #f4bf75">BigInt</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">0</span><span style="color: #d0d0d0">),</span> <span style="color: #f4bf75">BigInt</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">1</span><span style="color: #d0d0d0">)]</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line">  <span style="color: #aa759f">def</span> <span style="color: #f4bf75">self</span><span style="color: #d0d0d0">.</span><span style="color: #303030">number</span><span style="color: #d0d0d0">(</span><span style="color: #303030">n</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">Int</span><span style="color: #d0d0d0">)</span></span>
+<span id="L10" class="line">    <span style="color: #303030">negative</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">(</span><span style="color: #303030">n</span> <span style="color: #d0d0d0">&lt;</span> <span style="color: #90a959">0</span><span style="color: #d0d0d0">)</span></span>
+<span id="L11" class="line">    <span style="color: #303030">even</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">n</span><span style="color: #d0d0d0">.</span><span style="color: #303030">even?</span></span>
+<span id="L12" class="line">    <span style="color: #303030">n</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">n</span><span style="color: #d0d0d0">.</span><span style="color: #303030">abs</span></span>
+<span id="L13" class="line">    <span style="color: #aa759f">while</span> <span style="color: #303030">@@numbers</span><span style="color: #d0d0d0">.</span><span style="color: #303030">size</span> <span style="color: #d0d0d0">&lt;</span> <span style="color: #303030">n</span> <span style="color: #d0d0d0">+</span> <span style="color: #90a959">1</span></span>
+<span id="L14" class="line">      <span style="color: #303030">@@numbers</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #303030">@@numbers</span><span style="color: #d0d0d0">[</span><span style="color: #d0d0d0">-</span><span style="color: #90a959">1</span><span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">+</span> <span style="color: #303030">@@numbers</span><span style="color: #d0d0d0">[</span><span style="color: #d0d0d0">-</span><span style="color: #90a959">2</span><span style="color: #d0d0d0">]</span></span>
+<span id="L15" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L16" class="line">    <span style="color: #aa759f">if</span> <span style="color: #303030">negative</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #303030">even</span></span>
+<span id="L17" class="line">      <span style="color: #d0d0d0">-</span><span style="color: #303030">@@numbers</span><span style="color: #d0d0d0">[</span><span style="color: #303030">n</span><span style="color: #d0d0d0">]</span></span>
+<span id="L18" class="line">    <span style="color: #aa759f">else</span></span>
+<span id="L19" class="line">      <span style="color: #303030">@@numbers</span><span style="color: #d0d0d0">[</span><span style="color: #303030">n</span><span style="color: #d0d0d0">]</span></span>
+<span id="L20" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L21" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L22" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="テストの実行">テストの実行</h3>
+<div class="paragraph">
+<p>テストの実行コマンドは <code>crystal spec</code> です。プロジェクトディレクトリの直下でこのコマンドを実行すると用意したテストケースが順に評価され、実際の挙動が指定された内容通りかどうかチェックされます。</p>
+</div>
+<div class="listingblock">
+<div class="title">テスト実行結果</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal spec</span>
+<span id="L2" class="line"><span style="color: #505050">...</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">Finished in 203 microseconds</span></span>
+<span id="L5" class="line"><span style="color: #303030">3 examples, 0 failures, 0 errors, 0 pending</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>テスト結果の先頭行には、テストケース（<code>it</code> ブロック）ごとの実行結果がそれぞれ1文字で表示されます。表示されたのが <code>.</code> であれば、そのテストケースには合格できたことを表しています。もしここに <code>.</code> 以外の文字が表示されているようであれば、対応した <code>it</code> ブロック内でテストした機能の実装に問題があることになります。先頭行がすべて <code>.</code> になるまで、ソースコードの修正とテストを繰り返しましょう。</p>
+</div>
+<div class="paragraph">
+<p>今回の spec ファイルには <code>it</code> ブロックが3つあり、上の例では <code>.</code> が3つ並んでいます。ということは、実装したソースコードは当初想定した通りの挙動をしているようです。</p>
+</div>
+<div class="paragraph">
+<p>このように、テストが成功した時点で shard の機能面は完成です。実際、この状態でも GitHub へ公開すれば、shard として使用できてしまったりします。しかし、曲がりなりにも一般公開する shard には、それなりの体裁といったものもありますので、もうひと手間ふた手間かけてみることにしましょう。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="readme-を書く">README を書く</h3>
+<div class="paragraph">
+<p>ひな形生成時に用意されている <code>README.md</code> ファイルは、以下の内容をカバーするように構成されています。</p>
+</div>
+<div class="dlist">
+<div class="title"><code>README.md</code> ひな形の構成</div>
+<dl>
+<dt class="hdlist1"><code># shard 名</code></dt>
+<dd>
+<p>README のタイトルに当たるパート。shard の概要を記載する。</p>
+</dd>
+<dt class="hdlist1"><code>## Instration</code></dt>
+<dd>
+<p>shard をインストールするための手順を記載するパート。<code>shard.yml</code> へ追加する <code>dependencies</code> の内容は用意されている。shard 以外の外部ライブラリやコマンドに依存している場合はここで説明しておいた方が良い。</p>
+</dd>
+<dt class="hdlist1"><code>## Usage</code></dt>
+<dd>
+<p>ソースファイル内での shard の使い方を記載するパート。shard の <code>require</code> 方法は用意されている。最低限のサンプルコードくらいは書いておくべき。</p>
+</dd>
+<dt class="hdlist1"><code>## Development</code></dt>
+<dd>
+<p>開発者向け情報を記載するパート。shard の開発に参加したり、自身で改造したりしたい人向けの情報を記載する。積極的に開発者を募るつもりがなければ項目ごとオミットしても良いかも。</p>
+</dd>
+<dt class="hdlist1"><code>## Contributing</code></dt>
+<dd>
+<p>shard の開発に参加してくれる人向けの参加手順を記載するパート。積極的に開発者を募るつもりがなければ項目ごとオミットしても良いかも。</p>
+</dd>
+<dt class="hdlist1"><code>## Contributors</code></dt>
+<dd>
+<p>shard の作成に携わった人のリストを記載するパート。</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>また、このひな形は GitHub での公開を前提としています。そのため、GitHub で shard を 公開する場合には、以下の2点を修正するだけで標準的な README として利用できるようになっています。</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>何箇所かある <code>[your-github-name]</code> を自分の GitHub アカウントに置き換える</p>
+</li>
+<li>
+<p><code>TODO:</code> の部分を埋めていく</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>なお、ひな形の中で登場する <code>TODO:</code> は以下の3箇所です。</p>
+</div>
+<div class="dlist">
+<div class="title">README.md 中に登場する TODO: 項目</div>
+<dl>
+<dt class="hdlist1"><code>TODO: Write a description here</code></dt>
+<dd>
+<p>その shard の概要。最低限、なにをする shard なのかくらいは書いておいた方が良い。</p>
+</dd>
+<dt class="hdlist1"><code>TODO: Write usage instructions here</code></dt>
+<dd>
+<p>その shard の使い方。ある程度サンプルコードで代用可能。</p>
+</dd>
+<dt class="hdlist1"><code>TODO: Write development instructions here</code></dt>
+<dd>
+<p>その shard の開発に関わろうとする人向けの情報。</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p><code>fibonacci</code> はメソッドが1つだけしかなく機能もシンプルなので、<code>Usage</code> は最低限のサンプルコードで済ませることにします。また、共同開発者を積極的に募るほどの者でもありませんので、最低限の項目を記載した <code>README.md</code> は以下のようになりました。</p>
+</div>
+<div class="listingblock">
+<div class="title">完成した <code>README.md</code></div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-markdown" data-lang="markdown"><span id="L1" class="line"><span style="color: #6a9fb5;background-color: #151515;font-weight: bold"># fibonacci</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line">The fibonacci number calculator for the Crystal programing language.</span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line"><span style="color: #303030">## Installation</span></span>
+<span id="L6" class="line"></span>
+<span id="L7" class="line">Add this to your application's <span style="color: #90a959">`shard.yml`</span>:</span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line"><span style="color: #d0d0d0">```</span><span style="color: #303030">yaml</span></span>
+<span id="L10" class="line"><span style="color: #6a9fb5">dependencies</span><span style="color: #d0d0d0">:</span></span>
+<span id="L11" class="line">  <span style="color: #6a9fb5">fibonacci</span><span style="color: #d0d0d0">:</span></span>
+<span id="L12" class="line">    <span style="color: #6a9fb5">github</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">github_name/fibonacci</span></span>
+<span id="L13" class="line"><span style="color: #d0d0d0">```</span></span>
+<span id="L14" class="line"></span>
+<span id="L15" class="line"><span style="color: #303030">## Usage</span></span>
+<span id="L16" class="line"></span>
+<span id="L17" class="line"><span style="color: #d0d0d0">```</span><span style="color: #303030">crystal</span></span>
+<span id="L18" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"fibonacci"</span></span>
+<span id="L19" class="line"></span>
+<span id="L20" class="line"><span style="color: #303030">f0</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">Fibonacci</span><span style="color: #d0d0d0">.</span><span style="color: #303030">number</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">0</span><span style="color: #d0d0d0">)</span> <span style="color: #505050">#=&gt; 0_big_i</span></span>
+<span id="L21" class="line"><span style="color: #303030">f1</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">Fibonacci</span><span style="color: #d0d0d0">.</span><span style="color: #303030">number</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">1</span><span style="color: #d0d0d0">)</span> <span style="color: #505050">#=&gt; 1_big_i</span></span>
+<span id="L22" class="line"><span style="color: #303030">f2</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">Fibonacci</span><span style="color: #d0d0d0">.</span><span style="color: #303030">number</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">2</span><span style="color: #d0d0d0">)</span> <span style="color: #505050">#=&gt; 1_big_i</span></span>
+<span id="L23" class="line"><span style="color: #303030">f3</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">Fibonacci</span><span style="color: #d0d0d0">.</span><span style="color: #303030">number</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">3</span><span style="color: #d0d0d0">)</span> <span style="color: #505050">#=&gt; 2_big_i</span></span>
+<span id="L24" class="line"><span style="color: #303030">f4</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">Fibonacci</span><span style="color: #d0d0d0">.</span><span style="color: #303030">number</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">4</span><span style="color: #d0d0d0">)</span> <span style="color: #505050">#=&gt; 3_big_i</span></span>
+<span id="L25" class="line"><span style="color: #d0d0d0">```</span></span>
+<span id="L26" class="line"></span>
+<span id="L27" class="line"><span style="color: #303030">## Contributors</span></span>
+<span id="L28" class="line"></span>
+<span id="L29" class="line"><span style="color: #d0d0d0">-</span> <span style="color: #d0d0d0">[</span><span style="color: #303030">github_name</span><span style="color: #d0d0d0">](</span><span style="color: #90a959">https://github.com/github_name</span><span style="color: #d0d0d0">)</span> Your Git Name - creator, maintainer</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ライセンスを選ぶ">ライセンスを選ぶ</h3>
+<div class="paragraph">
+<p>プロジェクトのひな形では、shard を公開する際のライセンスとして、<code>MIT</code> ライセンスが選択されています。</p>
+</div>
+<div class="paragraph">
+<p><code>shard.yml</code> の <code>license</code> には <code>MIT</code> が指定されており、プロジェクトディレクトリ内の <code>LICENSE</code> ファイルも <code>MIT</code> ライセンスの条項が記載されています。<code>MIT</code> ライセンスとは、ざっくりいうと「著作権表記とライセンス条項さえ含まれていれば有償無償問わず自由に使って良い、ただし無保証」というものです。ソフトウェアの利用者としてはかなり自由に利用でき、開発者としては免責が明言されているため、比較的使いやすいライセンスの1つです。大した量ではありませんので、詳細については一度 <code>LICENSE</code> ファイルの内容を読んでみてください。</p>
+</div>
+<div class="paragraph">
+<p>もし <code>MIT</code> 以外のライセンスを採用したければ、<code>LICENSE</code> ファイルの内容を使用したいライセンス条件に書き換えて <code>shard.yml</code> の <code>license</code> を変更することになります。このとき、<code>shard.yml</code> の <code>license</code> には OSI（Open Source Initiative）で定義されたライセンス名か、ライセンスの参照先 URL を指定可能です。</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">OSI ライセンス名</dt>
+<dd>
+<p><a href="https://opensource.org/licenses/alphabetical" class="bare">https://opensource.org/licenses/alphabetical</a></p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>今回は特にライセンスへのこだわりもありませんので、<code>MIT</code> ライセンスのままで行こうと思います。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="github-へ公開する">GitHub へ公開する</h3>
+<div class="paragraph">
+<p>ここまでの準備が完了したら、プロジェクトを GitHub へ公開しましょう。この辺りの手順は GitHub のドキュメントなどを参照してください。</p>
+</div>
+<div class="paragraph">
+<p>プロジェクトが GitHub へ公開された結果、別のプロジェクトが <code>shard.yml</code> に以下の記述を追加すると  <code>fibonacci</code> をインストール可能になりました。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-yaml" data-lang="yaml"><span id="L1" class="line"><span style="color: #6a9fb5">dependencies</span><span style="color: #d0d0d0">:</span></span>
+<span id="L2" class="line">  <span style="color: #6a9fb5">fibonacci</span><span style="color: #d0d0d0">:</span></span>
+<span id="L3" class="line">    <span style="color: #6a9fb5">github</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">github_name/fibonacci</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ここまでで shard を作って公開するまでの手順は完了です。</p>
+</div>
+<div class="paragraph">
+<p>ただし、この状態では <code>shards</code> コマンドが shard のバージョンを認識できません。<code>fibonacci</code> を使おうとするプロジェクトで <code>shard.yml</code> に特定のバージョンを指定していても、常に最新状態（リポジトリの HEAD）の shard がインストールされてしまいます。</p>
+</div>
+<div class="paragraph">
+<p>shard を作る手順の最後に、shard のバージョン管理方法をご紹介しましょう。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="shard-のバージョン管理">shard のバージョン管理</h3>
+<div class="paragraph">
+<p>毎度おなじみ「 shard.yml specification.」には、shard のバージョンとして以下のようなルールが示されています。</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>セマンティックバージョニングに従うことが望ましい</p>
+</li>
+<li>
+<p>数字が含まれていること</p>
+</li>
+<li>
+<p><code>.</code> や <code>-</code> を使用しても良いが、連続しないこと</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">例</dt>
+<dd>
+<p><code>0.0.1</code>、<code>1.2.3</code>、<code>2.0.0-rc1</code> など</p>
+</dd>
+</dl>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>強制はされないものの、セマンティックバージョニングのような合理的なバージョン付けを強く推奨。</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>後方互換が損なわれる大きな変更でも、内部の子細なバグフィックスでもメジャーバージョンが上がるようでは、使う側としてバージョンの変化からバージョンアップのインパクトを測りかねてしまいます。</p>
+</div>
+<div class="paragraph">
+<p>セマンティックバージョニングではメジャー/マイナ/パッチの3つの数字でバージョンを構成し、パッチよりマイナ、マイナよりメジャーバージョンが上がることのインパクトが大きくなるよう定義されています。<code>shard.yml</code> 内でバージョンを指定する際の <code>~&gt;</code> 演算子は、セマンティックバージョニングのような、先頭に近い数字の変更がインパクトが大きい際に有効に働きます。</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">セマンティックバージョニング</dt>
+<dd>
+<p><a href="https://semver.org/lang/ja/" class="bare">https://semver.org/lang/ja/</a></p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="3つのバージョン情報">3つのバージョン情報</h4>
+<div class="paragraph">
+<p><code>fibonacci</code> プロジェクトでは、プロジェクトファイルの2箇所に shard のバージョンが登場します。まず <code>shard.yml</code> ファイル2行目の <code>version</code>、もう1つがソースファイルで定義されている <code>Fibonacci::VERSION</code> 定数です。この2つの値は、ひな形生成時にはどちらも <code>0.1.0</code> となっており、これがプロジェクト（shard）のバージョンになります。</p>
+</div>
+<div class="paragraph">
+<p>前述の通り、<code>shard.yml</code> とソースファイルにバージョンが書かれていても、<code>shards</code> コマンドはそのバージョンを認識できません。</p>
+</div>
+<div class="paragraph">
+<p>このとき使用されるのが第三のバージョン情報が、git リポジトリのバージョンタグです。</p>
+</div>
+<div class="paragraph">
+<p><code>shard.yml</code> の <code>dependencies</code> 内で、ある shard のバージョンとして <code>1.0.0</code> が指定されていたとしましょう。このとき、<code>shards</code> コマンドは、その shard のリポジトリから <code>v1.0.0</code> とタグ付けされたコミットの状態をインストールしようとします。</p>
+</div>
+<div class="paragraph">
+<p>つまり、先ほどプッシュした <code>fibonacci</code> の GitHub リポジトリに <code>v0.1.0</code> というタグを付けることで、現状の <code>fibonacci</code> がバージョン <code>0.1.0</code> だと明示できます。なお、GitHub ではリリース管理機能を使って新しいリリースを追加する際に、Web UI からバージョンタグを設定できて便利です。</p>
+</div>
+<div class="paragraph">
+<p>もし <code>fibonacci</code> の機能に修正を加えてバージョンを <code>0.2.0</code> へ上げる場合には以下のような手順で行うことになるでしょう。こうしておくと、複数のプロジェクトからそれぞれ異なるバージョンの <code>fibonacci</code> を利用可能になります。</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>fibonacci</code> の機能を修正</p>
+</li>
+<li>
+<p>ソースファイル上の <code>Fibonacci::VERSION</code> 定数を <code>0.2.0</code> に変更</p>
+</li>
+<li>
+<p><code>shard.yml</code> 2行目の <code>version</code> を <code>0.2.0</code> に変更</p>
+</li>
+<li>
+<p>変更をコミットし、GitHub 上の master ブランチへマージ</p>
+</li>
+<li>
+<p>GitHub 上で変更がマージされた master ブランチにバージョンタグ <code>v0.2.0</code> を追加</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>というわけで、以上が shard を作って公開し、さらに他のプロジェクトから使用してもらうために必要な作業の流れになります。</p>
+</div>
+<div class="paragraph">
+<p>是非みなさんも自作のライブラリを shard として公開してみてください。世界中には自分と同じことで困っていて、自分だけしか使わないだろうと思っていた機能を便利に使ってくれる人が意外といたりしますよ。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="テスト">テスト</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>この章の最後に、shard を作る際にも使用したテストについて簡単にご紹介しましょう。</p>
+</div>
+<div class="paragraph">
+<p>ここでいうテストはソフトウェアに対するユニットテストの一種で、プログラムが想定した通りの挙動を取るかどうかを調べる機能試験に相当します。これは、あらかじめ「このメソッドにこういった引数を与えると、こんな結果になるはず」というプログラムの挙動（テストケース）を列挙しておき、実際にそうなるかどうかを個々に評価するような仕組みです。</p>
+</div>
+<div class="paragraph">
+<p>Crystal には、RSpec を参考にしたテスト機能を提供するモジュール <code>Spec</code> がコンパイラ自身の標準添付ライブラリとして用意されています。また、標準のプロジェクトひな形にテスト用のファイル一式が含まれているなど、言語自体がテストを強く意識した作りになっています。</p>
+</div>
+<div class="sect2">
+<h3 id="テストの使い方">テストの使い方</h3>
+<div class="paragraph">
+<p>細かい説明は後にして、まずはテストの使い方をざっくり見てみましょう。</p>
+</div>
+<div class="sect3">
+<h4 id="spec-ファイルを作る">spec ファイルを作る</h4>
+<div class="paragraph">
+<p>まず、テストにはテストケースを定義した spec ファイルが必要です。spec ファイルは、<code>"spec"</code> とテスト対象となるコードを <code>require</code> した Crystal のソースファイルで、テストケース自体も Crystal のコードとして定義します。</p>
+</div>
+<div class="paragraph">
+<p>さて、ここでは簡単な例として <code>"がおー"</code> と吠える <code>Bear</code> クラスを実装する場合を考えてみましょう。<code>Bear</code> クラスが持つインスタンスメソッドは吠え声を文字列で返す <code>#bark</code> のみ、ソースファイル名は <code>bear.cr</code> です。spec ファイルの名前はテスト対象とするファイルのベースネームに続けて <code>_spec.cr</code> を加えたものが使用されることが一般的です。今回もその例に倣い、熊が正しく <code>"がおー"</code> と吠えるかどうかテストする <code>bear_spec.cr</code> を、ソースファイルと同じディレクトリに作ってみました。</p>
+</div>
+<div class="listingblock">
+<div class="title"><code>bear_spec.cr</code></div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"spec"</span></span>
+<span id="L2" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"./bear"</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">describe</span> <span style="color: #f4bf75">Bear</span> <span style="color: #aa759f">do</span></span>
+<span id="L5" class="line">  <span style="color: #303030">describe</span> <span style="color: #90a959">"#bark"</span> <span style="color: #aa759f">do</span></span>
+<span id="L6" class="line">    <span style="color: #303030">it</span> <span style="color: #90a959">"returns </span><span style="color: #8f5536">\"</span><span style="color: #90a959">がおー</span><span style="color: #8f5536">\"</span><span style="color: #90a959">."</span> <span style="color: #aa759f">do</span></span>
+<span id="L7" class="line">      <span style="color: #f4bf75">Bear</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">.</span><span style="color: #303030">bark</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #90a959">"がおー"</span></span>
+<span id="L8" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L9" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L10" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>最初の2行は <code>Spec</code> モジュールとソースコードの <code>require</code> 文で、4行目以降がテストケースの定義部分になります。</p>
+</div>
+<div class="paragraph">
+<p>まず登場するのが <code>describe Bear</code> で宣言されたブロックです。これは、その内部で行われるテストが <code>Bear</code> 型を対象としていることを明示しています。<code>describe Bear</code> ブロックの中には、もう1つ <code>describe "#bart"</code> ブロックが置かれています。こちらのブロックはその内部で <code>Bear</code> 型の中でも <code>#bart</code> メソッドに関するテストを行うことを宣言しています。</p>
+</div>
+<div class="paragraph">
+<p>続いて登場するのがテストケースに相当する <code>it</code> ブロックです。<code>it</code> ブロックでは、<code>describe</code> で宣言された対象となるメソッドの、ある1つの振る舞いに関するテストを行います。また、<code>it</code> ブロックには引数としてその内部で行うテスト内容の説明文を与えることができます。この例では、<code>it</code>（<code>Bear#bart</code> メソッド）が、正しく <code>"がおー"</code> という文字列を返すかどうかについてテストすることが説明されています。</p>
+</div>
+<div class="paragraph">
+<p>そして、<code>it</code> ブロックの内で実行される <code>Bear.new.bark.should eq "がおー"</code> が実際に評価されるテスト内容の記述です。<code>Bear.new.bark</code> が <code>"がおー"</code> と等しく（<code>eq</code>）あるべき（<code>should</code>）といったように、実際に評価している内容が（英語として）比較的自然に読める構文になっています。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="プログラム本体を実装する">プログラム本体を実装する</h4>
+<div class="paragraph">
+<p>さて、spec ファイルが用意できたので次に <code>Bear</code> クラスそのものを <code>bear.cr</code> へ実装していくのですが、ついうっかり熊に <code>"わん"</code> と吠えさせてしまいました。</p>
+</div>
+<div class="listingblock">
+<div class="title">実装ミスを含んだ <code>bear.cr</code></div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #aa759f">class</span> <span style="color: #f4bf75">Bear</span></span>
+<span id="L2" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">bark</span></span>
+<span id="L3" class="line">    <span style="color: #90a959">"わん"</span></span>
+<span id="L4" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L5" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>この状態でテストを実行してみるとどうなるでしょうか。なお、テストの実行コマンドは <code>crystal spec</code> です。特定の spec ファイルを対象としたい場合には、その spec ファイル名をパラメータとして与えてください。</p>
+</div>
+<div class="listingblock">
+<div class="title">テストの実行結果</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal spec bear_spec.cr</span>
+<span id="L2" class="line"><span style="color: #303030">F</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">Failures:</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line"><span style="color: #303030">  1) Bear #</span>bark returns <span style="color: #90a959">"がおー"</span><span style="color: #303030">.</span></span>
+<span id="L7" class="line"><span style="color: #303030">     Failure/Error: Bear.new.bark.should eq "がおー"</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line"><span style="color: #303030">       Expected: "がおー"</span></span>
+<span id="L10" class="line"><span style="color: #303030">            got: "わん"</span></span>
+<span id="L11" class="line"></span>
+<span id="L12" class="line"><span style="color: #303030">     #</span> bear_spec.cr:7</span>
+<span id="L13" class="line"></span>
+<span id="L14" class="line"><span style="color: #303030">Finished in 127 microseconds</span></span>
+<span id="L15" class="line"><span style="color: #303030">1 examples, 1 failures, 0 errors, 0 pending</span></span>
+<span id="L16" class="line"></span>
+<span id="L17" class="line"><span style="color: #303030">Failed examples:</span></span>
+<span id="L18" class="line"></span>
+<span id="L19" class="line"><span style="color: #303030">crystal spec bear_spec.cr:6 #</span> Bear <span style="color: #505050">#bark returns "がおー".</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>テスト結果の先頭行には、テストケース（<code>it</code> ブロック）ごとの実行結果サマリが、それぞれ1文字で出力されます。今回はテストケースが1つしかありませんので、表示されているのは <code>F</code> が1文字だけです。テスト結果 <code>F</code> は、実際の挙動がテストケースで指定された条件とは異なる結果を示したため、テストが不合格になった場合に表示されるものです。</p>
+</div>
+<div class="paragraph">
+<p>このように何らかの理由でテストが不合格になると、<code>Failures:</code> に続いて具体的な問題点が出力されます。ここでは、期待された値（<code>Expected:</code>）が <code>"がおー"</code> なのに対して、実際の結果（<code>got:</code>）が <code>"わん"</code> になっていたことが確認できます。このように、テストを行うと、実装されたコードが想定外の挙動を示した際に、どの部分がどのように異なっていたのかを具体的に知ることができます。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="テスト結果を元にソースを修正する">テスト結果を元にソースを修正する</h4>
+<div class="paragraph">
+<p>テスト結果から問題の箇所は明らかですので、<code>bear.cr</code> の実装を修正しました。</p>
+</div>
+<div class="listingblock">
+<div class="title">修正後の <code>bear.cr</code></div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #aa759f">class</span> <span style="color: #f4bf75">Bear</span></span>
+<span id="L2" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">bark</span></span>
+<span id="L3" class="line">    <span style="color: #90a959">"がおー"</span></span>
+<span id="L4" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L5" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>もう一度テストを実行してみると、今度は <code>F</code> ではなく <code>.</code> が表示されましたので、実装したコードが当初想定した通りの機能を実現できていることが確認できました。</p>
+</div>
+<div class="listingblock">
+<div class="title">テストの実行結果（ソース修正後）</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal spec bear_spec.cr</span>
+<span id="L2" class="line"><span style="color: #505050">.</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">Finished in 53 microseconds</span></span>
+<span id="L5" class="line"><span style="color: #303030">1 examples, 0 failures, 0 errors, 0 pending</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>このように、まず実装しようとする機能の挙動をテストケースとして定義し、テストケースを満足するように実装を進める開発手法を、テスト駆動開発や振る舞い駆動開発などと呼びます。この手法のメリットとしては、実装コードの品質が担保されるという点はもちろんありますが、テストケース自体がある意味で機能仕様やサンプルコードとして利用できるという点も見逃せません。チームで開発している場合や他の人が書いたコードを引き継ぐ場合などでも、適切なテストケースが用意されていれば最低限の情報はそこから入手可能です。</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="テスト関連の構文">テスト関連の構文</h3>
+<div class="paragraph">
+<p>では次に、spec ファイルで使用する各構文についてみてみましょう。</p>
+</div>
+<div class="sect3">
+<h4 id="グルーピング用ブロック">グルーピング用ブロック</h4>
+<div class="paragraph">
+<p>グルーピング用ブロックは、1つ以上のテストケースを何らかの基準でまとめるために使用されます。グルーピング用ブロックの内部には次に紹介するテストケース用のブロックだけでなく、別のグルーピング用ブロックをネストさせることも可能です。</p>
+</div>
+<div class="paragraph">
+<p>先の例で登場した <code>describe</code> もグルーピング用ブロックの1種です。<code>describe</code> ブロックはテスト対象を元にしたグルーピングを行うもので、テスト対象として型（クラス、モジュールなど）やメソッド名（文字列で指定）を引数として与えることができます。この引数はテスト不合格時の出力メッセージでも利用されるため、テスト対象となるメソッド名に準じた構成をとることが強く推奨されています。例えば、外側の <code>describe</code> では型を指定し、内側の <code>describe</code> にメソッド名を渡すような形です。またこのときのメソッド名に、クラスメソッドであれば <code>.</code> を、インスタンスメソッドであれば <code>#</code> を先頭に付けておくと、<code>Class #method</code> のように準的なメソッド表記に近い形を再現できます。</p>
+</div>
+<div class="paragraph">
+<p>Crystal の spec ファイルでは、グルーピング用のブロックとして <code>describe</code> 以外にもう1つ <code>context</code> が使用可能です。<code>describe</code> ブロックがテスト対象をもとにしたグルーピングだとすると、<code>context</code> ブロックはその時の状況（条件）によるグルーピングです。例えば、配列が要素を含んでいるか否かで挙動が異なる場合に、それぞれの状況を明示することができます。</p>
+</div>
+<div class="listingblock">
+<div class="title"><code>describe</code> と <code>context</code></div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"spec"</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #303030">describe</span> <span style="color: #f4bf75">Array</span> <span style="color: #aa759f">do</span></span>
+<span id="L4" class="line">  <span style="color: #303030">describe</span> <span style="color: #90a959">"#first?"</span> <span style="color: #aa759f">do</span></span>
+<span id="L5" class="line">    <span style="color: #303030">context</span> <span style="color: #90a959">"self is empty."</span> <span style="color: #aa759f">do</span></span>
+<span id="L6" class="line">      <span style="color: #303030">it</span> <span style="color: #90a959">"returns nil."</span> <span style="color: #aa759f">do</span></span>
+<span id="L7" class="line">        <span style="color: #f4bf75">Array</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">).</span><span style="color: #303030">new</span><span style="color: #d0d0d0">.</span><span style="color: #303030">first?</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">be_nil</span></span>
+<span id="L8" class="line">      <span style="color: #aa759f">end</span></span>
+<span id="L9" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L10" class="line"></span>
+<span id="L11" class="line">    <span style="color: #303030">context</span> <span style="color: #90a959">"self has elements."</span> <span style="color: #aa759f">do</span></span>
+<span id="L12" class="line">      <span style="color: #303030">it</span> <span style="color: #90a959">"returns receiver's first element."</span> <span style="color: #aa759f">do</span></span>
+<span id="L13" class="line">        <span style="color: #d0d0d0">[</span><span style="color: #90a959">1</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">2</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">3</span><span style="color: #d0d0d0">].</span><span style="color: #303030">first?</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #90a959">1</span></span>
+<span id="L14" class="line">      <span style="color: #aa759f">end</span></span>
+<span id="L15" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L16" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L17" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="テストケース用ブロック">テストケース用ブロック</h4>
+<div class="paragraph">
+<p>こちらの例としては <code>it</code> がすでに登場しています。<code>it</code> はあるメソッドがもつ特定の挙動1つについてのテストケースを定義するためのブロックです。ですので、複数の挙動に対するテスト内容を1つの <code>it</code> ブロック内に記述すべきではありません。例えば、オブジェクトの状態にや引数の値によって異なる挙動を示すような場合は、同じメソッドであってもそれぞれに独立した <code>it</code> ブロックを設けてテストケースを定義すべきです。</p>
+</div>
+<div class="paragraph">
+<p>テストケースを書くためのブロックには <code>it</code> ともう1つ、<code>pending</code> があります。<code>pending</code> ブロックは文字通り、一時的にそのテストケースの実行を保留する場合に使用します。例えば、機能仕様としてのテストケースは用意されたものの対象となるメソッドがまだ実装されていないような場合に、<code>it</code> の代わりに <code>pending</code> ブロックを使用すると良いでしょう。ただし、あくまで <strong>一時的に保留しておく</strong> だけですので、最終的には <code>pending</code> ブロックを <code>it</code> ブロックに置き換えてテストに合格できるようにしなければいけません。</p>
+</div>
+<div class="listingblock">
+<div class="title"><code>it</code> と <code>pending</code></div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"spec"</span></span>
+<span id="L2" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"./bear"</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">describe</span> <span style="color: #f4bf75">Bear</span> <span style="color: #aa759f">do</span></span>
+<span id="L5" class="line">  <span style="color: #303030">describe</span> <span style="color: #90a959">"#bark"</span> <span style="color: #aa759f">do</span></span>
+<span id="L6" class="line">    <span style="color: #303030">it</span> <span style="color: #90a959">"returns </span><span style="color: #8f5536">\"</span><span style="color: #90a959">がおー</span><span style="color: #8f5536">\"</span><span style="color: #90a959">."</span> <span style="color: #aa759f">do</span></span>
+<span id="L7" class="line">      <span style="color: #f4bf75">Bear</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">.</span><span style="color: #303030">bark</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #90a959">"がおー"</span></span>
+<span id="L8" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L9" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L10" class="line"></span>
+<span id="L11" class="line">  <span style="color: #303030">describe</span> <span style="color: #90a959">"#bite"</span> <span style="color: #aa759f">do</span></span>
+<span id="L12" class="line">    <span style="color: #505050"># Bear#bite は未実装</span></span>
+<span id="L13" class="line">    <span style="color: #303030">pending</span> <span style="color: #90a959">"retuns </span><span style="color: #8f5536">\"</span><span style="color: #90a959">がぶがぶ</span><span style="color: #8f5536">\"</span><span style="color: #90a959">."</span> <span style="color: #aa759f">do</span></span>
+<span id="L14" class="line">      <span style="color: #f4bf75">Bear</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">.</span><span style="color: #303030">bite</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #90a959">"がぶがぶ"</span></span>
+<span id="L15" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L16" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L17" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="オブジェクトの状態を確認する">オブジェクトの状態を確認する</h4>
+<div class="paragraph">
+<p><code>require "spec"</code> が実行されると、全てのオブジェクトに対して <code>#should</code> と <code>#should_not</code> という2つのインスタンスメソッドが追加されます。<code>#should</code> は、レシーバの状態に対する条件（<code>eq "がおー"</code> など）を引数に取り、実際の値がその条件を満たしていないとテストが不合格になります。一方、<code>#should_not</code> は逆に条件を満たしてしまうとテストが不合格になります。</p>
+</div>
+<div class="paragraph">
+<p>オブジェクトの状態に対する評価条件には以下のような種類があります。一部の評価条件は特定のインスタンスメソッドを持たないオブジェクトに対しては使用できません。例えば、<code>should be</code> を使用するには <code>#same?</code> が実装されている必要があります。</p>
+</div>
+<div class="dlist">
+<div class="title">使用可能なオブジェクトの状態を評価する</div>
+<dl>
+<dt class="hdlist1"><code>actual.sould eq expected</code></dt>
+<dd>
+<p><code>actual</code> が <code>expected</code> と等しいかどうか。<br>
+条件： <code>actual == expected</code></p>
+</dd>
+<dt class="hdlist1"><code>actual.sould be expected</code></dt>
+<dd>
+<p><code>actual</code> が <code>expected</code> と同値とみなせるかどうか。<br>
+条件： <code>actual.same?(expected)</code></p>
+</dd>
+<dt class="hdlist1"><code>actual.sould be_a expected</code></dt>
+<dd>
+<p><code>actual</code> が <code>expected</code> 型の値かどうか。<br>
+条件： <code>actual.is_a?(expected)</code></p>
+</dd>
+<dt class="hdlist1"><code>actual.sould be_nil</code></dt>
+<dd>
+<p><code>actual</code> が <code>nil</code> かどうか。<br>
+条件： <code>actual.nil?</code></p>
+</dd>
+<dt class="hdlist1"><code>actual.should be_true</code></dt>
+<dd>
+<p><code>acrual</code> が <code>true</code> かどうか。<br>
+条件： <code>actual == true</code></p>
+</dd>
+<dt class="hdlist1"><code>actual.should be_false</code></dt>
+<dd>
+<p><code>acrual</code> が <code>false</code> かどうか。<br>
+条件： <code>actual == false</code></p>
+</dd>
+<dt class="hdlist1"><code>actual.should be_truthy</code></dt>
+<dd>
+<p><code>acrual</code> が <code>if</code> 文で真とみなされるかどうか。<br>
+条件： <code>acrual</code> が <code>false</code>、<code>nil</code>、<code>Pointer.null</code> のいずれでもない</p>
+</dd>
+<dt class="hdlist1"><code>actual.should be_falsey</code></dt>
+<dd>
+<p><code>acrual</code> が <code>if</code> 文で偽とみなされるかどうか。<br>
+条件： <code>acrual</code> が <code>false</code>、<code>nil</code>、<code>Pointer.null</code> のいずれか</p>
+</dd>
+<dt class="hdlist1"><code>actual.should be &lt; expected</code></dt>
+<dd>
+<p><code>actual</code> が <code>expected</code> より小さいかどうか。<br>
+条件： <code>actual &lt; expected</code></p>
+</dd>
+<dt class="hdlist1"><code>actual.should be &#8656; expected</code></dt>
+<dd>
+<p><code>actual</code> が <code>expected</code> 以下かどうか。<br>
+条件： <code>actual &#8656; expected</code></p>
+</dd>
+<dt class="hdlist1"><code>actual.should be &gt; expected</code></dt>
+<dd>
+<p><code>actual</code> が <code>expected</code> より大きいかどうか。<br>
+条件： <code>actual &gt; expected</code></p>
+</dd>
+<dt class="hdlist1"><code>actual.should be &gt;= expected</code></dt>
+<dd>
+<p><code>actual</code> が <code>expected</code> 以上かどうか。<br>
+条件： <code>actual &gt;= expected</code></p>
+</dd>
+<dt class="hdlist1"><code>actual.should be_close(expected, delta)</code></dt>
+<dd>
+<p><code>actual</code> と <code>expexted</code> の差が <code>delta</code> 以下かどうか。<br>
+条件： <code>(actual - expected).abs &#8656; delta</code></p>
+</dd>
+<dt class="hdlist1"><code>actual.should contain expected</code></dt>
+<dd>
+<p><code>actual</code> が <code>expexted</code> を含むかどうか。<br>
+条件： <code>actual.includes?(expected)</code></p>
+</dd>
+<dt class="hdlist1"><code>actual.should match expected</code></dt>
+<dd>
+<p><code>actual</code> が <code>expexted</code> にマッチするかどうか。<br>
+条件： <code>actual =~ expected</code></p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="例外の発生を確認する">例外の発生を確認する</h4>
+<div class="paragraph">
+<p>テストケース内で <code>expext_raises</code> ブロックに引数として例外の型を指定してすると、ブロック内で指定した型の例外が発生することを確認できます。</p>
+</div>
+<div class="listingblock">
+<div class="title">例外チェック</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line">    <span style="color: #303030">context</span> <span style="color: #90a959">"self is empty."</span> <span style="color: #aa759f">do</span></span>
+<span id="L2" class="line">      <span style="color: #303030">it</span> <span style="color: #90a959">"raises an IndexError."</span> <span style="color: #aa759f">do</span></span>
+<span id="L3" class="line">        <span style="color: #303030">expect_raises</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">IndexError</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">{</span></span>
+<span id="L4" class="line">          <span style="color: #505050"># IndexError が発生しなければテスト失敗</span></span>
+<span id="L5" class="line">          <span style="color: #f4bf75">Array</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">).</span><span style="color: #303030">new</span><span style="color: #d0d0d0">.</span><span style="color: #303030">first</span></span>
+<span id="L6" class="line">        <span style="color: #d0d0d0">}</span></span>
+<span id="L7" class="line">      <span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>このとき、引数に文字列もしくは正規表現オブジェクトを追加することで、エラーメッセージに対する条件を指定することも可能です。</p>
+</div>
+<div class="dlist">
+<div class="title">メッセージ条件付き例外チェック</div>
+<dl>
+<dt class="hdlist1"><code>expect_raises(SomeError, "message") { &#8230;&#8203; }</code></dt>
+<dd>
+<p>エラーメッセージに <code>"message"</code> が含まれる <code>SomeError</code> 型の例外が発生しなければ不合格。</p>
+</dd>
+<dt class="hdlist1"><code>expect_raises(SomeError, /pattern/) { &#8230;&#8203; }</code></dt>
+<dd>
+<p>エラーメッセージが <code>/pattern/</code> にマッチする <code>SomeError</code> 型の例外が発生しなければ不合格。</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>なお、発生した例外の状態を他の評価条件でテストしたい場合、<code>expect_raises</code> の返り値として例外インスタンスを取得できます。</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="テスト実行結果の見方">テスト実行結果の見方</h3>
+<div class="paragraph">
+<p>テストの実行結果は大きく分けると以下のパートから構成されます。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>テストケースの実行結果サマリ</p>
+</li>
+<li>
+<p>不合格となったテストケースの詳細情報</p>
+</li>
+<li>
+<p>テストの実行に要した時間</p>
+</li>
+<li>
+<p>テスト結果の統計情報</p>
+</li>
+<li>
+<p>不合格となったテストケースの一覧</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>このうち、2. および 5. については、全てのテストケースを問題なく通過できた場合には表示されません。</p>
+</div>
+<div class="paragraph">
+<p>ソース修正前の <code>bear_spec.cr</code> の実行結果を例に、それぞれの内容を詳しくみてみましょう。</p>
+</div>
+<div class="listingblock">
+<div class="title">失敗したテストの実行結果（再掲）</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-plaintext" data-lang="plaintext"><span id="L1" class="line">$ crystal spec bear_spec.cr</span>
+<span id="L2" class="line">F</span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line">Failures:</span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line">  1) Bear #bark returns "がおー".</span>
+<span id="L7" class="line">     Failure/Error: Bear.new.bark.should eq "がおー"</span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line">       Expected: "がおー"</span>
+<span id="L10" class="line">            got: "わん"</span>
+<span id="L11" class="line"></span>
+<span id="L12" class="line">     # bear_spec.cr:7</span>
+<span id="L13" class="line"></span>
+<span id="L14" class="line">Finished in 127 microseconds</span>
+<span id="L15" class="line">1 examples, 1 failures, 0 errors, 0 pending</span>
+<span id="L16" class="line"></span>
+<span id="L17" class="line">Failed examples:</span>
+<span id="L18" class="line"></span>
+<span id="L19" class="line">crystal spec bear_spec.cr:6 # Bear #bark returns "がおー".</span></code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="テストケースの実行結果サマリ1行目">テストケースの実行結果サマリ（1行目）</h4>
+<div class="paragraph">
+<p>テストケースの実行結果には成功（<code>.</code>）、不合格（<code>F</code>）、エラー（<code>E</code>）、ペンディング（<code>*</code>）の4種類があります。テストの実行結果では、先頭行にテストケースの数だけ実行結果に対応した文字が並んで表示されます。もしテストを実行したのがカラー表示対応のターミナルであれば <code>.</code> は緑、<code>F</code> と <code>E</code> が赤、<code>\*</code> が黄色で表示されているかもしれません。</p>
+</div>
+<div class="paragraph">
+<p>ここで表示される実行結果が全て <code>.</code> になっていれば、テストに合格できたことになります。</p>
+</div>
+<div class="dlist">
+<div class="title">実行結果の種類</div>
+<dl>
+<dt class="hdlist1">成功（<code>.</code>）</dt>
+<dd>
+<p>テストケース内の評価条件を全てパスし、想定外の例外やエラーも発生しなかった場合。</p>
+</dd>
+<dt class="hdlist1">不合格（<code>F</code>）</dt>
+<dd>
+<p>テストケース内の評価条件を満たさない項目が存在したり、想定される例外が発生しなかった場合。</p>
+</dd>
+<dt class="hdlist1">エラー（<code>E</code>）</dt>
+<dd>
+<p>テストケース内で <code>expect_raises</code> で補足されない想定外の例外が発生した場合</p>
+</dd>
+<dt class="hdlist1">ペンディング（<code>*</code>）</dt>
+<dd>
+<p>テストケースが <code>pending</code> ブロックとして定義されており、テストの実行を保留している場合。</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="不合格となったテストケースの詳細情報311行目">不合格となったテストケースの詳細情報（3〜11行目）</h4>
+<div class="paragraph">
+<p><code>Failures:</code> に続いて、不合格となったテストケースの具体的な問題点が出力されます。</p>
+</div>
+<div class="olist arabic">
+<div class="title">不合格テストケースの情報</div>
+<ol class="arabic">
+<li>
+<p>不合格テストケースの通し番号とテストケースの説明（3行目）</p>
+</li>
+<li>
+<p>不合格の原因となったチェック項目（4行目）</p>
+</li>
+<li>
+<p>想定された状態（<code>Expected:</code>）と実際の状態（<code>got:</code>）（6〜7行目）</p>
+</li>
+<li>
+<p>該当チェック項目があるファイル名と行番号（9行目）</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>特に 3. で表示される想定値と実際の値との比較は、問題解決の大きな助けになってくれることでしょう。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="テストの実行に要した時間13行目">テストの実行に要した時間（13行目）</h4>
+<div class="paragraph">
+<p>テスト全体にかかった時間ですので、あくまで参考までに。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="テスト結果の統計情報14行目">テスト結果の統計情報（14行目）</h4>
+<div class="paragraph">
+<p>ここには <code>examples</code>、<code>failures</code>、<code>errors</code>、<code>pending</code> と4種類の数値が出力されます。</p>
+</div>
+<div class="paragraph">
+<p><code>examples</code> が spec ファイルに定義されたテストケースの数、後ろ3つは、実行結果が不合格/エラー/ペンディングとなったテストケースの数です。</p>
+</div>
+<div class="paragraph">
+<p>ここで後ろ3つの値がゼロになっていれば、テストに合格したことになります。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="不合格となったテストケースの再テスト用コマンド一覧1618行目">不合格となったテストケースの再テスト用コマンド一覧（16〜18行目）</h4>
+<div class="paragraph">
+<p>最後に、不合格となったテストケースについて、個別に再テストする場合に使える <code>crystal spec</code> コマンドが一覧で表示されます。</p>
+</div>
+<div class="paragraph">
+<p>リスト各行の <code>#</code> から後ろは、どのテストケースについてのものなのかを識別するためのコメントです。</p>
+</div>
+<div class="paragraph">
+<p><code>#</code> よりも前の部分、この例でいう <code>crystal spec bear_spec.cr:6</code> を実行することで、問題のあるテストケースだけを対象としてテストを実行できます。</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crystal-spec-コマンドのパラメータ">crystal spec コマンドのパラメータ</h3>
+<div class="paragraph">
+<p>テストを実行する <code>crystal spec</code> コマンドには、spec ファイル名を以外のパラメータを指定することができます。適切なパラメータを与えることで、ディレクトリ単位や spec ファイル単位、さらには特定のテストケース単位でのテストを実行可能です。</p>
+</div>
+<div class="dlist">
+<div class="title">crystal spec コマンドへのパラメータ指定</div>
+<dl>
+<dt class="hdlist1"><code>crystal spec</code></dt>
+<dd>
+<p>パラメータを省略した場合、<code>spec/**/*_spec.cr</code> にマッチする全ての spec ファイルを対象とする。</p>
+</dd>
+<dt class="hdlist1"><code>crystal spec dir/</code></dt>
+<dd>
+<p>ディレクトリを指定した場合。<code>dir/**/*_spec.cr</code> マッチする全ての spec ファイルを対象とする。</p>
+</dd>
+<dt class="hdlist1"><code>crystal spec spec_file.cr</code></dt>
+<dd>
+<p>spec ファイルを指定した場合。<code>spec_file.cr</code> 単体を対象とする。</p>
+</dd>
+<dt class="hdlist1"><code>crystal spec file.cr:10</code></dt>
+<dd>
+<p>spec ファイルと行数を指定した場合。<code>spec_file.cr</code> ファイルの10行目から始まるブロックだけを対象とする。</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>大規模なソースコードをのテストを実施する際には、これらのパラメータを有効活用することでテスト効率を向上できるかもしれません。</p>
+</div>
+<div class="paragraph">
+<p>なお、<code>crystal init</code> コマンドで生成されるプロジェクトひな形ではテスト関連のファイルは <code>spec</code> ディレクトリに収められています。そのため、spec ファイルを指定しなくても <code>crystal spec</code> とだけ打てばテストが実行可能になっています。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="spec-ヘルパファイル">spec ヘルパファイル</h3>
+<div class="paragraph">
+<p>プロジェクトひな形の <code>spec</code> ディレクトリには、spec ファイル以外に spec ヘルパファイル <code>spec_helper.cr</code> が用意されています。デフォルトでは、<code>"spec"</code> とプロジェクトのソースファイルを <code>require</code> するだけの内容になっており、spec ファイルから読み込まれています。</p>
+</div>
+<div class="paragraph">
+<p>spec ヘルパは、spec ファイルが1つだけの場合それほどありがたみを感じないかもしれません。しかし、プロジェクトが大規模になり、いくつもの spec ファイルを駆使するようになると spec ヘルパファイルが効果を発揮するようになります。例えば、テスト用のオブジェクト生成やテスト用の特別な環境設定など、複数の spec ファイルで共通的に使用するメソッドを spec ヘルパファイルに書いておけばコードの重複を防ぐことが可能です。</p>
+</div>
+<div class="paragraph">
+<p>テストはコードのクォリティを確保する上で重要な工程ですが、慣れないうちは面倒臭く感じることも多いと思います。spec ヘルパのような仕組みをうまく活用して、効率よくテストする方法を模索してみてください。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="まとめ">まとめ</h2>
+<div class="sectionbody">
+<div class="sidebarblock">
+<div class="content">
+<div class="title">shard を利用する手順</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>shard を利用するプロジェクトを作成する</p>
+</li>
+<li>
+<p><code>shard.yml</code> に使用したい shard の記述を追加する</p>
+</li>
+<li>
+<p>shard をプロジェクトディレクトリにインストールする</p>
+</li>
+<li>
+<p>ソースコードの先頭で shard を <code>require</code> する</p>
+</li>
+<li>
+<p>ソースコード内で shard が提供する機能を使用する</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">shard を作る手順</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>shard 用のプロジェクトを作成する</p>
+</li>
+<li>
+<p><code>shard.yml</code> にメタデータを記述する</p>
+</li>
+<li>
+<p>テストのテストケースを書く</p>
+</li>
+<li>
+<p>テストケースを満足させるようにソースファイルに機能を実装する</p>
+</li>
+<li>
+<p>テストを実行、問題がなくなるまでソースの修正とテストを繰り返す</p>
+</li>
+<li>
+<p>README を書く</p>
+</li>
+<li>
+<p>ライセンスを選ぶ</p>
+</li>
+<li>
+<p>GiuHub などのリポジトリへ公開する</p>
+</li>
+<li>
+<p>git リポジトリにバージョンタグを付ける</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">テストの構文</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>describe</code> ブロック</dt>
+<dd>
+<p>テスト対象でテストケースをグルーピングする。</p>
+</dd>
+<dt class="hdlist1"><code>context</code> ブロック</dt>
+<dd>
+<p>条件や状況でテストケースをグルーピングする。</p>
+</dd>
+<dt class="hdlist1"><code>it</code> ブロック</dt>
+<dd>
+<p>ある振る舞いに対するテストケースを記述する。</p>
+</dd>
+<dt class="hdlist1"><code>pending</code> ブロック</dt>
+<dd>
+<p>一時的にテストを保留するテストケースに使用する。</p>
+</dd>
+<dt class="hdlist1"><code>Object#should</code> メソッド</dt>
+<dd>
+<p>レシーバがある条件を満たさなければテストに不合格とする。</p>
+</dd>
+<dt class="hdlist1"><code>Object##should_not</code> メソッド</dt>
+<dd>
+<p>レシーバがある条件を満たした場合にテストに不合格とする。</p>
+</dd>
+<dt class="hdlist1"><code>expect_raises</code> ブロック</dt>
+<dd>
+<p>ブロック内で指定された例外が発生しなかったらテストに不合格とする。</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+	</article>
+</div><!-- Footer -->
+<div id="footer">
+  
+  <!-- Copyright -->
+  <ul class="copyright">
+    
+      <li>&copy;Intducing Crystal Programming Language. All rights reserved.</li>
+    
+    <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+    <li>Jekyll integration: <a href="https://chrisbobbe.github.io/">Chris Bobbe</a></li>
+  </ul>
+  
+</div></body>
+</html>

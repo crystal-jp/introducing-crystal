@@ -1,0 +1,1282 @@
+<!DOCTYPE HTML>
+<!--
+Prologue by HTML5 UP
+html5up.net | @ajlkn
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+Jekyll integration by Chris Bobbe | chrisbobbe.github.io
+-->
+<html><head><!-- Robots -->
+  <meta name="robots" content="index, follow" /><link rel="canonical" href="/introducing-crystal/chapters/04-macro.html" /><!-- Title, description, author --><title>04. マクロ | Intducing Crystal Programming Language</title>
+  <meta name="description" content="『Introducing Crystal Programming Language』はプログラミング言語 Crystal の初心者〜中級者向け解説書です。" />
+  <meta name="author" content="Crystal-JP" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="04. マクロ | Intducing Crystal Programming Language" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/introducing-crystal/assets/images/avatar.png" />
+  <meta property="og:url" content="/introducing-crystal/chapters/04-macro.html" />
+  <meta property="og:site_name" content="Intducing Crystal Programming Language" />
+  <meta property="og:description" content="『Introducing Crystal Programming Language』はプログラミング言語 Crystal の初心者〜中級者向け解説書です。" />
+  
+  <!-- Styles -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--[if lte IE 8]><script src="/introducing-crystal/assets/js/ie/html5shiv.js" defer></script><![endif]-->
+  <link rel="stylesheet" href="/introducing-crystal/assets/css/main.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="/introducing-crystal/assets/css/ie8.css" /><![endif]-->
+  <!--[if lte IE 9]><link rel="stylesheet" href="/introducing-crystal/assets/css/ie9.css" /><![endif]-->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+
+  <!-- Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/jquery.scrolly.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/jquery.scrollzer.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/skel.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/util.js" defer></script>
+  <!--[if lte IE 8]><script src="/introducing-crystal/assets/js/ie/respond.min.js" defer></script><![endif]-->
+  <script src="/introducing-crystal/assets/js/main.js" defer></script>
+
+</head><body><!-- Header -->
+<div id="header">
+  <div class="top"><!-- Logo -->
+<div id="logo">
+  <a href="/introducing-crystal/" id="home-link">
+    <span class="image avatar48"><img src="/introducing-crystal/assets/images/avatar.png" alt="Avatar of Crystal-JP" /></span>
+    <h1 id="title">Intducing Crystal Programming Language</h1>
+    <p></p>
+  </a>
+</div><!-- Nav -->
+<nav id="nav">
+  <ul><li><a href="/introducing-crystal/" id="トップページ-link">
+            <span class="icon fa-link">トップページ</span>
+          </a></li><li><a href="/introducing-crystal/chapters/01-introduction.html" id="01-はじめに-link">
+            <span class="icon fa-link">01. はじめに</span>
+          </a></li><li><a href="/introducing-crystal/chapters/02-getting-started.html" id="02-getting-started-link">
+            <span class="icon fa-link">02. Getting Started</span>
+          </a></li><li><a href="/introducing-crystal/chapters/03-syntax.html" id="03-構文-link">
+            <span class="icon fa-link">03. 構文</span>
+          </a></li><li><a href="/introducing-crystal/chapters/06-web-development.html" id="06-web-開発-link">
+            <span class="icon fa-link">06. Web 開発</span>
+          </a></li><li><a href="#" id="04-マクロ" class="active">
+            <span class="icon fa-link">04. マクロ</span>
+          </a></li><li><a href="/introducing-crystal/chapters/07-cli-development.html" id="07-cli-開発-link">
+            <span class="icon fa-link">07. CLI 開発</span>
+          </a></li><li><a href="/introducing-crystal/chapters/05-shards.html" id="05-shards-link">
+            <span class="icon fa-link">05. Shards</span>
+          </a></li><li><a href="/introducing-crystal/authors.html" id="著者紹介-link">
+            <span class="icon fa-link">著者紹介</span>
+          </a></li></ul>
+</nav></div>
+  <div class="bottom"><!-- Social Icons -->
+<ul class="icons"></ul>
+</div>
+</div>
+<!-- Main -->
+<div id="main">
+	<!-- Page -->
+	<article class="shade-two">
+	  <div class="container">
+			<header>
+				<h2>04. マクロ</h2></header><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#マクロとは">マクロとは</a></li>
+<li><a href="#マクロの利点">マクロの利点</a></li>
+<li><a href="#マクロの展開">マクロの展開</a></li>
+<li><a href="#標準搭載のマクロ">標準搭載のマクロ</a>
+<ul class="sectlevel2">
+<li><a href="#def_equales"><code>def_equales</code></a></li>
+<li><a href="#record"><code>record</code></a></li>
+<li><a href="#parallel"><code>parallel</code></a></li>
+</ul>
+</li>
+<li><a href="#マクロの文法">マクロの文法</a>
+<ul class="sectlevel2">
+<li><a href="#マクロのおさらい">マクロのおさらい</a></li>
+<li><a href="#マクロと抽象構文木">マクロと抽象構文木</a></li>
+<li><a href="#ast-node">AST node</a></li>
+<li><a href="#スコープ">スコープ</a></li>
+<li><a href="#if">if</a></li>
+<li><a href="#for">for</a></li>
+<li><a href="#可変長引数">可変長引数</a></li>
+<li><a href="#splat-展開">splat 展開</a></li>
+<li><a href="#定数">定数</a></li>
+<li><a href="#生成コードの注意点">生成コードの注意点</a></li>
+<li><a href="#型の情報にアクセスできる-type">型の情報にアクセスできる <code>@type</code></a></li>
+<li><a href="#hooks">Hooks</a></li>
+<li><a href="#fresh-variables">Fresh variables</a></li>
+</ul>
+</li>
+<li><a href="#まとめ">まとめ</a></li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>この章では、Crystal のマクロについて説明します。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="マクロとは">マクロとは</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Crystal のマクロは次のようなものです。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>「 Crystal のコードを書く」コード</p>
+</li>
+<li>
+<p>コンパイルフェーズで実行され、 Crystal のコードに展開される</p>
+</li>
+<li>
+<p>全マクロが展開されたあとの Crystal コードが実際にコンパイルされる</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>これだけではイメージが湧きづらいので、マクロがどのようなものかを実際に見てみましょう。次のコードを見てください。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">macro</span> <span style="color: #303030">my_macro</span><span style="color: #d0d0d0">(</span><span style="color: #303030">method_name</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">content</span><span style="color: #d0d0d0">)</span></span>
+<span id="L2" class="line">  <span style="color: #aa759f">def</span> <span style="color: #d0d0d0">{{</span><span style="color: #303030">method_name</span><span style="color: #d0d0d0">}}</span> <b class="conum">(1)</b></span>
+<span id="L3" class="line">    <span style="color: #d0d0d0">{{</span><span style="color: #303030">content</span><span style="color: #d0d0d0">}}</span></span>
+<span id="L4" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L5" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L6" class="line"></span>
+<span id="L7" class="line"><span style="color: #303030">my_macro</span><span style="color: #d0d0d0">(</span><span style="color: #303030">my_method</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"hoge"</span><span style="color: #d0d0d0">)</span> <b class="conum">(2)</b></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line"><span style="color: #303030">my_method</span> <b class="conum">(3)</b></span>
+<span id="L10" class="line"><span style="color: #505050"># =&gt; "hoge"</span></span></code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>macro</code> を用いてマクロを定義します</p>
+</li>
+<li>
+<p>定義したマクロを呼び出します</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>引数 <code>my_method</code>, <code>"hoge"</code> がマクロに渡されます</p>
+</li>
+<li>
+<p>引数をもとに処理が行われ、呼び出し箇所に Crystal コードが展開されます</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Crystal コードに展開された後、通常のコンパイルが行われます</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>つまり、マクロ展開後は次のようになります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #aa759f">def</span> <span style="color: #303030">my_method</span></span>
+<span id="L2" class="line">  <span style="color: #90a959">"hoge"</span></span>
+<span id="L3" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line"><span style="color: #303030">my_method</span> <span style="color: #505050"># =&gt; "hoge"</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>単純なメソッド定義とメソッド呼び出しに展開されています。その後、実際のコンパイルが行われます。マクロのイメージが湧きましたでしょうか。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="マクロの利点">マクロの利点</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>マクロを利用することで、コードの重複を排除できます。次のコードを見てください。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #aa759f">class</span> <span style="color: #f4bf75">User</span></span>
+<span id="L2" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">initialize</span><span style="color: #d0d0d0">(</span><span style="color: #303030">@name</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">String</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">@age</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">)</span></span>
+<span id="L3" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">name</span></span>
+<span id="L6" class="line">    <span style="color: #303030">@name</span></span>
+<span id="L7" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">age</span></span>
+<span id="L10" class="line">    <span style="color: #303030">@age</span></span>
+<span id="L11" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L12" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L13" class="line"></span>
+<span id="L14" class="line"><span style="color: #303030">user</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">User</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"Taro"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">30</span><span style="color: #d0d0d0">)</span></span>
+<span id="L15" class="line"><span style="color: #303030">user</span><span style="color: #d0d0d0">.</span><span style="color: #303030">name</span> <span style="color: #505050"># =&gt; "Taro"</span></span>
+<span id="L16" class="line"><span style="color: #303030">user</span><span style="color: #d0d0d0">.</span><span style="color: #303030">age</span>  <span style="color: #505050"># =&gt; 30</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>典型的な getter メソッドです。 <code>name</code> と <code>age</code> が似たようなメソッドになっています。マクロでこの重複を除去しましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #aa759f">class</span> <span style="color: #f4bf75">User</span></span>
+<span id="L2" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">initialize</span><span style="color: #d0d0d0">(</span><span style="color: #303030">@name</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">String</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">@age</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">)</span></span>
+<span id="L3" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line">  <span style="color: #505050"># macroの定義</span></span>
+<span id="L6" class="line">  <span style="color: #303030">macro</span> <span style="color: #303030">my_getter</span><span style="color: #d0d0d0">(</span><span style="color: #d0d0d0">*</span><span style="color: #303030">names</span><span style="color: #d0d0d0">)</span></span>
+<span id="L7" class="line">    <span style="color: #d0d0d0">{</span><span style="color: #90a959">% for </span><span style="color: #303030">name</span> <span style="color: #aa759f">in</span> <span style="color: #303030">names</span> <span style="color: #90a959">%}</span></span>
+<span id="L8" class="line"><span style="color: #90a959">      def {{name.id}</span><span style="color: #d0d0d0">}</span></span>
+<span id="L9" class="line">        <span style="color: #151515;background-color: #ac4142">@</span><span style="color: #d0d0d0">{{</span><span style="color: #303030">name</span><span style="color: #d0d0d0">.</span><span style="color: #303030">id</span><span style="color: #d0d0d0">}}</span></span>
+<span id="L10" class="line">      <span style="color: #aa759f">end</span></span>
+<span id="L11" class="line">    <span style="color: #d0d0d0">{</span><span style="color: #90a959">% end </span><span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L12" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L13" class="line"></span>
+<span id="L14" class="line">  <span style="color: #505050"># macroの呼び出し</span></span>
+<span id="L15" class="line">  <span style="color: #303030">my_getter</span> <span style="color: #303030">name</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">age</span></span>
+<span id="L16" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L17" class="line"></span>
+<span id="L18" class="line"><span style="color: #303030">user</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">User</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"Taro"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">30</span><span style="color: #d0d0d0">)</span></span>
+<span id="L19" class="line"><span style="color: #303030">user</span><span style="color: #d0d0d0">.</span><span style="color: #303030">name</span> <span style="color: #505050"># =&gt; "Taro"</span></span>
+<span id="L20" class="line"><span style="color: #303030">user</span><span style="color: #d0d0d0">.</span><span style="color: #303030">age</span>  <span style="color: #505050"># =&gt; 30</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>マクロを定義し、そのマクロを呼び出しました。一見、元のコードよりも複雑になったように見えます。しかし、今後インスタンス変数が増えたとしても、マクロの呼び出し引数にその名前を渡すだけでよくなります。重複を排除できました。</p>
+</div>
+<div class="paragraph">
+<p>実は、今回のような <code>getter</code> のマクロは、標準ですでに搭載されています。よって、上記のコードは次のように書くことができます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #aa759f">class</span> <span style="color: #f4bf75">User</span></span>
+<span id="L2" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">initialize</span><span style="color: #d0d0d0">(</span><span style="color: #303030">@name</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">String</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">@age</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">)</span></span>
+<span id="L3" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line">  <span style="color: #aa759f">getter</span> <span style="color: #303030">name</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">age</span></span>
+<span id="L6" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L7" class="line"></span>
+<span id="L8" class="line"><span style="color: #303030">user</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">User</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"Taro"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">30</span><span style="color: #d0d0d0">)</span></span>
+<span id="L9" class="line"><span style="color: #303030">user</span><span style="color: #d0d0d0">.</span><span style="color: #303030">name</span> <span style="color: #505050"># =&gt; "Taro"</span></span>
+<span id="L10" class="line"><span style="color: #303030">user</span><span style="color: #d0d0d0">.</span><span style="color: #303030">age</span>  <span style="color: #505050"># =&gt; 30</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>かなりすっきりしました。このように、マクロを利用することですっきりとしたコードを書くことができます。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="マクロの展開">マクロの展開</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>重複の除去によって、マクロ呼び出しのコードはすっきりしました。しかし、マクロ定義のコードはどうしても複雑になってしまいます。マクロの理解に加え、展開後の Crystal コードも理解しなければならないからです。</p>
+</div>
+<div class="paragraph">
+<p>Crystal のバージョン <code>0.20.4</code> 以前は、マクロ展開後のコードを知るすべはありませんでした。唯一のヒントは、エラーメッセージだけでした。しかし、 Crystal のバージョン <code>0.20.5</code> から <code>crystal tool expand</code> コマンドが追加されました。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal tool <span style="color: #303030">expand</span> <span style="color: #f4bf75">--help</span></span>
+<span id="L2" class="line"><span style="color: #303030">Usage: crystal tool expand [options] [programfile] [--] [arguments]</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">Options:</span></span>
+<span id="L5" class="line"><span style="color: #303030">    -D FLAG, --define FLAG           Define a compile-time flag</span></span>
+<span id="L6" class="line"><span style="color: #303030">    -c LOC, --cursor LOC             Cursor location with LOC as path/to/file.cr:line:column</span></span>
+<span id="L7" class="line"><span style="color: #303030">    -f text|json, --format text|json Output format text (default) or json</span></span>
+<span id="L8" class="line"><span style="color: #303030">    --error-trace                    Show full error trace</span></span>
+<span id="L9" class="line"><span style="color: #303030">    -h, --help                       Show this message</span></span>
+<span id="L10" class="line"><span style="color: #303030">    --no-color                       Disable colored output</span></span>
+<span id="L11" class="line"><span style="color: #303030">    --prelude                        Use given file as prelude</span></span>
+<span id="L12" class="line"><span style="color: #303030">    -s, --stats                      Enable statistics output</span></span>
+<span id="L13" class="line"><span style="color: #303030">    -p, --progress                   Enable progress output</span></span>
+<span id="L14" class="line"><span style="color: #303030">    -t, --time                       Enable execution time output</span></span>
+<span id="L15" class="line"><span style="color: #303030">    --stdin-filename                 Source file name to be read from STDIN</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>--cursor</code> オプションでカーソル位置を指定すると、カーソル上のマクロを展開した結果を表示することができます。先程の <code>getter</code> で試してみましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal tool <span style="color: #303030">expand</span> <span style="color: #f4bf75">--cursor</span> /path/to/getter.cr:5:3 /path/to/getter.cr</span>
+<span id="L2" class="line"><span style="color: #303030">1 expansion found</span></span>
+<span id="L3" class="line"><span style="color: #303030">expansion 1:</span></span>
+<span id="L4" class="line"><span style="color: #303030">   getter(name, age)</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line"><span style="color: #303030">#</span> <span style="color: #303030">expand </span>macro <span style="color: #90a959">'getter'</span> <span style="color: #d0d0d0">(</span>/path/to/crystal-lang/src/object.cr:230:3<span style="color: #d0d0d0">)</span></span>
+<span id="L7" class="line"><span style="color: #303030">~&gt;</span> def name</span>
+<span id="L8" class="line"><span style="color: #303030">     @name</span></span>
+<span id="L9" class="line"><span style="color: #303030">   end</span></span>
+<span id="L10" class="line"><span style="color: #303030">   def age</span></span>
+<span id="L11" class="line"><span style="color: #303030">     @age</span></span>
+<span id="L12" class="line"><span style="color: #303030">   end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>マクロが展開されました。意図していた定義です。このコマンドはエディタから実行できるようにすると便利です。設定方法は、エディタそれぞれの方法を参照してください。この <code>crystal tool expand</code> のおかげで、マクロのデバッグが格段にしやすくなりました。マクロを記述する際はぜひ活用してみてください。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="標準搭載のマクロ">標準搭載のマクロ</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Crystal には、標準で搭載されているマクロがあります。便利なものが多いのでいくつかご紹介します。<code>crystal tool expand</code> を用いれば内容を把握できます。また、公式の API ドキュメントの各マクロの説明には、そのマクロの定義へのリンクがあるので、興味のある方は確認してみてください。</p>
+</div>
+<div class="sect2">
+<h3 id="def_equales"><code>def_equales</code></h3>
+<div class="paragraph">
+<p>オブジェクトの同値性比較を行う <code>==</code> メソッドを定義します。同値性比較を行う場合、複数あるインスタンス変数の比較を行います。通常の場合、コードは次のようになります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #aa759f">struct</span> <span style="color: #f4bf75">User</span></span>
+<span id="L2" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">initialize</span><span style="color: #d0d0d0">(</span><span style="color: #303030">@name</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">String</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">@age</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">)</span></span>
+<span id="L3" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line">  <span style="color: #505050"># 同値性比較のメソッドを定義</span></span>
+<span id="L6" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">==</span><span style="color: #d0d0d0">(</span><span style="color: #303030">other</span> <span style="color: #d0d0d0">:</span> <span style="color: #303030">self</span><span style="color: #d0d0d0">)</span></span>
+<span id="L7" class="line">    <span style="color: #aa759f">return</span> <span style="color: #aa759f">false</span> <span style="color: #aa759f">unless</span> <span style="color: #303030">@name</span> <span style="color: #d0d0d0">==</span> <span style="color: #303030">other</span><span style="color: #d0d0d0">.</span><span style="color: #303030">@name</span></span>
+<span id="L8" class="line">    <span style="color: #aa759f">return</span> <span style="color: #aa759f">false</span> <span style="color: #aa759f">unless</span> <span style="color: #303030">@age</span> <span style="color: #d0d0d0">==</span> <span style="color: #303030">other</span><span style="color: #d0d0d0">.</span><span style="color: #303030">@age</span></span>
+<span id="L9" class="line">    <span style="color: #aa759f">true</span></span>
+<span id="L10" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L11" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L12" class="line"></span>
+<span id="L13" class="line"><span style="color: #303030">user1</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">User</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span> <span style="color: #90a959">"Taro"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">30</span></span>
+<span id="L14" class="line"><span style="color: #303030">user2</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">User</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span> <span style="color: #90a959">"Taro"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">30</span></span>
+<span id="L15" class="line"><span style="color: #303030">user1</span> <span style="color: #d0d0d0">==</span> <span style="color: #303030">user2</span> <span style="color: #505050"># =&gt; true</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>このコードを、 <code>def_equals</code> を使って書くと次のようになります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #aa759f">struct</span> <span style="color: #f4bf75">User</span></span>
+<span id="L2" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">initialize</span><span style="color: #d0d0d0">(</span><span style="color: #303030">@name</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">String</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">@age</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">)</span></span>
+<span id="L3" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line">  <span style="color: #505050"># 同値性比較のメソッドを定義</span></span>
+<span id="L6" class="line">  <span style="color: #303030">def_equals</span> <span style="color: #303030">@name</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">@age</span></span>
+<span id="L7" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line"><span style="color: #303030">user1</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">User</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span> <span style="color: #90a959">"Taro"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">30</span></span>
+<span id="L10" class="line"><span style="color: #303030">user2</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">User</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span> <span style="color: #90a959">"Taro"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">30</span></span>
+<span id="L11" class="line"><span style="color: #303030">user1</span> <span style="color: #d0d0d0">==</span> <span style="color: #303030">user2</span> <span style="color: #505050"># =&gt; true</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>とてもすっきりしました。マクロがいかに強力かがわかります。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="record"><code>record</code></h3>
+<div class="paragraph">
+<p><code>record</code> は Struct を簡単に定義できるマクロです。通常、 Struct の定義は次のように行います。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #505050"># Structの定義</span></span>
+<span id="L2" class="line"><span style="color: #aa759f">struct</span> <span style="color: #f4bf75">User</span></span>
+<span id="L3" class="line">  <span style="color: #aa759f">property</span> <span style="color: #303030">name</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">String</span></span>
+<span id="L4" class="line">  <span style="color: #aa759f">property</span> <span style="color: #303030">age</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">Int32</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">initialize</span><span style="color: #d0d0d0">(</span><span style="color: #303030">@name</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">@age</span><span style="color: #d0d0d0">)</span></span>
+<span id="L7" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L8" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L9" class="line"></span>
+<span id="L10" class="line"><span style="color: #303030">user1</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">User</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span> <span style="color: #90a959">"Taro"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">30</span></span>
+<span id="L11" class="line"><span style="color: #303030">user1</span>      <span style="color: #505050"># =&gt; User(@name="Taro", @age=30)</span></span>
+<span id="L12" class="line"><span style="color: #303030">user1</span><span style="color: #d0d0d0">.</span><span style="color: #303030">name</span> <span style="color: #505050"># =&gt; "Taro"</span></span>
+<span id="L13" class="line"><span style="color: #303030">user1</span><span style="color: #d0d0d0">.</span><span style="color: #303030">age</span>  <span style="color: #505050"># =&gt; 30</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>このコードを、<code>record</code> を使って書くと次のようになります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #505050"># Structの定義</span></span>
+<span id="L2" class="line"><span style="color: #aa759f">record</span> <span style="color: #f4bf75">User</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">name</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">String</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">age</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">Int32</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">user1</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">User</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span> <span style="color: #90a959">"Taro"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">30</span></span>
+<span id="L5" class="line"><span style="color: #303030">user1</span>      <span style="color: #505050"># =&gt; User(@name="Taro", @age=30)</span></span>
+<span id="L6" class="line"><span style="color: #303030">user1</span><span style="color: #d0d0d0">.</span><span style="color: #303030">name</span> <span style="color: #505050"># =&gt; "Taro"</span></span>
+<span id="L7" class="line"><span style="color: #303030">user1</span><span style="color: #d0d0d0">.</span><span style="color: #303030">age</span>  <span style="color: #505050"># =&gt; 30</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>１行で定義が書けてしまいました。<code>record</code> は、この他に</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ブロックを渡すことでメソッドを定義できる</p>
+</li>
+<li>
+<p>初期値を与えることができる</p>
+</li>
+<li>
+<p>初期値から型推論できる</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>という機能もあります。気になる方は <code>record</code> のマニュアルを読んでみてください。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="parallel"><code>parallel</code></h3>
+<div class="paragraph">
+<p>引数に与えた処理を並行処理します。各処理の返り値も受け取ることができます。次のコードは、<code>job1</code> <code>job2</code> <code>job3</code> を並行に実行し、返り値を受け取るコードです。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">io</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">IO</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Memory</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #505050"># １秒後に、文字列を出力し文字列を返すlambda</span></span>
+<span id="L4" class="line"><span style="color: #303030">job1</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">-&gt;</span><span style="color: #d0d0d0">{</span></span>
+<span id="L5" class="line">  <span style="color: #303030">sleep</span> <span style="color: #90a959">1</span></span>
+<span id="L6" class="line">  <span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">puts</span> <span style="color: #90a959">"job1  : </span><span style="color: #8f5536">#{</span><span style="color: #f4bf75">Time</span><span style="color: #d0d0d0">.</span><span style="color: #303030">now</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"%F %T"</span><span style="color: #d0d0d0">)</span><span style="color: #8f5536">}</span><span style="color: #90a959">"</span></span>
+<span id="L7" class="line">  <span style="color: #90a959">"return job1"</span></span>
+<span id="L8" class="line"><span style="color: #d0d0d0">}</span></span>
+<span id="L9" class="line"></span>
+<span id="L10" class="line"><span style="color: #505050"># ２秒後に、文字列を出力し文字列を返すlambda</span></span>
+<span id="L11" class="line"><span style="color: #303030">job2</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">-&gt;</span><span style="color: #d0d0d0">{</span></span>
+<span id="L12" class="line">  <span style="color: #303030">sleep</span> <span style="color: #90a959">2</span></span>
+<span id="L13" class="line">  <span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">puts</span> <span style="color: #90a959">"job2  : </span><span style="color: #8f5536">#{</span><span style="color: #f4bf75">Time</span><span style="color: #d0d0d0">.</span><span style="color: #303030">now</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"%F %T"</span><span style="color: #d0d0d0">)</span><span style="color: #8f5536">}</span><span style="color: #90a959">"</span></span>
+<span id="L14" class="line">  <span style="color: #90a959">"return job2"</span></span>
+<span id="L15" class="line"><span style="color: #d0d0d0">}</span></span>
+<span id="L16" class="line"></span>
+<span id="L17" class="line"><span style="color: #505050"># ３秒後に、文字列を出力し文字列を返すlambda</span></span>
+<span id="L18" class="line"><span style="color: #303030">job3</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">-&gt;</span><span style="color: #d0d0d0">{</span></span>
+<span id="L19" class="line">  <span style="color: #303030">sleep</span> <span style="color: #90a959">3</span></span>
+<span id="L20" class="line">  <span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">puts</span> <span style="color: #90a959">"job3  : </span><span style="color: #8f5536">#{</span><span style="color: #f4bf75">Time</span><span style="color: #d0d0d0">.</span><span style="color: #303030">now</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"%F %T"</span><span style="color: #d0d0d0">)</span><span style="color: #8f5536">}</span><span style="color: #90a959">"</span></span>
+<span id="L21" class="line">  <span style="color: #90a959">"return job3"</span></span>
+<span id="L22" class="line"><span style="color: #d0d0d0">}</span></span>
+<span id="L23" class="line"></span>
+<span id="L24" class="line"><span style="color: #505050"># 動かしてみる</span></span>
+<span id="L25" class="line"><span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">puts</span> <span style="color: #90a959">"start : </span><span style="color: #8f5536">#{</span><span style="color: #f4bf75">Time</span><span style="color: #d0d0d0">.</span><span style="color: #303030">now</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"%F %T"</span><span style="color: #d0d0d0">)</span><span style="color: #8f5536">}</span><span style="color: #90a959">"</span></span>
+<span id="L26" class="line"><span style="color: #303030">ret1</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">ret2</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">ret3</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">parallel</span> <span style="color: #303030">job1</span><span style="color: #d0d0d0">.</span><span style="color: #303030">call</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">job2</span><span style="color: #d0d0d0">.</span><span style="color: #303030">call</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">job3</span><span style="color: #d0d0d0">.</span><span style="color: #303030">call</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これを実行すると、返り値、出力結果は次のようになります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span></span>
+<span id="L2" class="line"><span style="color: #505050"># =&gt;</span></span>
+<span id="L3" class="line"><span style="color: #505050"># start : 2018-01-01 00:00:00</span></span>
+<span id="L4" class="line"><span style="color: #505050"># job1  : 2018-01-01 00:00:01</span></span>
+<span id="L5" class="line"><span style="color: #505050"># job2  : 2018-01-01 00:00:02</span></span>
+<span id="L6" class="line"><span style="color: #505050"># job3  : 2018-01-01 00:00:03</span></span>
+<span id="L7" class="line"></span>
+<span id="L8" class="line"><span style="color: #303030">ret1</span> <span style="color: #505050"># =&gt; return job1</span></span>
+<span id="L9" class="line"><span style="color: #303030">ret2</span> <span style="color: #505050"># =&gt; return job2</span></span>
+<span id="L10" class="line"><span style="color: #303030">ret3</span> <span style="color: #505050"># =&gt; return job3</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>実行された時刻を見ると、並行に実行されていることがわかります。また、返り値も適切に受け取っていることがわかります。このように、 <code>parallel</code> を使えば簡単に並行処理を記述できます。</p>
+</div>
+<div class="sect3">
+<h4 id="p-pp"><code>p!</code>, <code>pp!</code></h4>
+<div class="paragraph">
+<p><code>p</code> や <code>pp</code> と同じく、引数として渡された値を標準出力に出力しますが、渡された式自身も表示してくれます。デバッグ時に重宝します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">arr</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[</span><span style="color: #90a959">1</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">2</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">3</span><span style="color: #d0d0d0">]</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #303030">pp!</span> <span style="color: #303030">arr</span><span style="color: #d0d0d0">.</span><span style="color: #303030">map</span><span style="color: #d0d0d0">(</span><span style="color: #d0d0d0">&amp;</span><span style="color: #d0d0d0">.</span><span style="color: #303030">*</span> <span style="color: #90a959">1000</span><span style="color: #d0d0d0">)</span></span>
+<span id="L4" class="line"><span style="color: #505050"># output:</span></span>
+<span id="L5" class="line"><span style="color: #505050"># arr.map(&amp;.*(1000)) # =&gt; [1000, 2000, 3000]</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>　</p>
+</div>
+<div class="paragraph">
+<p>いかがでしたでしょうか。いくつかのマクロを紹介しましたが、この他にも標準のマクロは存在します。興味のある方は探してみてください。今までのコードがずっとすっきりするはずです。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="マクロの文法">マクロの文法</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>マクロの文法は <a href="https://crystal-lang.org/docs/syntax_and_semantics/macros.html">公式マニュアル</a> に記載されています。この章では公式マニュアルを基本とし、より詳しく解説していきます。</p>
+</div>
+<div class="sect2">
+<h3 id="マクロのおさらい">マクロのおさらい</h3>
+<div class="paragraph">
+<p>マクロの基本的な使い方をおさらいしましょう。次のコードを見てください。この章の冒頭で出たコードです。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">macro</span> <span style="color: #303030">my_macro</span><span style="color: #d0d0d0">(</span><span style="color: #303030">method_name</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">content</span><span style="color: #d0d0d0">)</span></span>
+<span id="L2" class="line">  <span style="color: #aa759f">def</span> <span style="color: #d0d0d0">{{</span><span style="color: #303030">method_name</span><span style="color: #d0d0d0">}}</span> <b class="conum">(1)</b></span>
+<span id="L3" class="line">    <span style="color: #d0d0d0">{{</span><span style="color: #303030">content</span><span style="color: #d0d0d0">}}</span></span>
+<span id="L4" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L5" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L6" class="line"></span>
+<span id="L7" class="line"><span style="color: #303030">my_macro</span> <span style="color: #303030">my_method</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"hoge"</span> <b class="conum">(2)</b></span>
+<span id="L8" class="line"><span style="color: #303030">my_method</span> <span style="color: #505050"># =&gt; "hoge"</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>上記の <code>（１）</code> の部分では、 <code>macro</code> を用いてマクロの定義を書いています。<code>（２）</code> の部分では、定義されたマクロの呼び出しを行っています。このコードを <code>crystal run</code> すると、次のような流れで処理されます。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>マクロ呼び出し時の引数が <code>my_macro</code> に渡される</p>
+</li>
+<li>
+<p>引数展開や条件分岐等の処理をし、 Crystal コードが生成される</p>
+</li>
+<li>
+<p>生成された Crystal コードを、マクロ呼び出し部分に展開する</p>
+</li>
+<li>
+<p>すべてのマクロを展開し終えたら、 Crystal コードのコンパイルをする</p>
+</li>
+<li>
+<p>Crystal コードのコンパイルが終わったら実行する</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>この流れを頭の中に入れつつ、次のステップに進みましょう。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="マクロと抽象構文木">マクロと抽象構文木</h3>
+<div class="paragraph">
+<p>Crystal のコードはパーサによって、抽象構文木（  Abstract Syntax Tree ）にパースされます。抽象構文木を構成する木構造の各要素を AST node と言います。つまり、 Crystal のコードは各 AST node で構成されています。</p>
+</div>
+<div class="paragraph">
+<p>ここでマクロに話を戻します。マクロは Crystal のコードを組み立てるものでした。言い換えると「マクロは AST node を操作して Crystal コードを組み立てるもの」ということになります。実際、マクロが引数として受け取るのは AST node です。そのことを確かめてみましょう。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ast-node">AST node</h3>
+<div class="paragraph">
+<p>マクロが受け取る AST node の型を見てみましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #505050"># 引数のclass_nameを表示させるmacro</span></span>
+<span id="L2" class="line"><span style="color: #303030">macro</span> <span style="color: #303030">ast_node_class_name</span><span style="color: #d0d0d0">(</span><span style="color: #303030">ast_node</span><span style="color: #d0d0d0">)</span></span>
+<span id="L3" class="line">  <span style="color: #d0d0d0">{{</span> <span style="color: #303030">ast_node</span><span style="color: #d0d0d0">.</span><span style="color: #303030">class_name</span> <span style="color: #d0d0d0">}}</span></span>
+<span id="L4" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line"><span style="color: #303030">ast_node_class_name</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">1</span><span style="color: #d0d0d0">)</span>              <span style="color: #505050"># =&gt; "NumberLiteral"</span></span>
+<span id="L7" class="line"><span style="color: #303030">ast_node_class_name</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"string"</span><span style="color: #d0d0d0">)</span>       <span style="color: #505050"># =&gt; "StringLiteral"</span></span>
+<span id="L8" class="line"><span style="color: #303030">ast_node_class_name</span><span style="color: #d0d0d0">(</span><span style="color: #303030">ast</span><span style="color: #d0d0d0">)</span>            <span style="color: #505050"># =&gt; "Call"</span></span>
+<span id="L9" class="line"><span style="color: #303030">ast_node_class_name</span><span style="color: #d0d0d0">([</span><span style="color: #90a959">"a"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"b"</span><span style="color: #d0d0d0">])</span>     <span style="color: #505050"># =&gt; "ArrayLiteral"</span></span>
+<span id="L10" class="line"><span style="color: #303030">ast_node_class_name</span><span style="color: #d0d0d0">({</span><span style="color: #90a959">key: </span><span style="color: #90a959">"value"</span><span style="color: #d0d0d0">})</span> <span style="color: #505050"># =&gt; "NamedTupleLiteral"</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>NumberLiteral</code> や <code>ArrayLiteral</code> などが表示されました。これらの class は <code>Crystal::Macros::NumberLiteral</code> や <code>Crystal::Macros::ArrayLiteral</code> として定義されています。そして、全 AST node は <code>Crystal::Macros::ASTNode</code> を継承しています。 <code>Crystal::Macros::ASTNode</code> の幾つかのメソッドを紹介します。</p>
+</div>
+<div class="paragraph">
+<p><code>#line_number</code> は、 AST node が書かれている行数を返します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">macro</span> <span style="color: #303030">ast_node_line_number</span><span style="color: #d0d0d0">(</span><span style="color: #303030">ast_node</span><span style="color: #d0d0d0">)</span></span>
+<span id="L2" class="line">  <span style="color: #d0d0d0">{{</span> <span style="color: #303030">ast_node</span><span style="color: #d0d0d0">.</span><span style="color: #303030">line_number</span> <span style="color: #d0d0d0">}}</span></span>
+<span id="L3" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line"><span style="color: #505050"># ... 他のコードが並ぶ</span></span>
+<span id="L6" class="line"></span>
+<span id="L7" class="line"><span style="color: #303030">ast_node_line_number</span> <span style="color: #90a959">1</span>        <span style="color: #505050"># =&gt; 12</span></span>
+<span id="L8" class="line"><span style="color: #303030">ast_node_line_number</span> <span style="color: #90a959">"string"</span> <span style="color: #505050"># =&gt; 13</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>#stringify</code> は、 AST node の文字列表現を返します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">macro</span> <span style="color: #303030">ast_node_stringify</span><span style="color: #d0d0d0">(</span><span style="color: #303030">ast_node</span><span style="color: #d0d0d0">)</span></span>
+<span id="L2" class="line">  <span style="color: #d0d0d0">{{</span> <span style="color: #303030">ast_node</span><span style="color: #d0d0d0">.</span><span style="color: #303030">stringify</span> <span style="color: #d0d0d0">}}</span></span>
+<span id="L3" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line"><span style="color: #303030">ast_node_stringify</span> <span style="color: #90a959">1</span>          <span style="color: #505050"># =&gt; "1"</span></span>
+<span id="L6" class="line"><span style="color: #303030">ast_node_stringify</span> <span style="color: #90a959">"string"</span>   <span style="color: #505050"># =&gt; "\"string\""</span></span>
+<span id="L7" class="line"><span style="color: #303030">ast_node_stringify</span> <span style="color: #d0d0d0">[</span><span style="color: #90a959">"a"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"b"</span><span style="color: #d0d0d0">]</span> <span style="color: #505050"># =&gt; "[\"a\", \"b\"]"</span></span>
+<span id="L8" class="line"><span style="color: #303030">ast_node_stringify</span> <span style="color: #f4bf75">CONST</span>      <span style="color: #505050"># =&gt; "CONST"</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>このように、 <code>Crystal::Macros::ASTNode</code> class には AST node を操作するためのメソッドが定義されています。そして、それらを継承している class （ <code>Crystal::Macros::ArrayLiteral</code> など）は、 AST node のメソッドに加え、それぞれの便利なメソッドが定義されています。例えば、 <code>Crystal::Macros::ArrayLiteral</code> には <code>Array</code> に似たメソッドが定義されています。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">macro</span> <span style="color: #303030">ast_node_array_literal</span><span style="color: #d0d0d0">(</span><span style="color: #303030">ast_node</span><span style="color: #d0d0d0">)</span></span>
+<span id="L2" class="line">  <span style="color: #d0d0d0">{{</span> <span style="color: #303030">ast_node</span><span style="color: #d0d0d0">.</span><span style="color: #303030">map</span><span style="color: #d0d0d0">(</span><span style="color: #d0d0d0">&amp;</span><span style="color: #d0d0d0">.</span><span style="color: #303030">capitalize</span><span style="color: #d0d0d0">).</span><span style="color: #303030">join</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"::"</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">}}</span></span>
+<span id="L3" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line"><span style="color: #303030">ast_node_array_literal</span> <span style="color: #d0d0d0">[</span><span style="color: #90a959">"apple"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"banana"</span><span style="color: #d0d0d0">]</span> <span style="color: #505050"># =&gt; "Apple::Banana"</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>通常の Crystal コードと似たような操作感で書くことができます。AST node を操作しているのか、 Crystal コードを操作しているのかをしっかりと意識してプログラミングしましょう。</p>
+</div>
+<div class="paragraph">
+<p>次からは、実際の文法を具体的に見ていきましょう。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="スコープ">スコープ</h3>
+<div class="paragraph">
+<p>マクロにもスコープがあります。</p>
+</div>
+<div class="paragraph">
+<p>トップレベルに定義した場合は、通常のメソッドと同じようにどこからでも呼び出せるようになります。</p>
+</div>
+<div class="listingblock">
+<div class="title">トップレベルに定義した場合</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #505050"># トップレベルで定義されたマクロは、どこからでも参照可能</span></span>
+<span id="L2" class="line"><span style="color: #303030">macro</span> <span style="color: #303030">my_macro</span></span>
+<span id="L3" class="line">  <span style="color: #90a959">"expanded my macro!!!"</span></span>
+<span id="L4" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line"><span style="color: #303030">my_macro</span> <span style="color: #505050"># =&gt; "expanded my macro!!!"</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>また、トップレベルにマクロを定義する際に <code>private</code> 修飾子を付けると、そのファイル内からのみ呼び出せるようになります。</p>
+</div>
+<div class="listingblock">
+<div class="title"><code>private</code> を付けてトップレベルに定義した場合</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #505050"># private を付けた場合は、同一ファイル内でのみ参照可能</span></span>
+<span id="L2" class="line"><span style="color: #aa759f">private</span> <span style="color: #303030">macro</span> <span style="color: #303030">my_macro</span></span>
+<span id="L3" class="line">  <span style="color: #90a959">"expanded my macro!!!"</span></span>
+<span id="L4" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line"><span style="color: #303030">my_macro</span> <span style="color: #505050"># =&gt; "expanded my macro!!!"</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>class 内にマクロを定義した場合は、インスタンスメソッドではなくクラスメソッドと似たような扱いになることに注意してください。<br>
+また、module や struct でも同様に、クラスメソッドのような扱いになります。</p>
+</div>
+<div class="listingblock">
+<div class="title">class 内に定義した場合</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #aa759f">class</span> <span style="color: #f4bf75">MacroScope</span></span>
+<span id="L2" class="line">  <span style="color: #303030">macro</span> <span style="color: #303030">my_macro</span></span>
+<span id="L3" class="line">    <span style="color: #90a959">"expanded my macro!!"</span></span>
+<span id="L4" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line">  <span style="color: #505050"># class 内で参照可能</span></span>
+<span id="L7" class="line">  <span style="color: #f4bf75">CONSTANT</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">my_macro</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line">  <span style="color: #505050"># インスタンスメソッド内で参照可能</span></span>
+<span id="L10" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">instance_method</span></span>
+<span id="L11" class="line">    <span style="color: #303030">my_macro</span></span>
+<span id="L12" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L13" class="line"></span>
+<span id="L14" class="line">  <span style="color: #505050"># クラスメソッド内で参照可能</span></span>
+<span id="L15" class="line">  <span style="color: #aa759f">def</span> <span style="color: #f4bf75">self</span><span style="color: #d0d0d0">.</span><span style="color: #303030">class_method</span></span>
+<span id="L16" class="line">    <span style="color: #303030">my_macro</span></span>
+<span id="L17" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L18" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L19" class="line"></span>
+<span id="L20" class="line"><span style="color: #505050"># クラスメソッドと同じ syntax で参照可能</span></span>
+<span id="L21" class="line"><span style="color: #f4bf75">MacroScope</span><span style="color: #d0d0d0">.</span><span style="color: #303030">my_macro</span> <span style="color: #505050"># =&gt; "expanded my macro!!"</span></span>
+<span id="L22" class="line"></span>
+<span id="L23" class="line"><span style="color: #505050"># インスタンスメソッドとしては参照できない</span></span>
+<span id="L24" class="line"><span style="color: #505050"># MacroScope.new.my_macro は undefined method になる</span></span>
+<span id="L25" class="line"></span>
+<span id="L26" class="line"><span style="color: #f4bf75">MacroScope</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">CONSTANT</span>           <span style="color: #505050"># =&gt; "expanded my macro!!"</span></span>
+<span id="L27" class="line"><span style="color: #f4bf75">MacroScope</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">.</span><span style="color: #303030">instance_method</span> <span style="color: #505050"># =&gt; "expanded my macro!!"</span></span>
+<span id="L28" class="line"><span style="color: #f4bf75">MacroScope</span><span style="color: #d0d0d0">.</span><span style="color: #303030">class_method</span>        <span style="color: #505050"># =&gt; "expanded my macro!!"</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>「マクロが呼び出せない」という問題に陥った場合は、こちらの例を思い出してください。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="if">if</h3>
+<div class="paragraph">
+<p>マクロでの条件分岐は <code>if</code> を使います。次のコードを見てください。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">macro</span> <span style="color: #303030">conditionals</span><span style="color: #d0d0d0">(</span><span style="color: #303030">content</span><span style="color: #d0d0d0">)</span></span>
+<span id="L2" class="line">  <span style="color: #d0d0d0">{</span><span style="color: #90a959">% if </span><span style="color: #303030">content</span> <span style="color: #d0d0d0">==</span> <span style="color: #90a959">1</span> <span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L3" class="line">    <span style="color: #90a959">"one"</span></span>
+<span id="L4" class="line">  <span style="color: #d0d0d0">{</span><span style="color: #90a959">% else </span><span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L5" class="line">    <span style="color: #d0d0d0">{{</span> <span style="color: #303030">content</span> <span style="color: #d0d0d0">}}</span></span>
+<span id="L6" class="line">  <span style="color: #d0d0d0">{</span><span style="color: #90a959">% end </span><span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L7" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line"><span style="color: #303030">conditionals</span> <span style="color: #90a959">1</span> <span style="color: #505050"># =&gt; "one"</span></span>
+<span id="L10" class="line"><span style="color: #303030">conditionals</span> <span style="color: #90a959">2</span> <span style="color: #505050"># =&gt; 2</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>if</code> での true/false の扱いは次のようになっています。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>false</code> として扱われるもの</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Nop</code></p>
+</li>
+<li>
+<p><code>NilLiteral</code></p>
+</li>
+<li>
+<p><code>BoolLiteral</code> の <code>false</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>true</code> として扱われるもの</p>
+<div class="ulist">
+<ul>
+<li>
+<p>上記以外</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>また、 <code>if</code> は <code>macro</code> の外でも利用できます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #d0d0d0">{</span><span style="color: #90a959">% if </span><span style="color: #303030">env</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"DEBUG"</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L2" class="line">  <span style="color: #303030">puts</span> <span style="color: #90a959">"===== DEBUG MODE ======"</span></span>
+<span id="L3" class="line"><span style="color: #d0d0d0">{</span><span style="color: #90a959">% end </span><span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これでちょっとしたマクロを素早く書くことができます。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="for">for</h3>
+<div class="paragraph">
+<p>マクロでのループは <code>for</code> を使います。次のコードを見てください。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">macro</span> <span style="color: #303030">iteration</span><span style="color: #d0d0d0">(</span><span style="color: #303030">names</span><span style="color: #d0d0d0">)</span></span>
+<span id="L2" class="line">  <span style="color: #d0d0d0">{</span><span style="color: #90a959">% for </span><span style="color: #303030">name</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">index</span> <span style="color: #aa759f">in</span> <span style="color: #303030">names</span> <span style="color: #90a959">%}</span></span>
+<span id="L3" class="line"><span style="color: #90a959">    def {{name}</span><span style="color: #d0d0d0">}</span></span>
+<span id="L4" class="line">      <span style="color: #d0d0d0">{{</span><span style="color: #303030">index</span><span style="color: #d0d0d0">}}</span></span>
+<span id="L5" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L6" class="line">  <span style="color: #d0d0d0">{</span><span style="color: #90a959">% end </span><span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L7" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line"><span style="color: #303030">iteration</span> <span style="color: #d0d0d0">[</span><span style="color: #303030">foo</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">bar</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">baz</span><span style="color: #d0d0d0">]</span></span>
+<span id="L10" class="line"></span>
+<span id="L11" class="line"><span style="color: #303030">foo</span> <span style="color: #505050"># =&gt; 0</span></span>
+<span id="L12" class="line"><span style="color: #303030">bar</span> <span style="color: #505050"># =&gt; 1</span></span>
+<span id="L13" class="line"><span style="color: #303030">baz</span> <span style="color: #505050"># =&gt; 2</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>ArrayLiteral</code> を渡すと for 文が回り、メソッドを定義します。この <code>for</code> は、 <code>HashLiteral</code> にも対応しています。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">macro</span> <span style="color: #303030">iteration</span><span style="color: #d0d0d0">(</span><span style="color: #303030">names</span><span style="color: #d0d0d0">)</span></span>
+<span id="L2" class="line">  <span style="color: #d0d0d0">{</span><span style="color: #90a959">% for </span><span style="color: #303030">key</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">value</span> <span style="color: #aa759f">in</span> <span style="color: #303030">names</span> <span style="color: #90a959">%}</span></span>
+<span id="L3" class="line"><span style="color: #90a959">    def {{key.id}</span><span style="color: #d0d0d0">}</span></span>
+<span id="L4" class="line">      <span style="color: #d0d0d0">{{</span><span style="color: #303030">value</span><span style="color: #d0d0d0">}}</span></span>
+<span id="L5" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L6" class="line">  <span style="color: #d0d0d0">{</span><span style="color: #90a959">% end </span><span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L7" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line"><span style="color: #303030">iteration</span><span style="color: #d0d0d0">({</span><span style="color: #90a959">foo: </span><span style="color: #90a959">"FOO"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">bar: </span><span style="color: #90a959">"BAR"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">baz: </span><span style="color: #90a959">"BAZ"</span><span style="color: #d0d0d0">})</span></span>
+<span id="L10" class="line"></span>
+<span id="L11" class="line"><span style="color: #303030">foo</span> <span style="color: #505050"># =&gt; "FOO"</span></span>
+<span id="L12" class="line"><span style="color: #303030">bar</span> <span style="color: #505050"># =&gt; "BAR"</span></span>
+<span id="L13" class="line"><span style="color: #303030">baz</span> <span style="color: #505050"># =&gt; "BAZ"</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>for</code> も <code>if</code> と同様、 <code>macro</code> の外でも利用できます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #d0d0d0">{</span><span style="color: #90a959">% for </span><span style="color: #303030">name</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">index</span> <span style="color: #aa759f">in</span> <span style="color: #d0d0d0">[</span><span style="color: #90a959">"foo"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"bar"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"baz"</span><span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L2" class="line">  <span style="color: #aa759f">def</span> <span style="color: #d0d0d0">{{</span><span style="color: #303030">name</span><span style="color: #d0d0d0">.</span><span style="color: #303030">id</span><span style="color: #d0d0d0">}}</span></span>
+<span id="L3" class="line">    <span style="color: #d0d0d0">{{</span><span style="color: #303030">index</span><span style="color: #d0d0d0">}}</span></span>
+<span id="L4" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L5" class="line"><span style="color: #d0d0d0">{</span><span style="color: #90a959">% end </span><span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L6" class="line"></span>
+<span id="L7" class="line"><span style="color: #303030">foo</span> <span style="color: #505050"># =&gt; 0</span></span>
+<span id="L8" class="line"><span style="color: #303030">bar</span> <span style="color: #505050"># =&gt; 1</span></span>
+<span id="L9" class="line"><span style="color: #303030">baz</span> <span style="color: #505050"># =&gt; 2</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="可変長引数">可変長引数</h3>
+<div class="paragraph">
+<p>通常の Crystal コードの感覚で可変長引数を扱うことができます。引数の定義に <code>*</code> を付けるだけです。受け取った引数は <code>TupleLiteral</code> になります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">macro</span> <span style="color: #303030">variadic_arguments</span><span style="color: #d0d0d0">(</span><span style="color: #d0d0d0">*</span><span style="color: #303030">names</span><span style="color: #d0d0d0">)</span></span>
+<span id="L2" class="line">  <span style="color: #d0d0d0">{</span><span style="color: #90a959">% for </span><span style="color: #303030">name</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">index</span> <span style="color: #aa759f">in</span> <span style="color: #303030">names</span> <span style="color: #90a959">%}</span></span>
+<span id="L3" class="line"><span style="color: #90a959">    def {{name.id}</span><span style="color: #d0d0d0">}</span></span>
+<span id="L4" class="line">      <span style="color: #d0d0d0">{{</span><span style="color: #303030">index</span><span style="color: #d0d0d0">}}</span></span>
+<span id="L5" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L6" class="line">  <span style="color: #d0d0d0">{</span><span style="color: #90a959">% end </span><span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L7" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line"><span style="color: #303030">variadic_arguments</span> <span style="color: #303030">foo</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">bar</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">baz</span></span>
+<span id="L10" class="line"></span>
+<span id="L11" class="line"><span style="color: #303030">foo</span> <span style="color: #505050"># =&gt; 0</span></span>
+<span id="L12" class="line"><span style="color: #303030">bar</span> <span style="color: #505050"># =&gt; 1</span></span>
+<span id="L13" class="line"><span style="color: #303030">baz</span> <span style="color: #505050"># =&gt; 2</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="splat-展開">splat 展開</h3>
+<div class="paragraph">
+<p><code>*</code> は、 <code>ArrayLiteral</code> と <code>TupleLiteral</code> の splat 展開にも使用できます。また、 <code>**</code> は <code>HashLiteral</code> と <code>NamedTupleLiteral</code> の splat 展開に使用できます。次のコードを見てください。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">macro</span> <span style="color: #303030">splat</span></span>
+<span id="L2" class="line">  <span style="color: #303030">p</span> <span style="color: #90a959">"Splatting a array"</span></span>
+<span id="L3" class="line">  <span style="color: #d0d0d0">{</span><span style="color: #90a959">% array </span><span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[</span><span style="color: #90a959">1</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">2</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">3</span><span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L4" class="line">  <span style="color: #303030">p</span> <span style="color: #d0d0d0">{{</span><span style="color: #d0d0d0">*</span><span style="color: #303030">array</span><span style="color: #d0d0d0">}}</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line">  <span style="color: #303030">p</span> <span style="color: #90a959">"Splatting a tuple"</span></span>
+<span id="L7" class="line">  <span style="color: #d0d0d0">{</span><span style="color: #90a959">% tuple </span><span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">{</span><span style="color: #90a959">4</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">5</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">6</span><span style="color: #d0d0d0">}</span> <span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L8" class="line">  <span style="color: #303030">p</span> <span style="color: #d0d0d0">{{</span><span style="color: #d0d0d0">*</span><span style="color: #303030">tuple</span><span style="color: #d0d0d0">}}</span></span>
+<span id="L9" class="line"></span>
+<span id="L10" class="line">  <span style="color: #505050"># p "Double Splatting a hash"</span></span>
+<span id="L11" class="line">  <span style="color: #505050"># {% hash = {"a" =&gt; 1, "b" =&gt; 2} %}</span></span>
+<span id="L12" class="line">  <span style="color: #505050"># p {{**hash}}</span></span>
+<span id="L13" class="line">  <span style="color: #505050"># ------------</span></span>
+<span id="L14" class="line">  <span style="color: #505050"># Syntax error in expanded macro: splat:11: unexpected token: =&gt;</span></span>
+<span id="L15" class="line">  <span style="color: #505050">#</span></span>
+<span id="L16" class="line">  <span style="color: #505050"># p "a" =&gt; 1, "b" =&gt; 2</span></span>
+<span id="L17" class="line">  <span style="color: #505050">#       ^</span></span>
+<span id="L18" class="line"></span>
+<span id="L19" class="line">  <span style="color: #303030">p</span> <span style="color: #90a959">"Double Splatting a named tuple"</span></span>
+<span id="L20" class="line">  <span style="color: #d0d0d0">{</span><span style="color: #90a959">% named_tuple </span><span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">{</span><span style="color: #90a959">"c"</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">3</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"d"</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">4</span><span style="color: #d0d0d0">}</span> <span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L21" class="line">  <span style="color: #303030">p</span> <span style="color: #d0d0d0">{{</span><span style="color: #d0d0d0">**</span><span style="color: #303030">named_tuple</span><span style="color: #d0d0d0">}}</span></span>
+<span id="L22" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L23" class="line"></span>
+<span id="L24" class="line"><span style="color: #303030">splat</span></span>
+<span id="L25" class="line"><span style="color: #505050"># output:</span></span>
+<span id="L26" class="line"><span style="color: #505050"># "Splatting a array"</span></span>
+<span id="L27" class="line"><span style="color: #505050"># 1</span></span>
+<span id="L28" class="line"><span style="color: #505050"># 2</span></span>
+<span id="L29" class="line"><span style="color: #505050"># 3</span></span>
+<span id="L30" class="line"><span style="color: #505050"># "Splatting a tuple"</span></span>
+<span id="L31" class="line"><span style="color: #505050"># 4</span></span>
+<span id="L32" class="line"><span style="color: #505050"># 5</span></span>
+<span id="L33" class="line"><span style="color: #505050"># 6</span></span>
+<span id="L34" class="line"><span style="color: #505050"># "Double Splatting a named tuple"</span></span>
+<span id="L35" class="line"><span style="color: #505050"># {c: 3, d: 4}</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>展開は、各要素をカンマで区切った形になります。 <code>HashLiteral</code> もそのままカンマ区切りで出力されますが、使い所によっては上記のように <code>Syntax error</code> になります。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="定数">定数</h3>
+<div class="paragraph">
+<p>マクロは定数にアクセスできます。次のコードを見てください。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #f4bf75">CONSTANTS</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[</span><span style="color: #90a959">"foo"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"bar"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"baz"</span><span style="color: #d0d0d0">]</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #d0d0d0">{</span><span style="color: #90a959">% for </span><span style="color: #303030">value</span> <span style="color: #aa759f">in</span> <span style="color: #f4bf75">CONSTANTS</span> <span style="color: #90a959">%}</span></span>
+<span id="L4" class="line"><span style="color: #90a959">  puts {{value}</span><span style="color: #d0d0d0">}</span></span>
+<span id="L5" class="line"><span style="color: #d0d0d0">{</span><span style="color: #90a959">% end </span><span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L6" class="line"><span style="color: #505050"># output:</span></span>
+<span id="L7" class="line"><span style="color: #505050"># foo</span></span>
+<span id="L8" class="line"><span style="color: #505050"># bar</span></span>
+<span id="L9" class="line"><span style="color: #505050"># baz</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>一見、マクロ以外の部分をマクロが参照しているので違和感があります。</p>
+</div>
+<div class="paragraph">
+<p>Crystal は定数の再代入は認めていません。再代入がある場合は、 <code>already initialized constant XXX</code> というエラーでコンパイルに失敗します。つまり、定数の値は不変なのでマクロ解析のフェーズでも扱えるというわけです。</p>
+</div>
+<div class="sect3">
+<h4 id="ネストしたマクロ">ネストしたマクロ</h4>
+<div class="paragraph">
+<p>ネストしたマクロも書くことができます。つまり、「マクロ定義を生成するマクロ」です。</p>
+</div>
+<div class="paragraph">
+<p>ネストしたマクロは、外側から順に内側に向かって展開されます。その際、内側のマクロは外側のマクロで展開されないように <code>\</code> でエスケープする必要があります。公式マニュアルの例がわかりやすいので引用します。次のコードを見てください。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">macro</span> <span style="color: #303030">define_macros</span><span style="color: #d0d0d0">(</span><span style="color: #d0d0d0">*</span><span style="color: #303030">names</span><span style="color: #d0d0d0">)</span></span>
+<span id="L2" class="line">  <span style="color: #d0d0d0">{</span><span style="color: #90a959">% for </span><span style="color: #303030">name</span> <span style="color: #aa759f">in</span> <span style="color: #303030">names</span> <span style="color: #90a959">%}</span></span>
+<span id="L3" class="line"><span style="color: #90a959">    macro greeting_for_{{name.id}</span><span style="color: #d0d0d0">}(</span><span style="color: #303030">greeting</span><span style="color: #d0d0d0">)</span></span>
+<span id="L4" class="line">      <span style="color: #d0d0d0">\{</span><span style="color: #90a959">% if </span><span style="color: #303030">greeting</span> <span style="color: #d0d0d0">==</span> <span style="color: #90a959">"hola"</span> <span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L5" class="line">        <span style="color: #90a959">"¡hola {{name.id}}!"</span></span>
+<span id="L6" class="line">      <span style="color: #d0d0d0">\{</span><span style="color: #90a959">% else </span><span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L7" class="line">        <span style="color: #90a959">"</span><span style="color: #8f5536">\{</span><span style="color: #90a959">{greeting.id}} {{name.id}}"</span></span>
+<span id="L8" class="line">      <span style="color: #d0d0d0">\{</span><span style="color: #90a959">% end </span><span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L9" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L10" class="line">  <span style="color: #d0d0d0">{</span><span style="color: #90a959">% end </span><span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L11" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L12" class="line"></span>
+<span id="L13" class="line"><span style="color: #505050"># This generates:</span></span>
+<span id="L14" class="line"><span style="color: #505050">#</span></span>
+<span id="L15" class="line"><span style="color: #505050">#     macro greeting_for_alice(greeting)</span></span>
+<span id="L16" class="line"><span style="color: #505050">#       {% if greeting == "hola" %}</span></span>
+<span id="L17" class="line"><span style="color: #505050">#         "¡hola alice!"</span></span>
+<span id="L18" class="line"><span style="color: #505050">#       {% else %}</span></span>
+<span id="L19" class="line"><span style="color: #505050">#         "{{greeting.id}} alice"</span></span>
+<span id="L20" class="line"><span style="color: #505050">#       {% end %}</span></span>
+<span id="L21" class="line"><span style="color: #505050">#     end</span></span>
+<span id="L22" class="line"><span style="color: #505050">#     macro greeting_for_bob(greeting)</span></span>
+<span id="L23" class="line"><span style="color: #505050">#       {% if greeting == "hola" %}</span></span>
+<span id="L24" class="line"><span style="color: #505050">#         "¡hola bob!"</span></span>
+<span id="L25" class="line"><span style="color: #505050">#       {% else %}</span></span>
+<span id="L26" class="line"><span style="color: #505050">#         "{{greeting.id}} bob"</span></span>
+<span id="L27" class="line"><span style="color: #505050">#       {% end %}</span></span>
+<span id="L28" class="line"><span style="color: #505050">#     end</span></span>
+<span id="L29" class="line"><span style="color: #303030">define_macros</span> <span style="color: #303030">alice</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">bob</span></span>
+<span id="L30" class="line"></span>
+<span id="L31" class="line"><span style="color: #303030">greeting_for_alice</span> <span style="color: #90a959">"hello"</span> <span style="color: #505050"># =&gt; "hello alice"</span></span>
+<span id="L32" class="line"><span style="color: #303030">greeting_for_bob</span> <span style="color: #90a959">"hallo"</span>   <span style="color: #505050"># =&gt; "hallo bob"</span></span>
+<span id="L33" class="line"><span style="color: #303030">greeting_for_alice</span> <span style="color: #90a959">"hej"</span>   <span style="color: #505050"># =&gt; "hej alice"</span></span>
+<span id="L34" class="line"><span style="color: #303030">greeting_for_bob</span> <span style="color: #90a959">"hola"</span>    <span style="color: #505050"># =&gt; "¡hola bob!"</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>外側のマクロで展開しない部分だけエスケープしていることに注目してください。特に、</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">"\{{greeting.id}} {{name.id}}"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>の部分では、外側のマクロで <code>{{name.id}}</code> の部分は展開されますが、 <code>\{{greeting.id}}</code> の部分は展開されません。<code>\{{greeting.id}}</code> の部分は内側のマクロで展開されます。Nested macros は、マクロの記述で重複が多い場合に有効です。しかし、可読性が損なわれやすいので注意が必要です。</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="生成コードの注意点">生成コードの注意点</h3>
+<div class="paragraph">
+<p>マクロで生成するコードは、それ単体で Crystal のコードとして完結していなければなりません。言い替えれば、 生成されたコードを別のファイルに書き出して正しくパースされるようなコードでなければなりません。この制約は忘れてしまいがちなので気をつけましょう。次の例を見てください。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">ret</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">""</span></span>
+<span id="L2" class="line"><span style="color: #303030">var</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"pitfalls"</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">ret</span> <span style="color: #d0d0d0">=</span> <span style="color: #aa759f">case</span> <span style="color: #303030">var</span></span>
+<span id="L5" class="line">  <span style="color: #d0d0d0">{</span><span style="color: #90a959">% for </span><span style="color: #303030">klass</span> <span style="color: #aa759f">in</span> <span style="color: #d0d0d0">[</span><span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">String</span><span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L6" class="line">    <span style="color: #aa759f">when</span> <span style="color: #d0d0d0">{{</span> <span style="color: #303030">klass</span><span style="color: #d0d0d0">.</span><span style="color: #303030">id</span> <span style="color: #d0d0d0">}}</span> <span style="color: #aa759f">then</span> <span style="color: #90a959">"</span><span style="color: #8f5536">#{</span><span style="color: #303030">var</span><span style="color: #8f5536">}</span><span style="color: #90a959"> is {{ klass }}"</span></span>
+<span id="L7" class="line">  <span style="color: #d0d0d0">{</span><span style="color: #90a959">% end </span><span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L8" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>一見、マクロが展開されたら正しい Crystal のコードが生成されるように見えます。しかし、マクロで生成されるコードは <code>when</code> から始まる部分だけなので、Crystal のコードとしては不完全で、エラーとなります。</p>
+</div>
+<div class="paragraph">
+<p>この場合は、 <code>{% begin %} &#8230;&#8203; {% end %}</code> でコードを括りましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">ret</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">""</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #d0d0d0">{</span><span style="color: #90a959">% begin </span><span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L4" class="line">  <span style="color: #303030">var</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"pitfalls"</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line">  <span style="color: #303030">ret</span> <span style="color: #d0d0d0">=</span> <span style="color: #aa759f">case</span> <span style="color: #303030">var</span></span>
+<span id="L7" class="line">    <span style="color: #d0d0d0">{</span><span style="color: #90a959">% for </span><span style="color: #303030">klass</span> <span style="color: #aa759f">in</span> <span style="color: #d0d0d0">[</span><span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">String</span><span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L8" class="line">      <span style="color: #aa759f">when</span> <span style="color: #d0d0d0">{{</span> <span style="color: #303030">klass</span><span style="color: #d0d0d0">.</span><span style="color: #303030">id</span> <span style="color: #d0d0d0">}}</span> <span style="color: #aa759f">then</span> <span style="color: #90a959">"</span><span style="color: #8f5536">#{</span><span style="color: #303030">var</span><span style="color: #8f5536">}</span><span style="color: #90a959"> is {{ klass }}"</span></span>
+<span id="L9" class="line">    <span style="color: #d0d0d0">{</span><span style="color: #90a959">% end </span><span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L10" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L11" class="line"><span style="color: #d0d0d0">{</span><span style="color: #90a959">% end </span><span style="color: #d0d0d0">%</span><span style="color: #d0d0d0">}</span></span>
+<span id="L12" class="line"></span>
+<span id="L13" class="line"><span style="color: #303030">ret</span> <span style="color: #505050"># =&gt; "pitfalls is String"</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>こうすることで、マクロが生成するコードが正しい Crystal のコードとなるため、コンパイルが通るようになります。陥りやすい間違いなので気をつけてください。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="型の情報にアクセスできる-type">型の情報にアクセスできる <code>@type</code></h3>
+<div class="paragraph">
+<p>マクロには特別なインスタンス変数 <code>@type</code> が用意されています。これを使うと、コンパイル時の型情報にアクセスできます。実際どんなメソッドが存在しているかを見たほうがわかりやすいので、いくつかご紹介します。<code>@type</code> は <code>Crystal::Macros::TypeNode</code> クラスです。</p>
+</div>
+<div class="sect3">
+<h4 id="typenodeinstance_vars"><code>TypeNode#instance_vars</code></h4>
+<div class="paragraph">
+<p>型に定義されているインスタンス変数を返します。返り値は <code>Crystal::Macros::MetaVar</code> クラスの配列です。<code>MetaVar</code> クラスは、変数やインスタンス変数を表す型で、名前（ <code>MetaVar#name</code> ）と型（ <code>MetaVar#type</code> ）を持っています。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #aa759f">class</span> <span style="color: #f4bf75">MyClass</span></span>
+<span id="L2" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">initialize</span><span style="color: #d0d0d0">(</span><span style="color: #303030">@name</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">String</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">@age</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">)</span></span>
+<span id="L3" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">instance_variables_name</span></span>
+<span id="L6" class="line">    <span style="color: #505050"># インスタンス変数の名前を配列で返す</span></span>
+<span id="L7" class="line">    <span style="color: #d0d0d0">{{</span> <span style="color: #303030">@type</span><span style="color: #d0d0d0">.</span><span style="color: #303030">instance_vars</span><span style="color: #d0d0d0">.</span><span style="color: #303030">map</span><span style="color: #d0d0d0">(</span><span style="color: #d0d0d0">&amp;</span><span style="color: #d0d0d0">.</span><span style="color: #303030">name</span><span style="color: #d0d0d0">.</span><span style="color: #303030">stringify</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">}}</span></span>
+<span id="L8" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L9" class="line"></span>
+<span id="L10" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">instance_variables_type</span></span>
+<span id="L11" class="line">    <span style="color: #505050"># インスタンス変数の型を配列で返す</span></span>
+<span id="L12" class="line">    <span style="color: #d0d0d0">{{</span> <span style="color: #303030">@type</span><span style="color: #d0d0d0">.</span><span style="color: #303030">instance_vars</span><span style="color: #d0d0d0">.</span><span style="color: #303030">map</span><span style="color: #d0d0d0">(</span><span style="color: #d0d0d0">&amp;</span><span style="color: #d0d0d0">.</span><span style="color: #303030">type</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">}}</span></span>
+<span id="L13" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L14" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L15" class="line"></span>
+<span id="L16" class="line"><span style="color: #303030">my_class</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">MyClass</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"Taro"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">30</span><span style="color: #d0d0d0">)</span></span>
+<span id="L17" class="line"><span style="color: #303030">my_class</span><span style="color: #d0d0d0">.</span><span style="color: #303030">instance_variables_name</span> <span style="color: #505050"># =&gt; ["name", "age"]</span></span>
+<span id="L18" class="line"><span style="color: #303030">my_class</span><span style="color: #d0d0d0">.</span><span style="color: #303030">instance_variables_type</span> <span style="color: #505050"># =&gt; [String, Int32]</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="typenodemethods"><code>TypeNode#methods</code></h4>
+<div class="paragraph">
+<p>型に定義されているメソッドの情報を返します。返り値は <code>Crystal::Macros::Def</code> クラスの配列です。<code>Def</code> クラスは、 <code>def</code> 文を表す型で、メソッド定義に関するさまざまな情報を持っています。例えば、 <code>Def#args</code> は引数の情報、 <code>Def#return_type</code> はメソッドの返り値の型を表します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #aa759f">class</span> <span style="color: #f4bf75">MyClass</span></span>
+<span id="L2" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">m1</span></span>
+<span id="L3" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line">  <span style="color: #aa759f">protected</span> <span style="color: #aa759f">def</span> <span style="color: #303030">m2</span></span>
+<span id="L6" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L7" class="line"></span>
+<span id="L8" class="line">  <span style="color: #aa759f">private</span> <span style="color: #aa759f">def</span> <span style="color: #303030">m3</span></span>
+<span id="L9" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L10" class="line"></span>
+<span id="L11" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">methods_name</span></span>
+<span id="L12" class="line">    <span style="color: #505050"># 定義されているメソッドの名前を返す</span></span>
+<span id="L13" class="line">    <span style="color: #d0d0d0">{{</span> <span style="color: #303030">@type</span><span style="color: #d0d0d0">.</span><span style="color: #303030">methods</span><span style="color: #d0d0d0">.</span><span style="color: #303030">map</span><span style="color: #d0d0d0">(</span><span style="color: #d0d0d0">&amp;</span><span style="color: #d0d0d0">.</span><span style="color: #303030">name</span><span style="color: #d0d0d0">.</span><span style="color: #303030">stringify</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">}}</span></span>
+<span id="L14" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L15" class="line"></span>
+<span id="L16" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">methods_visibility</span></span>
+<span id="L17" class="line">    <span style="color: #505050"># 定義されているメソッドのアクセス修飾子を返す</span></span>
+<span id="L18" class="line">    <span style="color: #d0d0d0">{{</span> <span style="color: #303030">@type</span><span style="color: #d0d0d0">.</span><span style="color: #303030">methods</span><span style="color: #d0d0d0">.</span><span style="color: #303030">map</span><span style="color: #d0d0d0">(</span><span style="color: #d0d0d0">&amp;</span><span style="color: #d0d0d0">.</span><span style="color: #303030">visibility</span><span style="color: #d0d0d0">.</span><span style="color: #303030">stringify</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">}}</span></span>
+<span id="L19" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L20" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L21" class="line"></span>
+<span id="L22" class="line"><span style="color: #303030">my_class</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">MyClass</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span></span>
+<span id="L23" class="line"></span>
+<span id="L24" class="line"><span style="color: #303030">my_class</span><span style="color: #d0d0d0">.</span><span style="color: #303030">methods_name</span></span>
+<span id="L25" class="line"><span style="color: #505050"># =&gt; ["m1", "m2", "m3", "methods_name", "methods_visibility"]</span></span>
+<span id="L26" class="line"></span>
+<span id="L27" class="line"><span style="color: #303030">my_class</span><span style="color: #d0d0d0">.</span><span style="color: #303030">methods_visibility</span></span>
+<span id="L28" class="line"><span style="color: #505050"># =&gt; [":public", ":protected", ":private", ":public", ":public"]</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これらの他にもメソッドはたくさんあります。私の調べた限りでは、組み合わせればやりたいことはできるという、必要最低限なメソッドはそろっていました。興味のある方はぜひ調べてみてください。</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="hooks">Hooks</h3>
+<div class="paragraph">
+<p>一部の特別な名前を持ったマクロは hooks と呼ばれ、特定のタイミングでコンパイル時に実行されます。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">テーブル 1. Hooks</caption>
+<colgroup>
+<col style="width: 35.7142%;">
+<col style="width: 64.2858%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">マクロ</th>
+<th class="tableblock halign-left valign-top">効果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>macro inherited &#8230;&#8203; end</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">サブクラスが定義されたときに実行されるマクロ</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>macro included &#8230;&#8203; end</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">モジュールが include されたときに実行されるマクロ</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>macro extended &#8230;&#8203; end</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">モジュールが extend されたときに実行されるマクロ</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>macro method_added &#8230;&#8203; end</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">メソッドが追加されたときに実行されるマクロ</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>macro method_missing &#8230;&#8203; end</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">呼び出そうとしたメソッドが定義されていない場合に実行されるマクロ</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>macro finished &#8230;&#8203; end</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">インスタンス変数の型が決定したあとに呼び出されるマクロ</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><code>inherited</code> の例を見てみましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #aa759f">class</span> <span style="color: #f4bf75">SuperClass</span></span>
+<span id="L2" class="line">  <span style="color: #303030">macro</span> <span style="color: #303030">inherited</span></span>
+<span id="L3" class="line">    <span style="color: #aa759f">def</span> <span style="color: #303030">type_name</span></span>
+<span id="L4" class="line">      <span style="color: #d0d0d0">{{</span> <span style="color: #303030">@type</span><span style="color: #d0d0d0">.</span><span style="color: #303030">name</span><span style="color: #d0d0d0">.</span><span style="color: #303030">stringify</span> <span style="color: #d0d0d0">}}</span></span>
+<span id="L5" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L6" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L7" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line"><span style="color: #aa759f">class</span> <span style="color: #f4bf75">SubClass</span> <span style="color: #d0d0d0">&lt;</span> <span style="color: #f4bf75">SuperClass</span></span>
+<span id="L10" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L11" class="line"></span>
+<span id="L12" class="line"><span style="color: #505050"># SuperClass.new.type_name は undefined method 'type_name' for SuperClass となる</span></span>
+<span id="L13" class="line"><span style="color: #f4bf75">SubClass</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">.</span><span style="color: #303030">type_name</span> <span style="color: #505050"># =&gt; "SubClass"</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>継承した場合のみ実行されるので、 <code>SuperClass</code> には <code>#type_name</code> が存在していないことがわかります。</p>
+</div>
+<div class="paragraph">
+<p><code>method_missing</code> の例も見てみましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">macro</span> <span style="color: #303030">method_missing</span><span style="color: #d0d0d0">(</span><span style="color: #303030">call</span><span style="color: #d0d0d0">)</span></span>
+<span id="L2" class="line">  <span style="color: #303030">puts</span> <span style="color: #90a959">"name: {{call.name.id}}"</span></span>
+<span id="L3" class="line">  <span style="color: #303030">puts</span> <span style="color: #90a959">"args: {{call.args.size}} arguments"</span></span>
+<span id="L4" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line"><span style="color: #303030">foo</span></span>
+<span id="L7" class="line"><span style="color: #505050"># output:</span></span>
+<span id="L8" class="line"><span style="color: #505050"># name: foo</span></span>
+<span id="L9" class="line"><span style="color: #505050"># args: 0 arguments</span></span>
+<span id="L10" class="line"></span>
+<span id="L11" class="line"><span style="color: #303030">bar</span> <span style="color: #90a959">1</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">'a'</span></span>
+<span id="L12" class="line"><span style="color: #505050"># output:</span></span>
+<span id="L13" class="line"><span style="color: #505050"># name: bar</span></span>
+<span id="L14" class="line"><span style="color: #505050"># args: 2 arguments</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>method_missing</code> の引数は <code>Crystal::Macros::Call</code> です。これはメソッドの呼び出しを表すクラスです。<code>#args</code> や <code>#receiver</code> などがあります。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="fresh-variables">Fresh variables</h3>
+<div class="paragraph">
+<p>マクロが展開されると、マクロ内で定義した変数もそのまま展開され、 Crystal コードとして解釈されます。次の例を見てください。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">macro</span> <span style="color: #303030">update_x</span></span>
+<span id="L2" class="line">  <span style="color: #303030">x</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">1</span></span>
+<span id="L3" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line"><span style="color: #303030">x</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">0</span></span>
+<span id="L6" class="line"><span style="color: #303030">update_x</span></span>
+<span id="L7" class="line"></span>
+<span id="L8" class="line"><span style="color: #303030">x</span> <span style="color: #505050"># =&gt; 1</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これは、ローカル変数を上書きして重複を排除する際には有効です。しかし、ライブラリで提供するマクロなどでは、意図しない形で上書きされてしまう可能性があります。そのため、 <strong>fresh variables</strong> という構文が用意されています。次の例を見てください。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">macro</span> <span style="color: #303030">dont_update_x</span></span>
+<span id="L2" class="line">  <span style="color: #90a959">%x = </span><span style="color: #90a959">1</span></span>
+<span id="L3" class="line">  <span style="color: #303030">puts</span> <span style="color: #d0d0d0">%</span><span style="color: #303030">x</span></span>
+<span id="L4" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line"><span style="color: #303030">x</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">0</span></span>
+<span id="L7" class="line"><span style="color: #303030">dont_update_x</span> <span style="color: #505050"># outputs 1</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line"><span style="color: #303030">x</span> <span style="color: #505050"># =&gt; 0</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>%変数名</code> とすることで、そのマクロのコンテキスト内で唯一の変数として扱われます。仕組みは簡単です。上記のコードで <code>crystal tool expand</code> をしてみましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal tool <span style="color: #303030">expand</span> <span style="color: #f4bf75">-c</span> /path/to/fresh_variables_example.cr:6:1 /path/to/fresh_variables_example.cr</span>
+<span id="L2" class="line"><span style="color: #303030">1 expansion found</span></span>
+<span id="L3" class="line"><span style="color: #303030">expansion 1:</span></span>
+<span id="L4" class="line"><span style="color: #303030">   dont_update_x</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line"><span style="color: #303030">#</span> <span style="color: #303030">expand </span>macro <span style="color: #90a959">'dont_update_x'</span> <span style="color: #d0d0d0">(</span>/path/to/fresh_variables_example.cr:2:1<span style="color: #d0d0d0">)</span></span>
+<span id="L7" class="line"><span style="color: #303030">~&gt;</span> __temp_20 <span style="color: #d0d0d0">=</span> 1</span>
+<span id="L8" class="line"><span style="color: #303030">   puts(__temp_20)</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>__temp_20</code> のような変数に置き換わっています。このように、マクロの実行フェーズで変数名を置き換えています。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="まとめ">まとめ</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>以上で、マクロとはどういうものか、マクロの文法はどうなっているのかなどの説明を終わります。マクロのおおまかなイメージは湧きましたでしょうか。自分はライブラリを書く際にマクロを使いますが、やはり重複排除の効果はすごいと思います。また、 DSL の提供も比較的簡単にできるのではないでしょうか。マクロに慣れてくると、 Crystal 本来のコードを書くよりもマクロを書いている比率が多くなる印象が強いです。今回のこの章を読み、「マクロが読めるようになった」「マクロが書けるようになった」という方が一人でも増えて頂けると幸いです。</p>
+</div>
+</div>
+</div></div>
+	</article>
+</div><!-- Footer -->
+<div id="footer">
+  
+  <!-- Copyright -->
+  <ul class="copyright">
+    
+      <li>&copy;Intducing Crystal Programming Language. All rights reserved.</li>
+    
+    <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+    <li>Jekyll integration: <a href="https://chrisbobbe.github.io/">Chris Bobbe</a></li>
+  </ul>
+  
+</div></body>
+</html>

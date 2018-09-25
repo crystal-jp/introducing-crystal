@@ -1,0 +1,419 @@
+<!DOCTYPE HTML>
+<!--
+Prologue by HTML5 UP
+html5up.net | @ajlkn
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+Jekyll integration by Chris Bobbe | chrisbobbe.github.io
+-->
+<html><head><!-- Robots -->
+  <meta name="robots" content="index, follow" /><link rel="canonical" href="/introducing-crystal/chapters/01-introduction.html" /><!-- Title, description, author --><title>01. はじめに | Intducing Crystal Programming Language</title>
+  <meta name="description" content="『Introducing Crystal Programming Language』はプログラミング言語 Crystal の初心者〜中級者向け解説書です。" />
+  <meta name="author" content="Crystal-JP" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="01. はじめに | Intducing Crystal Programming Language" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/introducing-crystal/assets/images/avatar.png" />
+  <meta property="og:url" content="/introducing-crystal/chapters/01-introduction.html" />
+  <meta property="og:site_name" content="Intducing Crystal Programming Language" />
+  <meta property="og:description" content="『Introducing Crystal Programming Language』はプログラミング言語 Crystal の初心者〜中級者向け解説書です。" />
+  
+  <!-- Styles -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--[if lte IE 8]><script src="/introducing-crystal/assets/js/ie/html5shiv.js" defer></script><![endif]-->
+  <link rel="stylesheet" href="/introducing-crystal/assets/css/main.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="/introducing-crystal/assets/css/ie8.css" /><![endif]-->
+  <!--[if lte IE 9]><link rel="stylesheet" href="/introducing-crystal/assets/css/ie9.css" /><![endif]-->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+
+  <!-- Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/jquery.scrolly.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/jquery.scrollzer.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/skel.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/util.js" defer></script>
+  <!--[if lte IE 8]><script src="/introducing-crystal/assets/js/ie/respond.min.js" defer></script><![endif]-->
+  <script src="/introducing-crystal/assets/js/main.js" defer></script>
+
+</head><body><!-- Header -->
+<div id="header">
+  <div class="top"><!-- Logo -->
+<div id="logo">
+  <a href="/introducing-crystal/" id="home-link">
+    <span class="image avatar48"><img src="/introducing-crystal/assets/images/avatar.png" alt="Avatar of Crystal-JP" /></span>
+    <h1 id="title">Intducing Crystal Programming Language</h1>
+    <p></p>
+  </a>
+</div><!-- Nav -->
+<nav id="nav">
+  <ul><li><a href="/introducing-crystal/" id="トップページ-link">
+            <span class="icon fa-link">トップページ</span>
+          </a></li><li><a href="#" id="01-はじめに" class="active">
+            <span class="icon fa-link">01. はじめに</span>
+          </a></li><li><a href="/introducing-crystal/chapters/02-getting-started.html" id="02-getting-started-link">
+            <span class="icon fa-link">02. Getting Started</span>
+          </a></li><li><a href="/introducing-crystal/chapters/03-syntax.html" id="03-構文-link">
+            <span class="icon fa-link">03. 構文</span>
+          </a></li><li><a href="/introducing-crystal/chapters/06-web-development.html" id="06-web-開発-link">
+            <span class="icon fa-link">06. Web 開発</span>
+          </a></li><li><a href="/introducing-crystal/chapters/04-macro.html" id="04-マクロ-link">
+            <span class="icon fa-link">04. マクロ</span>
+          </a></li><li><a href="/introducing-crystal/chapters/07-cli-development.html" id="07-cli-開発-link">
+            <span class="icon fa-link">07. CLI 開発</span>
+          </a></li><li><a href="/introducing-crystal/chapters/05-shards.html" id="05-shards-link">
+            <span class="icon fa-link">05. Shards</span>
+          </a></li><li><a href="/introducing-crystal/authors.html" id="著者紹介-link">
+            <span class="icon fa-link">著者紹介</span>
+          </a></li></ul>
+</nav></div>
+  <div class="bottom"><!-- Social Icons -->
+<ul class="icons"></ul>
+</div>
+</div>
+<!-- Main -->
+<div id="main">
+	<!-- Page -->
+	<article class="shade-two">
+	  <div class="container">
+			<header>
+				<h2>01. はじめに</h2></header><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#コンパイラ言語-crystal">コンパイラ言語 Crystal</a></li>
+<li><a href="#crystal-の型システム">Crystal の型システム</a></li>
+<li><a href="#null-安全性">Null 安全性</a></li>
+<li><a href="#マクロ">マクロ</a></li>
+<li><a href="#crystal-の並行処理">Crystal の並行処理</a></li>
+<li><a href="#c-バインディング">C バインディング</a></li>
+<li><a href="#パッケージ管理">パッケージ管理</a></li>
+<li><a href="#crystal-のコミュニティ">Crystal のコミュニティ</a></li>
+<li><a href="#まとめ">まとめ</a></li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>この本はプログラミング言語 Crystal の入門書です。おそらくまとまった一冊の書籍としては世界初の初心者向け Crystal 本になっています。</p>
+</div>
+<div class="paragraph">
+<p>Crystal が登場したのは2014年のことで、それからずっと「 Fast as C, Slick as Ruby 」というコンセプトで作られています。</p>
+</div>
+<div class="paragraph">
+<p>つまり Crystal は、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>C 言語の速さ</p>
+</li>
+<li>
+<p>Ruby の書き味</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>を同時に持つ実用的なプログラミング言語を目指して開発されています。元々は Manas Technology Solutions 社によって2011年から開発されていましたが、現在はオープンソースのプロジェクトとして公開され有志の手によって精力的に開発が進んでいます。そして、とうとうバージョン1.0のリリースが見えてくるところまで完成度が高くなりました。</p>
+</div>
+<div class="paragraph">
+<p>このように Crystal は新しいプログラミング言語ですので、本書を手に取っていただいた方の中には Crystal というプログラミング言語について初めて知ったという方もいるかもしれません。そこで、このはじまりの章では Crystal の特徴について概要を簡単に紹介していきます。</p>
+</div>
+<div class="paragraph">
+<p>ただ、どのようなプログラミング言語かということに関しては、言葉で説明するよりもまず実際のプログラムを見てイメージをつかんでもらう方が早いですよね。次のプログラムは、Crystal でごくシンプルな HTTP サーバを実装したプログラムです。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"http/server"</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #303030">server</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">HTTP</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Server</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">context</span><span style="color: #d0d0d0">|</span></span>
+<span id="L4" class="line">  <span style="color: #303030">context</span><span style="color: #d0d0d0">.</span><span style="color: #303030">response</span><span style="color: #d0d0d0">.</span><span style="color: #303030">content_type</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"text/plain"</span></span>
+<span id="L5" class="line">  <span style="color: #303030">context</span><span style="color: #d0d0d0">.</span><span style="color: #303030">response</span><span style="color: #d0d0d0">.</span><span style="color: #303030">print</span> <span style="color: #90a959">"Hello world, got </span><span style="color: #8f5536">#{</span><span style="color: #303030">context</span><span style="color: #d0d0d0">.</span><span style="color: #303030">request</span><span style="color: #d0d0d0">.</span><span style="color: #303030">path</span><span style="color: #8f5536">}</span><span style="color: #90a959">!"</span></span>
+<span id="L6" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L7" class="line"></span>
+<span id="L8" class="line"><span style="color: #303030">puts</span> <span style="color: #90a959">"Listening on http://127.0.0.1:8080"</span></span>
+<span id="L9" class="line"><span style="color: #303030">server</span><span style="color: #d0d0d0">.</span><span style="color: #303030">listen</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">8080</span><span style="color: #d0d0d0">)</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>いかがでしょうか。プログラムの細かいところはまだわからなくて問題ありませんが、Ruby を使ったことがある方であれば Crystal のプログラムが一見してとても Ruby に似ていることに気づいたと思います。自ら「 Slick as Ruby 」と称していることからもわかるように、Crystal は Ruby にとてもよく似たシンタックスを持ったプログラミング言語です。しかし、Crystal は Ruby とは異なる独自の特徴をいくつも持っており、それによって「 Fast as C 」の高速性や型安全なプログラミングを実現しています。　</p>
+</div>
+<div class="paragraph">
+<p>ここから、その Crystal の特徴を簡単にお伝えしていきます。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="コンパイラ言語-crystal">コンパイラ言語 Crystal</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Crystal の処理系はコンパイラとして提供されます。このことはつまり、Crystal のプログラムを実行するには、Crystal コンパイラでソースコードをコンパイルし実行ファイルを生成する必要があることを示しています。これは類似したシンタックスを持つ Ruby がコンパイル不要なインタプリタ型言語として作られていることとは対照的です。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+より正確に言うと、Ruby も実行する際に内部的にコンパイル処理を行なっているのですが、ここでは話を単純にするために実質的にインタプリタ型言語と分類しています
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Crystal はコンパイラ型の言語となっていることで、実行時速度の高速化や次項でお伝えする静的な型システムを実現しています。</p>
+</div>
+<div class="paragraph">
+<p>また、コンパイルすることで直接実行できるファイルが生成されるので、実行する環境に処理系を用意する必要がなくアプリケーションのデプロイが容易なことも利点の1つです。なお、本書では詳細には触れませんが、Crystal はコンパイラ基盤に LLVM を利用しており、各プラットフォームに最適化した実行ファイルの生成が可能になっています。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crystal-の型システム">Crystal の型システム</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Crystal は静的型付けのプログラミング言語です。これも、動的型付け言語の Ruby とは異なった Crystal の大きな特徴です。</p>
+</div>
+<div class="paragraph">
+<p>プログラムの中でデータの型は静的に解析されチェックが行われます。このことによって、型の不一致などはコンパイル時に補足され、実行時にエラーになってしまうことを防止できます。</p>
+</div>
+<div class="paragraph">
+<p>ただ、Crystal は強力な型推論の仕組みを備えているため、多くの場合はプログラマが自分で面倒な型指定をしなくてもよいようになっています。</p>
+</div>
+<div class="paragraph">
+<p>例えば、次の簡単なプログラムを見てください。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #aa759f">def</span> <span style="color: #303030">shout</span><span style="color: #d0d0d0">(</span><span style="color: #303030">x</span><span style="color: #d0d0d0">)</span></span>
+<span id="L2" class="line">  <span style="color: #505050"># Int32 と String はどちらも `to_s` メソッドを持っている</span></span>
+<span id="L3" class="line">  <span style="color: #303030">x</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">.</span><span style="color: #303030">upcase</span></span>
+<span id="L4" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line"><span style="color: #303030">foo</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">ENV</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"FOO"</span><span style="color: #d0d0d0">]?</span> <span style="color: #d0d0d0">||</span> <span style="color: #90a959">10</span></span>
+<span id="L7" class="line"></span>
+<span id="L8" class="line"><span style="color: #303030">typeof</span><span style="color: #d0d0d0">(</span><span style="color: #303030">foo</span><span style="color: #d0d0d0">)</span>        <span style="color: #505050"># =&gt; (Int32 | String)</span></span>
+<span id="L9" class="line"><span style="color: #303030">typeof</span><span style="color: #d0d0d0">(</span><span style="color: #303030">shout</span><span style="color: #d0d0d0">(</span><span style="color: #303030">foo</span><span style="color: #d0d0d0">))</span> <span style="color: #505050"># =&gt; String</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>このプログラムは、変数 <code>foo</code> に、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>環境変数 <code>FOO</code> が存在すればその値の文字列（<code>String</code> 型）</p>
+</li>
+<li>
+<p>存在しなければ <code>10</code> という数値（<code>Int32</code> 型）</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>を代入し、<code>foo</code> の型と <code>shout(foo)</code> の型を <code>typeof</code> によって調査するものです。<code>shout</code> メソッドの中では、引数として渡されたデータを <code>to_s</code> と <code>upcase</code> というメソッドによって大文字の文字列に変換しています。このとき、 <code>String</code> も <code>Int32</code> もどちらも <code>to_s</code> という文字列変換メソッドを持っていることがコンパイラによって正しく推論されるため、型を指定していなくてもエラーにはなりません。続いて <code>typeof</code> の結果を見てみましょう。<code>foo</code> の型は実行時まで <code>String</code> か <code>Int32</code> かが判定できないために両方の複合型（ユニオン型）になっています。一方、 <code>shout(foo)</code> は戻り値の型から <code>String</code> だということが保証されるため、その型も <code>String</code> として正しく推論されていることがわかります。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="null-安全性">Null 安全性</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>「 Null 参照によるエラーの損害は10億ドル相当だ」という有名な言葉を聞いたことがある人は多いと思います。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<a href="https://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare">Null References: The Billion Dollar Mistake - Tony Hoare</a>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>実際にプログラミングをしていても、おそらくほとんどの人が Null に 対して何か操作しようとしてエラーになってつらい経験をしたことがあるのではないでしょうか。Java の <code>NullPointerException</code> などはよく話のネタになりますよね。</p>
+</div>
+<div class="paragraph">
+<p>そこで、最近のモダンなプログラミング言語は Null 安全性を取り入れているものが多くなってきており、Crystal も例外ではありません。</p>
+</div>
+<div class="paragraph">
+<p>次のプログラムを見てください。</p>
+</div>
+<div class="listingblock">
+<div class="title"><code>hello_world.cr</code></div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #aa759f">if</span> <span style="color: #303030">rand</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">2</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #90a959">0</span></span>
+<span id="L2" class="line">  <span style="color: #303030">my_string</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"hello world"</span></span>
+<span id="L3" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line"><span style="color: #303030">puts</span> <span style="color: #303030">my_string</span><span style="color: #d0d0d0">.</span><span style="color: #303030">upcase</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これは、<code>rand</code> メソッドによって <code>0</code> 〜 <code>2</code> を生成し、その結果によって <code>if</code> 条件を判定しているものです。しかし、実行するまでその結果が「真」になるかどうかはわかりません。したがって、<code>my_string</code> が Null でないことをコンパイル時に保証することはできません。この場合は <code>upcase</code> メソッドが呼び出せるかどうかがわからないため、コンパイルは以下のようなエラーになります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal hello_world.cr</span>
+<span id="L2" class="line"><span style="color: #303030">Error in hello_world.cr:5: undefined method 'upcase' for Nil (compile-time type is (String | Nil))</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">puts my_string.upcase</span></span>
+<span id="L5" class="line"><span style="color: #303030">               ^~~~~~</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>このようにして、Crystal では Null 安全性を保証しており、また、Null でない場合だけに実行する処理の記述なども書きやすい設計となっています。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="マクロ">マクロ</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>先述したように、Crystal は静的型付けのコンパイラ言語であり、それによって安全なプログラムの構築が可能になっています。その一方で Ruby のような動的型付け言語が得意な「実行時にプログラムの動作を変える」こと、いわゆるメタプログラミングや実行時リフレクションといったテクニックは制限されます。</p>
+</div>
+<div class="paragraph">
+<p>しかし Crystal には強力なマクロの仕組みが搭載されており、それを活用することでかなり自由度の高いプログラムを書くことが可能です。</p>
+</div>
+<div class="paragraph">
+<p>マクロについては後の章で詳しく触れます。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crystal-の並行処理">Crystal の並行処理</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>現在のプログラミングにおける大きな変化として、並行処理や並列処理が高い注目を集めるようになったことがあげられるでしょう。進化した並列処理の機構を特徴とする Rust や Go 言語、そして非同期処理によってシェアを伸ばした Node.js を見ても、プログラミング言語に並行処理は欠かせないものとなっています。</p>
+</div>
+<div class="paragraph">
+<p>本書では大きく触れませんが、Crystal では、ノン・プリエンプティブな軽量スレッドを使った並行処理が可能になっており、それをファイバーと呼んでいます。ファイバー間におけるデータのやり取りには Go 言語や Clojure のようにチャンネルを利用し、共有メモリやロックを意識しなくても使いやすいように設計されています。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="c-バインディング">C バインディング</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>本書の範囲を超えてしまうので詳細は触れませんが、Crystal は C 言語ライブラリのバインディングを書きやすいので、C 言語の資産を Crystal から利用することも難しくありません。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="パッケージ管理">パッケージ管理</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>現代的なプログラミングでは OSS などで提供されるライブラリをいくつも利用することがごく一般的ですが、数が多くなってくるとその依存関係を管理するのがとても大変になります。したがって、パッケージングのシステムがあるかどうかはプログラミング言語の利用しやすさにおいて大きな位置を占めています。</p>
+</div>
+<div class="paragraph">
+<p>Crystal には Shards というパッケージ管理のシステムがあります。この Shards についても後の章で詳しく触れます。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crystal-のコミュニティ">Crystal のコミュニティ</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>プログラミング言語を使うときには、その言語自体の仕様はもちろんですが、その言語コミュニティが充実していることも同じくらい大事ですよね。ここでは、Crystal のコミュニティや公式の一次情報を得るためのサイトを紹介します。</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Crystal 公式サイト（英語）</dt>
+<dd>
+<p><a href="https://crystal-lang.org" class="bare">https://crystal-lang.org</a><br>
+Crystal の公式サイトです。リリースノートやブログ、そして API ドキュメントがあります。英語ですが、基本的には一次情報はこのサイトを中心として見ていれば得ることができます。</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Crystal の Google グループ （英語） </dt>
+<dd>
+<p><a href="https://groups.google.com/forum/#!forum/crystal-lang" class="bare">https://groups.google.com/forum/#!forum/crystal-lang</a><br>
+Crystal に関することで何かあれば、まずこの Google グループに書き込むことが推奨されています。例えば Crystal に関する質問や Crystal を使ったプロジェクトの紹介など、Crystal に関することであれば何でも OK です。活発にやりとりが行われています。</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Gitter の Crystal 公式チャットルーム（英語） </dt>
+<dd>
+<p><a href="https://gitter.im/crystal-lang/crystal" class="bare">https://gitter.im/crystal-lang/crystal</a><br>
+Crystal に関する Gitter の公式チャットルームです。チャットなので Google グループより気軽に質問などができて、レスポンスも早いことが期待できます。こちらもとても活発で、IRC との連携もされています。</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Crystal の GitHub リポジトリ </dt>
+<dd>
+<p><a href="https://github.com/crystal-lang/crystal" class="bare">https://github.com/crystal-lang/crystal</a><br>
+Crystal の開発は GitHub 上で行われています。Crystal の不具合を見つけたときに issues に報告したり、何か素晴らしい新機能や修正について直接 pull request を送ることもできます。</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Crystal-JP の Slack（日本語） </dt>
+<dd>
+<p><a href="http://crystal.pine.moe" class="bare">http://crystal.pine.moe</a><br>
+日本の Crystal ユーザコミュニティ「 Crystal-JP 」の Slack への招待ページです。Crystal-JP の Slack では日本語で Crystal の情報交換を行うことができます。お気軽に参加ください。また、Crystal-JP では不定期に（今のところ東京のみですが）イベントを開催しており、そのお知らせなども主にこの Slack で告知されます。</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>また、Crystal のライブラリなどを探したい場合には <a href="https://github.com/veelenga/awesome-crystal">Awesome Crystal</a> や <a href="https://crystalshards.xyz">CrystalShards</a> が参考になるでしょう。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="まとめ">まとめ</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>本章では、Crystal の特徴を簡単に説明しました。Crystal がどのようにして「 C 言語のように速く、Ruby の書き味を持つ」ということを実現しているかの概要だけでも把握していただき、Crystal の魅力を感じていただけたら幸いです。</p>
+</div>
+<div class="paragraph">
+<p>次の章からはより実践的な Crystal のプログラミングについて説明していきます。</p>
+</div>
+<div class="paragraph">
+<p>最後になりますが、本書で利用している Crystal のバージョンは執筆時点で最新の <code>0.26.1</code> です。異なるバージョンの Crystal では掲載されているプログラムが期待通りに動作しない可能性もあります。予めご了承ください。</p>
+</div>
+</div>
+</div></div>
+	</article>
+</div><!-- Footer -->
+<div id="footer">
+  
+  <!-- Copyright -->
+  <ul class="copyright">
+    
+      <li>&copy;Intducing Crystal Programming Language. All rights reserved.</li>
+    
+    <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+    <li>Jekyll integration: <a href="https://chrisbobbe.github.io/">Chris Bobbe</a></li>
+  </ul>
+  
+</div></body>
+</html>

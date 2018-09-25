@@ -1,0 +1,614 @@
+<!DOCTYPE HTML>
+<!--
+Prologue by HTML5 UP
+html5up.net | @ajlkn
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+Jekyll integration by Chris Bobbe | chrisbobbe.github.io
+-->
+<html><head><!-- Robots -->
+  <meta name="robots" content="index, follow" /><link rel="canonical" href="/introducing-crystal/chapters/02-getting-started.html" /><!-- Title, description, author --><title>02. Getting Started | Intducing Crystal Programming Language</title>
+  <meta name="description" content="『Introducing Crystal Programming Language』はプログラミング言語 Crystal の初心者〜中級者向け解説書です。" />
+  <meta name="author" content="Crystal-JP" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="02. Getting Started | Intducing Crystal Programming Language" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/introducing-crystal/assets/images/avatar.png" />
+  <meta property="og:url" content="/introducing-crystal/chapters/02-getting-started.html" />
+  <meta property="og:site_name" content="Intducing Crystal Programming Language" />
+  <meta property="og:description" content="『Introducing Crystal Programming Language』はプログラミング言語 Crystal の初心者〜中級者向け解説書です。" />
+  
+  <!-- Styles -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--[if lte IE 8]><script src="/introducing-crystal/assets/js/ie/html5shiv.js" defer></script><![endif]-->
+  <link rel="stylesheet" href="/introducing-crystal/assets/css/main.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="/introducing-crystal/assets/css/ie8.css" /><![endif]-->
+  <!--[if lte IE 9]><link rel="stylesheet" href="/introducing-crystal/assets/css/ie9.css" /><![endif]-->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+
+  <!-- Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/jquery.scrolly.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/jquery.scrollzer.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/skel.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/util.js" defer></script>
+  <!--[if lte IE 8]><script src="/introducing-crystal/assets/js/ie/respond.min.js" defer></script><![endif]-->
+  <script src="/introducing-crystal/assets/js/main.js" defer></script>
+
+</head><body><!-- Header -->
+<div id="header">
+  <div class="top"><!-- Logo -->
+<div id="logo">
+  <a href="/introducing-crystal/" id="home-link">
+    <span class="image avatar48"><img src="/introducing-crystal/assets/images/avatar.png" alt="Avatar of Crystal-JP" /></span>
+    <h1 id="title">Intducing Crystal Programming Language</h1>
+    <p></p>
+  </a>
+</div><!-- Nav -->
+<nav id="nav">
+  <ul><li><a href="/introducing-crystal/" id="トップページ-link">
+            <span class="icon fa-link">トップページ</span>
+          </a></li><li><a href="/introducing-crystal/chapters/01-introduction.html" id="01-はじめに-link">
+            <span class="icon fa-link">01. はじめに</span>
+          </a></li><li><a href="#" id="02-getting-started" class="active">
+            <span class="icon fa-link">02. Getting Started</span>
+          </a></li><li><a href="/introducing-crystal/chapters/03-syntax.html" id="03-構文-link">
+            <span class="icon fa-link">03. 構文</span>
+          </a></li><li><a href="/introducing-crystal/chapters/06-web-development.html" id="06-web-開発-link">
+            <span class="icon fa-link">06. Web 開発</span>
+          </a></li><li><a href="/introducing-crystal/chapters/04-macro.html" id="04-マクロ-link">
+            <span class="icon fa-link">04. マクロ</span>
+          </a></li><li><a href="/introducing-crystal/chapters/07-cli-development.html" id="07-cli-開発-link">
+            <span class="icon fa-link">07. CLI 開発</span>
+          </a></li><li><a href="/introducing-crystal/chapters/05-shards.html" id="05-shards-link">
+            <span class="icon fa-link">05. Shards</span>
+          </a></li><li><a href="/introducing-crystal/authors.html" id="著者紹介-link">
+            <span class="icon fa-link">著者紹介</span>
+          </a></li></ul>
+</nav></div>
+  <div class="bottom"><!-- Social Icons -->
+<ul class="icons"></ul>
+</div>
+</div>
+<!-- Main -->
+<div id="main">
+	<!-- Page -->
+	<article class="shade-two">
+	  <div class="container">
+			<header>
+				<h2>02. Getting Started</h2></header><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#crystal-のインストール">Crystal のインストール</a>
+<ul class="sectlevel2">
+<li><a href="#debian-や-ubuntu">Debian や Ubuntu</a></li>
+<li><a href="#red-hat-や-centos">Red Hat や CentOS</a></li>
+<li><a href="#arch-linux">Arch Linux</a></li>
+<li><a href="#gentoo-linux">Gentoo Linux</a></li>
+<li><a href="#macos">macOS</a></li>
+<li><a href="#linuxbrew">Linuxbrew</a></li>
+<li><a href="#windows">Windows</a></li>
+<li><a href="#その他のインストール方法">その他のインストール方法</a></li>
+</ul>
+</li>
+<li><a href="#hello-crystal">Hello Crystal</a>
+<ul class="sectlevel2">
+<li><a href="#インストールの確認">インストールの確認</a></li>
+<li><a href="#はじめての-crystal-プログラム">はじめての Crystal プログラム</a></li>
+</ul>
+</li>
+<li><a href="#crystal-を書くためのエディタ">Crystal を書くためのエディタ</a>
+<ul class="sectlevel2">
+<li><a href="#visual-studio-code">Visual Studio Code</a></li>
+<li><a href="#atom">Atom</a></li>
+<li><a href="#vim">Vim</a></li>
+<li><a href="#emacs">Emacs</a></li>
+</ul>
+</li>
+<li><a href="#crystal-playground">Crystal Playground</a></li>
+<li><a href="#まとめ">まとめ</a></li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>「はじめに」の章で説明したように、 Crystal はコンパイラ言語なので、プログラムのソースコードをコンパイルするためのコンパイラが必要になります。</p>
+</div>
+<div class="paragraph">
+<p>この章ではまず、 Crystal を実際に使っていくための様々なプラットフォームでのインストール方法を紹介します。</p>
+</div>
+<div class="paragraph">
+<p>そして、プログラムを書くために大事なエディタのサポート状況や、 Web ブラウザ上で Crystal プログラムを実行することのできる Playground というツールについても紹介します。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crystal-のインストール">Crystal のインストール</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Crystal のインストール方法は OS ごとに異なります。ここでは、主要な Linux ディストリビューションや macOS 、そして Windows へのインストール方法を紹介します。</p>
+</div>
+<div class="sect2">
+<h3 id="debian-や-ubuntu">Debian や Ubuntu</h3>
+<div class="paragraph">
+<p>Debian 系のディストリビューションでは、 Crystal の公式リポジトリを利用することができます。</p>
+</div>
+<div class="paragraph">
+<p>そのために、まず APT の構成にリポジトリを追加します。以下のコマンドを実行してください。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> curl <span style="color: #f4bf75">-sSL</span> https://dist.crystal-lang.org/apt/setup.sh | <span style="color: #303030">sudo </span>bash</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これによりリポジトリが構成されキーが登録されます。もし上記を自分自身で設定するのがお好みの場合は、以下を実行しても同じことができます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> curl <span style="color: #f4bf75">-sL</span> <span style="color: #90a959">"https://keybase.io/crystal/pgp_keys.asc"</span> | <span style="color: #303030">sudo </span>apt-key add -</span>
+<span id="L2" class="line"><span style="color: #303030">$</span> <span style="color: #303030">echo</span> <span style="color: #90a959">"deb https://dist.crystal-lang.org/apt crystal main"</span> | <span style="color: #303030">sudo tee</span> /etc/apt/sources.list.d/crystal.list</span>
+<span id="L3" class="line"><span style="color: #303030">$</span> <span style="color: #303030">sudo </span>apt-get update</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>リポジトリを構成したら以下で Crystal がインストールできます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> <span style="color: #303030">sudo </span>apt <span style="color: #303030">install </span>crystal</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>以下に記載するパッケージは必須ではありませんが、標準ライブラリの機能を使う上で必要となるためインストールすることを推奨します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> <span style="color: #303030">sudo </span>apt <span style="color: #303030">install </span>libssl-dev      <span style="color: #505050"># OpenSSL に必要です</span></span>
+<span id="L2" class="line"><span style="color: #303030">$</span> <span style="color: #303030">sudo </span>apt <span style="color: #303030">install </span>libxml2-dev     <span style="color: #505050"># XML に必要です</span></span>
+<span id="L3" class="line"><span style="color: #303030">$</span> <span style="color: #303030">sudo </span>apt <span style="color: #303030">install </span>libyaml-dev     <span style="color: #505050"># YAML に必要です</span></span>
+<span id="L4" class="line"><span style="color: #303030">$</span> <span style="color: #303030">sudo </span>apt <span style="color: #303030">install </span>libgmp-dev      <span style="color: #505050"># Big numbers に必要です</span></span>
+<span id="L5" class="line"><span style="color: #303030">$</span> <span style="color: #303030">sudo </span>apt <span style="color: #303030">install </span>libreadline-dev <span style="color: #505050"># Readline に必要です</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードすることができます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> <span style="color: #303030">sudo </span>apt update</span>
+<span id="L2" class="line"><span style="color: #303030">$</span> <span style="color: #303030">sudo </span>apt <span style="color: #303030">install </span>crystal</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="red-hat-や-centos">Red Hat や CentOS</h3>
+<div class="paragraph">
+<p>Red Hat 系のディストリビューションでも、 Crystal の公式リポジトリを利用することができます。</p>
+</div>
+<div class="paragraph">
+<p>まず YUM の構成にリポジトリを追加します。以下のコマンドを実行してください。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> curl https://dist.crystal-lang.org/rpm/setup.sh | <span style="color: #303030">sudo </span>bash</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これでリポジトリが構成されキーが登録されますが、以下のように、同様のことを手動で行うことも可能です。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> rpm <span style="color: #f4bf75">--import</span> https://dist.crystal-lang.org/rpm/RPM-GPG-KEY</span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #303030">$</span> <span style="color: #303030">cat</span> <span style="color: #d0d0d0">&gt;</span> /etc/yum.repos.d/crystal.repo <span style="color: #d0d0d0">&lt;&lt;</span><span style="color: #f4bf75">END</span></span>
+<span id="L4" class="line"><span style="color: #303030">$</span> <span style="color: #90a959">[crystal]</span></span>
+<span id="L5" class="line"><span style="color: #303030">$</span> <span style="color: #90a959">name = Crystal</span></span>
+<span id="L6" class="line"><span style="color: #303030">$</span> <span style="color: #90a959">baseurl = https://dist.crystal-lang.org/rpm/</span></span>
+<span id="L7" class="line"><span style="color: #303030">$</span> <span style="color: #90a959">END</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>リポジトリを構成したら以下で Crystal がインストールできます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> <span style="color: #303030">sudo </span>yum <span style="color: #303030">install </span>crystal</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードすることができます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> <span style="color: #303030">sudo </span>yum update crystal</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="arch-linux">Arch Linux</h3>
+<div class="paragraph">
+<p>Arch Linux では、ユーザリポジトリから Crystal をインストールできます。パッケージの依存関係を管理するための <code>shards</code> も必要になるので同様にインストールしてください。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> <span style="color: #303030">sudo </span>pacman <span style="color: #f4bf75">-S</span> crystal shards</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="gentoo-linux">Gentoo Linux</h3>
+<div class="paragraph">
+<p>Gentoo Linux では、メインの overlay に Crystal が含まれています。</p>
+</div>
+<div class="paragraph">
+<p>以下で構成のフラグを確認することができます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">#</span> equery u dev-lang/crystal</span>
+<span id="L2" class="line"><span style="color: #303030">[ Legend : U - final flag setting for installation]</span></span>
+<span id="L3" class="line"><span style="color: #303030">[        : I - package is installed with flag     ]</span></span>
+<span id="L4" class="line"><span style="color: #303030">[ Colors : set, unset                             ]</span></span>
+<span id="L5" class="line"><span style="color: #303030"> * Found these USE flags for dev-lang/crystal-0.18.7:</span></span>
+<span id="L6" class="line"><span style="color: #303030"> U I</span></span>
+<span id="L7" class="line"><span style="color: #303030"> - - doc      : Add extra documentation (API, Javadoc, etc). It is recommended to enable per package instead of globally</span></span>
+<span id="L8" class="line"><span style="color: #303030"> - - examples : Install examples, usually source code</span></span>
+<span id="L9" class="line"><span style="color: #303030"> + + xml      : Use the dev-libs/libxml2 library to enable Crystal xml module</span></span>
+<span id="L10" class="line"><span style="color: #303030"> + - yaml     : Use the dev-libs/libyaml library to enable Crystal yaml module</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>以下を実行してインストールしてください。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> su -</span>
+<span id="L2" class="line"><span style="color: #303030">#</span> emerge <span style="color: #f4bf75">-a</span> dev-lang/crystal</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="macos">macOS</h3>
+<div class="paragraph">
+<p>macOS では、 <a href="http://brew.sh/">Homebrew</a> を利用して簡単に Crystal をインストールすることができます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> brew update</span>
+<span id="L2" class="line"><span style="color: #303030">$</span> brew <span style="color: #303030">install </span>crystal</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>なお、macOS で Crystal を使うときに以下のエラーに遭遇することがあります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">ld: library not found for -levent</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>その場合は、以下のようにコマンドラインツールを再インストールした上で、デフォルトのツールチェインを選択し直す必要があります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> xcode-select <span style="color: #f4bf75">--install</span></span>
+<span id="L2" class="line"><span style="color: #303030">$</span> xcode-select <span style="color: #f4bf75">--switch</span> /Library/Developer/CommandLineTools</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="linuxbrew">Linuxbrew</h3>
+<div class="paragraph">
+<p><a href="http://linuxbrew.sh/">Linuxbrew</a> を使って Linux に Crystal をインストールすることもできます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> brew update</span>
+<span id="L2" class="line"><span style="color: #303030">$</span> brew <span style="color: #303030">install </span>crystal-lang</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>もし Crystal の言語自体を開発することにも興味があるのであれば、同時に LLVM もインストールしておくと良いでしょう。その場合は上記の2行目を以下に変更します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> brew <span style="color: #303030">install </span>crystal-lang <span style="color: #f4bf75">--with-llvm</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="windows">Windows</h3>
+<div class="paragraph">
+<p>残念ながら、まだ Crystal は Windows での実行をサポートしていません。ですが、 <a href="https://docs.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux</a> を利用することで Windows 10 上で Crystal を使うことが可能です。</p>
+</div>
+<div class="paragraph">
+<p>WSL 上での Crystal のインストール方法は、それぞれの Linux ディストリビューションにおけるインストール方法と同様です。例えば、もし WSL に Ubuntu を導入したのであれば、前掲の「 Debian や Ubuntu 」でのインストール方法を参照してください。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="その他のインストール方法">その他のインストール方法</h3>
+<div class="paragraph">
+<p>ここまで、プラットフォームごとのインストール方法を説明しましたが、自分の使っている環境が対応していない場合や、より最新のバージョンを使いたい場合のインストール方法を紹介します。入門書の範囲を超えてしまうため、詳細についてはリンク先をご覧ください。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://crystal-lang.org/docs/installation/from_a_targz.html">tar ボールからのバイナリインストール</a></p>
+</li>
+<li>
+<p><a href="https://crystal-lang.org/docs/installation/from_source_repository.html">ソースコードからのビルド</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="hello-crystal">Hello Crystal</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="インストールの確認">インストールの確認</h3>
+<div class="paragraph">
+<p>Crystal のインストールができたら、以下のコマンドを実行してみましょう。これで、Crystal がインストールされて利用できる状態かどうかが確認できます。</p>
+</div>
+<div class="listingblock">
+<div class="title"><code>hello.cr</code></div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal <span style="color: #f4bf75">-v</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>正常にインストールされている場合、</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">Crystal 0.26.1 (2018-08-27)</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>といったバージョン情報が表示されます。もし「コマンドが見つからない」といったエラーが表示された場合は、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Crystal のインストールでエラーが発生していないか</p>
+</li>
+<li>
+<p>Crystal をインストールした場所にパスが通っているか</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>を確認してください。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="はじめての-crystal-プログラム">はじめての Crystal プログラム</h3>
+<div class="paragraph">
+<p>無事にインストールして使える状態になっていたら、はじめての Crystal のプログラムを書いてみましょう。ご多分に漏れず、ここでも最初のプログラムは「 Hello world 」とします。</p>
+</div>
+<div class="paragraph">
+<p>好きなエディタで、以下のプログラムを書いて <code>hello.cr</code> として保存してください。Crystal の拡張子は <code>.cr</code> です。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">puts</span> <span style="color: #90a959">"Hello world!"</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>それではプログラムを実行してみましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal hello.cr</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>実行して、</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">Hello world!</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>と表示されたら成功です！</p>
+</div>
+<div class="paragraph">
+<p>Crystal はコンパイラ言語ですが、このように1つのコマンドでコンパイルと実行を同時に行うことができます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal run hello.cr</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>と実行しても同様です。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crystal-を書くためのエディタ">Crystal を書くためのエディタ</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>さて、これで Crystal を書くための準備が整ったので、次の章からは文法など実際にプログラムを書くための内容に入っていきます。ですが、プログラムを快適に書くためにはエディタのサポートも欠かせません。</p>
+</div>
+<div class="paragraph">
+<p>この章では最後に、以下の代表的なオープンソースエディタの Crystal サポートの状況について簡単に紹介します。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Visual Studio Code</p>
+</li>
+<li>
+<p>Atom</p>
+</li>
+<li>
+<p>Vim</p>
+</li>
+<li>
+<p>Emacs</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="visual-studio-code">Visual Studio Code</h3>
+<div class="paragraph">
+<p>Visual Studio Code、通称 VSCode は機能の豊富さとシンプルさ軽さを両立したエディタとしてとても人気のエディタです。</p>
+</div>
+<div class="paragraph">
+<p>VSCode で Crystal プログラミングをサポートするエクステンションにはいくつか種類がありますが、現在最も活発に開発されているのは Crystal Language というものです。GitHub 上では <a href="https://github.com/crystal-lang-tools/vscode-crystal-lang">crystal-lang-tools/vscode-crystal-lang</a> というリポジトリで開発されています。</p>
+</div>
+<div class="paragraph">
+<p>この Crystal Language エクステンションをインストールするだけで、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>シンタックスハイライト</p>
+</li>
+<li>
+<p>自動インデント</p>
+</li>
+<li>
+<p>自動フォーマット</p>
+</li>
+<li>
+<p>エラー検知</p>
+</li>
+<li>
+<p>定義ジャンプ</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>などの機能がすぐに利用できるようになります。</p>
+</div>
+<div class="paragraph">
+<p>vscode-crystal-lang の GitHub 上の Wiki にはより詳しい設定などの情報も記載されています。例えば、エラーの検知レベルをカスタマイズしたり、 <a href="https://github.com/crystal-lang-tools/scry">scry</a> という Crystal の Language Server との連携などのより便利に使うための設定も書かれていますので合わせてご覧ください。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="atom">Atom</h3>
+<div class="paragraph">
+<p>GitHub 社製のエディタ Atom では、以下のパッケージを導入することで快適に Crystal プログラミングができます。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/crystal-lang-tools/language-crystal">crystal-lang-tools/language-crystal</a></p>
+</li>
+<li>
+<p><a href="https://github.com/crystal-lang-tools/atom-ide-crystal">crystal-lang-tools/atom-ide-crystal</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>language-crystal は Atom のパッケージとしては language-crystal-actual という名前で提供されているので注意が必要です。　これをインストールすると Crystal のシンタックスハイライトや自動インデントがサポートされます。</p>
+</div>
+<div class="paragraph">
+<p>atom-ide-crystal は、 前節でも触れた scry という Language Server と連携して IDE のような機能を追加するものです。まだ機能的には充実していない面もありますが、エラー検知をサポートするなど少しずつ開発が進んでいます。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="vim">Vim</h3>
+<div class="paragraph">
+<p>言わずと知れた Vim でも、プラグインを使うことで Crystal プログラミングにエディタのサポートを受けることができます。</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/rhysd/vim-crystal">rhysd/vim-crystal</a> をインストールすると Crystal の filetype が追加され、シンタックスハイライトや自動インデントが有効になります。</p>
+</div>
+<div class="paragraph">
+<p>また、vim-crystal には Crystal の組み込みツール <code>crystal tool</code> や Spec との連携などの便利な機能があり、シームレスにプログラミングしやすくなっています。</p>
+</div>
+<div class="paragraph">
+<p>エラー検知をしたい場合には、 <a href="https://github.com/vim-syntastic/syntastic">vim-syntastic/syntastic</a> などの統合解析プラグインを導入が必要です。前述の vim-crystal にはこの syntastic 用のチェッカもバンドルされているため、特別な設定をせずとも利用することができます。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="emacs">Emacs</h3>
+<div class="paragraph">
+<p>Emacs で Crystal のプログラムを書く場合は <a href="https://github.com/crystal-lang-tools/emacs-crystal-mode">crystal-lang-tools/emacs-crystal-mode</a> を使うのがよいでしょう。</p>
+</div>
+<div class="paragraph">
+<p>このパッケージを導入するとシンタックスハイライトや自動インデントがサポートされ、定番のチェックツール flycheck にも Crystal のサポートが追加されます。</p>
+</div>
+<div class="paragraph">
+<p>emacs-crystal-mode パッケージは <a href="https://melpa.org/#/crystal-mode">MELPA</a> に登録されているので導入も簡単です。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crystal-playground">Crystal Playground</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Crystal Playground を使うと Web ブラウザ上で Crystal のコードを実行することができます。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../assets/images/02-crystal-playground.png" alt="02 crystal playground" width="75%">
+</div>
+</div>
+<div class="paragraph">
+<p>この画像を見るとわかるように、 Playground では、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>実行結果</p>
+</li>
+<li>
+<p>型情報</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>などを同時に表示しながら手軽に Crystal プログラミングを楽しむことができます。</p>
+</div>
+<div class="paragraph">
+<p>Playground は Crystal に同梱されているため、Crystal がインストールされていれば、</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal play</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>と実行するだけで Playground サーバが立ち上がり、すぐにアクセスして使うことができます。デフォルトではポート 8080 で起動するので、お気に入りの Web ブラウザで <a href="http://localhost:8080" class="bare">http://localhost:8080</a> にアクセスしてください。ポートは <code>-p</code> オプションでカスタマイズ可能です。</p>
+</div>
+<div class="paragraph">
+<p>Playground を立ち上げておけば、本書を読み進めるときに、記載されているコードをその場で実行して試したいときにも便利に活用できることでしょう。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="まとめ">まとめ</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>この章では、Crystal のインストール方法とエディタのサポート状況、そして Playground について紹介しました。まだ発展途上であり入門書の範囲を超えてしまうのでここでは記載しませんが、 もし Crystal に慣れてきたらエディタと連携したデバッグ方法なども調べてみるとよいでしょう。</p>
+</div>
+<div class="paragraph">
+<p>次の章では Crystal の構文について説明します。</p>
+</div>
+</div>
+</div></div>
+	</article>
+</div><!-- Footer -->
+<div id="footer">
+  
+  <!-- Copyright -->
+  <ul class="copyright">
+    
+      <li>&copy;Intducing Crystal Programming Language. All rights reserved.</li>
+    
+    <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+    <li>Jekyll integration: <a href="https://chrisbobbe.github.io/">Chris Bobbe</a></li>
+  </ul>
+  
+</div></body>
+</html>

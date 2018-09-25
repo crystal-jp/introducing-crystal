@@ -1,0 +1,1357 @@
+<!DOCTYPE HTML>
+<!--
+Prologue by HTML5 UP
+html5up.net | @ajlkn
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+Jekyll integration by Chris Bobbe | chrisbobbe.github.io
+-->
+<html><head><!-- Robots -->
+  <meta name="robots" content="index, follow" /><link rel="canonical" href="/introducing-crystal/chapters/07-cli-development.html" /><!-- Title, description, author --><title>07. CLI 開発 | Intducing Crystal Programming Language</title>
+  <meta name="description" content="『Introducing Crystal Programming Language』はプログラミング言語 Crystal の初心者〜中級者向け解説書です。" />
+  <meta name="author" content="Crystal-JP" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="07. CLI 開発 | Intducing Crystal Programming Language" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/introducing-crystal/assets/images/avatar.png" />
+  <meta property="og:url" content="/introducing-crystal/chapters/07-cli-development.html" />
+  <meta property="og:site_name" content="Intducing Crystal Programming Language" />
+  <meta property="og:description" content="『Introducing Crystal Programming Language』はプログラミング言語 Crystal の初心者〜中級者向け解説書です。" />
+  
+  <!-- Styles -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--[if lte IE 8]><script src="/introducing-crystal/assets/js/ie/html5shiv.js" defer></script><![endif]-->
+  <link rel="stylesheet" href="/introducing-crystal/assets/css/main.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="/introducing-crystal/assets/css/ie8.css" /><![endif]-->
+  <!--[if lte IE 9]><link rel="stylesheet" href="/introducing-crystal/assets/css/ie9.css" /><![endif]-->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+
+  <!-- Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/jquery.scrolly.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/jquery.scrollzer.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/skel.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/util.js" defer></script>
+  <!--[if lte IE 8]><script src="/introducing-crystal/assets/js/ie/respond.min.js" defer></script><![endif]-->
+  <script src="/introducing-crystal/assets/js/main.js" defer></script>
+
+</head><body><!-- Header -->
+<div id="header">
+  <div class="top"><!-- Logo -->
+<div id="logo">
+  <a href="/introducing-crystal/" id="home-link">
+    <span class="image avatar48"><img src="/introducing-crystal/assets/images/avatar.png" alt="Avatar of Crystal-JP" /></span>
+    <h1 id="title">Intducing Crystal Programming Language</h1>
+    <p></p>
+  </a>
+</div><!-- Nav -->
+<nav id="nav">
+  <ul><li><a href="/introducing-crystal/" id="トップページ-link">
+            <span class="icon fa-link">トップページ</span>
+          </a></li><li><a href="/introducing-crystal/chapters/01-introduction.html" id="01-はじめに-link">
+            <span class="icon fa-link">01. はじめに</span>
+          </a></li><li><a href="/introducing-crystal/chapters/02-getting-started.html" id="02-getting-started-link">
+            <span class="icon fa-link">02. Getting Started</span>
+          </a></li><li><a href="/introducing-crystal/chapters/03-syntax.html" id="03-構文-link">
+            <span class="icon fa-link">03. 構文</span>
+          </a></li><li><a href="/introducing-crystal/chapters/06-web-development.html" id="06-web-開発-link">
+            <span class="icon fa-link">06. Web 開発</span>
+          </a></li><li><a href="/introducing-crystal/chapters/04-macro.html" id="04-マクロ-link">
+            <span class="icon fa-link">04. マクロ</span>
+          </a></li><li><a href="#" id="07-cli-開発" class="active">
+            <span class="icon fa-link">07. CLI 開発</span>
+          </a></li><li><a href="/introducing-crystal/chapters/05-shards.html" id="05-shards-link">
+            <span class="icon fa-link">05. Shards</span>
+          </a></li><li><a href="/introducing-crystal/authors.html" id="著者紹介-link">
+            <span class="icon fa-link">著者紹介</span>
+          </a></li></ul>
+</nav></div>
+  <div class="bottom"><!-- Social Icons -->
+<ul class="icons"></ul>
+</div>
+</div>
+<!-- Main -->
+<div id="main">
+	<!-- Page -->
+	<article class="shade-two">
+	  <div class="container">
+			<header>
+				<h2>07. CLI 開発</h2></header><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#crystal-で-cli-ツール">Crystal で CLI ツール</a></li>
+<li><a href="#自作の-echo-コマンド-myecho-を作る">自作の echo コマンド「 myecho 」を作る</a></li>
+<li><a href="#バージョン表示のオプション-v-を実装する">バージョン表示のオプション <code>-v</code> を実装する</a></li>
+<li><a href="#ヘルプ表示のオプション-h-help-を実装する">ヘルプ表示のオプション <code>-h</code> <code>--help</code> を実装する</a></li>
+<li><a href="#prefix-を付ける-prefix-を実装する">prefix を付ける <code>--prefix</code> を実装する</a></li>
+<li><a href="#サードパーティ製のライブラリを使う">サードパーティ製のライブラリを使う</a>
+<ul class="sectlevel2">
+<li><a href="#mrrooijencommander">mrrooijen/commander</a></li>
+<li><a href="#jwaldripadmiral-cr">jwaldrip/admiral.cr</a></li>
+<li><a href="#at-grandpaclim">at-grandpa/clim</a></li>
+</ul>
+</li>
+<li><a href="#まとめ">まとめ</a></li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>この章では Crystal での CLI 開発について書きます。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crystal-で-cli-ツール">Crystal で CLI ツール</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Crystal で CLI ツールの開発をしていきましょう。Crystal で CLI ツールを書くメリットは次のようなものがあります。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>コンパイルしてワンバイナリにできる</p>
+</li>
+<li>
+<p>Ruby 風の syntax で雑に書ける</p>
+</li>
+<li>
+<p>実行速度が早い</p>
+</li>
+<li>
+<p>コンパイル時に型チェックが入る</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>CLI ツールは、欲しい時にサッと書けて継続的に使えるようにしたいですね。そういう意味では、 Crystal という選択肢は良いのではないでしょうか。今回初めて Crystal を触るという方も、まずは CLI ツールをサクッと作ってみることをおすすめします。では、早速作っていきましょう。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="自作の-echo-コマンド-myecho-を作る">自作の echo コマンド「 myecho 」を作る</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>echo</code> コマンドを模倣した <code>myecho</code> コマンドを作っていきましょう。まずは <code>crystal init app myecho</code> を実行してひな形を作ります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal init app myecho</span>
+<span id="L2" class="line"><span style="color: #303030">      create  myecho/.gitignore</span></span>
+<span id="L3" class="line"><span style="color: #303030">      create  myecho/.editorconfig</span></span>
+<span id="L4" class="line"><span style="color: #303030">      create  myecho/LICENSE</span></span>
+<span id="L5" class="line"><span style="color: #303030">      create  myecho/README.md</span></span>
+<span id="L6" class="line"><span style="color: #303030">      create  myecho/.travis.yml</span></span>
+<span id="L7" class="line"><span style="color: #303030">      create  myecho/shard.yml</span></span>
+<span id="L8" class="line"><span style="color: #303030">      create  myecho/src/myecho.cr</span></span>
+<span id="L9" class="line"><span style="color: #303030">      create  myecho/src/myecho/version.cr</span></span>
+<span id="L10" class="line"><span style="color: #303030">      create  myecho/spec/spec_helper.cr</span></span>
+<span id="L11" class="line"><span style="color: #303030">      create  myecho/spec/myecho_spec.cr</span></span>
+<span id="L12" class="line"><span style="color: #303030">Initialized empty Git repository in /path/to/myecho/.git/</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>次のようなファイルが作成されました。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> tree</span>
+<span id="L2" class="line"><span style="color: #505050">.</span></span>
+<span id="L3" class="line"><span style="color: #303030">├── LICENSE</span></span>
+<span id="L4" class="line"><span style="color: #303030">├── README.md</span></span>
+<span id="L5" class="line"><span style="color: #303030">├── shard.yml</span></span>
+<span id="L6" class="line"><span style="color: #303030">├── spec</span></span>
+<span id="L7" class="line"><span style="color: #303030">│   ├── myecho_spec.cr</span></span>
+<span id="L8" class="line"><span style="color: #303030">│   └── spec_helper.cr</span></span>
+<span id="L9" class="line"><span style="color: #303030">└── src</span></span>
+<span id="L10" class="line"><span style="color: #303030">    ├── myecho</span></span>
+<span id="L11" class="line"><span style="color: #303030">    │   └── version.cr</span></span>
+<span id="L12" class="line"><span style="color: #303030">    └── myecho.cr</span></span>
+<span id="L13" class="line"></span>
+<span id="L14" class="line"><span style="color: #303030">3 directories, 7 files</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これで準備は整いました。まずはテストを回してみましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal spec</span>
+<span id="L2" class="line"><span style="color: #303030">F</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">Failures:</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line"><span style="color: #303030">  1) MyEcho works</span></span>
+<span id="L7" class="line"><span style="color: #303030">     Failure/Error: false.should eq(true)</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line"><span style="color: #303030">       Expected: true</span></span>
+<span id="L10" class="line"><span style="color: #303030">            got: false</span></span>
+<span id="L11" class="line"></span>
+<span id="L12" class="line"><span style="color: #303030">     #</span> spec/myecho_spec.cr:7</span>
+<span id="L13" class="line"></span>
+<span id="L14" class="line"><span style="color: #303030">Finished in 73 microseconds</span></span>
+<span id="L15" class="line"><span style="color: #303030">1 examples, 1 failures, 0 errors, 0 pending</span></span>
+<span id="L16" class="line"></span>
+<span id="L17" class="line"><span style="color: #303030">Failed examples:</span></span>
+<span id="L18" class="line"></span>
+<span id="L19" class="line"><span style="color: #303030">crystal spec spec/myecho_spec.cr:6 #</span> MyEcho works</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>テストは落ちます。ひな形生成時、 <code>spec/myecho_spec.cr</code> に失敗するテストが書かれているからです。</p>
+</div>
+<div class="listingblock">
+<div class="title">spec/myecho_spec.cr</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"./spec_helper"</span></span>
+<span id="L2" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"./../src/myecho.cr"</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">describe</span> <span style="color: #f4bf75">MyEcho</span> <span style="color: #aa759f">do</span></span>
+<span id="L5" class="line">  <span style="color: #505050"># TODO: Write tests</span></span>
+<span id="L6" class="line"></span>
+<span id="L7" class="line">  <span style="color: #303030">it</span> <span style="color: #90a959">"works"</span> <span style="color: #aa759f">do</span></span>
+<span id="L8" class="line">    <span style="color: #aa759f">false</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span><span style="color: #d0d0d0">(</span><span style="color: #aa759f">true</span><span style="color: #d0d0d0">)</span></span>
+<span id="L9" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L10" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>では、実際のテストから書いていきましょう。<code>myecho</code> の基本機能は「与えられた引数の文字列をそのまま出力する」です。</p>
+</div>
+<div class="listingblock">
+<div class="title">spec/myecho_spec.cr の一部</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">describe</span> <span style="color: #f4bf75">MyEcho</span> <span style="color: #aa759f">do</span></span>
+<span id="L2" class="line">  <span style="color: #303030">describe</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span> <span style="color: #aa759f">do</span></span>
+<span id="L3" class="line">    <span style="color: #303030">describe</span> <span style="color: #90a959">"run"</span> <span style="color: #aa759f">do</span></span>
+<span id="L4" class="line">      <span style="color: #303030">it</span> <span style="color: #90a959">"writes the content of args to specified IO"</span> <span style="color: #aa759f">do</span></span>
+<span id="L5" class="line">        <span style="color: #303030">io</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">IO</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Memory</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span>           <b class="conum">(1)</b></span>
+<span id="L6" class="line">        <span style="color: #303030">myecho</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #303030">io</span><span style="color: #d0d0d0">)</span>  <b class="conum">(2)</b></span>
+<span id="L7" class="line">        <span style="color: #303030">myecho</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span><span style="color: #d0d0d0">([</span><span style="color: #90a959">"foo"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"bar"</span><span style="color: #d0d0d0">])</span>    <b class="conum">(3)</b></span>
+<span id="L8" class="line">        <span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #90a959">"foo bar</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span> <b class="conum">(4)</b></span>
+<span id="L9" class="line">      <span style="color: #aa759f">end</span></span>
+<span id="L10" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L11" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L12" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>出力する先の <code>IO</code> インスタンスを生成します。テスト時は <code>IO::Memory</code> に出力します。</p>
+</li>
+<li>
+<p><code>MyEcho::Cli</code> に <code>io</code> を渡し、インスタンスを生成します。</p>
+</li>
+<li>
+<p><code>MyEcho::Cli#run</code> に、コマンドライン引数の <code>ARGV</code> を模した <code>["foo", "bar"]</code> を渡して実行します。</p>
+</li>
+<li>
+<p><code>io</code> に出力された文字列を検証します。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>まだ実装が終わっていないので、このテストは落ちます。実装側も書きましょう。</p>
+</div>
+<div class="listingblock">
+<div class="title">src/myecho.cr</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"./myecho/*"</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #aa759f">module</span> <span style="color: #f4bf75">MyEcho</span></span>
+<span id="L4" class="line">  <span style="color: #aa759f">class</span> <span style="color: #f4bf75">Cli</span></span>
+<span id="L5" class="line">    <span style="color: #aa759f">def</span> <span style="color: #303030">initialize</span><span style="color: #d0d0d0">(</span><span style="color: #303030">@io</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">IO</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">STDOUT</span><span style="color: #d0d0d0">)</span> <b class="conum">(1)</b></span>
+<span id="L6" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L7" class="line"></span>
+<span id="L8" class="line">    <span style="color: #aa759f">def</span> <span style="color: #303030">run</span><span style="color: #d0d0d0">(</span><span style="color: #303030">args</span><span style="color: #d0d0d0">)</span>                     <b class="conum">(2)</b></span>
+<span id="L9" class="line">      <span style="color: #303030">@io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">print</span> <span style="color: #303030">args</span><span style="color: #d0d0d0">.</span><span style="color: #303030">join</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">" "</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">+</span> <span style="color: #90a959">"</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span> <b class="conum">(3)</b></span>
+<span id="L10" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L11" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L12" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>インスタンス変数 <code>@io</code> を定義します。初期値は <code>STDOUT</code> です。</p>
+</li>
+<li>
+<p><code>#run</code> を定義します。</p>
+</li>
+<li>
+<p><code>@io</code> に引数 <code>args</code> を出力します。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>書けたらテストを回しましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal spec</span>
+<span id="L2" class="line"><span style="color: #505050">.</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">Finished in 66 microseconds</span></span>
+<span id="L5" class="line"><span style="color: #303030">1 examples, 0 failures, 0 errors, 0 pending</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>通りました。これで、受け取った引数をそのまま出力するメソッド <code>#run</code> を実装できました。次は build してバイナリを作りましょう。</p>
+</div>
+<div class="paragraph">
+<p>まずは build 対象のファイルを作ります。<code>src/myecho.cr</code> で <code>#run</code> を呼び出して直接 build してもよいですが、そうするとテスト時にも <code>#run</code> が実行されてしまいます。それを避けるために <code>cli.cr</code> ファイルを別途作成し、 <code>myecho.cr</code> を require しましょう。</p>
+</div>
+<div class="listingblock">
+<div class="title">src/cli.cr</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"./myecho"</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">ARGV</span><span style="color: #d0d0d0">)</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これで、モジュールと build ファイルを分離できました。早速 build してみましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> <span style="color: #303030">mkdir </span>bin</span>
+<span id="L2" class="line"><span style="color: #303030">$</span> crystal build <span style="color: #f4bf75">-o</span> ./bin/myecho ./src/cli.cr</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>./bin/</code> ディレクトリを作成し、その中に <code>myecho</code> という名前でバイナリを出力しています。<code>myecho</code> を実行してみましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> ./bin/myecho Hello!! World!!</span>
+<span id="L2" class="line"><span style="color: #303030">Hello!! World!!</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>出力されました！CLI ツールの完成です！いろいろ出力して遊んでみてください。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> ./bin/myecho HAHAHA!</span>
+<span id="L2" class="line"><span style="color: #303030">HAHAHA!</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="バージョン表示のオプション-v-を実装する">バージョン表示のオプション <code>-v</code> を実装する</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>さらに CLI ツールらしくしていきましょう。バージョンを表示させる <code>-v</code> オプションを実装します。オプションがあると一気に CLI ツールらしくなりますね。Crystal には <code>OptionParser</code> というクラスが用意されています。コマンドラインオプションを扱うのに便利なクラスです。今回は <code>OptionParser</code> の使い方も解説しつつ実装していきます。まずはテストから書きましょう。</p>
+</div>
+<div class="listingblock">
+<div class="title">spec/myecho_spec.cr の一部</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">describe</span> <span style="color: #90a959">"writes the version to specified IO"</span> <span style="color: #aa759f">do</span></span>
+<span id="L2" class="line">  <span style="color: #303030">it</span> <span style="color: #90a959">"with '-v'"</span> <span style="color: #aa759f">do</span></span>
+<span id="L3" class="line">    <span style="color: #303030">io</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">IO</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Memory</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span>                      <b class="conum">(1)</b></span>
+<span id="L4" class="line">    <span style="color: #303030">myecho</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #303030">io</span><span style="color: #d0d0d0">)</span>             <b class="conum">(2)</b></span>
+<span id="L5" class="line">    <span style="color: #303030">myecho</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span><span style="color: #d0d0d0">([</span><span style="color: #90a959">"-v"</span><span style="color: #d0d0d0">])</span>                       <b class="conum">(3)</b></span>
+<span id="L6" class="line">    <span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">VERSION</span> <span style="color: #d0d0d0">+</span> <span style="color: #90a959">"</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span> <b class="conum">(4)</b></span>
+<span id="L7" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L8" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>出力する先の <code>IO</code> インスタンスを生成します。テスト時は <code>IO::Memory</code> に出力します。</p>
+</li>
+<li>
+<p><code>MyEcho::Cli</code> に <code>io</code> を渡し、インスタンスを生成します。</p>
+</li>
+<li>
+<p>version を表示するコマンドライン引数 <code>["-v"]</code> を渡して実行します。</p>
+</li>
+<li>
+<p><code>MyEcho::VERSION</code> が表示されていることを検証します。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>テストを回しましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal spec</span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #303030">..F</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line"><span style="color: #303030">Failures:</span></span>
+<span id="L6" class="line"></span>
+<span id="L7" class="line"><span style="color: #303030">  1) MyEcho MyEcho::Cli run writes the version to specified IO with '-v'</span></span>
+<span id="L8" class="line"><span style="color: #303030">     Failure/Error: io.to_s.should eq MyEcho::VERSION + "\n"</span></span>
+<span id="L9" class="line"></span>
+<span id="L10" class="line"><span style="color: #303030">       Expected: "0.1.0\n"</span></span>
+<span id="L11" class="line"><span style="color: #303030">            got: "-v\n"</span></span>
+<span id="L12" class="line"></span>
+<span id="L13" class="line"><span style="color: #303030">     #</span> spec/myecho_spec.cr:18</span>
+<span id="L14" class="line"></span>
+<span id="L15" class="line"><span style="color: #303030">Finished in 117 microseconds</span></span>
+<span id="L16" class="line"><span style="color: #303030">3 examples, 1 failures, 0 errors, 0 pending</span></span>
+<span id="L17" class="line"></span>
+<span id="L18" class="line"><span style="color: #303030">Failed examples:</span></span>
+<span id="L19" class="line"></span>
+<span id="L20" class="line"><span style="color: #303030">crystal spec spec/myecho_spec.cr:14 #</span> MyEcho MyEcho::Cli run writes the version to specified IO with <span style="color: #90a959">'-v'</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>0.1.0</code> が期待されていますが <code>-v</code> が出力されていますね。これは期待通りの落ち方です。では実装に入りましょう。単純に「 <code>-v</code> が入力されたら <code>MyEcho::VERSION</code> を出力する」でもよいのですが、先程も宣言した通り <code>OptionParser</code> を導入します。</p>
+</div>
+<div class="listingblock">
+<div class="title">src/myecho.cr</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"./myecho/*"</span></span>
+<span id="L2" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"option_parser"</span> <b class="conum">(1)</b></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #aa759f">module</span> <span style="color: #f4bf75">MyEcho</span></span>
+<span id="L5" class="line">  <span style="color: #aa759f">class</span> <span style="color: #f4bf75">Cli</span></span>
+<span id="L6" class="line">    <span style="color: #aa759f">def</span> <span style="color: #303030">initialize</span><span style="color: #d0d0d0">(</span><span style="color: #303030">@io</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">IO</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">STDOUT</span><span style="color: #d0d0d0">)</span></span>
+<span id="L7" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line">    <span style="color: #aa759f">class</span> <span style="color: #f4bf75">Options</span></span>
+<span id="L10" class="line">      <span style="color: #aa759f">property</span> <span style="color: #303030">display_version</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">Bool</span> <span style="color: #d0d0d0">=</span> <span style="color: #aa759f">false</span></span>
+<span id="L11" class="line">      <span style="color: #aa759f">property</span> <span style="color: #303030">args</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">Array</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">String</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[]</span> <span style="color: #aa759f">of</span> <span style="color: #f4bf75">String</span></span>
+<span id="L12" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L13" class="line"></span>
+<span id="L14" class="line">    <span style="color: #aa759f">def</span> <span style="color: #303030">run</span><span style="color: #d0d0d0">(</span><span style="color: #303030">args</span><span style="color: #d0d0d0">)</span></span>
+<span id="L15" class="line">      <span style="color: #505050"># オプション設定を格納する</span></span>
+<span id="L16" class="line">      <span style="color: #303030">options</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">Options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span></span>
+<span id="L17" class="line"></span>
+<span id="L18" class="line">      <span style="color: #505050"># OptionParserを用いたオプションの設定</span></span>
+<span id="L19" class="line">      <span style="color: #f4bf75">OptionParser</span><span style="color: #d0d0d0">.</span><span style="color: #303030">parse</span><span style="color: #d0d0d0">(</span><span style="color: #303030">args</span><span style="color: #d0d0d0">)</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">parser</span><span style="color: #d0d0d0">|</span> <b class="conum">(2)</b></span>
+<span id="L20" class="line">        <span style="color: #303030">parser</span><span style="color: #d0d0d0">.</span><span style="color: #303030">on</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"-v"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"show version"</span><span style="color: #d0d0d0">)</span> <span style="color: #aa759f">do</span> <b class="conum">(3)</b></span>
+<span id="L21" class="line">          <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">display_version</span> <span style="color: #d0d0d0">=</span> <span style="color: #aa759f">true</span></span>
+<span id="L22" class="line">        <span style="color: #aa759f">end</span></span>
+<span id="L23" class="line">        <span style="color: #303030">parser</span><span style="color: #d0d0d0">.</span><span style="color: #303030">unknown_args</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">unknown_args</span><span style="color: #d0d0d0">|</span> <b class="conum">(4)</b></span>
+<span id="L24" class="line">          <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">args</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">unknown_args</span></span>
+<span id="L25" class="line">        <span style="color: #aa759f">end</span></span>
+<span id="L26" class="line">      <span style="color: #aa759f">end</span></span>
+<span id="L27" class="line"></span>
+<span id="L28" class="line">      <span style="color: #505050"># バージョンの表示</span></span>
+<span id="L29" class="line">      <span style="color: #aa759f">if</span> <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">display_version</span></span>
+<span id="L30" class="line">        <span style="color: #303030">@io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">print</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">VERSION</span> <span style="color: #d0d0d0">+</span> <span style="color: #90a959">"</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span></span>
+<span id="L31" class="line">        <span style="color: #aa759f">return</span></span>
+<span id="L32" class="line">      <span style="color: #aa759f">end</span></span>
+<span id="L33" class="line"></span>
+<span id="L34" class="line">      <span style="color: #505050"># 引数の表示</span></span>
+<span id="L35" class="line">      <span style="color: #303030">@io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">print</span> <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">args</span><span style="color: #d0d0d0">.</span><span style="color: #303030">join</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">" "</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">+</span> <span style="color: #90a959">"</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span></span>
+<span id="L36" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L37" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L38" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>標準ライブラリの <code>OptionParser</code> を require します。</p>
+</li>
+<li>
+<p><code>OptionParser#parse</code> に <code>args</code> を渡し、ブロック内でオプションを定義していきます。</p>
+</li>
+<li>
+<p><code>OptionParser#on</code> の引数に <code>-v</code> とその説明文を、ブロックには実行したい処理を書きます。</p>
+</li>
+<li>
+<p>オプション以外の引数は、配列になって <code>OptionParser#unknown_args</code> のブロック引数となります。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>テストを回しましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal spec</span>
+<span id="L2" class="line"><span style="color: #505050">...</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">Finished in 102 microseconds</span></span>
+<span id="L5" class="line"><span style="color: #303030">3 examples, 0 failures, 0 errors, 0 pending</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>通りました。バイナリも作りましょう。そして、実際にバージョンを表示してみましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal build <span style="color: #f4bf75">-o</span> ./bin/myecho ./src/cli.cr</span>
+<span id="L2" class="line"><span style="color: #303030">$</span> ./bin/myecho foo</span>
+<span id="L3" class="line"><span style="color: #303030">foo</span></span>
+<span id="L4" class="line"><span style="color: #303030">$</span> ./bin/myecho <span style="color: #f4bf75">-v</span></span>
+<span id="L5" class="line"><span style="color: #303030">0.1.0</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>バージョン表示ができました！CLI ツールらしくなってきました。ここまで来ると、 <code>--version</code> を指定してもバージョンを表示させたいですよね。現状だと例外が発生してしまいます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> ./bin/myecho <span style="color: #f4bf75">--version</span></span>
+<span id="L2" class="line"><span style="color: #303030">--version</span></span>
+<span id="L3" class="line"><span style="color: #303030">Invalid option: --version (OptionParser::InvalidOption)</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line"><span style="color: #303030">（スタックトレースが続く ... ）</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>では対応していきましょう。まずはテストから書きます。</p>
+</div>
+<div class="listingblock">
+<div class="title">spec/myecho_spec.cr の一部</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">describe</span> <span style="color: #90a959">"writes the version to specified IO"</span> <span style="color: #aa759f">do</span></span>
+<span id="L2" class="line">  <span style="color: #303030">it</span> <span style="color: #90a959">"with '-v'"</span> <span style="color: #aa759f">do</span></span>
+<span id="L3" class="line">    <span style="color: #303030">io</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">IO</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Memory</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span></span>
+<span id="L4" class="line">    <span style="color: #303030">myecho</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #303030">io</span><span style="color: #d0d0d0">)</span></span>
+<span id="L5" class="line">    <span style="color: #303030">myecho</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span><span style="color: #d0d0d0">([</span><span style="color: #90a959">"-v"</span><span style="color: #d0d0d0">])</span></span>
+<span id="L6" class="line">    <span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">VERSION</span> <span style="color: #d0d0d0">+</span> <span style="color: #90a959">"</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span></span>
+<span id="L7" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line">  <span style="color: #505050"># 新しいテストケース</span></span>
+<span id="L10" class="line">  <span style="color: #303030">it</span> <span style="color: #90a959">"with '--version'"</span> <span style="color: #aa759f">do</span></span>
+<span id="L11" class="line">    <span style="color: #303030">io</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">IO</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Memory</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span></span>
+<span id="L12" class="line">    <span style="color: #303030">myecho</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #303030">io</span><span style="color: #d0d0d0">)</span></span>
+<span id="L13" class="line">    <span style="color: #303030">myecho</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span><span style="color: #d0d0d0">([</span><span style="color: #90a959">"--version"</span><span style="color: #d0d0d0">])</span> <b class="conum">(1)</b></span>
+<span id="L14" class="line">    <span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">VERSION</span> <span style="color: #d0d0d0">+</span> <span style="color: #90a959">"</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span></span>
+<span id="L15" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L16" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p><code>--version</code> を指定した場合でも、バージョンが表示されることを検証しています。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>テストを回すと、例外が発生しテストが落ちます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal spec</span>
+<span id="L2" class="line"><span style="color: #303030">.....E</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">Failures:</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line"><span style="color: #303030">  1) MyEcho MyEcho::Cli run writes the version to specified IO with '--version'</span></span>
+<span id="L7" class="line"></span>
+<span id="L8" class="line"><span style="color: #303030">       Invalid option: --version</span></span>
+<span id="L9" class="line"><span style="color: #303030">Error running at_exit handler: Index out of bounds</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>対応するには、 <code>OptionParser#on</code> の第二引数に <code>long_flag</code> を指定します。</p>
+</div>
+<div class="listingblock">
+<div class="title">src/myecho.cr の一部</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">parser</span><span style="color: #d0d0d0">.</span><span style="color: #303030">on</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"-v"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"--version"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"show version"</span><span style="color: #d0d0d0">)</span> <span style="color: #aa759f">do</span> <b class="conum">(1)</b></span>
+<span id="L2" class="line">  <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">display_version</span> <span style="color: #d0d0d0">=</span> <span style="color: #aa759f">true</span></span>
+<span id="L3" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p><code>OptionParser#on</code> の第二引数に <code>--version</code> を指定しています。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>これでテストが通ります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal spec</span>
+<span id="L2" class="line"><span style="color: #505050">......</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">Finished in 189 microseconds</span></span>
+<span id="L5" class="line"><span style="color: #303030">6 examples, 0 failures, 0 errors, 0 pending</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>実際にバージョンを表示してみましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal build <span style="color: #f4bf75">-o</span> ./bin/myecho ./src/cli.cr</span>
+<span id="L2" class="line"><span style="color: #303030">$</span> ./bin/myecho foo</span>
+<span id="L3" class="line"><span style="color: #303030">foo</span></span>
+<span id="L4" class="line"><span style="color: #303030">$</span> ./bin/myecho <span style="color: #f4bf75">-v</span></span>
+<span id="L5" class="line"><span style="color: #303030">0.1.0</span></span>
+<span id="L6" class="line"><span style="color: #303030">$</span> ./bin/myecho <span style="color: #f4bf75">--version</span></span>
+<span id="L7" class="line"><span style="color: #303030">0.1.0</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>--version</code> でもバージョンを表示することができました。このように、 <code>OptionParser</code> は、コマンドラインオプションを柔軟に扱えます。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ヘルプ表示のオプション-h-help-を実装する">ヘルプ表示のオプション <code>-h</code> <code>--help</code> を実装する</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>次にヘルプを表示してみます。オプションの追加はバージョン表示の時と同じです。まずはテストから書きましょう。</p>
+</div>
+<div class="listingblock">
+<div class="title">spec/myecho_spec.cr の一部</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">describe</span> <span style="color: #90a959">"writes the help to specified IO"</span> <span style="color: #aa759f">do</span></span>
+<span id="L2" class="line">  <span style="color: #303030">it</span> <span style="color: #90a959">"with '-h'"</span> <span style="color: #aa759f">do</span></span>
+<span id="L3" class="line">    <span style="color: #303030">io</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">IO</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Memory</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span></span>
+<span id="L4" class="line">    <span style="color: #303030">myecho</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #303030">io</span><span style="color: #d0d0d0">)</span></span>
+<span id="L5" class="line">    <span style="color: #303030">myecho</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span><span style="color: #d0d0d0">([</span><span style="color: #90a959">"-h"</span><span style="color: #d0d0d0">])</span></span>
+<span id="L6" class="line">    <span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #90a959">"helpには何が表示される？"</span></span>
+<span id="L7" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L8" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>-h</code> を指定した場合、何が表示されるかはまだわかりません。とりあえずこのまま進みましょう。現状だと、 <code>Invalid option: -h</code> でテストが落ちることは目に見えています。まずは適当に文字列を返しましょう。</p>
+</div>
+<div class="listingblock">
+<div class="title">src/myecho.cr の一部</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line">    <span style="color: #303030">parser</span><span style="color: #d0d0d0">.</span><span style="color: #303030">on</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"-h"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"--help"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"show help"</span><span style="color: #d0d0d0">)</span> <span style="color: #aa759f">do</span></span>
+<span id="L2" class="line">      <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">display_help</span> <span style="color: #d0d0d0">=</span> <span style="color: #aa759f">true</span></span>
+<span id="L3" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line">  <span style="color: #d0d0d0">...</span></span>
+<span id="L6" class="line"></span>
+<span id="L7" class="line">  <span style="color: #505050"># ヘルプの表示</span></span>
+<span id="L8" class="line">  <span style="color: #aa759f">if</span> <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">display_help</span></span>
+<span id="L9" class="line">    <span style="color: #303030">@io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">print</span> <span style="color: #90a959">"helpです。"</span> <span style="color: #d0d0d0">+</span> <span style="color: #90a959">"</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span></span>
+<span id="L10" class="line">    <span style="color: #aa759f">return</span></span>
+<span id="L11" class="line">  <span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>当然、テストは失敗します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal spec</span>
+<span id="L2" class="line"><span style="color: #303030">.........F</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">Failures:</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line"><span style="color: #303030">  1) MyEcho MyEcho::Cli run writes the help to specified IO with '-h'</span></span>
+<span id="L7" class="line"><span style="color: #303030">     Failure/Error: io.to_s.should eq "helpには何が表示される？"</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line"><span style="color: #303030">       Expected: "helpには何が表示される？"</span></span>
+<span id="L10" class="line"><span style="color: #303030">            got: "helpです。\n"</span></span>
+<span id="L11" class="line"></span>
+<span id="L12" class="line"><span style="color: #303030">     #</span> spec/myecho_spec.cr:35</span>
+<span id="L13" class="line"></span>
+<span id="L14" class="line"><span style="color: #303030">Finished in 246 microseconds</span></span>
+<span id="L15" class="line"><span style="color: #303030">10 examples, 1 failures, 0 errors, 0 pending</span></span>
+<span id="L16" class="line"></span>
+<span id="L17" class="line"><span style="color: #303030">Failed examples:</span></span>
+<span id="L18" class="line"></span>
+<span id="L19" class="line"><span style="color: #303030">crystal spec spec/myecho_spec.cr:31 #</span> MyEcho MyEcho::Cli run writes the <span style="color: #303030">help </span>to specified IO with <span style="color: #90a959">'-h'</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ここで、 <code>OptionParser</code> の便利機能を使います。<code>OptionParser#to_s</code> で、ヘルプメッセージを返してくれます。実装してみましょう。</p>
+</div>
+<div class="listingblock">
+<div class="title">src/myecho.cr の一部</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #505050"># OptionParserを用いたオプションの設定</span></span>
+<span id="L2" class="line"><span style="color: #f4bf75">OptionParser</span><span style="color: #d0d0d0">.</span><span style="color: #303030">parse</span><span style="color: #d0d0d0">(</span><span style="color: #303030">args</span><span style="color: #d0d0d0">)</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">parser</span><span style="color: #d0d0d0">|</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line">  <span style="color: #d0d0d0">...</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line">  <span style="color: #505050"># ヘルプメッセージの格納</span></span>
+<span id="L7" class="line">  <span style="color: #505050"># すべての設定を行った後で格納する</span></span>
+<span id="L8" class="line">  <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">help_message</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">parser</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span> <span style="color: #d0d0d0">+</span> <span style="color: #90a959">"</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span></span>
+<span id="L9" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L10" class="line"></span>
+<span id="L11" class="line"><span style="color: #d0d0d0">...</span></span>
+<span id="L12" class="line"></span>
+<span id="L13" class="line"><span style="color: #505050"># ヘルプの表示</span></span>
+<span id="L14" class="line"><span style="color: #aa759f">if</span> <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">display_help</span></span>
+<span id="L15" class="line">  <span style="color: #303030">@io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">print</span> <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">help_message</span></span>
+<span id="L16" class="line">  <span style="color: #aa759f">return</span></span>
+<span id="L17" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>テストを回します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal spec</span>
+<span id="L2" class="line"><span style="color: #303030">...F</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">Failures:</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line"><span style="color: #303030">  1) MyEcho MyEcho::Cli run writes the help to specified IO with '-h'</span></span>
+<span id="L7" class="line"><span style="color: #303030">     Failure/Error: io.to_s.should eq "helpには何が表示される？"</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line"><span style="color: #303030">       Expected: "helpには何が表示される？"</span></span>
+<span id="L10" class="line"><span style="color: #303030">            got: "    -h, --help                       show help\n    -v, --version                    show version\n"</span></span>
+<span id="L11" class="line"></span>
+<span id="L12" class="line"><span style="color: #303030">     #</span> spec/myecho_spec.cr:35</span>
+<span id="L13" class="line"></span>
+<span id="L14" class="line"><span style="color: #303030">Finished in 174 microseconds</span></span>
+<span id="L15" class="line"><span style="color: #303030">4 examples, 1 failures, 0 errors, 0 pending</span></span>
+<span id="L16" class="line"></span>
+<span id="L17" class="line"><span style="color: #303030">Failed examples:</span></span>
+<span id="L18" class="line"></span>
+<span id="L19" class="line"><span style="color: #303030">crystal spec spec/myecho_spec.cr:31 #</span> MyEcho MyEcho::Cli run writes the <span style="color: #303030">help </span>to specified IO with <span style="color: #90a959">'-h'</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>それらしい文字列が返ってきました。テストを修正しましょう。</p>
+</div>
+<div class="listingblock">
+<div class="title">spec/myecho_spec.cr の一部</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">describe</span> <span style="color: #90a959">"writes the help to specified IO"</span> <span style="color: #aa759f">do</span></span>
+<span id="L2" class="line">  <span style="color: #303030">it</span> <span style="color: #90a959">"with '-h'"</span> <span style="color: #aa759f">do</span></span>
+<span id="L3" class="line">    <span style="color: #303030">io</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">IO</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Memory</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span></span>
+<span id="L4" class="line">    <span style="color: #303030">myecho</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #303030">io</span><span style="color: #d0d0d0">)</span></span>
+<span id="L5" class="line">    <span style="color: #303030">myecho</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span><span style="color: #d0d0d0">([</span><span style="color: #90a959">"-h"</span><span style="color: #d0d0d0">])</span></span>
+<span id="L6" class="line">    <span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #d0d0d0">&lt;&lt;-</span><span style="color: #f4bf75">HELP_MESSAGE</span></span>
+<span id="L7" class="line"><span style="color: #90a959">        -h, --help                       show help</span></span>
+<span id="L8" class="line"><span style="color: #90a959">        -v, --version                    show version</span></span>
+<span id="L9" class="line"></span>
+<span id="L10" class="line"><span style="color: #f4bf75">    HELP_MESSAGE</span></span>
+<span id="L11" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L12" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>今度はテストが回りました。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal spec</span>
+<span id="L2" class="line"><span style="color: #505050">..........</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">Finished in 294 microseconds</span></span>
+<span id="L5" class="line"><span style="color: #303030">10 examples, 0 failures, 0 errors, 0 pending</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ヘルプが表示されるかを build して確かめます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal build <span style="color: #f4bf75">-o</span> ./bin/myecho ./src/cli.cr</span>
+<span id="L2" class="line"><span style="color: #303030">$</span> ./bin/myecho foo</span>
+<span id="L3" class="line"><span style="color: #303030">foo</span></span>
+<span id="L4" class="line"><span style="color: #303030">$</span> ./bin/myecho <span style="color: #f4bf75">-h</span></span>
+<span id="L5" class="line"><span style="color: #303030">    -h, --help                       show help</span></span>
+<span id="L6" class="line"><span style="color: #303030">    -v, --version                    show version</span></span>
+<span id="L7" class="line"><span style="color: #303030">$</span> ./bin/myecho <span style="color: #f4bf75">--help</span></span>
+<span id="L8" class="line"><span style="color: #303030">    -h, --help                       show help</span></span>
+<span id="L9" class="line"><span style="color: #303030">    -v, --version                    show version</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ヘルプが表示されました。しかし、もう少し体裁の整ったヘルプがよいですね。例えば、コマンドの説明や Usage などがあると良さそうです。テストを書きましょう。</p>
+</div>
+<div class="listingblock">
+<div class="title">spec/myecho_spec.cr の一部</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">describe</span> <span style="color: #90a959">"writes the help to specified IO"</span> <span style="color: #aa759f">do</span></span>
+<span id="L2" class="line">  <span style="color: #303030">it</span> <span style="color: #90a959">"with '-h'"</span> <span style="color: #aa759f">do</span></span>
+<span id="L3" class="line">    <span style="color: #303030">io</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">IO</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Memory</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span></span>
+<span id="L4" class="line">    <span style="color: #303030">myecho</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #303030">io</span><span style="color: #d0d0d0">)</span></span>
+<span id="L5" class="line">    <span style="color: #303030">myecho</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span><span style="color: #d0d0d0">([</span><span style="color: #90a959">"-h"</span><span style="color: #d0d0d0">])</span></span>
+<span id="L6" class="line">    <span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #d0d0d0">&lt;&lt;-</span><span style="color: #f4bf75">HELP_MESSAGE</span></span>
+<span id="L7" class="line"></span>
+<span id="L8" class="line"><span style="color: #90a959">    My echo.</span></span>
+<span id="L9" class="line"></span>
+<span id="L10" class="line"><span style="color: #90a959">    Usage: myecho [options] [arguments]</span></span>
+<span id="L11" class="line"></span>
+<span id="L12" class="line"><span style="color: #90a959">        -h, --help                       show help</span></span>
+<span id="L13" class="line"><span style="color: #90a959">        -v, --version                    show version</span></span>
+<span id="L14" class="line"></span>
+<span id="L15" class="line"><span style="color: #f4bf75">    HELP_MESSAGE</span></span>
+<span id="L16" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L17" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>良い感じのヘルプにしてみました。テストが通るように実装しましょう。<code>OptionParser</code> には、 <code>#banner=</code> というメソッドがあり、ヘルプメッセージに加える文字列を定義できます。</p>
+</div>
+<div class="listingblock">
+<div class="title">src/myecho.cr の一部</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line">  <span style="color: #303030">parser</span><span style="color: #d0d0d0">.</span><span style="color: #303030">banner</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">&lt;&lt;-</span><span style="color: #f4bf75">BANNER</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #90a959">  My echo.</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line"><span style="color: #90a959">  Usage: myecho [options] [arguments]</span></span>
+<span id="L6" class="line"></span>
+<span id="L7" class="line"><span style="color: #f4bf75">  BANNER</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これでテストを通すことができました。build して動作を確かめましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal build <span style="color: #f4bf75">-o</span> ./bin/myecho ./src/cli.cr</span>
+<span id="L2" class="line"><span style="color: #303030">$</span> ./bin/myecho <span style="color: #f4bf75">--help</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">My echo.</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line"><span style="color: #303030">Usage: myecho [options] [arguments]</span></span>
+<span id="L7" class="line"></span>
+<span id="L8" class="line"><span style="color: #303030">    -h, --help                       show help</span></span>
+<span id="L9" class="line"><span style="color: #303030">    -v, --version                    show version</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>より、ヘルプらしくなりました。<code>OptionParser</code> を使えば、このように簡単にヘルプを設定できます。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="prefix-を付ける-prefix-を実装する">prefix を付ける <code>--prefix</code> を実装する</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>もっと CLI ツールらしくするために、さらにオプションを加えましょう。各コマンド引数に prefix をつける <code>--prefix</code> オプションです。期待される動作は次のようになります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> ./bin/myecho <span style="color: #f4bf75">--prefix</span> pre_ foo bar baz</span>
+<span id="L2" class="line"><span style="color: #303030">pre_foo pre_bar pre_baz</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>--prefix PREFIX</code> を指定することで、各引数の先頭に <code>PREFIX</code> を付けます。まずはテストから書きましょう。</p>
+</div>
+<div class="listingblock">
+<div class="title">spec/myecho_spec.cr の一部</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">describe</span> <span style="color: #90a959">"prefix specified string to each arguments"</span> <span style="color: #aa759f">do</span></span>
+<span id="L2" class="line">  <span style="color: #303030">it</span> <span style="color: #90a959">"with '--prefix PREFIX'"</span> <span style="color: #aa759f">do</span></span>
+<span id="L3" class="line">    <span style="color: #303030">io</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">IO</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Memory</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span></span>
+<span id="L4" class="line">    <span style="color: #303030">myecho</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #303030">io</span><span style="color: #d0d0d0">)</span></span>
+<span id="L5" class="line">    <span style="color: #303030">myecho</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span><span style="color: #d0d0d0">([</span><span style="color: #90a959">"--prefix"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"pre_"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"foo"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"bar"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"baz"</span><span style="color: #d0d0d0">])</span></span>
+<span id="L6" class="line">    <span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #90a959">"pre_foo pre_bar pre_baz</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span></span>
+<span id="L7" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L8" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>このテストを通すように実装しましょう。</p>
+</div>
+<div class="listingblock">
+<div class="title">src/myecho.cr の一部</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line">  <span style="color: #505050"># OptionParserを用いたオプションの設定</span></span>
+<span id="L2" class="line">  <span style="color: #f4bf75">OptionParser</span><span style="color: #d0d0d0">.</span><span style="color: #303030">parse</span><span style="color: #d0d0d0">(</span><span style="color: #303030">args</span><span style="color: #d0d0d0">)</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">parser</span><span style="color: #d0d0d0">|</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line">    <span style="color: #d0d0d0">...</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line">    <span style="color: #303030">parser</span><span style="color: #d0d0d0">.</span><span style="color: #303030">on</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"--prefix PREFIX"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"prefix to each arguments"</span><span style="color: #d0d0d0">)</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">prefix</span><span style="color: #d0d0d0">|</span></span>
+<span id="L7" class="line">      <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">prefix</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">prefix</span></span>
+<span id="L8" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L9" class="line"></span>
+<span id="L10" class="line">    <span style="color: #d0d0d0">...</span></span>
+<span id="L11" class="line"></span>
+<span id="L12" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L13" class="line"></span>
+<span id="L14" class="line">  <span style="color: #d0d0d0">...</span></span>
+<span id="L15" class="line"></span>
+<span id="L16" class="line">  <span style="color: #303030">prefix</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">prefix</span></span>
+<span id="L17" class="line">  <span style="color: #aa759f">unless</span> <span style="color: #303030">prefix</span><span style="color: #d0d0d0">.</span><span style="color: #303030">nil?</span></span>
+<span id="L18" class="line">    <span style="color: #303030">@io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">print</span> <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">args</span><span style="color: #d0d0d0">.</span><span style="color: #303030">map</span> <span style="color: #d0d0d0">{</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">arg</span><span style="color: #d0d0d0">|</span> <span style="color: #303030">prefix</span> <span style="color: #d0d0d0">+</span> <span style="color: #303030">arg</span> <span style="color: #d0d0d0">}.</span><span style="color: #303030">join</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">" "</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">+</span> <span style="color: #90a959">"</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span></span>
+<span id="L19" class="line">    <span style="color: #aa759f">return</span></span>
+<span id="L20" class="line">  <span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>OptionParser#on</code> は、 <code>long_flag</code> の名前だけでも指定可能です。<code>--prefix PREFIX</code> のように、オプション引数（ <code>PREFIX</code> ）を書くと、オプション引数が必須になります。また、今回の <code>--prefix</code> 定義のままで、コマンドラインから <code>--prefix=PREFIX</code> のように <code>=</code> を用いた指定も可能です。いい感じに取り扱ってくれます。</p>
+</div>
+<div class="paragraph">
+<p>これで <code>--prefix</code> の実装も終わりました。build して動作を確認しましょう。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal build <span style="color: #f4bf75">-o</span> ./bin/myecho ./src/cli.cr</span>
+<span id="L2" class="line"><span style="color: #303030">$</span> ./bin/myecho <span style="color: #f4bf75">--prefix</span> pre_ foo bar baz</span>
+<span id="L3" class="line"><span style="color: #303030">pre_foo pre_bar pre_baz</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>うまく動作しているようです。</p>
+</div>
+<div class="paragraph">
+<p>　</p>
+</div>
+<div class="paragraph">
+<p>いかがでしたでしょうか。<code>OptionParser</code> を使っての CLI ツールの作成方法が大体つかめたでしょうか。</p>
+</div>
+<div class="paragraph">
+<p>以下に、ここまでで紹介した <code>myecho</code> のコード全てを記載します。</p>
+</div>
+<div class="listingblock">
+<div class="title">src/cli.cr</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"./myecho"</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">ARGV</span><span style="color: #d0d0d0">)</span></span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">src/myecho.cr</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"./myecho/*"</span></span>
+<span id="L2" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"option_parser"</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #aa759f">module</span> <span style="color: #f4bf75">MyEcho</span></span>
+<span id="L5" class="line">  <span style="color: #aa759f">class</span> <span style="color: #f4bf75">Cli</span></span>
+<span id="L6" class="line">    <span style="color: #aa759f">def</span> <span style="color: #303030">initialize</span><span style="color: #d0d0d0">(</span><span style="color: #303030">@io</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">IO</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">STDOUT</span><span style="color: #d0d0d0">)</span></span>
+<span id="L7" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line">    <span style="color: #aa759f">class</span> <span style="color: #f4bf75">Options</span></span>
+<span id="L10" class="line">      <span style="color: #aa759f">property</span> <span style="color: #303030">display_version</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">Bool</span> <span style="color: #d0d0d0">=</span> <span style="color: #aa759f">false</span></span>
+<span id="L11" class="line">      <span style="color: #aa759f">property</span> <span style="color: #303030">args</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">Array</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">String</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[]</span> <span style="color: #aa759f">of</span> <span style="color: #f4bf75">String</span></span>
+<span id="L12" class="line">      <span style="color: #aa759f">property</span> <span style="color: #303030">display_help</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">Bool</span> <span style="color: #d0d0d0">=</span> <span style="color: #aa759f">false</span></span>
+<span id="L13" class="line">      <span style="color: #aa759f">property</span> <span style="color: #303030">help_message</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">String</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">""</span></span>
+<span id="L14" class="line">      <span style="color: #aa759f">property</span> <span style="color: #303030">prefix</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">String</span><span style="color: #d0d0d0">?</span> <span style="color: #d0d0d0">=</span> <span style="color: #aa759f">nil</span></span>
+<span id="L15" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L16" class="line"></span>
+<span id="L17" class="line">    <span style="color: #aa759f">def</span> <span style="color: #303030">run</span><span style="color: #d0d0d0">(</span><span style="color: #303030">args</span><span style="color: #d0d0d0">)</span></span>
+<span id="L18" class="line">      <span style="color: #505050"># オプション設定を格納する</span></span>
+<span id="L19" class="line">      <span style="color: #303030">options</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">Options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span></span>
+<span id="L20" class="line"></span>
+<span id="L21" class="line">      <span style="color: #505050"># OptionParserを用いたオプションの設定</span></span>
+<span id="L22" class="line">      <span style="color: #f4bf75">OptionParser</span><span style="color: #d0d0d0">.</span><span style="color: #303030">parse</span><span style="color: #d0d0d0">(</span><span style="color: #303030">args</span><span style="color: #d0d0d0">)</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">parser</span><span style="color: #d0d0d0">|</span></span>
+<span id="L23" class="line">        <span style="color: #303030">parser</span><span style="color: #d0d0d0">.</span><span style="color: #303030">banner</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">&lt;&lt;-</span><span style="color: #f4bf75">BANNER</span></span>
+<span id="L24" class="line"></span>
+<span id="L25" class="line"><span style="color: #90a959">        My echo.</span></span>
+<span id="L26" class="line"></span>
+<span id="L27" class="line"><span style="color: #90a959">        Usage: myecho [options] [arguments]</span></span>
+<span id="L28" class="line"></span>
+<span id="L29" class="line"><span style="color: #f4bf75">        BANNER</span></span>
+<span id="L30" class="line">        <span style="color: #303030">parser</span><span style="color: #d0d0d0">.</span><span style="color: #303030">on</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"--prefix PREFIX"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"prefix to each arguments"</span><span style="color: #d0d0d0">)</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">prefix</span><span style="color: #d0d0d0">|</span></span>
+<span id="L31" class="line">          <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">prefix</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">prefix</span></span>
+<span id="L32" class="line">        <span style="color: #aa759f">end</span></span>
+<span id="L33" class="line">        <span style="color: #303030">parser</span><span style="color: #d0d0d0">.</span><span style="color: #303030">on</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"-h"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"--help"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"show help"</span><span style="color: #d0d0d0">)</span> <span style="color: #aa759f">do</span></span>
+<span id="L34" class="line">          <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">display_help</span> <span style="color: #d0d0d0">=</span> <span style="color: #aa759f">true</span></span>
+<span id="L35" class="line">        <span style="color: #aa759f">end</span></span>
+<span id="L36" class="line">        <span style="color: #303030">parser</span><span style="color: #d0d0d0">.</span><span style="color: #303030">on</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"-v"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"--version"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"show version"</span><span style="color: #d0d0d0">)</span> <span style="color: #aa759f">do</span></span>
+<span id="L37" class="line">          <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">display_version</span> <span style="color: #d0d0d0">=</span> <span style="color: #aa759f">true</span></span>
+<span id="L38" class="line">        <span style="color: #aa759f">end</span></span>
+<span id="L39" class="line">        <span style="color: #303030">parser</span><span style="color: #d0d0d0">.</span><span style="color: #303030">unknown_args</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">unknown_args</span><span style="color: #d0d0d0">|</span></span>
+<span id="L40" class="line">          <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">args</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">unknown_args</span></span>
+<span id="L41" class="line">        <span style="color: #aa759f">end</span></span>
+<span id="L42" class="line">        <span style="color: #505050"># ヘルプメッセージの格納</span></span>
+<span id="L43" class="line">        <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">help_message</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">parser</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span> <span style="color: #d0d0d0">+</span> <span style="color: #90a959">"</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span></span>
+<span id="L44" class="line">      <span style="color: #aa759f">end</span></span>
+<span id="L45" class="line"></span>
+<span id="L46" class="line">      <span style="color: #505050"># ヘルプの表示</span></span>
+<span id="L47" class="line">      <span style="color: #aa759f">if</span> <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">display_help</span></span>
+<span id="L48" class="line">        <span style="color: #303030">@io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">print</span> <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">help_message</span></span>
+<span id="L49" class="line">        <span style="color: #aa759f">return</span></span>
+<span id="L50" class="line">      <span style="color: #aa759f">end</span></span>
+<span id="L51" class="line"></span>
+<span id="L52" class="line">      <span style="color: #505050"># バージョンの表示</span></span>
+<span id="L53" class="line">      <span style="color: #aa759f">if</span> <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">display_version</span></span>
+<span id="L54" class="line">        <span style="color: #303030">@io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">print</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">VERSION</span> <span style="color: #d0d0d0">+</span> <span style="color: #90a959">"</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span></span>
+<span id="L55" class="line">        <span style="color: #aa759f">return</span></span>
+<span id="L56" class="line">      <span style="color: #aa759f">end</span></span>
+<span id="L57" class="line"></span>
+<span id="L58" class="line">      <span style="color: #505050"># prefixをつける</span></span>
+<span id="L59" class="line">      <span style="color: #303030">prefix</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">prefix</span></span>
+<span id="L60" class="line">      <span style="color: #aa759f">unless</span> <span style="color: #303030">prefix</span><span style="color: #d0d0d0">.</span><span style="color: #303030">nil?</span></span>
+<span id="L61" class="line">        <span style="color: #303030">@io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">print</span> <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">args</span><span style="color: #d0d0d0">.</span><span style="color: #303030">map</span> <span style="color: #d0d0d0">{</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">arg</span><span style="color: #d0d0d0">|</span> <span style="color: #303030">prefix</span> <span style="color: #d0d0d0">+</span> <span style="color: #303030">arg</span> <span style="color: #d0d0d0">}.</span><span style="color: #303030">join</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">" "</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">+</span> <span style="color: #90a959">"</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span></span>
+<span id="L62" class="line">        <span style="color: #aa759f">return</span></span>
+<span id="L63" class="line">      <span style="color: #aa759f">end</span></span>
+<span id="L64" class="line"></span>
+<span id="L65" class="line">      <span style="color: #505050"># 引数の表示</span></span>
+<span id="L66" class="line">      <span style="color: #303030">@io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">print</span> <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">args</span><span style="color: #d0d0d0">.</span><span style="color: #303030">join</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">" "</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">+</span> <span style="color: #90a959">"</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span></span>
+<span id="L67" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L68" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L69" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">src/myecho_spec.cr</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"./spec_helper"</span></span>
+<span id="L2" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"./../src/myecho.cr"</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">describe</span> <span style="color: #f4bf75">MyEcho</span> <span style="color: #aa759f">do</span></span>
+<span id="L5" class="line">  <span style="color: #303030">describe</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span> <span style="color: #aa759f">do</span></span>
+<span id="L6" class="line">    <span style="color: #303030">describe</span> <span style="color: #90a959">"run"</span> <span style="color: #aa759f">do</span></span>
+<span id="L7" class="line">      <span style="color: #303030">it</span> <span style="color: #90a959">"writes the content of args to specified IO with args"</span> <span style="color: #aa759f">do</span></span>
+<span id="L8" class="line">        <span style="color: #303030">io</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">IO</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Memory</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span></span>
+<span id="L9" class="line">        <span style="color: #303030">myecho</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #303030">io</span><span style="color: #d0d0d0">)</span></span>
+<span id="L10" class="line">        <span style="color: #303030">myecho</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span><span style="color: #d0d0d0">([</span><span style="color: #90a959">"foo"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"bar"</span><span style="color: #d0d0d0">])</span></span>
+<span id="L11" class="line">        <span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #90a959">"foo bar</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span></span>
+<span id="L12" class="line">      <span style="color: #aa759f">end</span></span>
+<span id="L13" class="line">      <span style="color: #303030">describe</span> <span style="color: #90a959">"writes the version to specified IO"</span> <span style="color: #aa759f">do</span></span>
+<span id="L14" class="line">        <span style="color: #303030">it</span> <span style="color: #90a959">"with '-v'"</span> <span style="color: #aa759f">do</span></span>
+<span id="L15" class="line">          <span style="color: #303030">io</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">IO</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Memory</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span></span>
+<span id="L16" class="line">          <span style="color: #303030">myecho</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #303030">io</span><span style="color: #d0d0d0">)</span></span>
+<span id="L17" class="line">          <span style="color: #303030">myecho</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span><span style="color: #d0d0d0">([</span><span style="color: #90a959">"-v"</span><span style="color: #d0d0d0">])</span></span>
+<span id="L18" class="line">          <span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">VERSION</span> <span style="color: #d0d0d0">+</span> <span style="color: #90a959">"</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span></span>
+<span id="L19" class="line">        <span style="color: #aa759f">end</span></span>
+<span id="L20" class="line">        <span style="color: #303030">it</span> <span style="color: #90a959">"with '--version'"</span> <span style="color: #aa759f">do</span></span>
+<span id="L21" class="line">          <span style="color: #303030">io</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">IO</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Memory</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span></span>
+<span id="L22" class="line">          <span style="color: #303030">myecho</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #303030">io</span><span style="color: #d0d0d0">)</span></span>
+<span id="L23" class="line">          <span style="color: #303030">myecho</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span><span style="color: #d0d0d0">([</span><span style="color: #90a959">"--version"</span><span style="color: #d0d0d0">])</span> <b class="conum">(1)</b></span>
+<span id="L24" class="line">          <span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">VERSION</span> <span style="color: #d0d0d0">+</span> <span style="color: #90a959">"</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span></span>
+<span id="L25" class="line">        <span style="color: #aa759f">end</span></span>
+<span id="L26" class="line">      <span style="color: #aa759f">end</span></span>
+<span id="L27" class="line">      <span style="color: #303030">describe</span> <span style="color: #90a959">"writes the help to specified IO"</span> <span style="color: #aa759f">do</span></span>
+<span id="L28" class="line">        <span style="color: #303030">it</span> <span style="color: #90a959">"with '-h'"</span> <span style="color: #aa759f">do</span></span>
+<span id="L29" class="line">          <span style="color: #303030">io</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">IO</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Memory</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span></span>
+<span id="L30" class="line">          <span style="color: #303030">myecho</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #303030">io</span><span style="color: #d0d0d0">)</span></span>
+<span id="L31" class="line">          <span style="color: #303030">myecho</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span><span style="color: #d0d0d0">([</span><span style="color: #90a959">"-h"</span><span style="color: #d0d0d0">])</span></span>
+<span id="L32" class="line">          <span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #d0d0d0">&lt;&lt;-</span><span style="color: #f4bf75">HELP_MESSAGE</span></span>
+<span id="L33" class="line"></span>
+<span id="L34" class="line"><span style="color: #90a959">          My echo.</span></span>
+<span id="L35" class="line"></span>
+<span id="L36" class="line"><span style="color: #90a959">          Usage: myecho [options] [arguments]</span></span>
+<span id="L37" class="line"></span>
+<span id="L38" class="line"><span style="color: #90a959">              --prefix PREFIX                  prefix to each arguments</span></span>
+<span id="L39" class="line"><span style="color: #90a959">              -h, --help                       show help</span></span>
+<span id="L40" class="line"><span style="color: #90a959">              -v, --version                    show version</span></span>
+<span id="L41" class="line"></span>
+<span id="L42" class="line"><span style="color: #f4bf75">          HELP_MESSAGE</span></span>
+<span id="L43" class="line">        <span style="color: #aa759f">end</span></span>
+<span id="L44" class="line">      <span style="color: #aa759f">end</span></span>
+<span id="L45" class="line">      <span style="color: #303030">describe</span> <span style="color: #90a959">"prefix specified string to each arguments"</span> <span style="color: #aa759f">do</span></span>
+<span id="L46" class="line">        <span style="color: #303030">it</span> <span style="color: #90a959">"with '--prefix PREFIX'"</span> <span style="color: #aa759f">do</span></span>
+<span id="L47" class="line">          <span style="color: #303030">io</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">IO</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Memory</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span></span>
+<span id="L48" class="line">          <span style="color: #303030">myecho</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">MyEcho</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">(</span><span style="color: #303030">io</span><span style="color: #d0d0d0">)</span></span>
+<span id="L49" class="line">          <span style="color: #303030">myecho</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span><span style="color: #d0d0d0">([</span><span style="color: #90a959">"--prefix"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"pre_"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"foo"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"bar"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"baz"</span><span style="color: #d0d0d0">])</span></span>
+<span id="L50" class="line">          <span style="color: #303030">io</span><span style="color: #d0d0d0">.</span><span style="color: #303030">to_s</span><span style="color: #d0d0d0">.</span><span style="color: #303030">should</span> <span style="color: #303030">eq</span> <span style="color: #90a959">"pre_foo pre_bar pre_baz</span><span style="color: #8f5536">\n</span><span style="color: #90a959">"</span></span>
+<span id="L51" class="line">        <span style="color: #aa759f">end</span></span>
+<span id="L52" class="line">      <span style="color: #aa759f">end</span></span>
+<span id="L53" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L54" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L55" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>次は、もう少しかゆいところに手が届く、サードパーティ製の CLI ビルダーライブラリをいくつかご紹介します。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="サードパーティ製のライブラリを使う">サードパーティ製のライブラリを使う</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>CLI ツールを作成するにあたって、サードパーティ製の CLI ビルダーツールを使うことは得策です。<code>OptionParser</code> よりもリッチな機能を使うことができます。例えば、 Ruby だと thor などが有名です。Crystal でも CLI ビルダーツールが作成されています。今回は主観で選択したいくつかをご紹介します。題材としては、ここまで作ってきた <code>myecho</code> を用います。</p>
+</div>
+<div class="sect2">
+<h3 id="mrrooijencommander">mrrooijen/commander</h3>
+<div class="paragraph">
+<p>早い時期から作成されていたライブラリです。百聞は一見に如かず、早速 <code>myecho</code> を実装しましょう。</p>
+</div>
+<div class="listingblock">
+<div class="title">src/myecho_commander.cr</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"./myecho_commander/*"</span></span>
+<span id="L2" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"commander"</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #303030">cli</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">Commander</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Command</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">cmd</span><span style="color: #d0d0d0">|</span></span>
+<span id="L5" class="line">  <span style="color: #303030">cmd</span><span style="color: #d0d0d0">.</span><span style="color: #303030">use</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"myecho"</span></span>
+<span id="L6" class="line">  <span style="color: #303030">cmd</span><span style="color: #d0d0d0">.</span><span style="color: #303030">long</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"My echo."</span></span>
+<span id="L7" class="line"></span>
+<span id="L8" class="line">  <span style="color: #303030">cmd</span><span style="color: #d0d0d0">.</span><span style="color: #303030">flags</span><span style="color: #d0d0d0">.</span><span style="color: #303030">add</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">flag</span><span style="color: #d0d0d0">|</span></span>
+<span id="L9" class="line">    <span style="color: #303030">flag</span><span style="color: #d0d0d0">.</span><span style="color: #303030">name</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"prefix"</span></span>
+<span id="L10" class="line">    <span style="color: #303030">flag</span><span style="color: #d0d0d0">.</span><span style="color: #303030">long</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"--prefix"</span></span>
+<span id="L11" class="line">    <span style="color: #303030">flag</span><span style="color: #d0d0d0">.</span><span style="color: #303030">default</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">""</span></span>
+<span id="L12" class="line">    <span style="color: #303030">flag</span><span style="color: #d0d0d0">.</span><span style="color: #303030">description</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"prefix to each arguments."</span></span>
+<span id="L13" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L14" class="line"></span>
+<span id="L15" class="line">  <span style="color: #303030">cmd</span><span style="color: #d0d0d0">.</span><span style="color: #303030">flags</span><span style="color: #d0d0d0">.</span><span style="color: #303030">add</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">flag</span><span style="color: #d0d0d0">|</span></span>
+<span id="L16" class="line">    <span style="color: #303030">flag</span><span style="color: #d0d0d0">.</span><span style="color: #303030">name</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"version"</span></span>
+<span id="L17" class="line">    <span style="color: #303030">flag</span><span style="color: #d0d0d0">.</span><span style="color: #303030">long</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"--version"</span></span>
+<span id="L18" class="line">    <span style="color: #303030">flag</span><span style="color: #d0d0d0">.</span><span style="color: #303030">short</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"-v"</span></span>
+<span id="L19" class="line">    <span style="color: #303030">flag</span><span style="color: #d0d0d0">.</span><span style="color: #303030">default</span> <span style="color: #d0d0d0">=</span> <span style="color: #aa759f">false</span></span>
+<span id="L20" class="line">    <span style="color: #303030">flag</span><span style="color: #d0d0d0">.</span><span style="color: #303030">description</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"show version."</span></span>
+<span id="L21" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L22" class="line"></span>
+<span id="L23" class="line">  <span style="color: #303030">cmd</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">options</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">arguments</span><span style="color: #d0d0d0">|</span></span>
+<span id="L24" class="line">    <span style="color: #505050"># バージョンの表示</span></span>
+<span id="L25" class="line">    <span style="color: #aa759f">if</span> <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">bool</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"version"</span><span style="color: #d0d0d0">]</span></span>
+<span id="L26" class="line">      <span style="color: #303030">puts</span> <span style="color: #f4bf75">MyechoCommander</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">VERSION</span></span>
+<span id="L27" class="line">      <span style="color: #aa759f">next</span></span>
+<span id="L28" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L29" class="line"></span>
+<span id="L30" class="line">    <span style="color: #505050"># prefixをつける</span></span>
+<span id="L31" class="line">    <span style="color: #303030">prefix</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">string</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"prefix"</span><span style="color: #d0d0d0">]</span></span>
+<span id="L32" class="line">    <span style="color: #aa759f">unless</span> <span style="color: #303030">prefix</span><span style="color: #d0d0d0">.</span><span style="color: #303030">empty?</span></span>
+<span id="L33" class="line">      <span style="color: #303030">puts</span> <span style="color: #303030">arguments</span><span style="color: #d0d0d0">.</span><span style="color: #303030">map</span> <span style="color: #d0d0d0">{</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">arg</span><span style="color: #d0d0d0">|</span> <span style="color: #303030">prefix</span> <span style="color: #d0d0d0">+</span> <span style="color: #303030">arg</span> <span style="color: #d0d0d0">}.</span><span style="color: #303030">join</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">" "</span><span style="color: #d0d0d0">)</span></span>
+<span id="L34" class="line">      <span style="color: #aa759f">next</span></span>
+<span id="L35" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L36" class="line"></span>
+<span id="L37" class="line">    <span style="color: #505050"># 引数の表示</span></span>
+<span id="L38" class="line">    <span style="color: #303030">puts</span> <span style="color: #303030">arguments</span><span style="color: #d0d0d0">.</span><span style="color: #303030">join</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">" "</span><span style="color: #d0d0d0">)</span></span>
+<span id="L39" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L40" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L41" class="line"></span>
+<span id="L42" class="line"><span style="color: #f4bf75">Commander</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span><span style="color: #d0d0d0">(</span><span style="color: #303030">cli</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">ARGV</span><span style="color: #d0d0d0">)</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>サードパーティ製のライブラリは、基本的に次の構成になっています。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>コマンドの説明（ <code>Description</code> や <code>Usage</code> など）</p>
+</li>
+<li>
+<p><code>Options</code> や <code>Flags</code> の定義</p>
+</li>
+<li>
+<p>実際に実行される箇所</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>run</code> メソッドや <code>run</code> ブロックなど</p>
+</li>
+<li>
+<p>ここで <code>Options</code> や <code>Flags</code> の入力値を受け取れる</p>
+</li>
+<li>
+<p>ここで 入力された引数を受け取れる</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>これらを独自の定義方法で書いていきます。<code>OotionParser</code> を用いたときよりも見やすくなっていると思います。また、 <code>help</code> や <code>version</code> など、 CLI ツールに必須のオプションはデフォルトでついている場合もあります。<code>mrrooijen/commander</code> の場合は <code>help</code> がデフォルトで設定されているので、コード上には現れていません。また、サブコマンドも実装可能です。詳しくは公式マニュアルを御覧ください。コードを実際に実行すると次のようになります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal run src/myecho_commander.cr <span style="color: #f4bf75">--</span> foo bar baz</span>
+<span id="L2" class="line"><span style="color: #303030">foo bar baz</span></span>
+<span id="L3" class="line"><span style="color: #303030">$</span> crystal run src/myecho_commander.cr <span style="color: #f4bf75">--</span> <span style="color: #f4bf75">--version</span></span>
+<span id="L4" class="line"><span style="color: #303030">0.1.0</span></span>
+<span id="L5" class="line"><span style="color: #303030">$</span> crystal run src/myecho_commander.cr <span style="color: #f4bf75">--</span> <span style="color: #f4bf75">--help</span></span>
+<span id="L6" class="line"><span style="color: #303030">  myecho - My echo.</span></span>
+<span id="L7" class="line"></span>
+<span id="L8" class="line"><span style="color: #303030">  Usage:</span></span>
+<span id="L9" class="line"><span style="color: #303030">    myecho [flags] [arguments]</span></span>
+<span id="L10" class="line"></span>
+<span id="L11" class="line"><span style="color: #303030">  Commands:</span></span>
+<span id="L12" class="line"><span style="color: #303030">    help [command]  #</span> Help about any command.</span>
+<span id="L13" class="line"></span>
+<span id="L14" class="line"><span style="color: #303030">  Flags:</span></span>
+<span id="L15" class="line"><span style="color: #303030">    -h, --help     #</span> Help <span style="color: #aa759f">for </span>this command. default: <span style="color: #90a959">'false'</span><span style="color: #303030">.</span></span>
+<span id="L16" class="line"><span style="color: #303030">        --prefix   #</span> prefix to each arguments. default: <span style="color: #90a959">''</span><span style="color: #303030">.</span></span>
+<span id="L17" class="line"><span style="color: #303030">    -v, --version  #</span> show version. default: <span style="color: #90a959">'false'</span><span style="color: #303030">.</span></span>
+<span id="L18" class="line"><span style="color: #303030">$</span> crystal run src/myecho_commander.cr <span style="color: #f4bf75">--</span> <span style="color: #f4bf75">--prefix</span> pre_ foo bar baz</span>
+<span id="L19" class="line"><span style="color: #303030">pre_foo pre_bar pre_baz</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>期待通りの動作をしていることがわかります。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="jwaldripadmiral-cr">jwaldrip/admiral.cr</h3>
+<div class="paragraph">
+<p>最近も開発されているライブラリです。早速コードを見てみましょう。</p>
+</div>
+<div class="listingblock">
+<div class="title">src/myecho_admiral.cr</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"./myecho_admiral/*"</span></span>
+<span id="L2" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"admiral"</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #aa759f">module</span> <span style="color: #f4bf75">MyechoAdmiral</span></span>
+<span id="L5" class="line">  <span style="color: #aa759f">class</span> <span style="color: #f4bf75">Cli</span> <span style="color: #d0d0d0">&lt;</span> <span style="color: #f4bf75">Admiral</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Command</span></span>
+<span id="L6" class="line">    <span style="color: #303030">define_version</span> <span style="color: #f4bf75">MyechoAdmiral</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">VERSION</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">short: </span><span style="color: #303030">v</span></span>
+<span id="L7" class="line">    <span style="color: #303030">define_help</span> <span style="color: #90a959">description: </span><span style="color: #90a959">"My echo."</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">short: </span><span style="color: #303030">h</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line">    <span style="color: #303030">define_flag</span> <span style="color: #303030">prefix</span> <span style="color: #d0d0d0">:</span> <span style="color: #f4bf75">String</span><span style="color: #d0d0d0">?,</span></span>
+<span id="L10" class="line">      <span style="color: #90a959">description: </span><span style="color: #90a959">"prefix to each arguments."</span><span style="color: #d0d0d0">,</span></span>
+<span id="L11" class="line">      <span style="color: #90a959">long: </span><span style="color: #303030">prefix</span></span>
+<span id="L12" class="line"></span>
+<span id="L13" class="line">    <span style="color: #aa759f">def</span> <span style="color: #303030">run</span></span>
+<span id="L14" class="line">      <span style="color: #505050"># prefixをつける</span></span>
+<span id="L15" class="line">      <span style="color: #303030">prefix</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">flags</span><span style="color: #d0d0d0">.</span><span style="color: #303030">prefix</span></span>
+<span id="L16" class="line">      <span style="color: #aa759f">unless</span> <span style="color: #303030">prefix</span><span style="color: #d0d0d0">.</span><span style="color: #303030">nil?</span></span>
+<span id="L17" class="line">        <span style="color: #303030">puts</span> <span style="color: #303030">arguments</span><span style="color: #d0d0d0">.</span><span style="color: #303030">map</span> <span style="color: #d0d0d0">{</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">arg</span><span style="color: #d0d0d0">|</span> <span style="color: #303030">prefix</span> <span style="color: #d0d0d0">+</span> <span style="color: #303030">arg</span> <span style="color: #d0d0d0">}.</span><span style="color: #303030">join</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">" "</span><span style="color: #d0d0d0">)</span></span>
+<span id="L18" class="line">        <span style="color: #aa759f">return</span></span>
+<span id="L19" class="line">      <span style="color: #aa759f">end</span></span>
+<span id="L20" class="line"></span>
+<span id="L21" class="line">      <span style="color: #505050"># 引数の表示</span></span>
+<span id="L22" class="line">      <span style="color: #303030">puts</span> <span style="color: #303030">arguments</span><span style="color: #d0d0d0">.</span><span style="color: #303030">join</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">" "</span><span style="color: #d0d0d0">)</span></span>
+<span id="L23" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L24" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L25" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L26" class="line"></span>
+<span id="L27" class="line"><span style="color: #f4bf75">MyechoAdmiral</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>行数が少ないですね。<code>help</code> と <code>version</code> はマクロで1行で書かれています。こういった DSL を提供しやすいのもマクロの強みです。構造もわかりやすく、読みやすいと思います。もちろん、サブコマンドも対応しています。</p>
+</div>
+<div class="paragraph">
+<p>実際に実行すると次のようになります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal run src/myecho_admiral.cr <span style="color: #f4bf75">--</span> foo bar baz</span>
+<span id="L2" class="line"><span style="color: #303030">foo bar baz</span></span>
+<span id="L3" class="line"><span style="color: #303030">$</span> crystal run src/myecho_admiral.cr <span style="color: #f4bf75">--</span> <span style="color: #f4bf75">--version</span></span>
+<span id="L4" class="line"><span style="color: #303030">0.1.0</span></span>
+<span id="L5" class="line"><span style="color: #303030">$</span> crystal run src/myecho_admiral.cr <span style="color: #f4bf75">--</span> <span style="color: #f4bf75">--help</span></span>
+<span id="L6" class="line"><span style="color: #303030">Usage:</span></span>
+<span id="L7" class="line"><span style="color: #303030">  myecho [flags...] [arg...]</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line"><span style="color: #303030">My echo.</span></span>
+<span id="L10" class="line"></span>
+<span id="L11" class="line"><span style="color: #303030">Flags:</span></span>
+<span id="L12" class="line"><span style="color: #303030">  --help, -h (default: false)     #</span> Displays <span style="color: #303030">help </span><span style="color: #aa759f">for </span>the current command.</span>
+<span id="L13" class="line"><span style="color: #303030">  --prefix                        #</span> prefix to each arguments.</span>
+<span id="L14" class="line"><span style="color: #303030">  --version, -v (default: false)</span></span>
+<span id="L15" class="line"><span style="color: #303030">$</span> crystal run src/myecho_admiral.cr <span style="color: #f4bf75">--</span> <span style="color: #f4bf75">--prefix</span> pre_ foo bar baz</span>
+<span id="L16" class="line"><span style="color: #303030">pre_foo pre_bar pre_baz</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>こちらも期待通りの動作をしています。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="at-grandpaclim">at-grandpa/clim</h3>
+<div class="paragraph">
+<p>これは私自身が作成したライブラリです。記述量の少なさと直感的な記述を目的に作成しています。コードを見てみましょう。</p>
+</div>
+<div class="listingblock">
+<div class="title">src/myecho_clim.cr</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"./myecho_clim/*"</span></span>
+<span id="L2" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"clim"</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #aa759f">module</span> <span style="color: #f4bf75">MyechoClim</span></span>
+<span id="L5" class="line">  <span style="color: #aa759f">class</span> <span style="color: #f4bf75">Cli</span> <span style="color: #d0d0d0">&lt;</span> <span style="color: #f4bf75">Clim</span></span>
+<span id="L6" class="line">    <span style="color: #303030">main_command</span> <span style="color: #aa759f">do</span></span>
+<span id="L7" class="line">      <span style="color: #303030">desc</span> <span style="color: #90a959">"My echo."</span></span>
+<span id="L8" class="line">      <span style="color: #303030">usage</span> <span style="color: #90a959">"myecho [options] [arguments] ..."</span></span>
+<span id="L9" class="line">      <span style="color: #303030">option</span> <span style="color: #90a959">"--prefix PREFIX"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">type: </span><span style="color: #f4bf75">String</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">desc: </span><span style="color: #90a959">"prefix to each arguments."</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">default: </span><span style="color: #90a959">""</span></span>
+<span id="L10" class="line">      <span style="color: #303030">version</span> <span style="color: #f4bf75">MyechoClim</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">VERSION</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">short: </span><span style="color: #90a959">"-v"</span></span>
+<span id="L11" class="line">      <span style="color: #303030">run</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">options</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">arguments</span><span style="color: #d0d0d0">|</span></span>
+<span id="L12" class="line">        <span style="color: #505050"># prefixをつける</span></span>
+<span id="L13" class="line">        <span style="color: #303030">prefix</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">prefix</span></span>
+<span id="L14" class="line">        <span style="color: #aa759f">unless</span> <span style="color: #303030">prefix</span><span style="color: #d0d0d0">.</span><span style="color: #303030">empty?</span></span>
+<span id="L15" class="line">          <span style="color: #303030">puts</span> <span style="color: #303030">arguments</span><span style="color: #d0d0d0">.</span><span style="color: #303030">map</span> <span style="color: #d0d0d0">{</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">argument</span><span style="color: #d0d0d0">|</span> <span style="color: #303030">prefix</span> <span style="color: #d0d0d0">+</span> <span style="color: #303030">argument</span> <span style="color: #d0d0d0">}.</span><span style="color: #303030">join</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">" "</span><span style="color: #d0d0d0">)</span></span>
+<span id="L16" class="line">          <span style="color: #aa759f">return</span></span>
+<span id="L17" class="line">        <span style="color: #aa759f">end</span></span>
+<span id="L18" class="line"></span>
+<span id="L19" class="line">        <span style="color: #505050"># 引数の表示</span></span>
+<span id="L20" class="line">        <span style="color: #303030">puts</span> <span style="color: #303030">arguments</span><span style="color: #d0d0d0">.</span><span style="color: #303030">join</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">" "</span><span style="color: #d0d0d0">)</span></span>
+<span id="L21" class="line">      <span style="color: #aa759f">end</span></span>
+<span id="L22" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L23" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L24" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L25" class="line"></span>
+<span id="L26" class="line"><span style="color: #f4bf75">MyechoClim</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Cli</span><span style="color: #d0d0d0">.</span><span style="color: #303030">start</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">ARGV</span><span style="color: #d0d0d0">)</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>desc</code> や <code>option</code> などの定義が１行で書けます。<code>version</code> マクロも用意しました。コマンドの実行箇所は、 <code>run</code> ブロックになります。サブコマンドも対応しており、直感的に記述することができます。詳しくはマニュアルを御覧ください。</p>
+</div>
+<div class="paragraph">
+<p>実際に実行すると次のようになります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal run src/myecho_clim.cr <span style="color: #f4bf75">--</span> foo bar baz</span>
+<span id="L2" class="line"><span style="color: #303030">foo bar baz</span></span>
+<span id="L3" class="line"><span style="color: #303030">$</span> crystal run src/myecho_clim.cr <span style="color: #f4bf75">--</span> <span style="color: #f4bf75">--version</span></span>
+<span id="L4" class="line"><span style="color: #303030">0.1.0</span></span>
+<span id="L5" class="line"><span style="color: #303030">$</span> crystal run src/myecho_clim.cr <span style="color: #f4bf75">--</span> <span style="color: #f4bf75">--help</span></span>
+<span id="L6" class="line"></span>
+<span id="L7" class="line"><span style="color: #303030">  My echo.</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line"><span style="color: #303030">  Usage:</span></span>
+<span id="L10" class="line"></span>
+<span id="L11" class="line"><span style="color: #303030">    myecho [options] [arguments] ...</span></span>
+<span id="L12" class="line"></span>
+<span id="L13" class="line"><span style="color: #303030">  Options:</span></span>
+<span id="L14" class="line"></span>
+<span id="L15" class="line"><span style="color: #303030">    --prefix PREFIX                  prefix to each arguments. [type:String] [default:""]</span></span>
+<span id="L16" class="line"><span style="color: #303030">    --help                           Show this help.</span></span>
+<span id="L17" class="line"><span style="color: #303030">    -v, --version                    Show version.</span></span>
+<span id="L18" class="line"></span>
+<span id="L19" class="line"><span style="color: #303030">$</span> crystal run src/myecho_clim.cr <span style="color: #f4bf75">--</span> <span style="color: #f4bf75">--prefix</span> pre_ foo bar baz</span>
+<span id="L20" class="line"><span style="color: #303030">pre_foo pre_bar pre_baz</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>こちらも期待通りの動作をしています。</p>
+</div>
+<div class="paragraph">
+<p>　</p>
+</div>
+<div class="paragraph">
+<p>サードパーティ製のライブラリはそれぞれに特徴がありますが、デフォルトの <code>OptionParser</code> よりはリッチな機能を提供してくれます。個人で使う小さな CLI ツールだと <code>OptionParser</code> で十分かもしれません。しかし、ツールとして公開したりメンテナンスが必要になってくるケースでは、サードパーティ製ライブラリを使うほうが良いかと思います。ぜひ一度試してみてください。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="まとめ">まとめ</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>この章では Crystal で CLI ツールの開発を行うことについて説明しました。冒頭に説明した通り、利点は次のようになるでしょう。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>コンパイルしてワンバイナリにできる</p>
+</li>
+<li>
+<p>Ruby 風の syntax で雑に書ける</p>
+</li>
+<li>
+<p>実行速度が早い</p>
+</li>
+<li>
+<p>コンパイル時に型チェックが入る</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>ものすごく雑に小さい CLI ツールを作成する場合は、コンパイルがある分、 Crystal よりも Ruby の方が速いでしょう。しかし、中規模程度でコード量が多くてメンテナンスが必要になってくるケースだと、 Crystal の利点は大きくなってくるのではないでしょうか。大規模なバッチ処理などでも、処理スピードやメモリ使用量などで Crysal の力が発揮されると思います。</p>
+</div>
+<div class="paragraph">
+<p>みなさんも一度、 敷居の低い CLI ツールを通して Crystal に触れてみてください。</p>
+</div>
+</div>
+</div></div>
+	</article>
+</div><!-- Footer -->
+<div id="footer">
+  
+  <!-- Copyright -->
+  <ul class="copyright">
+    
+      <li>&copy;Intducing Crystal Programming Language. All rights reserved.</li>
+    
+    <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+    <li>Jekyll integration: <a href="https://chrisbobbe.github.io/">Chris Bobbe</a></li>
+  </ul>
+  
+</div></body>
+</html>

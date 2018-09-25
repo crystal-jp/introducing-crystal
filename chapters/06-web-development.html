@@ -1,0 +1,1009 @@
+<!DOCTYPE HTML>
+<!--
+Prologue by HTML5 UP
+html5up.net | @ajlkn
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+Jekyll integration by Chris Bobbe | chrisbobbe.github.io
+-->
+<html><head><!-- Robots -->
+  <meta name="robots" content="index, follow" /><link rel="canonical" href="/introducing-crystal/chapters/06-web-development.html" /><!-- Title, description, author --><title>06. Web 開発 | Intducing Crystal Programming Language</title>
+  <meta name="description" content="『Introducing Crystal Programming Language』はプログラミング言語 Crystal の初心者〜中級者向け解説書です。" />
+  <meta name="author" content="Crystal-JP" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="06. Web 開発 | Intducing Crystal Programming Language" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/introducing-crystal/assets/images/avatar.png" />
+  <meta property="og:url" content="/introducing-crystal/chapters/06-web-development.html" />
+  <meta property="og:site_name" content="Intducing Crystal Programming Language" />
+  <meta property="og:description" content="『Introducing Crystal Programming Language』はプログラミング言語 Crystal の初心者〜中級者向け解説書です。" />
+  
+  <!-- Styles -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--[if lte IE 8]><script src="/introducing-crystal/assets/js/ie/html5shiv.js" defer></script><![endif]-->
+  <link rel="stylesheet" href="/introducing-crystal/assets/css/main.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="/introducing-crystal/assets/css/ie8.css" /><![endif]-->
+  <!--[if lte IE 9]><link rel="stylesheet" href="/introducing-crystal/assets/css/ie9.css" /><![endif]-->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+
+  <!-- Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/jquery.scrolly.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/jquery.scrollzer.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/skel.min.js" defer></script>
+  <script src="/introducing-crystal/assets/js/util.js" defer></script>
+  <!--[if lte IE 8]><script src="/introducing-crystal/assets/js/ie/respond.min.js" defer></script><![endif]-->
+  <script src="/introducing-crystal/assets/js/main.js" defer></script>
+
+</head><body><!-- Header -->
+<div id="header">
+  <div class="top"><!-- Logo -->
+<div id="logo">
+  <a href="/introducing-crystal/" id="home-link">
+    <span class="image avatar48"><img src="/introducing-crystal/assets/images/avatar.png" alt="Avatar of Crystal-JP" /></span>
+    <h1 id="title">Intducing Crystal Programming Language</h1>
+    <p></p>
+  </a>
+</div><!-- Nav -->
+<nav id="nav">
+  <ul><li><a href="/introducing-crystal/" id="トップページ-link">
+            <span class="icon fa-link">トップページ</span>
+          </a></li><li><a href="/introducing-crystal/chapters/01-introduction.html" id="01-はじめに-link">
+            <span class="icon fa-link">01. はじめに</span>
+          </a></li><li><a href="/introducing-crystal/chapters/02-getting-started.html" id="02-getting-started-link">
+            <span class="icon fa-link">02. Getting Started</span>
+          </a></li><li><a href="/introducing-crystal/chapters/03-syntax.html" id="03-構文-link">
+            <span class="icon fa-link">03. 構文</span>
+          </a></li><li><a href="#" id="06-web-開発" class="active">
+            <span class="icon fa-link">06. Web 開発</span>
+          </a></li><li><a href="/introducing-crystal/chapters/04-macro.html" id="04-マクロ-link">
+            <span class="icon fa-link">04. マクロ</span>
+          </a></li><li><a href="/introducing-crystal/chapters/07-cli-development.html" id="07-cli-開発-link">
+            <span class="icon fa-link">07. CLI 開発</span>
+          </a></li><li><a href="/introducing-crystal/chapters/05-shards.html" id="05-shards-link">
+            <span class="icon fa-link">05. Shards</span>
+          </a></li><li><a href="/introducing-crystal/authors.html" id="著者紹介-link">
+            <span class="icon fa-link">著者紹介</span>
+          </a></li></ul>
+</nav></div>
+  <div class="bottom"><!-- Social Icons -->
+<ul class="icons"></ul>
+</div>
+</div>
+<!-- Main -->
+<div id="main">
+	<!-- Page -->
+	<article class="shade-two">
+	  <div class="container">
+			<header>
+				<h2>06. Web 開発</h2></header><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#crystal-での-web-開発の前提知識">Crystal での Web 開発の前提知識</a>
+<ul class="sectlevel2">
+<li><a href="#http-ハンドラ">HTTP ハンドラ</a></li>
+<li><a href="#crystal-の-web-フレームワーク">Crystal の Web フレームワーク</a></li>
+</ul>
+</li>
+<li><a href="#kemal-による-web-開発">Kemal による Web 開発</a>
+<ul class="sectlevel2">
+<li><a href="#kemal-インストール">Kemal インストール</a></li>
+<li><a href="#kemal-firststep">Kemal FirstStep</a></li>
+<li><a href="#db-と連動する">DB と連動する</a></li>
+<li><a href="#投稿一覧ページの編集">投稿一覧ページの編集</a></li>
+<li><a href="#レイアウトページの作成">レイアウトページの作成</a></li>
+<li><a href="#css-の作成">CSS の作成</a></li>
+<li><a href="#一覧ページの作成">一覧ページの作成</a></li>
+<li><a href="#新規投稿ページ">新規投稿ページ</a></li>
+<li><a href="#詳細ページ">詳細ページ</a></li>
+<li><a href="#kemal-プログラム改修">Kemal プログラム改修</a></li>
+<li><a href="#クエリ">クエリ</a></li>
+<li><a href="#データの更新">データの更新</a></li>
+<li><a href="#レンダリング">レンダリング</a></li>
+<li><a href="#オブジェクトの-crud">オブジェクトの CRUD</a></li>
+</ul>
+</li>
+<li><a href="#補注">補注</a>
+<ul class="sectlevel2">
+<li><a href="#トランザクション">トランザクション</a></li>
+<li><a href="#mysql">MySQL</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>この章では、 Crystal を用いて Web 開発を行う方法について解説します。<br>
+本サンプルで使用する Crystal のバージョンは <code>0.26.0</code> で確認しています。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crystal-での-web-開発の前提知識">Crystal での Web 開発の前提知識</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>まず、 Crystal では HTTP でのサービスをどのように処理するかについて解説します。<br>
+前の章でも既に解説済みですが、改めて Crystal での Web 開発の基本となる部分について解説します。</p>
+</div>
+<div class="paragraph">
+<p>以下のコードで解説します。</p>
+</div>
+<div class="listingblock">
+<div class="title">server.cr</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"http/server"</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #303030">server</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">HTTP</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Server</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">context</span><span style="color: #d0d0d0">|</span></span>
+<span id="L4" class="line">  <span style="color: #303030">context</span><span style="color: #d0d0d0">.</span><span style="color: #303030">response</span><span style="color: #d0d0d0">.</span><span style="color: #303030">content_type</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"text/plain"</span></span>
+<span id="L5" class="line">  <span style="color: #303030">context</span><span style="color: #d0d0d0">.</span><span style="color: #303030">response</span><span style="color: #d0d0d0">.</span><span style="color: #303030">print</span> <span style="color: #90a959">"Hello world"</span></span>
+<span id="L6" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L7" class="line"></span>
+<span id="L8" class="line"><span style="color: #303030">puts</span> <span style="color: #90a959">"Listening on http://0.0.0.0:8080"</span></span>
+<span id="L9" class="line"><span style="color: #303030">server</span><span style="color: #d0d0d0">.</span><span style="color: #303030">listen</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">8080</span><span style="color: #d0d0d0">)</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ポート 8080 での HTTP アクセスを Listen する最小のプログラムです。<br>
+以下のコードを実行することで簡易 HTTP サーバとして機能します。<br>
+localhost:8080 にアクセスすると <code>Hello world</code> が表示されます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal server.cr</span>
+<span id="L2" class="line"><span style="color: #303030">Listening on http://0.0.0.0:8080</span></span></code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="http-ハンドラ">HTTP ハンドラ</h3>
+<div class="paragraph">
+<p>基本的に Crystal の HTTP サーバが返却するパラメータは レスポンス本文、ヘッダ、ステータスコードの3種です。<br>
+その3種を持っている限りにおいて、処理をスタックすることが出来ます。<br>
+この辺りの規約は Ruby でいうところの Rack に似ているといえます。<br>
+HTTP ハンドラを実装するには Rack 同様に call メソッドを定義し、引数に <code>HTTP::Server::Context</code> 型のオブジェクトを渡すという形式になっています。<br>
+以下に例を記載します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"http/server"</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #aa759f">class</span> <span style="color: #f4bf75">InterruptTestFirst</span></span>
+<span id="L4" class="line">  <span style="color: #aa759f">include</span> <span style="color: #f4bf75">HTTP</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Handler</span></span>
+<span id="L5" class="line"></span>
+<span id="L6" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">call</span><span style="color: #d0d0d0">(</span><span style="color: #303030">context</span><span style="color: #d0d0d0">)</span></span>
+<span id="L7" class="line">    <span style="color: #303030">response</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">call_next</span><span style="color: #d0d0d0">(</span><span style="color: #303030">context</span><span style="color: #d0d0d0">)</span></span>
+<span id="L8" class="line">    <span style="color: #303030">puts</span> <span style="color: #90a959">"aa"</span></span>
+<span id="L9" class="line">    <span style="color: #303030">response</span></span>
+<span id="L10" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L11" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L12" class="line"></span>
+<span id="L13" class="line"><span style="color: #aa759f">class</span> <span style="color: #f4bf75">InterruptTestSecond</span></span>
+<span id="L14" class="line">  <span style="color: #aa759f">include</span> <span style="color: #f4bf75">HTTP</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Handler</span></span>
+<span id="L15" class="line"></span>
+<span id="L16" class="line">  <span style="color: #aa759f">def</span> <span style="color: #303030">call</span><span style="color: #d0d0d0">(</span><span style="color: #303030">context</span><span style="color: #d0d0d0">)</span></span>
+<span id="L17" class="line">    <span style="color: #303030">response</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">call_next</span><span style="color: #d0d0d0">(</span><span style="color: #303030">context</span><span style="color: #d0d0d0">)</span></span>
+<span id="L18" class="line">    <span style="color: #303030">puts</span> <span style="color: #90a959">"bb"</span></span>
+<span id="L19" class="line">    <span style="color: #303030">response</span></span>
+<span id="L20" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L21" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L22" class="line"></span>
+<span id="L23" class="line"><span style="color: #303030">server</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">HTTP</span><span style="color: #d0d0d0">::</span><span style="color: #f4bf75">Server</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">([</span><span style="color: #f4bf75">InterruptTestFirst</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">InterruptTestSecond</span><span style="color: #d0d0d0">.</span><span style="color: #303030">new</span><span style="color: #d0d0d0">])</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">context</span><span style="color: #d0d0d0">|</span></span>
+<span id="L24" class="line">  <span style="color: #303030">context</span><span style="color: #d0d0d0">.</span><span style="color: #303030">response</span><span style="color: #d0d0d0">.</span><span style="color: #303030">content_type</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"text/plain"</span></span>
+<span id="L25" class="line">  <span style="color: #303030">context</span><span style="color: #d0d0d0">.</span><span style="color: #303030">response</span><span style="color: #d0d0d0">.</span><span style="color: #303030">print</span> <span style="color: #90a959">"Hello world"</span></span>
+<span id="L26" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L27" class="line"></span>
+<span id="L28" class="line"><span style="color: #303030">puts</span> <span style="color: #90a959">"Listening on http://0.0.0.0:8080"</span></span>
+<span id="L29" class="line"><span style="color: #303030">server</span><span style="color: #d0d0d0">.</span><span style="color: #303030">listen</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">8080</span><span style="color: #d0d0d0">)</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>上記の例で言いますと、 <code>InterruptTestFirst</code> <code>InterruptTestSecond</code> の順にスタックに積まれます。<br>
+実行されるのは先入れ後出しなので、後に積まれた <code>InterruptTestSecond</code> からになります。</p>
+</div>
+<div class="paragraph">
+<p><code>curl -X GET <a href="http://localhost:8080" class="bare">http://localhost:8080</a></code> を実行することで以下の内容がコンソールに出力されます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">bb</span></span>
+<span id="L2" class="line"></span>
+<span id="L3" class="line"><span style="color: #303030">aa</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>主に Crystal で Web 開発を行う上での基本的な内容ですが、実際に開発する場合は何らかの Web フレームワークを用いることになるかと思います。<br>
+次項から Web フレームワークについて解説します。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="crystal-の-web-フレームワーク">Crystal の Web フレームワーク</h3>
+<div class="paragraph">
+<p>Crystal で現在最も活発に開発されている Web フレームワークが Kemal です。<br>
+Ruby でいうところの Sinatra に似た設計思想で作られており、シンプルな実装で Web アプリを作成することが出来ます。<br>
+本書では主に Kemal を用いて簡単な Web アプリを作成しながら Web 開発の方法を解説していきます。</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Web サイト </dt>
+<dd>
+<p><a href="http://kemalcr.com/" class="bare">http://kemalcr.com/</a></p>
+</dd>
+<dt class="hdlist1">GitHub </dt>
+<dd>
+<p><a href="https://github.com/kemalcr/kemal" class="bare">https://github.com/kemalcr/kemal</a></p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>また Kemal 以外の主なフレームワークとして以下のものがあります。</p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Amber </dt>
+<dd>
+<p><a href="https://www.amberframework.org" class="bare">https://www.amberframework.org</a></p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>フルスタックの Web フレームワークです。<br>
+様々なコードジェネレータや、 OR/M を備えています。 Rails 的な規約重視のフレームワークです。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="kemal-による-web-開発">Kemal による Web 開発</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>それでは本章から Kemal による Web 開発を、サンプルを交えながら説明します。<br>
+また本サンプルに使用する Kemal のバージョンは <code>0.24.0</code> を想定しています。</p>
+</div>
+<div class="sect2">
+<h3 id="kemal-インストール">Kemal インストール</h3>
+<div class="paragraph">
+<p>適当な作業用のディレクトリ以下で、以下のコードを実行してみます。ディレクトリが作成され幾つかのファイルがひな形から作成されます。<br>
+本稿ではサンプルアプリを kemal-sample として進めます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal init app kemal-sample</span>
+<span id="L2" class="line"><span style="color: #303030">$</span> <span style="color: #303030">cd </span>kemal-sample</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>shard.yml ファイルに以下の内容を追記します。</p>
+</div>
+<div class="listingblock">
+<div class="title">shard.yml</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-yaml" data-lang="yaml"><span id="L1" class="line"><span style="color: #6a9fb5">dependencies</span><span style="color: #d0d0d0">:</span></span>
+<span id="L2" class="line">  <span style="color: #6a9fb5">kemal</span><span style="color: #d0d0d0">:</span></span>
+<span id="L3" class="line">    <span style="color: #6a9fb5">github</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">kemalcr/kemal</span></span>
+<span id="L4" class="line">    <span style="color: #6a9fb5">version</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">0.24.0</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>以下のコマンドを実行することで Kemal 本体をインストールすることが出来ます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> shards <span style="color: #303030">install</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kemal-firststep">Kemal FirstStep</h3>
+<div class="paragraph">
+<p>インストールまで問題なく動かせたら続いて簡単なサンプルを作成してみましょう。<br>
+カレントの src ディレクトリ以下の <code>kemal-sample.cr</code> に以下の追記を行います。</p>
+</div>
+<div class="paragraph">
+<p>まず行頭に以下の行を足します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"kemal"</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>続いて <code>module Kemal::Sample</code> 内に以下の内容を追記します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line">  <span style="color: #303030">get</span> <span style="color: #90a959">"/hello"</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">env</span><span style="color: #d0d0d0">|</span></span>
+<span id="L2" class="line">    <span style="color: #303030">hello</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"Hello World"</span></span>
+<span id="L3" class="line">    <span style="color: #303030">render</span> <span style="color: #90a959">"src/views/hello.ecr"</span></span>
+<span id="L4" class="line">  <span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>末尾の行に以下の内容を追記します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #f4bf75">Kemal</span><span style="color: #d0d0d0">.</span><span style="color: #303030">run</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>画面側の処理を作成します。<br>
+<code>src</code> 以下に view ディレクトリを作成し、以下の <code>hello.ecr</code> ファイルを <code>view</code> ディレクトリ内に作成します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-erb" data-lang="erb"><span id="L1" class="line"><span style="color: #f4bf75">&lt;!DOCTYPE html&gt;</span></span>
+<span id="L2" class="line"><span style="color: #f4bf75">&lt;html&gt;</span></span>
+<span id="L3" class="line"><span style="color: #f4bf75">&lt;head&gt;</span></span>
+<span id="L4" class="line">  <span style="color: #f4bf75">&lt;meta</span> <span style="color: #6a9fb5">charset=</span><span style="color: #90a959">"utf-8"</span><span style="color: #f4bf75">/&gt;</span></span>
+<span id="L5" class="line">  <span style="color: #f4bf75">&lt;title&gt;</span>hello<span style="color: #f4bf75">&lt;/title&gt;</span></span>
+<span id="L6" class="line"><span style="color: #f4bf75">&lt;/head&gt;</span></span>
+<span id="L7" class="line"><span style="color: #f4bf75">&lt;body&gt;</span></span>
+<span id="L8" class="line">  <span style="color: #f4bf75">&lt;%=</span> <span style="color: #303030">hello</span> <span style="color: #f4bf75">%&gt;</span></span>
+<span id="L9" class="line"><span style="color: #f4bf75">&lt;/body&gt;</span></span>
+<span id="L10" class="line"><span style="color: #f4bf75">&lt;/html&gt;</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Kemal の基本的な使い方として、 REST の動詞 GET POST PUT DELETE を以下の形で記述します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">get</span> <span style="color: #90a959">"/path"</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">env</span><span style="color: #d0d0d0">|</span></span>
+<span id="L2" class="line">  <span style="color: #505050"># 処理</span></span>
+<span id="L3" class="line"><span style="color: #aa759f">end</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line"><span style="color: #303030">post</span> <span style="color: #90a959">"/path"</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">env</span><span style="color: #d0d0d0">|</span></span>
+<span id="L6" class="line">  <span style="color: #505050"># 処理</span></span>
+<span id="L7" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>詳しい内容については後述します。<br>
+先ずは記述したら、以下のコマンドでビルド、実行します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> crystal build src/kemal-sample.cr</span>
+<span id="L2" class="line"><span style="color: #303030">$</span> ./kemal-sample</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ブラウザで <code><a href="http://localhost:3000/" class="bare">http://localhost:3000/</a></code> でアクセスします。<br>
+<code>Hello World</code> と表示されていれば問題ありません。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="db-と連動する">DB と連動する</h3>
+<div class="paragraph">
+<p>通常、 Web アプリでは DB が必須です。 Kemal で作ったアプリから DB にアクセスすることも可能です。<br>
+ライブラリを使用することで PostgreSQL か、もしくは MySQL を使用することが出来ます。<br>
+今回は PostgreSQL を使用します。</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">テーブル 1. テーブル名 articles</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">カラム名</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">型</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">serial</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">title</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">text</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">content</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">text</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>DB を作成します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> createdb kemal_sample_development <span style="color: #f4bf75">-O</span> your_owner</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>DDL を作成しロードします。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-sql" data-lang="sql"><span id="L1" class="line"><span style="color: #aa759f">create</span> <span style="color: #aa759f">table</span> <span style="color: #303030">articles</span> <span style="color: #d0d0d0">(</span></span>
+<span id="L2" class="line">  <span style="color: #303030">id</span>      <span style="color: #303030">serial</span> <span style="color: #aa759f">primary</span> <span style="color: #aa759f">key</span><span style="color: #d0d0d0">,</span></span>
+<span id="L3" class="line">  <span style="color: #303030">title</span>   <span style="color: #303030">text</span><span style="color: #d0d0d0">,</span></span>
+<span id="L4" class="line">  <span style="color: #303030">content</span> <span style="color: #303030">text</span></span>
+<span id="L5" class="line"><span style="color: #d0d0d0">);</span></span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> psql <span style="color: #f4bf75">-U</span> your_owner <span style="color: #f4bf75">-d</span> kemal_sample_development <span style="color: #f4bf75">-f</span> sql/create_articles.sql</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>作成した後、 shard.yml ファイルに以下の内容を追記します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-yaml" data-lang="yaml"><span id="L1" class="line"><span style="color: #6a9fb5">dependencies</span><span style="color: #d0d0d0">:</span></span>
+<span id="L2" class="line">  <span style="color: #6a9fb5">kemal</span><span style="color: #d0d0d0">:</span></span>
+<span id="L3" class="line">    <span style="color: #6a9fb5">github</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">kemalcr/kemal</span></span>
+<span id="L4" class="line">    <span style="color: #6a9fb5">version</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">0.24.0</span></span>
+<span id="L5" class="line">  <span style="color: #6a9fb5">db</span><span style="color: #d0d0d0">:</span></span>
+<span id="L6" class="line">    <span style="color: #6a9fb5">github</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">crystal-lang/crystal-db</span></span>
+<span id="L7" class="line">  <span style="color: #6a9fb5">pg</span><span style="color: #d0d0d0">:</span></span>
+<span id="L8" class="line">    <span style="color: #6a9fb5">github</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">will/crystal-pg</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>編集後、以下のコマンドを実行します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console"><span id="L1" class="line"><span style="color: #303030">$</span> shards <span style="color: #303030">install</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="投稿一覧ページの編集">投稿一覧ページの編集</h3>
+<div class="paragraph">
+<p>これからいよいよ Web アプリらしく記事の一覧ページと詳細ページ、新規投稿ページをそれぞれ作成していきます。<br>
+まず全ページで共通で使用するテンプレートは別に作成します。<br>
+テンプレートヘッダに新規投稿ページと投稿リストページヘのリンクを表示し、ページ内に各ページのコンテンツを表示するように修正していきます。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="レイアウトページの作成">レイアウトページの作成</h3>
+<div class="paragraph">
+<p>まずひな形のページを <code>application.ecr</code> という名前で作成します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-erb" data-lang="erb"><span id="L1" class="line"><span style="color: #f4bf75">&lt;!DOCTYPE html&gt;</span></span>
+<span id="L2" class="line"><span style="color: #f4bf75">&lt;html&gt;</span></span>
+<span id="L3" class="line"><span style="color: #f4bf75">&lt;head&gt;</span></span>
+<span id="L4" class="line">  <span style="color: #f4bf75">&lt;meta</span> <span style="color: #6a9fb5">charset=</span><span style="color: #90a959">"utf-8"</span><span style="color: #f4bf75">/&gt;</span></span>
+<span id="L5" class="line">  <span style="color: #f4bf75">&lt;title&gt;</span>kemal sample<span style="color: #f4bf75">&lt;/title&gt;</span></span>
+<span id="L6" class="line">  <span style="color: #505050">&lt;!-- bootstrapを使用する --&gt;</span></span>
+<span id="L7" class="line">  <span style="color: #f4bf75">&lt;link</span></span>
+<span id="L8" class="line">   <span style="color: #6a9fb5">rel=</span><span style="color: #90a959">"stylesheet"</span></span>
+<span id="L9" class="line">   <span style="color: #6a9fb5">href=</span><span style="color: #90a959">"//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"</span><span style="color: #f4bf75">&gt;</span></span>
+<span id="L10" class="line">  <span style="color: #f4bf75">&lt;link</span> <span style="color: #6a9fb5">rel=</span><span style="color: #90a959">"stylesheet"</span> <span style="color: #6a9fb5">href=</span><span style="color: #90a959">"/css/custom.css"</span><span style="color: #f4bf75">&gt;</span></span>
+<span id="L11" class="line"><span style="color: #f4bf75">&lt;/head&gt;</span></span>
+<span id="L12" class="line"><span style="color: #f4bf75">&lt;body&gt;</span></span>
+<span id="L13" class="line"><span style="color: #f4bf75">&lt;header</span> <span style="color: #6a9fb5">class=</span><span style="color: #90a959">"navbar navbar-fixed-top navbar-inverse"</span><span style="color: #f4bf75">&gt;</span></span>
+<span id="L14" class="line">  <span style="color: #f4bf75">&lt;div</span> <span style="color: #6a9fb5">class=</span><span style="color: #90a959">"container"</span><span style="color: #f4bf75">&gt;</span></span>
+<span id="L15" class="line">    <span style="color: #f4bf75">&lt;a</span> <span style="color: #6a9fb5">id=</span><span style="color: #90a959">"logo"</span><span style="color: #f4bf75">&gt;</span>sample app<span style="color: #f4bf75">&lt;/a&gt;</span></span>
+<span id="L16" class="line">    <span style="color: #f4bf75">&lt;nav&gt;</span></span>
+<span id="L17" class="line">      <span style="color: #f4bf75">&lt;ul</span> <span style="color: #6a9fb5">class=</span><span style="color: #90a959">"nav navbar-nav navbar-right"</span><span style="color: #f4bf75">&gt;</span></span>
+<span id="L18" class="line">        <span style="color: #f4bf75">&lt;li&gt;&lt;a</span> <span style="color: #6a9fb5">href=</span><span style="color: #90a959">"/articles"</span><span style="color: #f4bf75">&gt;</span>ArticleList<span style="color: #f4bf75">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span id="L19" class="line">        <span style="color: #f4bf75">&lt;li&gt;&lt;a</span> <span style="color: #6a9fb5">href=</span><span style="color: #90a959">"/articles/new"</span><span style="color: #f4bf75">&gt;</span>新規投稿<span style="color: #f4bf75">&lt;/a&gt;&lt;/li&gt;</span></span>
+<span id="L20" class="line">      <span style="color: #f4bf75">&lt;/ul&gt;</span></span>
+<span id="L21" class="line">    <span style="color: #f4bf75">&lt;/nav&gt;</span></span>
+<span id="L22" class="line">  <span style="color: #f4bf75">&lt;/div&gt;</span></span>
+<span id="L23" class="line"><span style="color: #f4bf75">&lt;/header&gt;</span></span>
+<span id="L24" class="line">  <span style="color: #f4bf75">&lt;div</span> <span style="color: #6a9fb5">class=</span><span style="color: #90a959">"container"</span><span style="color: #f4bf75">&gt;</span></span>
+<span id="L25" class="line">    <span style="color: #f4bf75">&lt;%=</span> <span style="color: #303030">content</span> <span style="color: #f4bf75">%&gt;</span></span>
+<span id="L26" class="line">  <span style="color: #f4bf75">&lt;/div&gt;</span></span>
+<span id="L27" class="line"><span style="color: #f4bf75">&lt;/body&gt;</span></span>
+<span id="L28" class="line"><span style="color: #f4bf75">&lt;/html&gt;</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>本サンプルでは BootStrap を使用します。<br>
+CDN を使用しますので特にダウンロード不要ですが、ダウンロードする場合は別途 <code><a href="http://getbootstrap.com/" class="bare">http://getbootstrap.com/</a></code> から必要なファイルをダウンロードし、プロジェクトカレントの <code>/public</code> 以下に配置してください。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="css-の作成">CSS の作成</h3>
+<div class="paragraph">
+<p>ページ修飾用の CSS を作成します。本サンプルでは rails tutorial をそのまま参考にします。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-css" data-lang="css"><span id="L1" class="line"><span style="color: #f4bf75">body</span> <span style="color: #d0d0d0">{</span></span>
+<span id="L2" class="line">  <span style="color: #303030">padding-top</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">60px</span><span style="color: #d0d0d0">;</span></span>
+<span id="L3" class="line"><span style="color: #d0d0d0">}</span></span>
+<span id="L4" class="line"></span>
+<span id="L5" class="line"><span style="color: #f4bf75">section</span> <span style="color: #d0d0d0">{</span></span>
+<span id="L6" class="line">  <span style="color: #303030">overflow</span><span style="color: #d0d0d0">:</span> <span style="color: #303030">auto</span><span style="color: #d0d0d0">;</span></span>
+<span id="L7" class="line"><span style="color: #d0d0d0">}</span></span>
+<span id="L8" class="line"></span>
+<span id="L9" class="line"><span style="color: #f4bf75">textarea</span> <span style="color: #d0d0d0">{</span></span>
+<span id="L10" class="line">  <span style="color: #303030">resize</span><span style="color: #d0d0d0">:</span> <span style="color: #303030">vertical</span><span style="color: #d0d0d0">;</span></span>
+<span id="L11" class="line"><span style="color: #d0d0d0">}</span></span>
+<span id="L12" class="line"></span>
+<span id="L13" class="line"><span style="color: #f4bf75">.center</span> <span style="color: #d0d0d0">{</span></span>
+<span id="L14" class="line">  <span style="color: #303030">text-align</span><span style="color: #d0d0d0">:</span> <span style="color: #303030">center</span><span style="color: #d0d0d0">;</span></span>
+<span id="L15" class="line"><span style="color: #d0d0d0">}</span></span>
+<span id="L16" class="line"></span>
+<span id="L17" class="line"><span style="color: #f4bf75">.center</span> <span style="color: #f4bf75">h1</span> <span style="color: #d0d0d0">{</span></span>
+<span id="L18" class="line">  <span style="color: #303030">margin-bottom</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">10px</span><span style="color: #d0d0d0">;</span></span>
+<span id="L19" class="line"><span style="color: #d0d0d0">}</span></span>
+<span id="L20" class="line"></span>
+<span id="L21" class="line"><span style="color: #f4bf75">h1</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">h2</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">h3</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">h4</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">h5</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">h6</span> <span style="color: #d0d0d0">{</span></span>
+<span id="L22" class="line">  <span style="color: #303030">line-height</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">1</span><span style="color: #d0d0d0">;</span></span>
+<span id="L23" class="line"><span style="color: #d0d0d0">}</span></span>
+<span id="L24" class="line"></span>
+<span id="L25" class="line"><span style="color: #f4bf75">h1</span> <span style="color: #d0d0d0">{</span></span>
+<span id="L26" class="line">  <span style="color: #303030">font-size</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">3em</span><span style="color: #d0d0d0">;</span></span>
+<span id="L27" class="line">  <span style="color: #303030">letter-spacing</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">-2px</span><span style="color: #d0d0d0">;</span></span>
+<span id="L28" class="line">  <span style="color: #303030">margin-bottom</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">30px</span><span style="color: #d0d0d0">;</span></span>
+<span id="L29" class="line">  <span style="color: #303030">text-align</span><span style="color: #d0d0d0">:</span> <span style="color: #303030">center</span><span style="color: #d0d0d0">;</span></span>
+<span id="L30" class="line"><span style="color: #d0d0d0">}</span></span>
+<span id="L31" class="line"></span>
+<span id="L32" class="line"><span style="color: #f4bf75">h2</span> <span style="color: #d0d0d0">{</span></span>
+<span id="L33" class="line">  <span style="color: #303030">font-size</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">1.2em</span><span style="color: #d0d0d0">;</span></span>
+<span id="L34" class="line">  <span style="color: #303030">letter-spacing</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">-1px</span><span style="color: #d0d0d0">;</span></span>
+<span id="L35" class="line">  <span style="color: #303030">margin-bottom</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">30px</span><span style="color: #d0d0d0">;</span></span>
+<span id="L36" class="line">  <span style="color: #303030">text-align</span><span style="color: #d0d0d0">:</span> <span style="color: #303030">center</span><span style="color: #d0d0d0">;</span></span>
+<span id="L37" class="line">  <span style="color: #303030">font-weight</span><span style="color: #d0d0d0">:</span> <span style="color: #303030">normal</span><span style="color: #d0d0d0">;</span></span>
+<span id="L38" class="line">  <span style="color: #303030">color</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">#777</span><span style="color: #d0d0d0">;</span></span>
+<span id="L39" class="line"><span style="color: #d0d0d0">}</span></span>
+<span id="L40" class="line"></span>
+<span id="L41" class="line"><span style="color: #f4bf75">p</span> <span style="color: #d0d0d0">{</span></span>
+<span id="L42" class="line">  <span style="color: #303030">font-size</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">1.1em</span><span style="color: #d0d0d0">;</span></span>
+<span id="L43" class="line">  <span style="color: #303030">line-height</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">1.7em</span><span style="color: #d0d0d0">;</span></span>
+<span id="L44" class="line"><span style="color: #d0d0d0">}</span></span>
+<span id="L45" class="line"></span>
+<span id="L46" class="line"><span style="color: #303030">#logo</span> <span style="color: #d0d0d0">{</span></span>
+<span id="L47" class="line">  <span style="color: #303030">float</span><span style="color: #d0d0d0">:</span> <span style="color: #303030">left</span><span style="color: #d0d0d0">;</span></span>
+<span id="L48" class="line">  <span style="color: #303030">margin-right</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">10px</span><span style="color: #d0d0d0">;</span></span>
+<span id="L49" class="line">  <span style="color: #303030">font-size</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">1.7em</span><span style="color: #d0d0d0">;</span></span>
+<span id="L50" class="line">  <span style="color: #303030">color</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">#fff</span><span style="color: #d0d0d0">;</span></span>
+<span id="L51" class="line">  <span style="color: #303030">text-transform</span><span style="color: #d0d0d0">:</span> <span style="color: #303030">uppercase</span><span style="color: #d0d0d0">;</span></span>
+<span id="L52" class="line">  <span style="color: #303030">letter-spacing</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">-1px</span><span style="color: #d0d0d0">;</span></span>
+<span id="L53" class="line">  <span style="color: #303030">padding-top</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">9px</span><span style="color: #d0d0d0">;</span></span>
+<span id="L54" class="line">  <span style="color: #303030">font-weight</span><span style="color: #d0d0d0">:</span> <span style="color: #303030">bold</span><span style="color: #d0d0d0">;</span></span>
+<span id="L55" class="line"><span style="color: #d0d0d0">}</span></span>
+<span id="L56" class="line"></span>
+<span id="L57" class="line"><span style="color: #303030">#logo</span><span style="color: #303030">:hover</span> <span style="color: #d0d0d0">{</span></span>
+<span id="L58" class="line">  <span style="color: #303030">color</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">#fff</span><span style="color: #d0d0d0">;</span></span>
+<span id="L59" class="line">  <span style="color: #303030">text-decoration</span><span style="color: #d0d0d0">:</span> <span style="color: #303030">none</span><span style="color: #d0d0d0">;</span></span>
+<span id="L60" class="line"><span style="color: #d0d0d0">}</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="一覧ページの作成">一覧ページの作成</h3>
+<div class="paragraph">
+<p>記事一覧ページを以下の内容で作成します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-erb" data-lang="erb"><span id="L1" class="line"><span style="color: #f4bf75">&lt;h2&gt;</span>Article List<span style="color: #f4bf75">&lt;/h2&gt;</span></span>
+<span id="L2" class="line"><span style="color: #f4bf75">&lt;table</span> <span style="color: #6a9fb5">class=</span><span style="color: #90a959">"table table-striped"</span><span style="color: #f4bf75">&gt;</span></span>
+<span id="L3" class="line"><span style="color: #f4bf75">&lt;thead&gt;</span></span>
+<span id="L4" class="line">  <span style="color: #f4bf75">&lt;tr&gt;</span></span>
+<span id="L5" class="line">    <span style="color: #f4bf75">&lt;td&gt;</span>title<span style="color: #f4bf75">&lt;/td&gt;</span></span>
+<span id="L6" class="line">  <span style="color: #f4bf75">&lt;/tr&gt;</span></span>
+<span id="L7" class="line"><span style="color: #f4bf75">&lt;tbody&gt;</span></span>
+<span id="L8" class="line">  <span style="color: #f4bf75">&lt;%</span> <span style="color: #303030">articles</span><span style="color: #d0d0d0">.</span><span style="color: #303030">each</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">article</span><span style="color: #d0d0d0">|</span> <span style="color: #f4bf75">%&gt;</span></span>
+<span id="L9" class="line">  <span style="color: #f4bf75">&lt;tr&gt;</span></span>
+<span id="L10" class="line">    <span style="color: #f4bf75">&lt;td&gt;</span></span>
+<span id="L11" class="line">      <span style="color: #f4bf75">&lt;a</span> <span style="color: #6a9fb5">href=</span><span style="color: #90a959">"/articles/</span><span style="color: #f4bf75">&lt;%=</span><span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"id"</span><span style="color: #d0d0d0">]?</span> <span style="color: #f4bf75">%&gt;</span><span style="color: #90a959">"</span> <span style="color: #6a9fb5">target=</span><span style="color: #90a959">"_top"</span><span style="color: #f4bf75">&gt;</span></span>
+<span id="L12" class="line">        <span style="color: #f4bf75">&lt;%=</span><span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"title"</span><span style="color: #d0d0d0">]?</span> <span style="color: #f4bf75">%&gt;</span></span>
+<span id="L13" class="line">      <span style="color: #f4bf75">&lt;/a&gt;</span></span>
+<span id="L14" class="line">    <span style="color: #f4bf75">&lt;/td&gt;</span></span>
+<span id="L15" class="line">  <span style="color: #f4bf75">&lt;/tr&gt;</span></span>
+<span id="L16" class="line">  <span style="color: #f4bf75">&lt;%</span> <span style="color: #aa759f">end</span> <span style="color: #f4bf75">%&gt;</span></span>
+<span id="L17" class="line"><span style="color: #f4bf75">&lt;/tbody&gt;</span></span>
+<span id="L18" class="line"><span style="color: #f4bf75">&lt;/table&gt;</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="新規投稿ページ">新規投稿ページ</h3>
+<div class="paragraph">
+<p>記事投稿用のページを新規作成します。</p>
+</div>
+<div class="paragraph">
+<p>以下のファイルを追加します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-erb" data-lang="erb"><span id="L1" class="line"><span style="color: #f4bf75">&lt;h2&gt;</span>新規投稿<span style="color: #f4bf75">&lt;/h2&gt;</span></span>
+<span id="L2" class="line"><span style="color: #f4bf75">&lt;form</span> <span style="color: #6a9fb5">method=</span><span style="color: #90a959">"post"</span><span style="color: #151515;background-color: #ac4142">,</span> <span style="color: #6a9fb5">action=</span><span style="color: #90a959">"/articles"</span><span style="color: #f4bf75">&gt;</span></span>
+<span id="L3" class="line">  <span style="color: #f4bf75">&lt;input</span> <span style="color: #6a9fb5">type=</span><span style="color: #90a959">"text"</span> <span style="color: #6a9fb5">name=</span><span style="color: #90a959">"title"</span> <span style="color: #6a9fb5">size=</span><span style="color: #90a959">"10"</span> <span style="color: #6a9fb5">maxlength=</span><span style="color: #90a959">"10"</span> <span style="color: #f4bf75">/&gt;</span></span>
+<span id="L4" class="line">  <span style="color: #f4bf75">&lt;br</span> <span style="color: #f4bf75">/&gt;</span></span>
+<span id="L5" class="line">  <span style="color: #f4bf75">&lt;br</span> <span style="color: #f4bf75">/&gt;</span></span>
+<span id="L6" class="line">  <span style="color: #f4bf75">&lt;textarea</span> <span style="color: #6a9fb5">name=</span><span style="color: #90a959">"content"</span> <span style="color: #6a9fb5">cols=</span><span style="color: #90a959">"40"</span> <span style="color: #6a9fb5">rows=</span><span style="color: #90a959">"4"</span><span style="color: #f4bf75">&gt;&lt;/textarea&gt;</span></span>
+<span id="L7" class="line">  <span style="color: #f4bf75">&lt;br</span> <span style="color: #f4bf75">/&gt;</span></span>
+<span id="L8" class="line">  <span style="color: #f4bf75">&lt;br</span> <span style="color: #f4bf75">/&gt;</span></span>
+<span id="L9" class="line">  <span style="color: #f4bf75">&lt;input</span> <span style="color: #6a9fb5">type=</span><span style="color: #90a959">"submit"</span> <span style="color: #6a9fb5">value=</span><span style="color: #90a959">"post"</span><span style="color: #f4bf75">&gt;</span></span>
+<span id="L10" class="line"><span style="color: #f4bf75">&lt;/form&gt;</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="詳細ページ">詳細ページ</h3>
+<div class="paragraph">
+<p>一覧ページから記事タイトルをクリックした時に遷移する詳細ページを作成します。<br>
+データへの更新については後述します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-erb" data-lang="erb"><span id="L1" class="line"><span style="color: #f4bf75">&lt;h2&gt;</span>Article<span style="color: #f4bf75">&lt;/h2&gt;</span></span>
+<span id="L2" class="line"><span style="color: #f4bf75">&lt;%</span> <span style="color: #303030">articles</span><span style="color: #d0d0d0">.</span><span style="color: #303030">each</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">article</span><span style="color: #d0d0d0">|</span> <span style="color: #f4bf75">%&gt;</span></span>
+<span id="L3" class="line">  <span style="color: #f4bf75">&lt;h3&gt;</span><span style="color: #f4bf75">&lt;%=</span><span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"title"</span><span style="color: #d0d0d0">]</span> <span style="color: #f4bf75">%&gt;</span><span style="color: #f4bf75">&lt;/h3&gt;</span></span>
+<span id="L4" class="line">  <span style="color: #f4bf75">&lt;p&gt;</span><span style="color: #f4bf75">&lt;%=</span><span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"content"</span><span style="color: #d0d0d0">]</span> <span style="color: #f4bf75">%&gt;</span><span style="color: #f4bf75">&lt;/p&gt;</span></span>
+<span id="L5" class="line">  <span style="color: #505050">&lt;!-- 更新 --&gt;</span></span>
+<span id="L6" class="line">  <span style="color: #f4bf75">&lt;a</span> <span style="color: #6a9fb5">href=</span><span style="color: #90a959">"/articles/</span><span style="color: #f4bf75">&lt;%=</span><span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"id"</span><span style="color: #d0d0d0">]</span> <span style="color: #f4bf75">%&gt;</span><span style="color: #90a959">/edit"</span> <span style="color: #6a9fb5">target=</span><span style="color: #90a959">"_top"</span> <span style="color: #6a9fb5">class=</span><span style="color: #90a959">"btn btn-primary"</span><span style="color: #f4bf75">&gt;</span>edit<span style="color: #f4bf75">&lt;/a&gt;</span></span>
+<span id="L7" class="line"><span style="color: #f4bf75">&lt;br</span> <span style="color: #f4bf75">/&gt;</span></span>
+<span id="L8" class="line"><span style="color: #f4bf75">&lt;%</span> <span style="color: #aa759f">end</span> <span style="color: #f4bf75">%&gt;</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kemal-プログラム改修">Kemal プログラム改修</h3>
+<div class="paragraph">
+<p>kemal-sample.cr を以下の内容で修正します。</p>
+</div>
+<div class="paragraph">
+<p>行頭を以下の内容に修正します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"kemal"</span></span>
+<span id="L2" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"db"</span></span>
+<span id="L3" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"pg"</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>続いて <code>module Kemal::Sample</code> 内に以下の内容を追記します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line">  <span style="color: #303030">database_url</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"postgres://localhost:5432/kemal_sample_development"</span></span>
+<span id="L2" class="line">  <span style="color: #303030">db</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">DB</span><span style="color: #d0d0d0">.</span><span style="color: #303030">open</span><span style="color: #d0d0d0">(</span><span style="color: #303030">database_url</span><span style="color: #d0d0d0">)</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line">  <span style="color: #d0d0d0">[</span><span style="color: #90a959">"/"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"/articles"</span><span style="color: #d0d0d0">].</span><span style="color: #303030">each</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">path</span><span style="color: #d0d0d0">|</span></span>
+<span id="L5" class="line">    <span style="color: #303030">get</span> <span style="color: #303030">path</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">env</span><span style="color: #d0d0d0">|</span></span>
+<span id="L6" class="line">      <span style="color: #303030">articles</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[]</span> <span style="color: #aa759f">of</span> <span style="color: #f4bf75">Hash</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">String</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">String</span> <span style="color: #d0d0d0">|</span> <span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">)</span></span>
+<span id="L7" class="line">      <span style="color: #303030">db</span><span style="color: #d0d0d0">.</span><span style="color: #303030">query</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"select id, title, content from articles"</span><span style="color: #d0d0d0">)</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">rs</span><span style="color: #d0d0d0">|</span></span>
+<span id="L8" class="line">        <span style="color: #303030">rs</span><span style="color: #d0d0d0">.</span><span style="color: #303030">each</span> <span style="color: #aa759f">do</span></span>
+<span id="L9" class="line">          <span style="color: #303030">article</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">{}</span> <span style="color: #aa759f">of</span> <span style="color: #f4bf75">String</span> <span style="color: #d0d0d0">=&gt;</span> <span style="color: #f4bf75">String</span> <span style="color: #d0d0d0">|</span> <span style="color: #f4bf75">Int32</span></span>
+<span id="L10" class="line">          <span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"id"</span><span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">rs</span><span style="color: #d0d0d0">.</span><span style="color: #303030">read</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">)</span></span>
+<span id="L11" class="line">          <span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"title"</span><span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">rs</span><span style="color: #d0d0d0">.</span><span style="color: #303030">read</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">String</span><span style="color: #d0d0d0">)</span></span>
+<span id="L12" class="line">          <span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"content"</span><span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">rs</span><span style="color: #d0d0d0">.</span><span style="color: #303030">read</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">String</span><span style="color: #d0d0d0">)</span></span>
+<span id="L13" class="line">          <span style="color: #303030">articles</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #303030">article</span></span>
+<span id="L14" class="line">        <span style="color: #aa759f">end</span></span>
+<span id="L15" class="line">      <span style="color: #aa759f">end</span></span>
+<span id="L16" class="line">      <span style="color: #303030">db</span><span style="color: #d0d0d0">.</span><span style="color: #303030">close</span></span>
+<span id="L17" class="line">      <span style="color: #303030">render</span> <span style="color: #90a959">"src/views/index.ecr"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"src/views/application.ecr"</span></span>
+<span id="L18" class="line">    <span style="color: #aa759f">end</span></span>
+<span id="L19" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L20" class="line"></span>
+<span id="L21" class="line">  <span style="color: #303030">get</span> <span style="color: #90a959">"/articles/new"</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">env</span><span style="color: #d0d0d0">|</span></span>
+<span id="L22" class="line">    <span style="color: #303030">render</span> <span style="color: #90a959">"src/views/articles/new.ecr"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"src/views/application.ecr"</span></span>
+<span id="L23" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L24" class="line"></span>
+<span id="L25" class="line">  <span style="color: #303030">post</span> <span style="color: #90a959">"/articles"</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">env</span><span style="color: #d0d0d0">|</span></span>
+<span id="L26" class="line">    <span style="color: #505050"># env.params.bodyでformのvalueを取得できます</span></span>
+<span id="L27" class="line">    <span style="color: #303030">title_param</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">env</span><span style="color: #d0d0d0">.</span><span style="color: #303030">params</span><span style="color: #d0d0d0">.</span><span style="color: #303030">body</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"title"</span><span style="color: #d0d0d0">]</span></span>
+<span id="L28" class="line">    <span style="color: #303030">content_param</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">env</span><span style="color: #d0d0d0">.</span><span style="color: #303030">params</span><span style="color: #d0d0d0">.</span><span style="color: #303030">body</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"content"</span><span style="color: #d0d0d0">]</span></span>
+<span id="L29" class="line">    <span style="color: #303030">params</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[]</span> <span style="color: #aa759f">of</span> <span style="color: #f4bf75">String</span></span>
+<span id="L30" class="line">    <span style="color: #303030">params</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #303030">title_param</span></span>
+<span id="L31" class="line">    <span style="color: #303030">params</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #303030">content_param</span></span>
+<span id="L32" class="line">    <span style="color: #505050"># update, insert, deleteは以下のようにexecでアップデートを実行します</span></span>
+<span id="L33" class="line">    <span style="color: #303030">db</span><span style="color: #d0d0d0">.</span><span style="color: #303030">exec</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"insert into articles(title, content) values($1::text, $2::text)"</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">params</span><span style="color: #d0d0d0">)</span></span>
+<span id="L34" class="line">    <span style="color: #303030">db</span><span style="color: #d0d0d0">.</span><span style="color: #303030">close</span></span>
+<span id="L35" class="line">    <span style="color: #303030">env</span><span style="color: #d0d0d0">.</span><span style="color: #303030">redirect</span> <span style="color: #90a959">"/"</span></span>
+<span id="L36" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L37" class="line"></span>
+<span id="L38" class="line">  <span style="color: #303030">get</span> <span style="color: #90a959">"/articles/:id"</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">env</span><span style="color: #d0d0d0">|</span></span>
+<span id="L39" class="line">    <span style="color: #303030">articles</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[]</span> <span style="color: #aa759f">of</span> <span style="color: #f4bf75">Hash</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">String</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">String</span> <span style="color: #d0d0d0">|</span> <span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">)</span></span>
+<span id="L40" class="line">    <span style="color: #303030">article</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">{}</span> <span style="color: #aa759f">of</span> <span style="color: #f4bf75">String</span> <span style="color: #d0d0d0">=&gt;</span> <span style="color: #f4bf75">String</span> <span style="color: #d0d0d0">|</span> <span style="color: #f4bf75">Int32</span></span>
+<span id="L41" class="line">    <span style="color: #303030">id</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">env</span><span style="color: #d0d0d0">.</span><span style="color: #303030">params</span><span style="color: #d0d0d0">.</span><span style="color: #303030">url</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"id"</span><span style="color: #d0d0d0">].</span><span style="color: #303030">to_i32</span></span>
+<span id="L42" class="line">    <span style="color: #303030">params</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[]</span> <span style="color: #aa759f">of</span> <span style="color: #f4bf75">Int32</span></span>
+<span id="L43" class="line">    <span style="color: #303030">params</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #303030">id</span></span>
+<span id="L44" class="line">    <span style="color: #303030">sql</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"select id, title, content from articles where id = $1::int8"</span></span>
+<span id="L45" class="line">    <span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"id"</span><span style="color: #d0d0d0">],</span> <span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"title"</span><span style="color: #d0d0d0">],</span> <span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"content"</span><span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">=</span></span>
+<span id="L46" class="line">      <span style="color: #303030">db</span><span style="color: #d0d0d0">.</span><span style="color: #303030">query_one</span><span style="color: #d0d0d0">(</span><span style="color: #303030">sql</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">params</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">as: </span><span style="color: #d0d0d0">{</span><span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">String</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">String</span><span style="color: #d0d0d0">})</span></span>
+<span id="L47" class="line">    <span style="color: #303030">articles</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #303030">article</span></span>
+<span id="L48" class="line">    <span style="color: #303030">db</span><span style="color: #d0d0d0">.</span><span style="color: #303030">close</span></span>
+<span id="L49" class="line">    <span style="color: #303030">render</span> <span style="color: #90a959">"src/views/articles/show.ecr"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"src/views/application.ecr"</span></span>
+<span id="L50" class="line">  <span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>修正は以上です。次項から処理について解説します。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="クエリ">クエリ</h3>
+<div class="paragraph">
+<p>まずクエリは以下のように記述します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line">      <span style="color: #303030">db</span><span style="color: #d0d0d0">.</span><span style="color: #303030">query</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"select id, title, content from articles"</span><span style="color: #d0d0d0">)</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">rs</span><span style="color: #d0d0d0">|</span></span>
+<span id="L2" class="line">        <span style="color: #303030">rs</span><span style="color: #d0d0d0">.</span><span style="color: #303030">each</span> <span style="color: #aa759f">do</span></span>
+<span id="L3" class="line">          <span style="color: #303030">article</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">{}</span> <span style="color: #aa759f">of</span> <span style="color: #f4bf75">String</span> <span style="color: #d0d0d0">=&gt;</span> <span style="color: #f4bf75">String</span> <span style="color: #d0d0d0">|</span> <span style="color: #f4bf75">Int32</span></span>
+<span id="L4" class="line">          <span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"id"</span><span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">rs</span><span style="color: #d0d0d0">.</span><span style="color: #303030">read</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">)</span></span>
+<span id="L5" class="line">          <span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"title"</span><span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">rs</span><span style="color: #d0d0d0">.</span><span style="color: #303030">read</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">String</span><span style="color: #d0d0d0">)</span></span>
+<span id="L6" class="line">          <span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"content"</span><span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">rs</span><span style="color: #d0d0d0">.</span><span style="color: #303030">read</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">String</span><span style="color: #d0d0d0">)</span></span>
+<span id="L7" class="line">          <span style="color: #303030">articles</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #303030">article</span></span>
+<span id="L8" class="line">        <span style="color: #aa759f">end</span></span>
+<span id="L9" class="line">      <span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>query メソッドに SQL クエリを記述し、ループ内で結果を格納していきます。<br>
+1件だけ取得したい場合は <code>query_one</code> もしくは <code>query_one?</code> を使います。後者は1件もデータが無い場合がありうる場合に使います。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line">  <span style="color: #303030">sql</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"select id, title, body from articles where id = $1::int8"</span></span>
+<span id="L2" class="line">  <span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"id"</span><span style="color: #d0d0d0">],</span> <span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"title"</span><span style="color: #d0d0d0">],</span> <span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"body"</span><span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">=</span></span>
+<span id="L3" class="line">    <span style="color: #303030">db</span><span style="color: #d0d0d0">.</span><span style="color: #303030">query_one</span><span style="color: #d0d0d0">(</span><span style="color: #303030">sql</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">params</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">as: </span><span style="color: #d0d0d0">{</span><span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">String</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">String</span><span style="color: #d0d0d0">})</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>query_one</code> の戻り値は、 <code>as</code> で指定した型の <code>Touple</code> になります。<br>
+パラメータを SQL 文に渡す場合は上記例で言うと</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">$1</span><span style="color: #d0d0d0">::</span><span style="color: #303030">int8</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>と、連番で指定していきます。<br>
+これは PostgreSQL の例です。 MySQL の場合は？で指定します。<br>
+指定できる型番は以下の形式です。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>text</p>
+</li>
+<li>
+<p>boolean</p>
+</li>
+<li>
+<p>int8 int4 int2</p>
+</li>
+<li>
+<p>float4 float8</p>
+</li>
+<li>
+<p>timestamptz date timestamp</p>
+</li>
+<li>
+<p>json and jsonb</p>
+</li>
+<li>
+<p>uuid</p>
+</li>
+<li>
+<p>bytea</p>
+</li>
+<li>
+<p>numeric/decimal</p>
+</li>
+<li>
+<p>varchar</p>
+</li>
+<li>
+<p>regtype</p>
+</li>
+<li>
+<p>geo types</p>
+</li>
+<li>
+<p>array types: int8 int4 int2 float8 float4 bool text</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="データの更新">データの更新</h3>
+<div class="paragraph">
+<p>更新系のクエリは以下のような記述で行います。<br>
+データの投入は以下のように行います。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">db</span><span style="color: #d0d0d0">.</span><span style="color: #303030">exec</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"insert into articles(title, content) values($1::text, $2::text)"</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">params</span><span style="color: #d0d0d0">)</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>SQL 文に update や delete も設定ができます。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="レンダリング">レンダリング</h3>
+<div class="paragraph">
+<p>View の構造はテンプレート形式で設定することが出来ます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">render</span> <span style="color: #90a959">"src/views/articles/show.ecr"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"src/views/application.ecr"</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>の形式で ecr ファイルをレンダリングすることで、 Rails のようにファイルを入れ子の形で描画することが出来ます。</p>
+</div>
+<div class="paragraph">
+<p>Web アプリ再起動後に <code><a href="http://localhost:3000/" class="bare">http://localhost:3000/</a></code> にアクセスすると、まだ記事が投稿されていないので空欄になっています。<br>
+<code><a href="http://localhost:3000/articles/new" class="bare">http://localhost:3000/articles/new</a></code> にアクセスすると、タイトルと本文を入力する画面が表示されており、入力後に一覧に遷移すると成功です。<br>
+記事タイトルをクリックすると詳細画面に遷移すると成功です。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="オブジェクトの-crud">オブジェクトの CRUD</h3>
+<div class="paragraph">
+<p>Kemal は RESTful に対応しており、 GET POST 以外にも、 PUT DELETE にも対応しております。<br>
+記事の編集をサンプルに追加しながら説明します。<br>
+新規ページで <code>src/views/articles/edit.ecr</code> を追加します。</p>
+</div>
+<div class="paragraph">
+<p>データの編集画面</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #d0d0d0">&lt;</span><span style="color: #303030">h2</span><span style="color: #d0d0d0">&gt;</span><span style="color: #151515;background-color: #ac4142">投稿編集</span><span style="color: #d0d0d0">&lt;</span><span style="color: #75b5aa">/h2&gt;</span></span>
+<span id="L2" class="line"><span style="color: #75b5aa">&lt;% articles.each do |article| %&gt;</span></span>
+<span id="L3" class="line"><span style="color: #75b5aa">&lt;form method="post", action="/</span><span style="color: #303030">articles</span><span style="color: #d0d0d0">/&lt;</span><span style="color: #90a959">%=article["id"] %&gt;"&gt;</span></span>
+<span id="L4" class="line"><span style="color: #90a959">  &lt;!--</span></span>
+<span id="L5" class="line"><span style="color: #90a959">   hiddenフィールドにname=</span><span style="color: #90a959">"_method"</span><span style="color: #151515;background-color: #ac4142">、</span></span>
+<span id="L6" class="line">   <span style="color: #303030">value</span><span style="color: #151515;background-color: #ac4142">に</span><span style="color: #303030">put</span><span style="color: #151515;background-color: #ac4142">を設定する。</span></span>
+<span id="L7" class="line">  <span style="color: #d0d0d0">--&gt;</span></span>
+<span id="L8" class="line">  <span style="color: #d0d0d0">&lt;</span><span style="color: #303030">input</span> <span style="color: #aa759f">type</span><span style="color: #d0d0d0">=</span><span style="color: #90a959">"hidden"</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">name</span><span style="color: #d0d0d0">=</span><span style="color: #90a959">"_method"</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">value</span><span style="color: #d0d0d0">=</span><span style="color: #90a959">"put"</span> <span style="color: #d0d0d0">/&gt;</span></span>
+<span id="L9" class="line">  <span style="color: #d0d0d0">&lt;</span><span style="color: #303030">input</span> <span style="color: #aa759f">type</span><span style="color: #d0d0d0">=</span><span style="color: #90a959">"text"</span> <span style="color: #303030">name</span><span style="color: #d0d0d0">=</span><span style="color: #90a959">"title"</span> <span style="color: #303030">size</span><span style="color: #d0d0d0">=</span><span style="color: #90a959">"10"</span> <span style="color: #303030">maxlength</span><span style="color: #d0d0d0">=</span><span style="color: #90a959">"10"</span> <span style="color: #303030">value</span><span style="color: #d0d0d0">=</span><span style="color: #90a959">"&lt;%=article["</span><span style="color: #303030">title</span><span style="color: #90a959">"] %&gt;"</span> <span style="color: #d0d0d0">/&gt;</span></span>
+<span id="L10" class="line">  <span style="color: #d0d0d0">&lt;</span><span style="color: #303030">br</span> <span style="color: #75b5aa">/&gt;</span></span>
+<span id="L11" class="line"><span style="color: #75b5aa">  &lt;br /</span><span style="color: #d0d0d0">&gt;</span></span>
+<span id="L12" class="line">  <span style="color: #d0d0d0">&lt;</span><span style="color: #303030">textarea</span> <span style="color: #303030">name</span><span style="color: #d0d0d0">=</span><span style="color: #90a959">"content"</span> <span style="color: #303030">cols</span><span style="color: #d0d0d0">=</span><span style="color: #90a959">"40"</span> <span style="color: #303030">rows</span><span style="color: #d0d0d0">=</span><span style="color: #90a959">"4"</span><span style="color: #d0d0d0">&gt;&lt;</span><span style="color: #90a959">%=article["content"] %&gt;&lt;/textarea&gt;</span></span>
+<span id="L13" class="line"><span style="color: #90a959">  &lt;br /&gt;</span></span>
+<span id="L14" class="line"><span style="color: #90a959">  &lt;br /&gt;</span></span>
+<span id="L15" class="line"><span style="color: #90a959">  &lt;input type=</span><span style="color: #90a959">"submit"</span> <span style="color: #303030">value</span><span style="color: #d0d0d0">=</span><span style="color: #90a959">"edit"</span> <span style="color: #aa759f">class</span><span style="color: #d0d0d0">=</span><span style="color: #90a959">"btn btn-primary"</span><span style="color: #d0d0d0">&gt;</span></span>
+<span id="L16" class="line"><span style="color: #d0d0d0">&lt;</span><span style="color: #75b5aa">/form&gt;</span></span>
+<span id="L17" class="line"><span style="color: #75b5aa">&lt;% end %&gt;</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ブラウザによっては form が get post 以外には対応していない場合、以下の hidden フィールドの設定で PUT や DELETE で送信することが出来ます。<br>
+<code>kemal-sample.cr</code> を以下の内容で修正します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line">  <span style="color: #303030">get</span> <span style="color: #90a959">"/articles/:id/edit"</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">env</span><span style="color: #d0d0d0">|</span></span>
+<span id="L2" class="line">    <span style="color: #303030">articles</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[]</span> <span style="color: #aa759f">of</span> <span style="color: #f4bf75">Hash</span><span style="color: #d0d0d0">(</span><span style="color: #f4bf75">String</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">String</span> <span style="color: #d0d0d0">|</span> <span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">)</span></span>
+<span id="L3" class="line">    <span style="color: #303030">article</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">{}</span> <span style="color: #aa759f">of</span> <span style="color: #f4bf75">String</span> <span style="color: #d0d0d0">=&gt;</span> <span style="color: #f4bf75">String</span> <span style="color: #d0d0d0">|</span> <span style="color: #f4bf75">Int32</span></span>
+<span id="L4" class="line">    <span style="color: #303030">id</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">env</span><span style="color: #d0d0d0">.</span><span style="color: #303030">params</span><span style="color: #d0d0d0">.</span><span style="color: #303030">url</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"id"</span><span style="color: #d0d0d0">].</span><span style="color: #303030">to_i32</span></span>
+<span id="L5" class="line">    <span style="color: #303030">params</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[]</span> <span style="color: #aa759f">of</span> <span style="color: #f4bf75">Int32</span></span>
+<span id="L6" class="line">    <span style="color: #303030">params</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #303030">id</span></span>
+<span id="L7" class="line">    <span style="color: #303030">sql</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"select id, title, content from articles where id = $1::int8"</span></span>
+<span id="L8" class="line">    <span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"id"</span><span style="color: #d0d0d0">],</span> <span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"title"</span><span style="color: #d0d0d0">],</span> <span style="color: #303030">article</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"content"</span><span style="color: #d0d0d0">]</span> <span style="color: #d0d0d0">=</span></span>
+<span id="L9" class="line">      <span style="color: #303030">db</span><span style="color: #d0d0d0">.</span><span style="color: #303030">query_one</span><span style="color: #d0d0d0">(</span><span style="color: #303030">sql</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">params</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">as: </span><span style="color: #d0d0d0">{</span><span style="color: #f4bf75">Int32</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">String</span><span style="color: #d0d0d0">,</span> <span style="color: #f4bf75">String</span><span style="color: #d0d0d0">})</span></span>
+<span id="L10" class="line">    <span style="color: #303030">articles</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #303030">article</span></span>
+<span id="L11" class="line">    <span style="color: #303030">db</span><span style="color: #d0d0d0">.</span><span style="color: #303030">close</span></span>
+<span id="L12" class="line">    <span style="color: #303030">render</span> <span style="color: #90a959">"src/views/articles/edit.ecr"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"src/views/application.ecr"</span></span>
+<span id="L13" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L14" class="line"></span>
+<span id="L15" class="line">  <span style="color: #303030">put</span> <span style="color: #90a959">"/articles/:id"</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">env</span><span style="color: #d0d0d0">|</span></span>
+<span id="L16" class="line">    <span style="color: #303030">id</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">env</span><span style="color: #d0d0d0">.</span><span style="color: #303030">params</span><span style="color: #d0d0d0">.</span><span style="color: #303030">url</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"id"</span><span style="color: #d0d0d0">].</span><span style="color: #303030">to_i32</span></span>
+<span id="L17" class="line">    <span style="color: #303030">title_param</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">env</span><span style="color: #d0d0d0">.</span><span style="color: #303030">params</span><span style="color: #d0d0d0">.</span><span style="color: #303030">body</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"title"</span><span style="color: #d0d0d0">]</span></span>
+<span id="L18" class="line">    <span style="color: #303030">content_param</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">env</span><span style="color: #d0d0d0">.</span><span style="color: #303030">params</span><span style="color: #d0d0d0">.</span><span style="color: #303030">body</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"content"</span><span style="color: #d0d0d0">]</span></span>
+<span id="L19" class="line">    <span style="color: #303030">params</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[]</span> <span style="color: #aa759f">of</span> <span style="color: #f4bf75">String</span> <span style="color: #d0d0d0">|</span> <span style="color: #f4bf75">Int32</span></span>
+<span id="L20" class="line">    <span style="color: #303030">params</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #303030">title_param</span></span>
+<span id="L21" class="line">    <span style="color: #303030">params</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #303030">content_param</span></span>
+<span id="L22" class="line">    <span style="color: #303030">params</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #303030">id</span></span>
+<span id="L23" class="line">    <span style="color: #303030">db</span><span style="color: #d0d0d0">.</span><span style="color: #303030">exec</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"update articles set title = $1::text, content = $2::text where id = $3::int8"</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">params</span><span style="color: #d0d0d0">)</span></span>
+<span id="L24" class="line">    <span style="color: #303030">db</span><span style="color: #d0d0d0">.</span><span style="color: #303030">close</span></span>
+<span id="L25" class="line">    <span style="color: #303030">env</span><span style="color: #d0d0d0">.</span><span style="color: #303030">redirect</span> <span style="color: #90a959">"/articles/</span><span style="color: #8f5536">#{</span><span style="color: #303030">id</span><span style="color: #8f5536">}</span><span style="color: #90a959">"</span></span>
+<span id="L26" class="line">  <span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これで、データの追加から一覧表示、編集までの処理が行えるようになります。<br>
+また、 DELETE を追加する場合は以下のように行います。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">delete</span> <span style="color: #90a959">"/articles/:id"</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">env</span><span style="color: #d0d0d0">|</span></span>
+<span id="L2" class="line">  <span style="color: #303030">id</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">env</span><span style="color: #d0d0d0">.</span><span style="color: #303030">params</span><span style="color: #d0d0d0">.</span><span style="color: #303030">url</span><span style="color: #d0d0d0">[</span><span style="color: #90a959">"id"</span><span style="color: #d0d0d0">].</span><span style="color: #303030">to_i32</span></span>
+<span id="L3" class="line">  <span style="color: #303030">params</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">[]</span> <span style="color: #aa759f">of</span> <span style="color: #f4bf75">Int32</span></span>
+<span id="L4" class="line">  <span style="color: #303030">params</span> <span style="color: #d0d0d0">&lt;&lt;</span> <span style="color: #303030">id</span></span>
+<span id="L5" class="line">  <span style="color: #303030">db</span><span style="color: #d0d0d0">.</span><span style="color: #303030">exec</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"delete from articles where id = $1::int8"</span><span style="color: #d0d0d0">,</span> <span style="color: #303030">params</span><span style="color: #d0d0d0">)</span></span>
+<span id="L6" class="line">  <span style="color: #303030">db</span><span style="color: #d0d0d0">.</span><span style="color: #303030">close</span></span>
+<span id="L7" class="line">  <span style="color: #303030">env</span><span style="color: #d0d0d0">.</span><span style="color: #303030">redirect</span> <span style="color: #90a959">"/"</span></span>
+<span id="L8" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これでデータの作成、表示、更新、削除の機能を持ったアプリを作ることが出来ます。<br>
+本稿では省略しますが、セッションを用いて認証機能を追加することも出来ます。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="補注">補注</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>本稿のコードでは取り上げませんでしたが、 Web アプリを書く上で注意すべき事項を以下に記載します。</p>
+</div>
+<div class="sect2">
+<h3 id="トランザクション">トランザクション</h3>
+<div class="paragraph">
+<p>データの原子性を保つ上で、トランザクション制御は必須です。<br>
+以下の設定でトランザクションのコミット、およびロールバックを設定します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">database_url</span> <span style="color: #d0d0d0">=</span> <span style="color: #90a959">"postgres://localhost:5432/kemal_sample_development"</span></span>
+<span id="L2" class="line"><span style="color: #303030">db</span> <span style="color: #d0d0d0">=</span> <span style="color: #f4bf75">DB</span><span style="color: #d0d0d0">.</span><span style="color: #303030">open</span><span style="color: #d0d0d0">(</span><span style="color: #303030">database_url</span><span style="color: #d0d0d0">)</span></span>
+<span id="L3" class="line"><span style="color: #303030">db</span><span style="color: #d0d0d0">.</span><span style="color: #303030">transaction</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">tx</span><span style="color: #d0d0d0">|</span></span>
+<span id="L4" class="line">  <span style="color: #303030">result</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">tx</span><span style="color: #d0d0d0">.</span><span style="color: #303030">connection</span><span style="color: #d0d0d0">.</span><span style="color: #303030">exec</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">"insert into articles(title, content) values('hoge', 'huga')"</span><span style="color: #d0d0d0">)</span></span>
+<span id="L5" class="line">  <span style="color: #505050"># エラー時</span></span>
+<span id="L6" class="line">  <span style="color: #aa759f">if</span> <span style="color: #d0d0d0">!</span><span style="color: #303030">result</span></span>
+<span id="L7" class="line">    <span style="color: #303030">tx</span><span style="color: #d0d0d0">.</span><span style="color: #303030">rollback</span></span>
+<span id="L8" class="line">  <span style="color: #aa759f">else</span></span>
+<span id="L9" class="line">    <span style="color: #303030">tx</span><span style="color: #d0d0d0">.</span><span style="color: #303030">commit</span></span>
+<span id="L10" class="line">  <span style="color: #aa759f">end</span></span>
+<span id="L11" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="mysql">MySQL</h3>
+<div class="paragraph">
+<p>MySQL を使用する場合は、以下の設定を行います。<br>
+<code>shard.yml</code> に以下の記述を行います。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-yaml" data-lang="yaml"><span id="L1" class="line"><span style="color: #6a9fb5">dependencies</span><span style="color: #d0d0d0">:</span></span>
+<span id="L2" class="line">  <span style="color: #6a9fb5">mysql</span><span style="color: #d0d0d0">:</span></span>
+<span id="L3" class="line">    <span style="color: #6a9fb5">github</span><span style="color: #d0d0d0">:</span> <span style="color: #90a959">crystal-lang/crystal-mysql</span></span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-crystal" data-lang="crystal"><span id="L1" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"db"</span></span>
+<span id="L2" class="line"><span style="color: #303030">require</span> <span style="color: #90a959">"mysql"</span></span>
+<span id="L3" class="line"></span>
+<span id="L4" class="line"><span style="color: #f4bf75">DB</span><span style="color: #d0d0d0">.</span><span style="color: #303030">open</span> <span style="color: #90a959">"mysql://root@localhost/test"</span> <span style="color: #aa759f">do</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">db</span><span style="color: #d0d0d0">|</span></span>
+<span id="L5" class="line">  <span style="color: #505050"># 実行系</span></span>
+<span id="L6" class="line">  <span style="color: #303030">db</span><span style="color: #d0d0d0">.</span><span style="color: #303030">exec</span> <span style="color: #90a959">"insert into contacts values (?, ?)"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">"John"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">30</span></span>
+<span id="L7" class="line"><span style="color: #aa759f">end</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div></div>
+	</article>
+</div><!-- Footer -->
+<div id="footer">
+  
+  <!-- Copyright -->
+  <ul class="copyright">
+    
+      <li>&copy;Intducing Crystal Programming Language. All rights reserved.</li>
+    
+    <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+    <li>Jekyll integration: <a href="https://chrisbobbe.github.io/">Chris Bobbe</a></li>
+  </ul>
+  
+</div></body>
+</html>
