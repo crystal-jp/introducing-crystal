@@ -99,9 +99,9 @@ crystal-lang/html_builder:: link:https://github.com/crystal-lang/html_builder[]
 
 === 使用する shard を指定する
 
-プロジェクトディレクトリ内にある `shard.yml` ファイルは、shard 関係の設定を記述するファイルです。
+プロジェクトディレクトリ内にある `shard.yaml` ファイルは、shard 関係の設定を記述するファイルです。
 
-アプリケーションとして初期化された `shard.yml` は以下のような内容になっています。
+アプリケーションとして初期化された `shard.yaml` は以下のような内容になっています。
 
 [source,yaml]
 .ひな形生成時の `shard.yml`
@@ -109,9 +109,9 @@ crystal-lang/html_builder:: link:https://github.com/crystal-lang/html_builder[]
 include::projects/simple_html/shard.yml[lines=1..13]
 ----
 
-ここへ `html_builder` を指定するための設定を追加しましょう。大抵の場合 shard の README にはその shard を使用するために `shard.yml` へ追加すべき内容が紹介されています。
+ここへ `html_builder` を指定するための設定を追加しましょう。大抵の場合 shard の README にはその shard を使用するために `shard.yaml` へ追加すべき内容が紹介されています。
 
-README に従って `dependencies` を追加した `shard.yml` はこのようになりました。
+README に従って `dependencies` を追加した `shard.yaml` はこのようになりました。
 
 [source,yaml]
 .依存ライブラリの設定追加後
@@ -164,7 +164,7 @@ dependencies:
 
 === shard をインストールする
 
-`shard.yml` で指定した shard をプロジェクト環境にインストールするコマンドは `shards install` です。プロジェクトディレクトリの直下でこのコマンドを実行すると、プロジェクトディレクトリの下に lib ディレクトリが作られ、その中に必要なファイル一式が展開されます。
+`shard.yaml` で指定した shard をプロジェクト環境にインストールするコマンドは `shards install` です。プロジェクトディレクトリの直下でこのコマンドを実行すると、プロジェクトディレクトリの下に lib ディレクトリが作られ、その中に必要なファイル一式が展開されます。
 
 [source,console]
 .shard のインストール
