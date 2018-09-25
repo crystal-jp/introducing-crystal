@@ -49,9 +49,8 @@ jobs:
             git config --global user.email 'make.just.on@gmail.com'
             git config --global user.name 'TSUYUSATO Kitsune (bot)'
 
-            git clone $CIRCLE_REPOSITORY_URL out
+            git clone $CIRCLE_REPOSITORY_URL build/out
 
-            mkdir -p build/out
             cd build/out
             git checkout gh-pages || git checkout --orphan gh-pages
             git rm -rf . || true
@@ -64,7 +63,7 @@ jobs:
             cd build/out
             git add -A
             git commit --allow-empty -m "Deploy: ${CIRCLE_SHA1}"
-            git push origin gh-pages
+            GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_adae94c4a135a39f10ddaed7eab6891d -F /dev/null"  git push origin gh-pages
 
 workflows:
   version: 2
