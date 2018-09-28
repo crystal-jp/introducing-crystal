@@ -138,6 +138,7 @@ file build_docs_dir => [
   sh 'jekyll', 'build'
   mkdir_p build_docs_dir / 'assets/pdfs'
   cp web_pdf, build_docs_dir / 'assets/pdfs/introducing-crystal.pdf'
+  sh 'touch', (build_docs_dir / '.nojekyll').to_s
 end
 
 desc 'Generate Web documents by Jekyll'
