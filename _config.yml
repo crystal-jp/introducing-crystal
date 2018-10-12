@@ -2,7 +2,7 @@ source: docs
 destination: build/docs
 baseurl: /introducing-crystal
 
-title: Intducing Crystal Programming Language
+title: Introducing Crystal Programming Language
 description: 『Introducing Crystal Programming Language』はプログラミング言語 Crystal の初心者〜中級者向け解説書です。
 author: Crystal-JP
 avatar: assets/images/avatar.png
