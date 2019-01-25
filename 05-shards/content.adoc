@@ -712,7 +712,7 @@ include::examples/bear1_spec.cr[]
 条件： `acrual` が `false`、`nil`、`Pointer.null` のいずれでもない
 
 `actual.should be_falsey`:: `acrual` が `if` 文で偽とみなされるかどうか。
-条件： `acrual` が `false`、`nil`、`Pointer.null` のいずれかである
+条件： `acrual` が `false`、`nil`、`Pointer.null` のいずれか
 
 `actual.should be < expected`:: `actual` が `expected` より小さいかどうか。
 条件： `actual < expected`
