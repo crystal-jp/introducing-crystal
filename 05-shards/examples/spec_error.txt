@@ -11,7 +11,7 @@ Failures:
 
      # bear_spec.cr:7
 
-Finished in 127 microseconds
+Finished in 112 microseconds
 1 examples, 1 failures, 0 errors, 0 pending
 
 Failed examples:

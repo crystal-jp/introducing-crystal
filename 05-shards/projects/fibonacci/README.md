@@ -4,13 +4,13 @@ The fibonacci number calculator for the Crystal programing language.
 
 ## Installation
 
-Add this to your application's `shard.yml`:
-
+1. Add the dependency to your `shard.yml`:
 ```yaml
 dependencies:
   fibonacci:
     github: github_name/fibonacci
 ```
+2. Run `shards install`
 
 ## Usage
 
