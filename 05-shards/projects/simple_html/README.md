@@ -24,4 +24,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [your-github-user](https://github.com/your-github-user) Your Git Name - creator, maintainer
+- [github_name](https://github.com/github_name) Your Git Name - creator, maintainer

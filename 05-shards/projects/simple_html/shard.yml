@@ -8,7 +8,7 @@ targets:
   simple_html:
     main: src/simple_html.cr
 
-crystal: 0.26.1
+crystal: 0.27.0
 
 license: MIT
 
