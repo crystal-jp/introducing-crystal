@@ -8,14 +8,12 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.5.1'
+ruby '2.5.3'
 
 gem 'asciidoctor'
 gem 'asciidoctor-pdf'
 gem 'asciidoctor-pdf-cjk'
-gem 'asciidoctor-rouge',
-    github: 'MakeNowJust/asciidoctor-rouge',
-    branch: 'rouge-3'
+gem 'asciidoctor-rouge'
 gem 'rouge'
 
 gem 'combine_pdf'
