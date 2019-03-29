@@ -10,7 +10,7 @@ end
 
 ruby '2.5.3'
 
-gem 'asciidoctor'
+gem 'asciidoctor', '~> 1.5.8'
 gem 'asciidoctor-pdf'
 gem 'asciidoctor-pdf-cjk'
 gem 'asciidoctor-rouge'
