@@ -8,6 +8,6 @@ targets:
   myecho:
     main: src/myecho.cr
 
-crystal: 0.26.1
+crystal: 0.27.2
 
 license: MIT

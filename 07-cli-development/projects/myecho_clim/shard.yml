@@ -8,7 +8,7 @@ targets:
   myecho_clim:
     main: src/myecho_clim.cr
 
-crystal: 0.26.1
+crystal: 0.27.2
 
 license: MIT
 
