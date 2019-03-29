@@ -222,5 +222,5 @@ server.listen(8080)
 [RedPen 1.10.1](https://github.com/redpen-cc/redpen/releases/tag/redpen-1.10.1)の `.tar.gz` を落としてきて `vendor/` 以下に展開したあと、次のコマンドを実行します。
 
 ```console
-docker build -t makenowjust/techbookfest-build -f .circleci/images/build/Dockerfile .
+$ docker build -t makenowjust/techbookfest-build -f .circleci/images/build/Dockerfile .
 ```
