@@ -14,7 +14,7 @@ targets:
 dependencies:
   kemal:
     github: kemalcr/kemal
-    version: 0.24.0
+    version: 0.25.2
 # end::kemal-dep[]
   db:
     github: crystal-lang/crystal-db
@@ -25,6 +25,6 @@ dependencies:
     github: kemalcr/spec-kemal
 # end::dep[]
 
-crystal: 0.26.0
+crystal: 0.27.2
 
 license: MIT
