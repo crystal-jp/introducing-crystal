@@ -3,7 +3,7 @@ version: 2.0
 jobs:
   build:
     docker:
-      - image: makenowjust/techbookfest-build:0.27.2
+      - image: makenowjust/techbookfest-build:0.31.1
     steps:
       - checkout
       - restore_cache:
