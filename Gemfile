@@ -8,9 +8,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.5.3'
+ruby '2.6.5'
 
-gem 'asciidoctor', '~> 1.5.8'
+gem 'asciidoctor', '~> 2.0.10'
 gem 'asciidoctor-pdf'
 gem 'asciidoctor-pdf-cjk'
 gem 'asciidoctor-rouge'

@@ -62,7 +62,7 @@ adoc_rouge_flags = %w[
 adoc_web_flags = [
   *adoc_base_flags,
   *adoc_rouge_flags,
-  '-a', adoc_web_theme.to_s
+  '-a', "pdf-style=#{adoc_web_theme}"
 ]
 # The Asciidoctor option flags for print PDF
 adoc_print_flags = [
