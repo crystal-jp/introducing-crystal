@@ -16,7 +16,7 @@ Crystal のインストール方法は OS ごとに異なります。ここで�
 
 === Debian や Ubuntu
 
-Debian 系のディストリビューションでは、 Crystal の公式リポジトリを利用することができます。
+Debian 系のディストリビューションでは、 Crystal の公式リポジトリを利用できます。
 
 そのために、まず APT の構成にリポジトリを追加します。以下のコマンドを実行してください。
 
@@ -52,7 +52,7 @@ $ sudo apt install libgmp-dev      # Big numbers に必要です
 $ sudo apt install libreadline-dev # Readline に必要です
 ----
 
-なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードすることができます。
+なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードできます。
 
 [source,console]
 ----
@@ -62,7 +62,7 @@ $ sudo apt install crystal
 
 === Red Hat や CentOS
 
-Red Hat 系のディストリビューションでも、 Crystal の公式リポジトリを利用することができます。
+Red Hat 系のディストリビューションでも、 Crystal の公式リポジトリを利用できます。
 
 まず YUM の構成にリポジトリを追加します。以下のコマンドを実行してください。
 
@@ -91,7 +91,7 @@ $ END
 $ sudo yum install crystal
 ----
 
-なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードすることができます。
+なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードできます。
 
 [source,console]
 ----
@@ -111,7 +111,7 @@ $ sudo pacman -S crystal shards
 
 Gentoo Linux では、メインの overlay に Crystal が含まれています。
 
-以下で構成のフラグを確認することができます。
+以下で構成のフラグを確認できます。
 
 [source,console]
 ----
@@ -137,7 +137,7 @@ $ su -
 
 === macOS
 
-macOS では、 http://brew.sh/[Homebrew] を利用して簡単に Crystal をインストールすることができます。
+macOS では、 http://brew.sh/[Homebrew] を利用して簡単に Crystal をインストールできます。
 
 [source,console]
 ----
@@ -303,7 +303,7 @@ https://github.com/rhysd/vim-crystal[rhysd/vim-crystal] をインストールす
 
 また、vim-crystal には Crystal の組み込みツール `crystal tool` や Spec との連携などの便利な機能があり、シームレスにプログラミングしやすくなっています。
 
-エラー検知をしたい場合には、 https://github.com/vim-syntastic/syntastic[vim-syntastic/syntastic] などの統合解析プラグインを導入が必要です。前述の vim-crystal にはこの syntastic 用のチェッカもバンドルされているため、特別な設定をせずとも利用することができます。
+エラー検知をしたい場合には、 https://github.com/vim-syntastic/syntastic[vim-syntastic/syntastic] などの統合解析プラグインを導入が必要です。前述の vim-crystal にはこの syntastic 用のチェッカもバンドルされているため、特別な設定をせずとも利用できます。
 
 === Emacs
 
@@ -315,7 +315,7 @@ emacs-crystal-mode パッケージは https://melpa.org/#/crystal-mode[MELPA] �
 
 == Crystal Playground
 
-Crystal Playground を使うと Web ブラウザ上で Crystal のコードを実行することができます。
+Crystal Playground を使うと Web ブラウザ上で Crystal のコードを実行できます。
 
 image::02-crystal-playground.png[width=75%,pdfwidth=100%]
 
