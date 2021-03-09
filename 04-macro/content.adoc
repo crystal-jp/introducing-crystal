@@ -154,25 +154,6 @@ include::./examples/record_01_macro.cr[tags=code;main]
 
 という機能もあります。気になる方は `record` のマニュアルを読んでみてください。
 
-=== `parallel`
-
-引数に与えた処理を並行処理します。各処理の返り値も受け取ることができます。次のコードは、`job1` `job2` `job3` を並行に実行し、返り値を受け取るコードです。
-
-[source,crystal,indent=0]
-----
-      io = IO::Memory.new
-include::./projects/macro/src/parallel.cr[tags=code]
-----
-
-これを実行すると、返り値、出力結果は次のようになります。
-
-[source,crystal,indent=0]
-----
-include::./projects/macro/src/parallel.cr[tags=main]
-----
-
-実行された時刻を見ると、並行に実行されていることがわかります。また、返り値も適切に受け取っていることがわかります。このように、 `parallel` を使えば簡単に並行処理を記述できます。
-
 [suppress='InvalidSymbol']
 ==== `p!`, `pp!`
 
