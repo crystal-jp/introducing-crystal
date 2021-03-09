@@ -1,8 +1,7 @@
 /build/
 /.tmp/
-/vendor/bundle
+/vendor/
 /.bundle/
 /Makefile.local
-/vendor/redpen-distribution-*
 /.sass-cache/
 docs/.jekyll-cache/
