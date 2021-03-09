@@ -282,7 +282,9 @@ VSCode で Crystal プログラミングをサポートするエクステンシ�
 
 などの機能がすぐに利用できるようになります。
 
-vscode-crystal-lang の GitHub 上の Wiki にはより詳しい設定などの情報も記載されています。例えば、エラーの検知レベルをカスタマイズしたり、 https://github.com/crystal-lang-tools/scry[scry] という Crystal の Language Server との連携などのより便利に使うための設定も書かれていますので合わせてご覧ください。
+vscode-crystal-lang の GitHub 上の Wiki にはより詳しい設定などの情報も記載されています。例えば、エラーの検知レベルをカスタマイズしたり、 https://github.com/elbywan/crystalline[Crystalline] や https://github.com/crystal-lang-tools/scry[Scry] という Crystal の Language Server との連携などのより便利に使うための設定も書かれていますので合わせてご覧ください。
+
+NOTE: Crystalline は Crystal のバージョン `0.35.1` 以降に対応しています。
 
 === Atom
 
@@ -293,7 +295,7 @@ GitHub 社製のエディタ Atom では、以下のパッケージを導入す�
 
 language-crystal は Atom のパッケージとしては language-crystal-actual という名前で提供されているので注意が必要です。　これをインストールすると Crystal のシンタックスハイライトや自動インデントがサポートされます。
 
-atom-ide-crystal は、 前節でも触れた scry という Language Server と連携して IDE のような機能を追加するものです。まだ機能的には充実していない面もありますが、エラー検知をサポートするなど少しずつ開発が進んでいます。
+atom-ide-crystal は、前節でも触れた Language Server と連携して IDE のような機能を追加するものです。まだ機能的には充実していない面もありますが、エラー検知をサポートするなど少しずつ開発が進んでいます。
 
 === Vim
 
