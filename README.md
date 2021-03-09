@@ -8,17 +8,17 @@
 
 ## 必要なもの
 
-  - Ruby 2.5.1
+  - Ruby 2.6.5
   - Bundler
   - [Redpen](https://redpen.cc)
 
 ## ビルド方法
 
-`bundle install` して `rake` すればビルドできます。
+`bundle install` して `bundle exec rake` すればビルドできます。
 
 ```console
 $ bundle install --path=vendor/bundle
-$ rake -j
+$ bundle exec rake -j
 ```
 
 生成されたファイルは `build` ディレクトリ以下にあります。
@@ -33,16 +33,16 @@ docs/  introducing-crystal-print.pdf  introducing-crystal-web.pdf
 
 ## テスト
 
-Redpen による文章のチェック等や `crystal tool format` によるフォーマットのチェックは `rake lint` で実行できます。
+Redpen による文章のチェック等や `crystal tool format` によるフォーマットのチェックは `bundle exec rake lint` で実行できます。
 
 ```console
-$ rake lint
+$ bundle exec rake lint
 ```
 
-Example テストやプロジェクトのテストは `rake test` で実行できます。
+Example テストやプロジェクトのテストは `bundle exec rake test` で実行できます。
 
 ```console
-$ rake test
+$ bundle exec rake test
 ```
 
 この2つが通るようにがんばってください。
@@ -74,7 +74,7 @@ include::./examples/code.cr[]
 
 コードはディレクトリの `examples` 以下に置いてください。
 
-`examples` ディレクトリ以下に置いた Crystal のコードは `rake test` の際にいくつか変換を施したのち実行されます。
+`examples` ディレクトリ以下に置いた Crystal のコードは `bundle exec rake test` の際にいくつか変換を施したのち実行されます。
 
 変換のルールは以下の通りです。
 
@@ -204,7 +204,7 @@ server.listen(8080)
 ### Shards のプロジェクトについて
 
 いくつかの章では説明のためにプロジェクトを作るかと思います。
-その場合は `projects` ディレクトリ以下にプロジェクトを配置すると、 `rake test` の際にプロジェクトのビルドとテストが実行されます。
+その場合は `projects` ディレクトリ以下にプロジェクトを配置すると、 `bundle exec rake test` の際にプロジェクトのビルドとテストが実行されます。
 
 ビルドとテストは、
 
