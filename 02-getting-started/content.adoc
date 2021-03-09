@@ -282,7 +282,12 @@ VSCode で Crystal プログラミングをサポートするエクステンシ�
 
 などの機能がすぐに利用できるようになります。
 
-vscode-crystal-lang の GitHub 上の Wiki にはより詳しい設定などの情報も記載されています。例えば、エラーの検知レベルをカスタマイズしたり、 https://github.com/elbywan/crystalline[Crystalline] や https://github.com/crystal-lang-tools/scry[Scry] という Crystal の Language Server との連携などのより便利に使うための設定も書かれていますので合わせてご覧ください。
+vscode-crystal-lang の GitHub 上の Wiki にはより詳しい設定などの情報も記載されています。例えば、エラーの検知レベルをカスタマイズしたり、
+
+- https://github.com/elbywan/crystalline[Crystalline]
+- https://github.com/crystal-lang-tools/scry[Scry]
+
+という Crystal の Language Server との連携などのより便利に使うための設定も書かれていますので合わせてご覧ください。
 
 NOTE: Crystalline は Crystal のバージョン `0.35.1` 以降に対応しています。
 
