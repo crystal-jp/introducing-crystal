@@ -1,6 +1,6 @@
-version: 1.0
+version: 2.0
 shards:
   html_builder:
-    github: crystal-lang/html_builder
+    git: https://github.com/crystal-lang/html_builder.git
     version: 0.2.2
 

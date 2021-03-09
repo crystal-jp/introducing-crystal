@@ -1,30 +1,30 @@
-version: 1.0
+version: 2.0
 shards:
   db:
-    github: crystal-lang/crystal-db
-    version: 0.5.1
+    git: https://github.com/crystal-lang/crystal-db.git
+    version: 0.10.0
 
   exception_page:
-    github: crystal-loot/exception_page
-    version: 0.1.2
+    git: https://github.com/crystal-loot/exception_page.git
+    version: 0.1.4
 
   kemal:
-    github: kemalcr/kemal
-    version: 0.25.2
+    git: https://github.com/kemalcr/kemal.git
+    version: 0.27.0
 
   kilt:
-    github: jeromegn/kilt
+    git: https://github.com/jeromegn/kilt.git
     version: 0.4.0
 
   pg:
-    github: will/crystal-pg
-    version: 0.15.0
+    git: https://github.com/will/crystal-pg.git
+    version: 0.23.1
 
   radix:
-    github: luislavena/radix
+    git: https://github.com/luislavena/radix.git
     version: 0.3.9
 
   spec-kemal:
-    github: kemalcr/spec-kemal
+    git: https://github.com/kemalcr/spec-kemal.git
     version: 0.5.0
 
