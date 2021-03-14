@@ -10,7 +10,7 @@ end
 
 ruby '2.7.0'
 
-gem 'asciidoctor', '~> 2.0.10'
+gem 'asciidoctor', '< 2'
 gem 'asciidoctor-pdf'
 gem 'asciidoctor-pdf-cjk'
 gem 'asciidoctor-rouge'
