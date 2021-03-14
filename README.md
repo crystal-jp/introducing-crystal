@@ -8,7 +8,7 @@
 
 ## 必要なもの
 
-  - Ruby 2.6.5
+  - Ruby 2.7.0
   - Bundler
   - [Redpen](https://redpen.cc)
 
