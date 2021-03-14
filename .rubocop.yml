@@ -1,11 +1,15 @@
 AllCops:
-  TargetRubyVersion: 2.5
+  NewCops: enable
+  TargetRubyVersion: 2.7
   Exclude:
     - 03-syntax/examples/*.rb
     - vendor/bundle/**/*
 
 Style/AccessModifierDeclarations:
   EnforcedStyle: inline
+
+Style/AsciiComments:
+  Enabled: false
 
 Metrics/BlockLength:
   Exclude:

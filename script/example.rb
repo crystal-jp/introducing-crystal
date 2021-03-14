@@ -114,7 +114,7 @@ class Example
     (offset + 1...@lines.size).each do |i|
       break unless @lines[i].start_with? '# '
 
-      @output << @lines[i][2..-1]
+      @output << @lines[i][2..]
     end
     line
   end
@@ -130,9 +130,7 @@ class Example
   end
 
   private def mode!(mode)
-    unless @mode == :normal || @mode == mode
-      raise "Expected mode is normal or #{mode}, but current mode is #{@mode}"
-    end
+    raise "Expected mode is normal or #{mode}, but current mode is #{@mode}" unless @mode == :normal || @mode == mode
 
     @mode = mode
   end
