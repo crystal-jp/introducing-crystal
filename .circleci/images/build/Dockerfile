@@ -1,7 +1,7 @@
 FROM alpine:edge
 MAINTAINER TSUYUSATO Kitsune <make.just.on@gmail.com>
 
-ADD vendor/redpen-distribution-1.10.1 /opt/redpen
+ADD vendor/redpen-distribution-1.10.4 /opt/redpen
 RUN apk --update add curl crystal openjdk8 ruby ruby-dev ruby-json ruby-bigdecimal ruby-etc ruby-bundler make git gcc g++ musl-dev libxml2-dev gmp-dev openssl-dev openssh-client yaml-dev && \
     git clone https://github.com/crystal-lang/shards /tmp/shards && \
     cd /tmp/shards && \

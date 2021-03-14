@@ -88,7 +88,7 @@ Options:
     --stdin-filename                 Source file name to be read from STDIN
 ----
 
-`--cursor` オプションでカーソル位置を指定すると、カーソル上のマクロを展開した結果を表示することができます。先程の `getter` で試してみましょう。
+`--cursor` オプションでカーソル位置を指定すると、カーソル上のマクロを展開した結果を表示できます。先程の `getter` で試してみましょう。
 
 [source,console]
 ----
