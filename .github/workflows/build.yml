@@ -16,7 +16,7 @@ jobs:
         cd /tmp
         curl -LO https://github.com/redpen-cc/redpen/releases/download/redpen-1.10.4/redpen-1.10.4.tar.gz
         tar xvf redpen-1.10.4.tar.gz
-        ln -s redpen-distribution-1.10.4/bin/redpen /usr/local/bin/redpen
+        echo /tmp/redpen-distribution-1.10.4/bin >> $GITHUB_PATH
     - run: bundle exec rake -j
     - run: bundle exec rake lint
     - run: bundle exec rake test
