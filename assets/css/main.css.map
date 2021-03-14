@@ -3,11 +3,11 @@
 	"file": "main.css",
 	"sources": [
 		"main.scss",
-		"vendor/bundle/ruby/2.6.0/gems/jekyll-theme-prologue-0.3.3/_sass/jekyll-theme-prologue.scss",
-		"vendor/bundle/ruby/2.6.0/gems/jekyll-theme-prologue-0.3.3/_sass/libs/_vars.scss",
-		"vendor/bundle/ruby/2.6.0/gems/jekyll-theme-prologue-0.3.3/_sass/libs/_functions.scss",
-		"vendor/bundle/ruby/2.6.0/gems/jekyll-theme-prologue-0.3.3/_sass/libs/_mixins.scss",
-		"vendor/bundle/ruby/2.6.0/gems/jekyll-theme-prologue-0.3.3/_sass/libs/_skel.scss"
+		"../../../../../var/lib/gems/2.7.0/gems/jekyll-theme-prologue-0.3.3/_sass/jekyll-theme-prologue.scss",
+		"../../../../../var/lib/gems/2.7.0/gems/jekyll-theme-prologue-0.3.3/_sass/libs/_vars.scss",
+		"../../../../../var/lib/gems/2.7.0/gems/jekyll-theme-prologue-0.3.3/_sass/libs/_functions.scss",
+		"../../../../../var/lib/gems/2.7.0/gems/jekyll-theme-prologue-0.3.3/_sass/libs/_mixins.scss",
+		"../../../../../var/lib/gems/2.7.0/gems/jekyll-theme-prologue-0.3.3/_sass/libs/_skel.scss"
 	],
 	"sourcesContent": [
 		"@import \"jekyll-theme-prologue\";",

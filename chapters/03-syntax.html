@@ -55,14 +55,14 @@ Jekyll integration by Chris Bobbe | chrisbobbe.github.io
             <span class="icon fa-link">02. Getting Started</span>
           </a></li><li><a href="#" id="03-構文" class="active">
             <span class="icon fa-link">03. 構文</span>
-          </a></li><li><a href="/introducing-crystal/chapters/06-web-development.html" id="06-web-開発-link">
-            <span class="icon fa-link">06. Web 開発</span>
           </a></li><li><a href="/introducing-crystal/chapters/04-macro.html" id="04-マクロ-link">
             <span class="icon fa-link">04. マクロ</span>
-          </a></li><li><a href="/introducing-crystal/chapters/07-cli-development.html" id="07-cli-開発-link">
-            <span class="icon fa-link">07. CLI 開発</span>
           </a></li><li><a href="/introducing-crystal/chapters/05-shards.html" id="05-shards-link">
             <span class="icon fa-link">05. Shards</span>
+          </a></li><li><a href="/introducing-crystal/chapters/06-web-development.html" id="06-web-開発-link">
+            <span class="icon fa-link">06. Web 開発</span>
+          </a></li><li><a href="/introducing-crystal/chapters/07-cli-development.html" id="07-cli-開発-link">
+            <span class="icon fa-link">07. CLI 開発</span>
           </a></li><li><a href="/introducing-crystal/authors.html" id="著者紹介-link">
             <span class="icon fa-link">著者紹介</span>
           </a></li></ul>
@@ -191,7 +191,7 @@ Jekyll integration by Chris Bobbe | chrisbobbe.github.io
 </div>
 <div class="paragraph">
 <p>メソッドの引数に型を指定しているところに注目してください。<br>
-引数の型でメソッドをオーバーロードすることができます。<br>
+引数の型でメソッドをオーバーロードできます。<br>
 これは Ruby ではできません。</p>
 </div>
 <div class="listingblock">
@@ -396,7 +396,7 @@ Jekyll integration by Chris Bobbe | chrisbobbe.github.io
 <div class="sect2">
 <h3 id="空の配列と空のハッシュに対する型指定">空の配列と空のハッシュに対する型指定</h3>
 <div class="paragraph">
-<p>空の配列は <code>[]</code> 、空のハッシュは <code>{}</code> のように書けますが、これだと要素やキーの型が分からないためコンパイルすることができません。<br>
+<p>空の配列は <code>[]</code> 、空のハッシュは <code>{}</code> のように書けますが、これだと要素やキーの型が分からないためコンパイルできません。<br>
 そこで Crystal では、空のリテラルに <code>of 型</code> と続けることで型を指定します。<br>
 ハッシュの場合は <code>of キーの型 &#8658; 値の型</code> になります。</p>
 </div>
@@ -604,7 +604,7 @@ splat 展開も Ruby と同様の構文で、メソッド呼び出しで引数�
 その場合は明示的にインスタンス変数の型を指定してください。</p>
 </div>
 <div class="paragraph">
-<p>また、メソッドの引数名としてインスタンス変数を指定すると、メソッドの呼び出しと同時に、そのインスタンス変数に代入することができます。</p>
+<p>また、メソッドの引数名としてインスタンス変数を指定すると、メソッドの呼び出しと同時に、そのインスタンス変数に代入できます。</p>
 </div>
 <div class="listingblock">
 <div class="content">

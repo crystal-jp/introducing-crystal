@@ -55,14 +55,14 @@ Jekyll integration by Chris Bobbe | chrisbobbe.github.io
             <span class="icon fa-link">02. Getting Started</span>
           </a></li><li><a href="/introducing-crystal/chapters/03-syntax.html" id="03-構文-link">
             <span class="icon fa-link">03. 構文</span>
-          </a></li><li><a href="/introducing-crystal/chapters/06-web-development.html" id="06-web-開発-link">
-            <span class="icon fa-link">06. Web 開発</span>
           </a></li><li><a href="/introducing-crystal/chapters/04-macro.html" id="04-マクロ-link">
             <span class="icon fa-link">04. マクロ</span>
-          </a></li><li><a href="/introducing-crystal/chapters/07-cli-development.html" id="07-cli-開発-link">
-            <span class="icon fa-link">07. CLI 開発</span>
           </a></li><li><a href="/introducing-crystal/chapters/05-shards.html" id="05-shards-link">
             <span class="icon fa-link">05. Shards</span>
+          </a></li><li><a href="/introducing-crystal/chapters/06-web-development.html" id="06-web-開発-link">
+            <span class="icon fa-link">06. Web 開発</span>
+          </a></li><li><a href="/introducing-crystal/chapters/07-cli-development.html" id="07-cli-開発-link">
+            <span class="icon fa-link">07. CLI 開発</span>
           </a></li><li><a href="/introducing-crystal/authors.html" id="著者紹介-link">
             <span class="icon fa-link">著者紹介</span>
           </a></li></ul>
@@ -132,7 +132,7 @@ Jekyll integration by Chris Bobbe | chrisbobbe.github.io
 <div class="sect2">
 <h3 id="debian-や-ubuntu">Debian や Ubuntu</h3>
 <div class="paragraph">
-<p>Debian 系のディストリビューションでは、 Crystal の公式リポジトリを利用することができます。</p>
+<p>Debian 系のディストリビューションでは、 Crystal の公式リポジトリを利用できます。</p>
 </div>
 <div class="paragraph">
 <p>そのために、まず APT の構成にリポジトリを追加します。以下のコマンドを実行してください。</p>
@@ -173,7 +173,7 @@ Jekyll integration by Chris Bobbe | chrisbobbe.github.io
 </div>
 </div>
 <div class="paragraph">
-<p>なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードすることができます。</p>
+<p>なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードできます。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -185,7 +185,7 @@ Jekyll integration by Chris Bobbe | chrisbobbe.github.io
 <div class="sect2">
 <h3 id="red-hat-や-centos">Red Hat や CentOS</h3>
 <div class="paragraph">
-<p>Red Hat 系のディストリビューションでも、 Crystal の公式リポジトリを利用することができます。</p>
+<p>Red Hat 系のディストリビューションでも、 Crystal の公式リポジトリを利用できます。</p>
 </div>
 <div class="paragraph">
 <p>まず YUM の構成にリポジトリを追加します。以下のコマンドを実行してください。</p>
@@ -218,7 +218,7 @@ Jekyll integration by Chris Bobbe | chrisbobbe.github.io
 </div>
 </div>
 <div class="paragraph">
-<p>なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードすることができます。</p>
+<p>なお、新しいバージョンの Crystal がリリースされた場合は以下でアップグレードできます。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -243,7 +243,7 @@ Jekyll integration by Chris Bobbe | chrisbobbe.github.io
 <p>Gentoo Linux では、メインの overlay に Crystal が含まれています。</p>
 </div>
 <div class="paragraph">
-<p>以下で構成のフラグを確認することができます。</p>
+<p>以下で構成のフラグを確認できます。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -272,7 +272,7 @@ Jekyll integration by Chris Bobbe | chrisbobbe.github.io
 <div class="sect2">
 <h3 id="macos">macOS</h3>
 <div class="paragraph">
-<p>macOS では、 <a href="http://brew.sh/">Homebrew</a> を利用して簡単に Crystal をインストールすることができます。</p>
+<p>macOS では、 <a href="http://brew.sh/">Homebrew</a> を利用して簡単に Crystal をインストールできます。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -492,7 +492,32 @@ Jekyll integration by Chris Bobbe | chrisbobbe.github.io
 <p>などの機能がすぐに利用できるようになります。</p>
 </div>
 <div class="paragraph">
-<p>vscode-crystal-lang の GitHub 上の Wiki にはより詳しい設定などの情報も記載されています。例えば、エラーの検知レベルをカスタマイズしたり、 <a href="https://github.com/crystal-lang-tools/scry">scry</a> という Crystal の Language Server との連携などのより便利に使うための設定も書かれていますので合わせてご覧ください。</p>
+<p>vscode-crystal-lang の GitHub 上の Wiki にはより詳しい設定などの情報も記載されています。例えば、エラーの検知レベルをカスタマイズしたり、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/elbywan/crystalline">Crystalline</a></p>
+</li>
+<li>
+<p><a href="https://github.com/crystal-lang-tools/scry">Scry</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>という Crystal の Language Server との連携などのより便利に使うための設定も書かれていますので併せてご覧ください。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Crystalline は Crystal のバージョン <code>0.35.1</code> 以降に対応しています。
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -514,7 +539,7 @@ Jekyll integration by Chris Bobbe | chrisbobbe.github.io
 <p>language-crystal は Atom のパッケージとしては language-crystal-actual という名前で提供されているので注意が必要です。　これをインストールすると Crystal のシンタックスハイライトや自動インデントがサポートされます。</p>
 </div>
 <div class="paragraph">
-<p>atom-ide-crystal は、 前節でも触れた scry という Language Server と連携して IDE のような機能を追加するものです。まだ機能的には充実していない面もありますが、エラー検知をサポートするなど少しずつ開発が進んでいます。</p>
+<p>atom-ide-crystal は、前節でも触れた Language Server と連携して IDE のような機能を追加するものです。まだ機能的には充実していない面もありますが、エラー検知をサポートするなど少しずつ開発が進んでいます。</p>
 </div>
 </div>
 <div class="sect2">
@@ -529,7 +554,7 @@ Jekyll integration by Chris Bobbe | chrisbobbe.github.io
 <p>また、vim-crystal には Crystal の組み込みツール <code>crystal tool</code> や Spec との連携などの便利な機能があり、シームレスにプログラミングしやすくなっています。</p>
 </div>
 <div class="paragraph">
-<p>エラー検知をしたい場合には、 <a href="https://github.com/vim-syntastic/syntastic">vim-syntastic/syntastic</a> などの統合解析プラグインを導入が必要です。前述の vim-crystal にはこの syntastic 用のチェッカもバンドルされているため、特別な設定をせずとも利用することができます。</p>
+<p>エラー検知をしたい場合には、 <a href="https://github.com/vim-syntastic/syntastic">vim-syntastic/syntastic</a> などの統合解析プラグインを導入が必要です。前述の vim-crystal にはこの syntastic 用のチェッカもバンドルされているため、特別な設定をせずとも利用できます。</p>
 </div>
 </div>
 <div class="sect2">
@@ -550,7 +575,7 @@ Jekyll integration by Chris Bobbe | chrisbobbe.github.io
 <h2 id="crystal-playground">Crystal Playground</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Crystal Playground を使うと Web ブラウザ上で Crystal のコードを実行することができます。</p>
+<p>Crystal Playground を使うと Web ブラウザ上で Crystal のコードを実行できます。</p>
 </div>
 <div class="imageblock">
 <div class="content">
