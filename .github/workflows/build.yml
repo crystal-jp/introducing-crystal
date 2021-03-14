@@ -1,0 +1,34 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: oprypin/install-crystal@v1
+      with:
+        crystal: 0.36.1
+    - name: Install Ruby Deps
+      run: bundle install
+    - name: Install Redpen
+      run: |
+        cd /tmp
+        curl -LO https://github.com/redpen-cc/redpen/releases/download/redpen-1.10.4/redpen-1.10.4.tar.gz
+        tar xvf redpen-1.10.4.tar.gz
+        echo /tmp/redpen-distribution-1.10.4/bin >> $GITHUB_PATH
+    - name: Build
+      run: bundle exec rake -j
+    - name: Lint
+      run: bundle exec rake lint
+    - name: Test
+      run: bundle exec rake test
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build/docs/
