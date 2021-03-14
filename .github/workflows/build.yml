@@ -1,6 +1,8 @@
 name: Build
 
-on: [push]
+on:
+  push:
+    branches: [main]
 
 jobs:
   build:
@@ -11,12 +13,22 @@ jobs:
     - uses: oprypin/install-crystal@v1
       with:
         crystal: 0.36.1
-    - run: bundle install
-    - run: |
+    - name: Install Ruby Deps
+      run: bundle install
+    - name: Install Redpen
+      run: |
         cd /tmp
         curl -LO https://github.com/redpen-cc/redpen/releases/download/redpen-1.10.4/redpen-1.10.4.tar.gz
         tar xvf redpen-1.10.4.tar.gz
         echo /tmp/redpen-distribution-1.10.4/bin >> $GITHUB_PATH
-    - run: bundle exec rake -j
-    - run: bundle exec rake lint
-    - run: bundle exec rake test
+    - name: Build
+      run: bundle exec rake -j
+    - name: Lint
+      run: bundle exec rake lint
+    - name: Test
+      run: bundle exec rake test
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build/docs/
