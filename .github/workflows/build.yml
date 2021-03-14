@@ -1,0 +1,22 @@
+name: Crystal CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: oprypin/install-crystal@v1
+      with:
+        crystal: 0.36.1
+    - run: bundle install
+    - run: |
+        cd /tmp
+        curl -LO https://github.com/redpen-cc/redpen/releases/download/redpen-1.10.4/redpen-1.10.4.tar.gz
+        tar xvf redpen-1.10.4.tar.gz
+        ln -s redpen-distribution-1.10.4/bin/redpen /usr/local/bin/redpen
+    - run: bundle exec rake -j
+    - run: bundle exec rake lint
+    - run: bundle exec rake test
