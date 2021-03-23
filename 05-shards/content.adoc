@@ -278,7 +278,7 @@ NOTE: 今回は作成した shard を GitHub 上で公開することを想定�
 ====
 
 ====
-shard.yml specification.:: link:https://github.com/crystal-lang/shards/blob/master/SPEC.md[]
+shard.yml specification.:: link:https://github.com/crystal-lang/shards/blob/master/docs/shard.yml.adoc[]
 ====
 
 基本的にこれらの条件に従う必要がありますが、shard 名の重複についてはそこまで厳密に考えなくても問題になることは少ないでしょう。単機能の shard 名は割とカブりがちですし、その名前を世界中の誰も使っていないことを確認することは現実的には不可能です。とはいえ、最低でも標準添付のライブラリとカブるような名前は避ける必要があります。また、余裕があれば CrystalShards.xyz で使いたい名前を検索して、ヒットするかどうか確認くらいはしてみても良いかもしれません。
