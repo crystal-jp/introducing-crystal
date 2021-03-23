@@ -88,7 +88,7 @@ Awesome Crystal:: link:https://github.com/veelenga/awesome-crystal[]
 
 ====
 CrystalShards.xyz:: link:http://crystalshards.xyz/[]
-GitHub で公開されている shard のキーワード検索機能を提供。GitHub で公開されている shard を自動的に収集しているため玉石混こうではあるものの、Awesome Crytstal より網羅的にマイナな shard も見つけられる。
+GitHub で公開されている shard のキーワード検索機能を提供。GitHub で公開されている shard を自動的に収集しているため玉石混こうではあるものの、Awesome Crystal より網羅的にマイナな shard も見つけられる。
 ====
 
 試しに Awesome Crystal 内を「 html 」で検索してみると、HTML 構築専用の構文を提供してくれる `html_builder` という shard が見つかりました。早速これを使ってみることにしましょう。
