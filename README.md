@@ -208,7 +208,7 @@ server.listen(8080)
 
 ビルドとテストは、
 
-  - `Makefile` が無い場合は、 `shards build` と `crystal spec` を実行します。
+  - `Makefile` が無い場合は、 `shards` と `crystal spec` を実行します。
   - `Makefile` がある場合は、 `make` と `make test` を実行します。
 
 という風にして実行します。
