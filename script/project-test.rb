@@ -30,7 +30,7 @@ PROJECTS.each_with_index do |project, i|
     sh 'make test', chdir: path
   else
     Spinner.show progress(i, project, '(deps)')
-    sh 'shards', chdir: path
+    sh 'shards --ignore-crystal-version', chdir: path
     Spinner.show progress(i, project, nil)
     sh 'crystal', 'spec', chdir: path
   end
