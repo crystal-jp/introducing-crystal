@@ -95,7 +95,7 @@ include::./projects/myecho/spec/myecho_01_first_spec_failed.cr[]
 [source,crystal]
 .spec/myecho_spec.cr の一部
 ----
-include::./projects/myecho/spec/myecho_02_standart_output_spec.cr[tag=spec]
+include::./projects/myecho/spec/myecho_02_standard_output_spec.cr[tag=spec]
 ----
 <1> 出力する先の `IO` インスタンスを生成します。テスト時は `IO::Memory` に出力します。
 <2> `MyEcho::Cli` に `io` を渡し、インスタンスを生成します。
