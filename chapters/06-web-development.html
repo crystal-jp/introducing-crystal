@@ -335,7 +335,7 @@ Ruby でいうところの Sinatra に似た設計思想で作られており、
 </div>
 <div class="paragraph">
 <p>画面側の処理を作成します。<br>
-<code>src</code> 以下に view ディレクトリを作成し、以下の <code>hello.ecr</code> ファイルを <code>view</code> ディレクトリ内に作成します。</p>
+<code>src</code> 以下に views ディレクトリを作成し、以下の <code>hello.ecr</code> ファイルを <code>views</code> ディレクトリ内に作成します。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -376,7 +376,7 @@ Ruby でいうところの Sinatra に似た設計思想で作られており、
 </div>
 </div>
 <div class="paragraph">
-<p>ブラウザで <code><a href="http://localhost:3000/" class="bare">http://localhost:3000/</a></code> でアクセスします。<br>
+<p>ブラウザで <code><a href="http://localhost:3000/hello" class="bare">http://localhost:3000/hello</a></code> でアクセスします。<br>
 <code>Hello World</code> と表示されていれば問題ありません。</p>
 </div>
 </div>
@@ -472,7 +472,7 @@ Ruby でいうところの Sinatra に似た設計思想で作られており、
 <div class="sect2">
 <h3 id="レイアウトページの作成">レイアウトページの作成</h3>
 <div class="paragraph">
-<p>まずひな形のページを <code>application.ecr</code> という名前で作成します。</p>
+<p>まずひな形のページを <code>application.ecr</code> という名前で <code>src/views</code> ディレクトリ内に作成します。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -514,7 +514,7 @@ CDN を使用しますので特にダウンロード不要ですが、ダウン�
 <div class="sect2">
 <h3 id="css-の作成">CSS の作成</h3>
 <div class="paragraph">
-<p>ページ修飾用の CSS を作成します。本サンプルでは rails tutorial をそのまま参考にします。</p>
+<p>ページ修飾用の CSS を <code>custom.css</code> という名前で <code>public/css</code> ディレクトリ内に作成します。本サンプルでは rails tutorial をそのまま参考にします。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -584,7 +584,7 @@ CDN を使用しますので特にダウンロード不要ですが、ダウン�
 <div class="sect2">
 <h3 id="一覧ページの作成">一覧ページの作成</h3>
 <div class="paragraph">
-<p>記事一覧ページを以下の内容で作成します。</p>
+<p>記事一覧ページを <code>index.ecr</code> という名前で <code>src/views</code> ディレクトリ内に作成します。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -612,7 +612,7 @@ CDN を使用しますので特にダウンロード不要ですが、ダウン�
 <div class="sect2">
 <h3 id="新規投稿ページ">新規投稿ページ</h3>
 <div class="paragraph">
-<p>記事投稿用のページを新規作成します。</p>
+<p>記事投稿用のページを <code>new.ecr</code> という名前で <code>src/views/articles</code> ディレクトリ内に新規作成します。</p>
 </div>
 <div class="paragraph">
 <p>以下のファイルを追加します。</p>
@@ -635,7 +635,7 @@ CDN を使用しますので特にダウンロード不要ですが、ダウン�
 <div class="sect2">
 <h3 id="詳細ページ">詳細ページ</h3>
 <div class="paragraph">
-<p>一覧ページから記事タイトルをクリックした時に遷移する詳細ページを作成します。<br>
+<p>一覧ページから記事タイトルをクリックした時に遷移する詳細ページを <code>show.ecr</code> という名前で <code>src/views/articles</code> ディレクトリ内に作成します。<br>
 データへの更新については後述します。</p>
 </div>
 <div class="listingblock">
@@ -757,7 +757,7 @@ CDN を使用しますので特にダウンロード不要ですが、ダウン�
 </div>
 </div>
 <div class="paragraph">
-<p><code>query_one</code> の戻り値は、 <code>as</code> で指定した型の <code>Touple</code> になります。<br>
+<p><code>query_one</code> の戻り値は、 <code>as</code> で指定した型の <code>Tuple</code> になります。<br>
 パラメータを SQL 文に渡す場合は上記例で言うと</p>
 </div>
 <div class="listingblock">
