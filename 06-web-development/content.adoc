@@ -135,7 +135,7 @@ Kemal.run
 ----
 
 画面側の処理を作成します。
-`src` 以下に view ディレクトリを作成し、以下の `hello.ecr` ファイルを `view` ディレクトリ内に作成します。
+`src` 以下に views ディレクトリを作成し、以下の `hello.ecr` ファイルを `views` ディレクトリ内に作成します。
 
 [source,erb]
 ----
@@ -164,7 +164,7 @@ $ crystal build src/kemal-sample.cr
 $ ./kemal-sample
 ----
 
-ブラウザで `http://localhost:3000/` でアクセスします。
+ブラウザで `http://localhost:3000/hello` でアクセスします。
 `Hello World` と表示されていれば問題ありません。
 
 === DB と連動する
@@ -221,7 +221,7 @@ $ shards install
 
 === レイアウトページの作成
 
-まずひな形のページを `application.ecr` という名前で作成します。
+まずひな形のページを `application.ecr` という名前で `src/views` ディレクトリ内に作成します。
 
 [source,erb]
 ----
@@ -233,7 +233,7 @@ CDN を使用しますので特にダウンロード不要ですが、ダウン�
 
 === CSS の作成
 
-ページ修飾用の CSS を作成します。本サンプルでは rails tutorial をそのまま参考にします。
+ページ修飾用の CSS を `custom.css` という名前で `public/css` ディレクトリ内に作成します。本サンプルでは rails tutorial をそのまま参考にします。
 
 [source,css]
 ----
@@ -242,7 +242,7 @@ include::./projects/kemal-sample/public/css/custom.css[]
 
 === 一覧ページの作成
 
-記事一覧ページを以下の内容で作成します。
+記事一覧ページを `index.ecr` という名前で `src/views` ディレクトリ内に作成します。
 
 [source,erb]
 ----
@@ -251,7 +251,7 @@ include::./projects/kemal-sample/src/views/index.ecr[]
 
 === 新規投稿ページ
 
-記事投稿用のページを新規作成します。
+記事投稿用のページを `new.ecr` という名前で `src/views/articles` ディレクトリ内に新規作成します。
 
 以下のファイルを追加します。
 
@@ -262,7 +262,7 @@ include::./projects/kemal-sample/src/views/articles/new.ecr[]
 
 === 詳細ページ
 
-一覧ページから記事タイトルをクリックした時に遷移する詳細ページを作成します。
+一覧ページから記事タイトルをクリックした時に遷移する詳細ページを `show.ecr` という名前で `src/views/articles` ディレクトリ内に作成します。
 データへの更新については後述します。
 
 [source,erb]
@@ -312,7 +312,7 @@ query メソッドに SQL クエリを記述し、ループ内で結果を格納
     db.query_one(sql, params, as: {Int32, String, String})
 ----
 
-`query_one` の戻り値は、 `as` で指定した型の `Touple` になります。
+`query_one` の戻り値は、 `as` で指定した型の `Tuple` になります。
 パラメータを SQL 文に渡す場合は上記例で言うと
 
 [source,crystal]
