@@ -1245,7 +1245,7 @@ Jekyll integration by Chris Bobbe | chrisbobbe.github.io
 <span id="L3" class="line"></span>
 <span id="L4" class="line"><span style="color: #aa759f">module</span> <span style="color: #f4bf75">MyechoClim</span></span>
 <span id="L5" class="line">  <span style="color: #aa759f">class</span> <span style="color: #f4bf75">Cli</span> <span style="color: #d0d0d0">&lt;</span> <span style="color: #f4bf75">Clim</span></span>
-<span id="L6" class="line">    <span style="color: #303030">main_command</span> <span style="color: #aa759f">do</span></span>
+<span id="L6" class="line">    <span style="color: #303030">main</span> <span style="color: #aa759f">do</span></span>
 <span id="L7" class="line">      <span style="color: #303030">desc</span> <span style="color: #90a959">"My echo."</span></span>
 <span id="L8" class="line">      <span style="color: #303030">usage</span> <span style="color: #90a959">"myecho [options] [arguments] ..."</span></span>
 <span id="L9" class="line">      <span style="color: #303030">option</span> <span style="color: #90a959">"--prefix PREFIX"</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">type: </span><span style="color: #f4bf75">String</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">desc: </span><span style="color: #90a959">"prefix to each arguments."</span><span style="color: #d0d0d0">,</span> <span style="color: #90a959">default: </span><span style="color: #90a959">""</span></span>
@@ -1254,12 +1254,12 @@ Jekyll integration by Chris Bobbe | chrisbobbe.github.io
 <span id="L12" class="line">        <span style="color: #505050"># prefixをつける</span></span>
 <span id="L13" class="line">        <span style="color: #303030">prefix</span> <span style="color: #d0d0d0">=</span> <span style="color: #303030">options</span><span style="color: #d0d0d0">.</span><span style="color: #303030">prefix</span></span>
 <span id="L14" class="line">        <span style="color: #aa759f">unless</span> <span style="color: #303030">prefix</span><span style="color: #d0d0d0">.</span><span style="color: #303030">empty?</span></span>
-<span id="L15" class="line">          <span style="color: #303030">puts</span> <span style="color: #303030">arguments</span><span style="color: #d0d0d0">.</span><span style="color: #303030">map</span> <span style="color: #d0d0d0">{</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">argument</span><span style="color: #d0d0d0">|</span> <span style="color: #303030">prefix</span> <span style="color: #d0d0d0">+</span> <span style="color: #303030">argument</span> <span style="color: #d0d0d0">}.</span><span style="color: #303030">join</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">" "</span><span style="color: #d0d0d0">)</span></span>
-<span id="L16" class="line">          <span style="color: #aa759f">return</span></span>
+<span id="L15" class="line">          <span style="color: #303030">puts</span> <span style="color: #303030">arguments</span><span style="color: #d0d0d0">.</span><span style="color: #303030">all_args</span><span style="color: #d0d0d0">.</span><span style="color: #303030">map</span> <span style="color: #d0d0d0">{</span> <span style="color: #d0d0d0">|</span><span style="color: #303030">argument</span><span style="color: #d0d0d0">|</span> <span style="color: #303030">prefix</span> <span style="color: #d0d0d0">+</span> <span style="color: #303030">argument</span> <span style="color: #d0d0d0">}.</span><span style="color: #303030">join</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">" "</span><span style="color: #d0d0d0">)</span></span>
+<span id="L16" class="line">          <span style="color: #aa759f">next</span></span>
 <span id="L17" class="line">        <span style="color: #aa759f">end</span></span>
 <span id="L18" class="line"></span>
 <span id="L19" class="line">        <span style="color: #505050"># 引数の表示</span></span>
-<span id="L20" class="line">        <span style="color: #303030">puts</span> <span style="color: #303030">arguments</span><span style="color: #d0d0d0">.</span><span style="color: #303030">join</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">" "</span><span style="color: #d0d0d0">)</span></span>
+<span id="L20" class="line">        <span style="color: #303030">puts</span> <span style="color: #303030">arguments</span><span style="color: #d0d0d0">.</span><span style="color: #303030">all_args</span><span style="color: #d0d0d0">.</span><span style="color: #303030">join</span><span style="color: #d0d0d0">(</span><span style="color: #90a959">" "</span><span style="color: #d0d0d0">)</span></span>
 <span id="L21" class="line">      <span style="color: #aa759f">end</span></span>
 <span id="L22" class="line">    <span style="color: #aa759f">end</span></span>
 <span id="L23" class="line">  <span style="color: #aa759f">end</span></span>
