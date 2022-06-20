@@ -14,7 +14,10 @@ jobs:
       with:
         crystal: 1.0.0
     - name: Install Ruby Deps
-      run: bundle install
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '2.7.0'
+        bundler-cache: true
     - name: Install Redpen
       run: |
         cd /tmp
