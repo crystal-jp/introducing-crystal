@@ -3,9 +3,6 @@ name: Build
 on:
   push:
     branches: [main]
-  # To test. Remove this after CI passed
-  pull_request:
-    branches: [main]
 
 jobs:
   build:
